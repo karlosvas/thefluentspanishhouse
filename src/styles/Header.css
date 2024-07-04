@@ -1,0 +1,78 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+    user-select: none;
+    position: sticky;
+    top: 0;
+
+    #logo{
+      height: 45px;
+      width: 50px;
+    }
+  
+    nav > ul{
+      list-style-type: none;
+      display: flex;
+      li {
+        padding: 0 10px;
+        font-size: 20px;
+        font-weight: 600;
+      }
+    }
+  
+    .svgIcon{
+      margin-right: 20px;
+    }
+    
+    .auth {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      #register{
+        background-color: var(--primary-blue);
+        color: var(--primary-white);
+      }
+
+      #singIn{
+        background-color: var(--secondary-blue);
+        color: var(--primary-black);
+      }
+    }
+  
+    .svgIcon{
+      height: 20px;
+      cursor: pointer;
+    }
+
+    #modalLanguajes {
+      border-radius: 10px;
+      position: absolute;
+      top: 60px;
+      right: 243px;
+      padding: 10px;
+      background-color: var(--primary-black);
+    }
+
+    .modalAuth{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 100%);
+      background-color: aliceblue;
+      padding: 20px;
+      border-radius: 10px;
+      
+      .closeAuth{
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        font-weight: 900;
+      }
+      .closeAuth:hover{
+        color: var(--primary-blue);
+      }
+    }
+  }

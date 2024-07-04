@@ -1,0 +1,94 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --primary-blue: #2b65e2;
+  --secondary-blue: #C1F6FE;
+  --primary-white: rgb(240, 250, 255);
+  --primary-black: #242424;
+  --primary-yellow: #ffbd59;
+
+  color-scheme: light dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  text-decoration: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  margin: 5px;
+}
+button:hover {
+  border-color: var(--primary-blue);
+}
+
+
+/* Estilos para tema claro */
+html.light {
+  background-color: var(--primary-white);
+  color: var(--primary-black);
+  header {
+    background-color: var(--primary-white);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    #modalLanguajes {
+      a {
+        color: var(--primary-white);
+        transition: all 0.3s ease;
+      }
+      a:hover {
+        color: var(--primary-blue);
+      }
+      background-color: var(--primary-black);
+    }
+  }
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Estilos para tema oscuro */
+html.dark {
+  background-color: var(--primary-black);
+  color: var(--primary-white);
+  header {
+    background-color:var(--primary-black);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    #modalLanguajes {
+      a {
+        color: var(--primary-black);
+        transition: all 0.3s ease;
+      }
+      a:hover {
+        color: var(--primary-blue);
+      }
+      background-color: var(--primary-white);
+    }
+  }
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
