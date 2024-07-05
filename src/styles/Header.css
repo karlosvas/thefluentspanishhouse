@@ -55,24 +55,4 @@ header {
       padding: 10px;
       background-color: var(--primary-black);
     }
-
-    .modalAuth{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, 100%);
-      background-color: aliceblue;
-      padding: 20px;
-      border-radius: 10px;
-      
-      .closeAuth{
-        position: absolute;
-        right: 20px;
-        top: 10px;
-        font-weight: 900;
-      }
-      .closeAuth:hover{
-        color: var(--primary-blue);
-      }
-    }
-  }
+}

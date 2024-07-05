@@ -1,5 +1,5 @@
-import Coments from '../components/Comments';
-import CardBlog from '../components/CardBlog'
+// import Coments from '../components/Comments';
+// import CardBlog from '../components/CardBlog'
 import { useTranslation } from 'react-i18next';
 
 

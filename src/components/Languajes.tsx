@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 function Languajes() {
-    const [ t, i18n ] = useTranslation("global");
+    const { i18n } = useTranslation("global");
     const [ showModal, setShowModal ] = useState(false);
 
     function toggleModal(){
