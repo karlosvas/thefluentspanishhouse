@@ -1,4 +1,7 @@
 .contactForm {
+  animation: reveal linear both;
+  animation-timeline: view();
+  animation-range: entry 20% cover 30%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,7 +9,7 @@
   border: 1px solid #ddd;
   padding: 16px;
   border-radius: 8px;
-  max-width: 400px;
+  max-width: 300px;
   margin: 200px auto 200px auto;
   background-color: var(--secondary-white);
   color: var(--primary-black);
@@ -40,15 +43,68 @@
   }
   
   button {
-    background-color: #000;
+    background-color: var(--primary-blue);
+    color: var(--primary-white);
+    transition: all 0.3s;
     color: #fff;
     padding: 10px 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    width: 100%;
   }
   
   button:hover {
-    background-color: #444;
+    background-color: var(--secondary-blue);
+    color: var(--primary-black);
+  }
+}
+
+@media only screen and (width <= 767px) {
+  .contactForm {
+    margin: 200px auto 100px auto;
+    background-color: var(--secondary-white);
+    color: var(--primary-black);
+    
+    h2 {
+        align-self: center;
+        margin: 0;
+    }
+  
+    p   {
+        align-self: flex-start;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+    
+    input,
+    textarea {
+      resize: none;
+      width: 90%;
+      padding: 8px;
+      margin-top: 4px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    textarea{
+      height: 70px;
+    }
+    
+    button {
+      background-color: #000;
+      color: #fff;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #444;
+    }
   }
 }

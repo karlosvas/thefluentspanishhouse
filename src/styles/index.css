@@ -6,7 +6,7 @@
   --primary-blue: #2b65e2;
   --secondary-blue: #C1F6FE;
   --primary-white: rgb(240, 250, 255);
-  --secondary-white: #fff;
+  --secondary-white: #ffffff;
   --primary-black: #242424;
   --primary-yellow: #ffbd59;
 
@@ -17,6 +17,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  scrollbar-width: none;
 }
 
 body {
@@ -69,6 +70,16 @@ svg:hover {
 }
 li:hover {
   color: var(--primary-blue);
+}
+
+@keyframes reveal {
+  from{
+    opacity: 0;
+    translate: 0 100px;
+  } to {
+    opacity: 1;
+    translate: 0 0;
+  }
 }
 
 /* Estilos para tema claro */

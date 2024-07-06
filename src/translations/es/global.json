@@ -1,4 +1,34 @@
 {
     "title": "The Fluent Spanish House",
-    "descriptionTitle": "He conocido de primera mano las dificultades de los estudiantes de español para dominar mi idioma. Memorizar reglas y vocabulario no son las claves para la fluidez. Necesitas construir una base gramatical sólida. Mis cursos brindan orientación y soluciones. ¡Da un paso más!"
+    "descriptionTitle": "He conocido de primera mano las dificultades de los estudiantes de español para dominar mi idioma. Memorizar reglas y vocabulario no son las claves para la fluidez. Necesitas construir una base gramatical sólida. Mis cursos brindan orientación y soluciones. ¡Da un paso más!",
+    "navInfo": ["Blog", "Reseñas", "Contacto"],
+    "cardsBlog": [
+      {
+        "title": "Sed de conocimiento lingüístico",
+        "content": "#spanishteacher #spanishlessonsonline #learnspanish #languagelearning"
+      },
+      {
+        "title": "Singular o plural, nadie lo es",
+        "content": "Hola, querido estudiante. Tengas el nivel que tengas de español. Esto te interesa 😏."
+      },
+      {
+        "title": "¿De qué estás hablando?",
+        "content": "Hola, amigo. En algunos países anglohablantes se usa siesta, fiesta o patio. Bueno a los hispanohablantes también nos"
+      },
+      {
+        "title": "La esencia de aprender español",
+        "content": "#spanishlessonsonline #spanishlessonsonline #learnspanish #spanishpractice"
+      },
+      {
+        "title": "¿Cómo decimos a alguien?",
+        "content": "Hola, querido estudiante, para que conste (\"for the record\") quiero que sepas que no me gustan los callos (\"tripe\") 😏."
+      },
+      {
+        "title": "Adaptándonos",
+        "content": "Hola, querido estudiante. Las formas de vida cambian y nosotros cambiamos con ellas."
+      }
+      ],
+      "contact": [
+        "Contactar conmigo", "Hazme cualquier pregunta que tengas", "Nombre completo", "Nota de entrega", "Enviar"
+        ]
 }

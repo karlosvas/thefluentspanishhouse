@@ -1,41 +1,22 @@
+import { useTranslation } from 'react-i18next';
 import '../styles/blog.css'
 
+type CardType = {
+  title: string;
+  content: string;
+};
+
 function CardBlog() {
-  const data = [
-    {
-      "title": "Thirst For Language Knowledge",
-      "text": "#spanishteacher #spanishlessonsonline #learnspanish #languagelearning"
-    },
-    {
-      "title": "None is plural or singular",
-      "text": "Hola, querido estudiante. Tengas el nivel que tengas de español. Esto te interesa 😏."
-    },
-    {
-      "title": "What are you talking about?",
-      "text": "Hola, amigo. En algunos países anglohablantes se usa siesta, fiesta o patio. Bueno a los hispanohablantes también nos"
-    },
-    {
-      "title": "The Essence of Learning Spanish",
-      "text": "#spanishlessonsonline #spanishlessonsonline #learnspanish #spanishpractice"
-    },
-    {
-      "title": "How we say somebody?",
-      "text": "Hola, querido estudiante, para que conste (\"for the record\") quiero que sepas que no me gustan los callos (\"tripe\") 😏."
-    },
-    {
-      "title": "Adaptándonos",
-      "text": "Hola, querido estudiante. Las formas de vida cambian y nosotros cambiamos con ellas."
-    }
-  ]
-  
-  
+  const [t] = useTranslation("global");
+  const cardsBlog: CardType[] = t('cardsBlog', { returnObjects: true });
+
       return (
         <>
-          {data.map((item, index) => (
+          {cardsBlog.map((item, index) => (
             <div className="cardBlog" key={index}>
               <img src={`/img/${index}.png`} alt="" />
               <h3>{item.title}</h3>
-              <p>{item.text}</p>
+              <p>{item.content}</p>
             </div>
           ))} 
         </>

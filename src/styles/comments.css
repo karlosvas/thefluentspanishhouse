@@ -1,12 +1,41 @@
 #hReviews{
     margin-top: 200px;
+    color: var(--primary-blue);
+    animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 30%;
 }
 
-.review{
+
+main > .review{
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 30%;
     display: flex;
     justify-content: center;
     align-items: center;
     iframe{
       margin: 10px;
+      z-index: -10;
+      border: none;
+      overflow: hidden; 
+      margin-left: 30px;
+    }
+    iframe:nth-child(2){
+      scale: 1.1;
+      height: 200px;
     }
   }
+
+@media only screen and (width <= 767px) {
+  .review{
+    flex-direction: column;
+    width: 100%;
+    height: 500px;
+    iframe{
+      margin: 0;
+      transform: scale(0.7);
+      transform-origin: center; 
+    }
+  }
+}

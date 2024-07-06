@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import '../styles/contactForm.css';
 
 const ContactForm: React.FC = () => {
@@ -10,12 +11,16 @@ const ContactForm: React.FC = () => {
     console.log({ fullName, deliveryNote });
   };
 
+  const [t] = useTranslation("global");
+  const contact: string[] = t('contact', { returnObjects: true });
+
+
   return (
     <form id="hForm" className="contactForm" onSubmit={handleSubmit}>
-      <h2>Contact me</h2>
-      <p>Ask me any question you have</p>
+      <h2>{contact[0]}</h2>
+      <p>{contact[1]}</p>
       <label>
-        Full Name
+      {contact[2]}
         <input
           type="text"
           value={fullName}
@@ -25,7 +30,7 @@ const ContactForm: React.FC = () => {
         />
       </label>
       <label>
-        Delivery note
+        {contact[3]}
         <textarea
           value={deliveryNote}
           onChange={(e) => setDeliveryNote(e.target.value)}
@@ -33,7 +38,7 @@ const ContactForm: React.FC = () => {
           required
         ></textarea>
       </label>
-      <button type="submit">Save shipping information</button>
+      <button type="submit">{contact[4]}</button>
     </form>
   );
 };

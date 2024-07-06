@@ -18,6 +18,9 @@ main {
   }
 
   #mainTitle {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 30%;
     padding: 100px;
     text-align: center;
     #title {
@@ -31,16 +34,17 @@ main {
   }
 } 
 
+/* Moviles */
 @media only screen and (width <= 767px) {
-  #root{
-    width: 380px;
-  }
   main{
     #mainTitle{
       padding: 50px 10px;
     }
     h1{
       font-size: 20px;
+    }
+    h2{
+      margin-left: 35px;
     }
   }
 }

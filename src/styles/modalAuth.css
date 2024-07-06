@@ -4,10 +4,12 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: aliceblue;
+    color: var(--primary-black);
     padding: 20px;
     border-radius: 5px;
-    width: 40vw;
+    width: fit-content;
     height: 35vh;
+    padding: 0 50px;
     text-align: center;
     font-weight: 500;
     display: flex;
@@ -78,10 +80,15 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-
-@media (min-width: 1200px) {
+/* Moviles */
+@media only screen and (width <= 767px) {
     .modalAuth {
-        width: 20vw;
-        height: auto;
+        height: fit-content;
+        width: fit-content;
+        padding: 20px;
+        padding-top: 0;
     }
+}
+
+@media (width <= 1200px) {
 }

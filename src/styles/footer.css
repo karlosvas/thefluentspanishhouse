@@ -1,0 +1,21 @@
+footer{
+  text-align: center;
+  background-color: var(--primary-black);
+  height: 20vh;
+  width: auto;
+  color: var(--primary-white);
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  border-top: 1px solid #ddd;
+  a{
+    color: var(--primary-white);
+  }
+  .svgIcons{
+    padding-right: 10px;
+    margin-left: 50px;
+    height: 25px;
+    width: 25px;
+  }
+}

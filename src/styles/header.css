@@ -3,10 +3,12 @@ header{
   height: 90px;
   position: sticky;
   top: 0;
-  z-index: 100px;
+  z-index: 999;
   
   .header {
-    z-index: 100px;
+    a:hover {
+      color: var(--primary-blue);
+    }
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -18,15 +20,19 @@ header{
     #logo{
       height: 45px;
       width: 50px;
+      border-radius: 5px;
     }
-    
-    nav > ul{
-      list-style-type: none;
-      display: flex;
-      li {
-        padding: 0 10px;
-        font-size: 20px;
-        font-weight: 600;
+  
+    nav{
+      margin-left: 200px;
+      ul{
+        list-style-type: none;
+        display: flex;
+        li {
+          padding: 0 10px;
+          font-size: 20px;
+          font-weight: 600;
+        }
       }
     }
     
@@ -62,34 +68,41 @@ header{
       border-radius: 10px;
       position: absolute;
       top: 60px;
-      right: 243px;
+      right: 600px;
       padding: 10px;
       background-color: var(--primary-black);
+      a:hover {
+        color: var(--primary-blue);
+      }
     }
   }
 }
-  
-  @media only screen and (width <= 767px) {
+
+/* Moviles */
+@media only screen and (width <= 767px) {
     header{
       height: 50px;
       
       .header{
         justify-content: center;
         height: 50px;
-      
-      nav > ul > li {
-        font-size: 15px;
-        padding: 0 10px;
-      }
-      
-      #logoOrHamburger{
-        position: absolute;
-        left: 20px;
-        top: 15px;
-        height: 20px;
-        width: 20px;
-        margin-left: 10px;
-      }
+
+        nav{
+          margin-left: 0;
+          ul > li {
+              font-size: 15px;
+            padding: 0 10px;
+          }
+        }
+        
+        #logoOrHamburger{
+          position: absolute;
+          left: 20px;
+          top: 15px;
+          height: 20px;
+          width: 20px;
+          margin-left: 10px;
+        }
       
       .menuLeft{
         margin-top: 10wpx;
@@ -119,17 +132,29 @@ header{
       }
       
       #modalLanguajes {
-        border-radius: 10px;
-        position: absolute;
-        top: 40px;
-        right: 12px;
-        padding: 10px;
+        top: 45px;
+        left: 180px;
+        width: fit-content;
         border: 1px solid gray;
       }
       
       .modalBackdrop{
         top: 50px;
       }
+    }
+  }
+}
+
+/* Tablets */
+@media (width >= 768px) and (width <= 1024px) {
+}
+
+/* Portatiles */
+@media (width <= 1040px) {
+  header > .header{
+    #modalLanguajes {
+      background-color: red;
+      right: 243px;
     }
   }
 }

@@ -1,13 +1,12 @@
 import Coments from '../components/Comments';
 import CardBlog from '../components/CardBlog'
-import Footer from '../layouts/Footer'
 import ContactForm from '../components/ContactForm'
 import { useTranslation } from 'react-i18next';
-
+import '../styles/main.css'
 
 function Main() {
-  const [t ] = useTranslation("global");
-
+  const [t] = useTranslation("global");
+  const navInfo: string[] = t('navInfo', { returnObjects: true });
     return (
       <>
         <main>
@@ -19,21 +18,18 @@ function Main() {
             </p>
           </div>
 
-          <h2 id="hBlog">Blog</h2>
+          <h2 id="hBlog">{navInfo[0]}</h2>
           <div className="blog">
               <CardBlog/>
           </div>
           
-          <h2 id="hReviews">Reviews</h2>
+          <h2 id="hReviews">{navInfo[1]}</h2>
           <div className="review">
               <Coments/>
           </div>
 
           <ContactForm/>
         </ main>
-        <footer>
-          <Footer/>
-        </footer>
       </>
     )
   }

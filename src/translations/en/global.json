@@ -1,4 +1,32 @@
 {
     "title": "The Fluent Spanish House",
-    "descriptionTitle": "I have known firsthand the Spanish learners' struggles to get fluent in my language. Memorizing rules and vocabulary aren't the keys to fluency. You need to build a strong grammar foundation. My courses provide guidance and solutions. Take a step further!"
+    "descriptionTitle": "I have known firsthand the Spanish learners' struggles to get fluent in my language. Memorizing rules and vocabulary aren't the keys to fluency. You need to build a strong grammar foundation. My courses provide guidance and solutions. Take a step further!",
+    "navInfo": ["Blog", "Review", "Contact"],
+    "cardsBlog": [
+      {
+        "title": "Thirst For Language Knowledge",
+        "content": "#spanishteacher #spanishlessonsonline #learnspanish #languagelearning"
+      },
+      {
+        "title": "None is plural or singular",
+        "content": "Hola, dear student. No matter what level of Spanish you have. This interests you 😏."
+      },
+      {
+        "title": "What are you talking about?",
+        "content": "Hello, friend. In some English-speaking countries siesta, party, or patio is used. Well, Spanish speakers also us."
+      },
+      {
+        "title": "The Essence of Learning Spanish",
+        "content": "#spanishlessonsonline #spanishlessonsonline #learnspanish #spanishpractice"
+      },
+      {
+        "title": "How we say somebody?",
+        "content": "Hello, dear student, for the record I want you to know that I don't like tripe 😏."
+      },
+      {
+        "title": "Adapting",
+        "content": "Hello, dear student. Lifestyles change and we change with them."
+      }
+      ],
+      "contact": ["Contact me", "Ask me any question you have", "Full Name", "Delivery note", "Submit"]
 }

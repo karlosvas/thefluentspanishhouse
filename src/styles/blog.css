@@ -1,5 +1,10 @@
 #hBlog{
+  color: var(--primary-blue);
   margin-top: 100px;
+  margin-left: 120px;
+  animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 30%;
 }
 
 .blog {
@@ -10,8 +15,13 @@
     grid-template-columns: repeat(3, 1fr);
     height: auto;
     width: 80%;
-
+    
     .cardBlog {
+      margin-top: 5px;
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 30%;
+
       background-color: var(--secondary-white);
       color: var(--primary-black);
       display: flex;
@@ -19,9 +29,9 @@
       align-items: center;
       flex-direction: column;
       border: 1px solid #ddd;
-      border-radius: 7px;
+      border-radius: 10px;
       height: 357px;
-      width: 325px;
+      width: 300px;
       text-align: start;
       p {
         padding: 0 10px;
@@ -38,6 +48,24 @@
         height: 160px;
         width: 160px;
         object-fit: cover;
+        border-radius: 5px;
       }
     }
+}
+
+@media only screen and (width <= 767px) {
+  .blog {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    grid-template-columns: repeat(1, 1fr);
+    height: auto;
+    width: 80%;
+
+    .cardBlog {
+      height: 300px;
+      width: 300px;
+    }
   }
+}
