@@ -1,0 +1,12 @@
+#hReviews{
+    margin-top: 200px;
+}
+
+.review{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    iframe{
+      margin: 10px;
+    }
+  }

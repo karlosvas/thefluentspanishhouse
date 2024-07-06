@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { signInWithGoogle, registerWithGoogle, signOutUser, isLogged, localRegister, localSingin } from '../scripts/oauth2-0'
-import '../styles/ModalAuth.css'
+import '../styles/modalAuth.css'
 import { Toaster } from 'react-hot-toast'
 
 function Auth() {
@@ -48,7 +48,7 @@ function Auth() {
             </button>
             {showModal &&
             <>
-                    <div className="modalBackdrop" onClick={() => toggleModal('')}></div>
+                <div className="modalBackdrop" onClick={() => toggleModal('')}></div>
                 <div className="modalAuth">
                     <div className="modal-content">
                     <span className="closeAuth" onClick={() => toggleModal('')}>&times;</span>

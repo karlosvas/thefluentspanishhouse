@@ -1,0 +1,43 @@
+#hBlog{
+  margin-top: 100px;
+}
+
+.blog {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    height: auto;
+    width: 80%;
+
+    .cardBlog {
+      background-color: var(--secondary-white);
+      color: var(--primary-black);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      border: 1px solid #ddd;
+      border-radius: 7px;
+      height: 357px;
+      width: 325px;
+      text-align: start;
+      p {
+        padding: 0 10px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        white-space: normal;
+        text-wrap: pretty;
+      }
+      img {
+        height: 160px;
+        width: 160px;
+        object-fit: cover;
+      }
+    }
+  }

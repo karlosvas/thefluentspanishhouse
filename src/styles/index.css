@@ -6,6 +6,7 @@
   --primary-blue: #2b65e2;
   --secondary-blue: #C1F6FE;
   --primary-white: rgb(240, 250, 255);
+  --secondary-white: #fff;
   --primary-black: #242424;
   --primary-yellow: #ffbd59;
 
@@ -15,6 +16,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -27,6 +29,10 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+h2{
+  scroll-margin-top: 90px;
 }
 
 button {
@@ -44,6 +50,9 @@ button {
 a {
   font-weight: 500;
   text-decoration: inherit;
+}
+a:hover {
+  color: var(--primary-blue);
 }
 li{
   transition: color 0.25s;
@@ -66,37 +75,36 @@ li:hover {
 html.light {
   background-color: var(--primary-white);
   color: var(--primary-black);
+  transition: background-color 0.3s ease, color 0.1s ease;
   header {
     background-color: var(--primary-white);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.1s ease;
+    nav > ul > li a {
+      color: var(--primary-black);
+    }
     #modalLanguajes {
       a {
         color: var(--primary-white);
-        transition: all 0.3s ease;
-      }
-      a:hover {
-        color: var(--primary-blue);
       }
       background-color: var(--primary-black);
     }
   }
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Estilos para tema oscuro */
 html.dark {
   background-color: var(--primary-black);
   color: var(--primary-white);
+  transition: background-color 0.3s ease, color 0.1s ease;
   header {
-    background-color:var(--primary-black);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--primary-black);
+    transition: background-color 0.3s ease, color 0.1s ease;
+    nav > ul > li a {
+      color: var(--primary-white);
+    }
     #modalLanguajes {
       a {
         color: var(--primary-black);
-        transition: all 0.3s ease;
-      }
-      a:hover {
-        color: var(--primary-blue);
       }
       background-color: var(--primary-white);
     }
@@ -106,7 +114,6 @@ html.dark {
     }
     .googleAuth{
       border: 2px solid var(--primary-white);
+    }
   }
-  }
-  transition: background-color 0.3s ease, color 0.3s ease;
 }

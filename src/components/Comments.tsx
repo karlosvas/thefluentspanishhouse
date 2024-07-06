@@ -1,4 +1,4 @@
-
+import '../styles/comments.css'
 function Coments() {
     return (
       <>
