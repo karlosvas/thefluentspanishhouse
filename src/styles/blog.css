@@ -1,13 +1,6 @@
-#hBlog{
-  color: var(--primary-blue);
-  margin-top: 100px;
-  margin-left: 120px;
-  animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 20% cover 30%;
-}
-
-.blog {
+#blog {
+    margin: auto;
+    margin-top: 100px;
     display: grid;
     justify-content: center;
     align-items: center;
@@ -21,7 +14,7 @@
       animation: reveal linear both;
       animation-timeline: view();
       animation-range: entry 20% cover 30%;
-
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       background-color: var(--secondary-white);
       color: var(--primary-black);
       display: flex;
@@ -30,10 +23,17 @@
       flex-direction: column;
       border: 1px solid #ddd;
       border-radius: 10px;
-      height: 357px;
+      height: 330px;
       width: 300px;
       text-align: start;
-      p {
+      padding-top: 10px;
+      a{
+        display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      }
+      a > p {
         padding: 0 10px;
         overflow: hidden;
         display: -webkit-box;
@@ -44,7 +44,7 @@
         white-space: normal;
         text-wrap: pretty;
       }
-      img {
+      a > img {
         height: 160px;
         width: 160px;
         object-fit: cover;
@@ -53,8 +53,9 @@
     }
 }
 
+
 @media only screen and (width <= 767px) {
-  .blog {
+  #blog {
     display: grid;
     justify-content: center;
     align-items: center;
@@ -62,10 +63,10 @@
     grid-template-columns: repeat(1, 1fr);
     height: auto;
     width: 80%;
-
+    margin-top: 100px;
     .cardBlog {
       height: 300px;
-      width: 300px;
+      width: auto;
     }
   }
 }

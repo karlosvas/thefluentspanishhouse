@@ -1,37 +1,53 @@
-import Coments from '../components/Comments';
-import CardBlog from '../components/CardBlog'
-import ContactForm from '../components/ContactForm'
-import { useTranslation } from 'react-i18next';
-import '../styles/main.css'
+import Coments from "../components/Comments";
+import CardBlog from "../components/CardBlog";
+import ContactForm from "../components/ContactForm";
+import { type Translations } from "../../types/types";
+import "../styles/main.css";
 
-function Main() {
-  const [t] = useTranslation("global");
-  const navInfo: string[] = t('navInfo', { returnObjects: true });
-    return (
-      <>
-        <main>
-          <img className='banner' src="/img/banner.png" alt="Banner with inspiring images" />
-          <div id='mainTitle'>
-            <h1 id='title'>{t("title")}</h1>
-            <p>
-              {t("descriptionTitle")}
-            </p>
-          </div>
+const Main: React.FC<Translations> = ({ translation }) => {
+  return (
+    <>
+      {window.innerWidth >= 1024 ? (
+        <img
+          id="banner"
+          src="/img/banner-xl.png"
+          alt="Banner with inspiring images"
+        />
+      ) : window.innerWidth >= 766 ? (
+        <img
+          id="banner"
+          src="/img/banner-md.png"
+          alt="Banner with inspiring images"
+        />
+      ) : (
+        <img
+          id="banner"
+          src="/img/banner-sm.png"
+          alt="Banner with inspiring images"
+        />
+      )}
+      <main>
+        <div id="mainTitle">
+          <h1 id="title">{translation("title")}</h1>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: translation("descriptionTitle").split(".").join(".<br>"),
+            }}
+          />
+        </div>
 
-          <h2 id="hBlog">{navInfo[0]}</h2>
-          <div className="blog">
-              <CardBlog/>
-          </div>
-          
-          <h2 id="hReviews">{navInfo[1]}</h2>
-          <div className="review">
-              <Coments/>
-          </div>
+        <div id="blog">
+          <CardBlog translation={translation} />
+        </div>
 
-          <ContactForm/>
-        </ main>
-      </>
-    )
-  }
-  
-  export default Main
+        <div id="reviews">
+          <Coments />
+        </div>
+
+        <ContactForm translation={translation} />
+      </main>
+    </>
+  );
+};
+
+export default Main;

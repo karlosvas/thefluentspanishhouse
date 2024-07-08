@@ -1,26 +1,25 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import '../styles/contactForm.css';
+import { useState } from "react";
+import { type Translations } from "../../types/types";
+import Button from "./Buuton";
+import "../styles/contactForm.css";
 
-const ContactForm: React.FC = () => {
-  const [fullName, setFullName] = useState('');
-  const [deliveryNote, setDeliveryNote] = useState('');
+const ContactForm: React.FC<Translations> = ({ translation }) => {
+  const [fullName, setFullName] = useState("");
+  const [deliveryNote, setDeliveryNote] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log({ fullName, deliveryNote });
   };
 
-  const [t] = useTranslation("global");
-  const contact: string[] = t('contact', { returnObjects: true });
-
+  const contact: string[] = translation("contact", { returnObjects: true });
 
   return (
-    <form id="hForm" className="contactForm" onSubmit={handleSubmit}>
+    <form id="contactForm" onSubmit={handleSubmit}>
       <h2>{contact[0]}</h2>
       <p>{contact[1]}</p>
       <label>
-      {contact[2]}
+        {contact[2]}
         <input
           type="text"
           value={fullName}
@@ -38,7 +37,7 @@ const ContactForm: React.FC = () => {
           required
         ></textarea>
       </label>
-      <button type="submit">{contact[4]}</button>
+      <Button type="submit">{contact[4]}</Button>
     </form>
   );
 };

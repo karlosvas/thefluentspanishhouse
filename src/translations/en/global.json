@@ -1,7 +1,9 @@
 {
     "title": "The Fluent Spanish House",
-    "descriptionTitle": "I have known firsthand the Spanish learners' struggles to get fluent in my language. Memorizing rules and vocabulary aren't the keys to fluency. You need to build a strong grammar foundation. My courses provide guidance and solutions. Take a step further!",
-    "navInfo": ["Blog", "Review", "Contact"],
+    "descriptionTitle": "\"I have known firsthand the Spanish learners' struggles to get fluent in my language. Memorizing rules and vocabulary aren't the keys to fluency. You need to build a strong grammar foundation. My courses provide guidance and solutions, take a step further!\"",
+    "navInfo": ["Blog", "Reviews", "Contact"],
+    "hamburger": ["Theme", "Language"],
+    "buttons": ["Sing In", "Logout", "Register","Submit"],
     "cardsBlog": [
       {
         "title": "Thirst For Language Knowledge",

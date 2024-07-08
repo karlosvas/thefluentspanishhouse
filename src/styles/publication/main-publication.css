@@ -1,0 +1,23 @@
+.publication{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 30%;
+    h2{
+        align-self: center;
+        margin: 0;
+    }
+    strong{
+        align-self: center;
+        text-align: center;
+    }
+}
+p{
+    margin: 20px;
+    width: 50%;
+    strong{
+        font-size: 20px;
+    }
+}
+

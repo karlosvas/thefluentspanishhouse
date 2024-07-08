@@ -1,20 +1,15 @@
-#hReviews{
+main > #reviews{
     margin-top: 200px;
-    color: var(--primary-blue);
-    animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 20% cover 30%;
-}
-
-
-main > .review{
     animation: reveal linear both;
     animation-timeline: view();
     animation-range: entry 20% cover 30%;
     display: flex;
     justify-content: center;
     align-items: center;
+    scroll-margin-top: 300px;
+    margin-right: 50px;
     iframe{
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       margin: 10px;
       z-index: -10;
       border: none;
@@ -27,15 +22,20 @@ main > .review{
     }
   }
 
-@media only screen and (width <= 767px) {
-  .review{
-    flex-direction: column;
-    width: 100%;
-    height: 500px;
-    iframe{
-      margin: 0;
-      transform: scale(0.7);
-      transform-origin: center; 
+  @media only screen and (width <= 767px) {
+    main > #reviews{
+      flex-direction: column;
+      width: 100%;
+      height: auto;
+      margin-top: 100px;
+      margin-right: 0;
+      scroll-margin-top: 100px;
+      iframe{
+        transform: scale(0.7);
+        transform-origin: center; 
+      }
+      iframe:nth-child(2){
+        scale: 1;
+      }
     }
   }
-}

@@ -1,26 +1,32 @@
-import { useTranslation } from 'react-i18next';
-import '../styles/blog.css'
+import { Link } from "react-router-dom";
+import { type Translations, CardType } from "../../types/types";
+import "../styles/blog.css";
 
-type CardType = {
-  title: string;
-  content: string;
+const CardBlog: React.FC<Translations> = ({ translation }) => {
+  const cardsBlog: CardType[] = translation("cardsBlog", {
+    returnObjects: true,
+  });
+
+  return (
+    <>
+      {cardsBlog.map((publication, index) => (
+        <div className="cardBlog" key={index}>
+          <Link
+            to={`/publication/${index}`}
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              fontWeight: "normal",
+            }}
+          >
+            <img src={`/img/${index}.png`} alt="" />
+            <h3>{publication.title}</h3>
+            <p>{publication.content}</p>
+          </Link>
+        </div>
+      ))}
+    </>
+  );
 };
 
-function CardBlog() {
-  const [t] = useTranslation("global");
-  const cardsBlog: CardType[] = t('cardsBlog', { returnObjects: true });
-
-      return (
-        <>
-          {cardsBlog.map((item, index) => (
-            <div className="cardBlog" key={index}>
-              <img src={`/img/${index}.png`} alt="" />
-              <h3>{item.title}</h3>
-              <p>{item.content}</p>
-            </div>
-          ))} 
-        </>
-      )
-    }
-    
-export default CardBlog
+export default CardBlog;

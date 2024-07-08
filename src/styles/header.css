@@ -9,6 +9,7 @@ header{
     a:hover {
       color: var(--primary-blue);
     }
+
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -51,7 +52,6 @@ header{
         background-color: var(--primary-blue);
         color: var(--primary-white);
       }
-      
       #singIn{
         background-color: var(--secondary-blue);
         color: var(--primary-black);
@@ -95,7 +95,7 @@ header{
           }
         }
         
-        #logoOrHamburger{
+        #hamburger{
           position: absolute;
           left: 20px;
           top: 15px;
@@ -105,7 +105,7 @@ header{
         }
       
       .menuLeft{
-        margin-top: 10wpx;
+        margin-top: 10px;
         padding-top: 15px;
         user-select: none;
         display: flex;
@@ -113,12 +113,23 @@ header{
         flex-direction: column;
         position: absolute;
         left: -30px;
-        border-radius: 5px;
         color: var(--primary-white);
         background-color: var(--primary-black);
         height: 100vh;
         width: 70vw;
         z-index: 50;
+
+        section{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 5px 70px;
+          border-top: 2px solid #ddd;
+          font-weight: 500;
+        }
+        section:last-child{
+          border-bottom: 2px solid #ddd;
+        }
       }
       
       .svgIcon{
@@ -132,8 +143,8 @@ header{
       }
       
       #modalLanguajes {
-        top: 45px;
-        left: 180px;
+        top: 200px;
+        left: 130px;
         width: fit-content;
         border: 1px solid gray;
       }

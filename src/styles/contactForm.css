@@ -1,4 +1,4 @@
-.contactForm {
+#contactForm {
   animation: reveal linear both;
   animation-timeline: view();
   animation-range: entry 20% cover 30%;
@@ -10,9 +10,11 @@
   padding: 16px;
   border-radius: 8px;
   max-width: 300px;
-  margin: 200px auto 200px auto;
+  margin: 200px auto;
   background-color: var(--secondary-white);
   color: var(--primary-black);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  scroll-margin-top: 100px;
   
   h2 {
       align-self: center;
@@ -58,10 +60,12 @@
     background-color: var(--secondary-blue);
     color: var(--primary-black);
   }
+
 }
 
 @media only screen and (width <= 767px) {
-  .contactForm {
+  #contactForm {
+    scroll-margin-top: 0;
     margin: 200px auto 100px auto;
     background-color: var(--secondary-white);
     color: var(--primary-black);
@@ -92,19 +96,6 @@
     }
     textarea{
       height: 70px;
-    }
-    
-    button {
-      background-color: #000;
-      color: #fff;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    
-    button:hover {
-      background-color: #444;
     }
   }
 }
