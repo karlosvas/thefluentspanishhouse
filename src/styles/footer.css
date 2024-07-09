@@ -8,7 +8,7 @@ footer{
   justify-content: center;
   align-items: start;
   flex-direction: column;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid transparent;
   a{
     color: var(--primary-white);
   }
@@ -19,3 +19,7 @@ footer{
     width: 25px;
   }
 }
+
+/* @media only screen and (width <= 746) {
+
+} */

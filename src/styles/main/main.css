@@ -35,8 +35,7 @@ main {
     margin-top: 100px;
     text-align: center;
     #title {
-      text-shadow: 5px 2px 5px rgba(0, 0, 0, 0.1);
-      /* text-shadow: 0 4px 8px rgb(66, 176, 255); */
+      text-shadow: 0 2px 2px var(--primary-blue);
       color: var(--primary-blue);
     }
     p{

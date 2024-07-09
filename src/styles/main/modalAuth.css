@@ -62,11 +62,11 @@
       
 
     .googleAuth{
+        margin: auto;
         display: flex;
         justify-content: center;
         align-items: center;
         width: 220px;
-        margin: 0 0 0 20px;
         border: 2px solid var(--primary-black);
         #svgGoogle{
             margin-left: 10px;
@@ -90,6 +90,9 @@
         width: fit-content;
         padding: 20px;
         padding-top: 0;
+        label{
+            text-align: start;
+        }
     }
 }
 

@@ -11,10 +11,11 @@
   border-radius: 8px;
   max-width: 300px;
   margin: 200px auto;
-  background-color: var(--secondary-white);
+  background-color:var(--secondary-white);
   color: var(--primary-black);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   scroll-margin-top: 100px;
+  padding: 30px;
   
   h2 {
       align-self: center;
@@ -27,7 +28,8 @@
   animation-range: entry 20% cover 30%;
       align-self: flex-start;
       text-wrap: pretty;
-      margin: 0 0 16px 0;
+      margin: 16px;
+      width: 100%;
   }
   
   label {

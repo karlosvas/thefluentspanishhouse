@@ -17,7 +17,6 @@ function Footer() {
           </svg>
           mar411geca@gmail
         </a>
-
         <a href="tel:+34617286125">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +34,6 @@ function Footer() {
           </svg>
           +34617286125
         </a>
-
         <a href="https://www.facebook.com/share/pvGozQ6PhZwUWdma/">
           <svg
             href=""

@@ -1,7 +1,7 @@
 import Coments from "../components/Comments";
 import CardBlog from "../components/CardBlog";
 import ContactForm from "../components/ContactForm";
-import Prices from "../components/Pracing";
+import Prices from "../components/Prices";
 import AboutMe from "../components/AboutMe";
 import { type Translations } from "../../types/types";
 import "../styles/main/main.css";

@@ -21,7 +21,7 @@ header{
     #logo{
       height: 45px;
       width: 50px;
-      border-radius: 5px;
+      border-radius: 3px;
     }
   
     nav{
@@ -60,7 +60,11 @@ header{
       #singIn{
         background-color: var(--secondary-blue);
         color: var(--primary-black);
+        transition: all 0.3s;
         border: 2px solid transparent;
+      }
+      #singIn:hover{
+        background-color: #87d9ffc0;
       }
     }
     .navIcons{

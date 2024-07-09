@@ -1,3 +1,7 @@
+#hreviews{
+  margin: 0;
+  margin-top: 200px;
+}
 main > #reviews{
     animation: reveal linear both;
     animation-timeline: view();
@@ -7,6 +11,7 @@ main > #reviews{
     align-items: center;
     scroll-margin-top: 300px;
     margin-right: 50px;
+
     iframe{
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       margin: 10px;
@@ -26,7 +31,6 @@ main > #reviews{
       flex-direction: column;
       width: 100%;
       height: auto;
-      margin-top: 100px;
       margin-right: 20px;
       scroll-margin-top: 100px;
       iframe{

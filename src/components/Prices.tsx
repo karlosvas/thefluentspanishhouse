@@ -1,5 +1,3 @@
-import Button from "./Buuton";
-
 import "../styles/main/prices.css";
 const Prices = () => {
   return (
@@ -15,9 +13,11 @@ const Prices = () => {
             <li>Acceso a recursos en línea</li>
             <li>Clases grupales</li>
             <li>1 hora semanal</li>
-            <li>Soporte por correo</li>
+            <li className="notPrivileges">Soporte por correo y chat</li>
+            <li className="notPrivileges">Clases privadas</li>
+            <li className="notPrivileges">Acceso a contenido exclusivo</li>
+            <li className="notPrivileges">Soporte 24/7</li>
           </ul>
-          <Button type="submit">Inscribirse</Button>
         </div>
         <div className="cardPracing">
           <h3>Clases Intermedias</h3>
@@ -30,8 +30,9 @@ const Prices = () => {
             <li>Clases grupales y privadas</li>
             <li>2 horas semanales</li>
             <li>Soporte por correo y chat</li>
+            <li className="notPrivileges">Acceso a contenido exclusivo</li>
+            <li className="notPrivileges">Soporte 24/7</li>
           </ul>
-          <button>Inscribirse</button>
         </div>
         <div className="cardPracing">
           <h3>Clases Avanzadas</h3>
@@ -40,12 +41,13 @@ const Prices = () => {
             <small>/ mes</small>
           </div>
           <ul>
-            <li>Acceso a todos los recursos</li>
-            <li>Clases privadas</li>
+            <li>Acceso a contenido exclusivo</li>
+            <li>Clases grupales y privadas</li>
             <li>4 horas semanales</li>
+            <li>Soporte por correo y chat</li>
+            <li>Acceso a contenido exclusivo</li>
             <li>Soporte 24/7</li>
           </ul>
-          <button>Inscribirse</button>
         </div>
       </div>
     </>

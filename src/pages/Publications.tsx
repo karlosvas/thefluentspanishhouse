@@ -5,6 +5,7 @@ import {
   type RouteParams,
 } from "../../types/types";
 import Header from "../layouts/Header";
+import Footer from "../layouts/Footer";
 import "../styles/publication/main-publication.css";
 
 export const Publications: React.FC<Translations> = ({ translation }) => {
@@ -55,6 +56,7 @@ export const Publications: React.FC<Translations> = ({ translation }) => {
           consequatur quasi? Aspernatur cupiditate placeat voluptatem!
         </p>
       </main>
+      <Footer />
     </>
   );
 };

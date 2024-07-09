@@ -6,35 +6,47 @@
     animation-timeline: view();
     animation-range: entry 20% cover 30%;
     color: var(--primary-black);
-}
-.cardPracing{
-    margin: 0 50px;
-    background-color:rgb(228, 239, 255);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-radius: 10px;
-    padding-bottom: 10px;
-    ul{
-        align-self: flex-start;
-        margin-left: 40px;
-    }
-    .price{
+    .cardPracing{
+        margin: 0 50px;
+        background-color: var(--secondary-white);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 300px;
         display: flex;
-        justify-content: center;
-        align-items: end;
-        small{
-            margin-bottom: 35px;
+        justify-content: start;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 10px;
+        padding-bottom: 20px;
+        height: 400px;
+        ul{
+            align-self: flex-start;
+            list-style: none;
         }
-    }
-    button{
-        border: 2px solid transparent;
-    }
-    button:hover{
-        border: 2px solid var(--primary-blue);
+        li::before {
+            /* content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><circle cx="5" cy="5" r="5" fill="black" /></svg>');content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2346d246" className=""><path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" /></svg>'); */
+            content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2346d246" stroke="white" class=""><path fillRule="evenodd" d="M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08Zm3.094 8.016a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" /></svg>');
+            display: inline-block;
+            width: 1.2em;
+            height: 10px;
+            margin-right: 8px;
+        }
+        .notPrivileges::before{
+            content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff3333" class="size-6"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" /></svg>');
+        }
+        .price{
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            small{
+                margin-bottom: 35px;
+            }
+        }
+        button{
+            border: 2px solid transparent;
+        }
+        button:hover{
+            border: 2px solid var(--primary-blue);
+        }
     }
 }
 
@@ -42,13 +54,13 @@
 @media only screen and (width <= 767px) {
     .divPracing{
         flex-direction: column;
+        .cardPracing{
+            margin-top: 40px;
+        }
+        .cardPracing:first-child{
+            margin-top: 0;
+        }
     }
-    .cardPracing{
-        margin: 0 auto;
-        margin-top: 50px;
-    }
-    .cardPracing:first-child{
-        margin-top: 0;
-    }
+    
 
 }
