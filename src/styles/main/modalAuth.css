@@ -15,7 +15,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    z-index: 9999;
+    .modal-content > h2{
+        margin-top: 0;
+    }
     .login-form{
         display: flex;
         justify-content: center;

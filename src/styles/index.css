@@ -31,13 +31,13 @@ h1 {
   line-height: 1.1;
 }
 
-#banner,#contactForm, #blog {
-  scroll-margin-top: 100px;
+h2{
+  margin-top: 200px;
 }
 
 button {
   border-radius: 8px;
-  border: 2px solid transparent;
+  border: none;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
@@ -134,4 +134,31 @@ html.dark {
       color: var(--primary-white);
     }
   }
+}
+
+@media (width <= 768px) {
+  #banner,#contactForm, #haboutme {
+    scroll-margin-top: 100px;
+  }
+  #blog{
+    scroll-margin-top: 500px;
+  }
+  #hprices{
+    scroll-margin-top: 100px;
+  }
+}
+
+@media (width >= 1200px) {
+  #banner,#contactForm, #haboutme {
+    scroll-margin-top: 100px;
+  }
+  
+  #blog{
+    scroll-margin-top: 400px;
+  }
+  
+  #hprices{
+    scroll-margin-top: 250px;
+  }
+
 }

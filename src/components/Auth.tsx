@@ -10,7 +10,7 @@ import {
 import { Toaster } from "react-hot-toast";
 import { toggleModal } from "../scripts/modal";
 import Button from "./Buuton";
-import "../styles/modalAuth.css";
+import "../styles/main/modalAuth.css";
 import { type Translations } from "../../types/types";
 
 const Auth: React.FC<Translations> = ({ translation }) => {

@@ -22,29 +22,36 @@
   }
 
   p   {
+    animation: reveal linear both;
+  animation-timeline: view();
+  animation-range: entry 20% cover 30%;
       align-self: flex-start;
+      text-wrap: pretty;
+      margin: 0 0 16px 0;
   }
   
   label {
-    display: block;
-    margin-bottom: 8px;
+    width: 100%;
+    margin: 0 0 8px 0;
   }
   
   input,
   textarea {
     resize: none;
-    width: 90%;
+    width: 100%;
     padding: 8px;
     margin-top: 4px;
     margin-bottom: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box; 
   }
   textarea{
     height: 70px;
   }
   
   button {
+   
     background-color: var(--primary-blue);
     color: var(--primary-white);
     transition: all 0.3s;

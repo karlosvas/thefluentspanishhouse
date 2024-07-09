@@ -1,10 +1,14 @@
 import Coments from "../components/Comments";
 import CardBlog from "../components/CardBlog";
 import ContactForm from "../components/ContactForm";
+import Prices from "../components/Pracing";
+import AboutMe from "../components/AboutMe";
 import { type Translations } from "../../types/types";
-import "../styles/main.css";
+import "../styles/main/main.css";
 
 const Main: React.FC<Translations> = ({ translation }) => {
+  const navInfo: string[] = translation("navInfo", { returnObjects: true });
+
   return (
     <>
       {window.innerWidth >= 1024 ? (
@@ -36,14 +40,16 @@ const Main: React.FC<Translations> = ({ translation }) => {
           />
         </div>
 
-        <div id="blog">
-          <CardBlog translation={translation} />
-        </div>
+        <CardBlog translation={translation} />
 
-        <div id="reviews">
-          <Coments />
-        </div>
+        <h2 id="hreviews">{navInfo[1]}</h2>
+        <Coments />
 
+        <h2 id="haboutme">{navInfo[2]}</h2>
+        <AboutMe />
+
+        <h2 id="hprices">{navInfo[3]}</h2>
+        <Prices />
         <ContactForm translation={translation} />
       </main>
     </>

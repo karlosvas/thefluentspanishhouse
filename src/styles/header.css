@@ -47,63 +47,68 @@ header{
       display: flex;
       justify-content: center;
       align-items: center;
-      
       #register{
         background-color: var(--primary-blue);
         color: var(--primary-white);
+        border: 2px solid transparent;
+        transition: all 0.3s;
+      }
+      #register:hover{
+        background-color: var(--secondary-blue);
+        color: var(--primary-black);
       }
       #singIn{
         background-color: var(--secondary-blue);
         color: var(--primary-black);
+        border: 2px solid transparent;
       }
     }
-    
     .navIcons{
       display: flex;
       justify-content: center;
       align-items: center;
     }
-    
-    #modalLanguajes {
-      border-radius: 10px;
-      position: absolute;
-      top: 60px;
-      right: 600px;
-      padding: 10px;
-      background-color: var(--primary-black);
-      a:hover {
-        color: var(--primary-blue);
+    .divLang {
+      padding-top: 8px;
+      position: relative;
+      cursor: pointer;
+      #modalLanguajes {
+        border-radius: 10px;
+        position: absolute;
+        top: 100%;
+        left: -20px;
+        padding: 10px;
+        z-index: 100; 
+        a:hover {
+          color: var(--primary-blue);
+        }
       }
     }
-  }
+    }
 }
-
 /* Moviles */
 @media only screen and (width <= 767px) {
-    header{
+  header{
+    height: 50px;
+    .header{
+      justify-content: center;
       height: 50px;
-      
-      .header{
-        justify-content: center;
-        height: 50px;
 
-        nav{
-          margin-left: 0;
-          ul > li {
-              font-size: 15px;
-            padding: 0 10px;
-          }
+      nav{
+        margin-left: 0;
+        ul > li {
+            font-size: 13px;
+            padding: 0 5px;
         }
-        
-        #hamburger{
-          position: absolute;
-          left: 20px;
-          top: 15px;
-          height: 20px;
-          width: 20px;
-          margin-left: 10px;
-        }
-      
+      }
+      #hamburger{
+        position: absolute;
+        left: 20px;
+        top: 15px;
+        height: 20px;
+        width: 20px;
+        margin-left: 10px;
+      }
       .menuLeft{
         margin-top: 10px;
         padding-top: 15px;
@@ -118,7 +123,6 @@ header{
         height: 100vh;
         width: 70vw;
         z-index: 50;
-
         section{
           display: flex;
           justify-content: space-between;
@@ -131,24 +135,17 @@ header{
           border-bottom: 2px solid #ddd;
         }
       }
-      
       .svgIcon{
         display: flex;
         justify-content: end;
         align-items: center;
       }
-      
       .auth{
         margin: 15px 0;
       }
-      
       #modalLanguajes {
-        top: 200px;
-        left: 130px;
-        width: fit-content;
-        border: 1px solid gray;
+        margin-top: 5px;
       }
-      
       .modalBackdrop{
         top: 50px;
       }
@@ -162,10 +159,4 @@ header{
 
 /* Portatiles */
 @media (width <= 1040px) {
-  header > .header{
-    #modalLanguajes {
-      background-color: red;
-      right: 243px;
-    }
-  }
 }

@@ -34,7 +34,8 @@
       flex-direction: column;
       }
       a > p {
-        padding: 0 10px;
+        margin: 0;
+        width: 90%;
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: 3;
@@ -67,6 +68,11 @@
     .cardBlog {
       height: 300px;
       width: auto;
+      a > h3 {
+        padding: 0;
+        margin: 0;
+        padding-top: 10px;
+      }
     }
   }
 }

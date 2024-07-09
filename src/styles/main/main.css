@@ -8,6 +8,7 @@
 
 #banner{
   width: 100%;
+  box-shadow: 5px 5px 5px var(--secondary-blue);
 }
 
 main {
@@ -21,6 +22,9 @@ main {
   h2{
     align-self: self-start;
     margin-left: 100px;
+    animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 30%;
   }
 
   #mainTitle {
@@ -31,7 +35,7 @@ main {
     margin-top: 100px;
     text-align: center;
     #title {
-      text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+      text-shadow: 5px 2px 5px rgba(0, 0, 0, 0.1);
       /* text-shadow: 0 4px 8px rgb(66, 176, 255); */
       color: var(--primary-blue);
     }

@@ -21,3 +21,18 @@ p{
     }
 }
 
+@media only screen and (width <= 767px) {
+    .publication{
+       width: 90%;
+    }
+    img{
+        width: 80%;
+    }
+    p{
+        margin: 20px;
+        width: 80%;
+        strong{
+            font-size: 20px;
+        }
+    }
+  }
