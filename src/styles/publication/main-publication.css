@@ -1,39 +1,41 @@
-
-.publication{
+.publicationMain {
+  .publication {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 30%;
-    h2{
-        align-self: center;
-        margin: 0;
+    h2 {
+      align-self: center;
+      margin: 0;
     }
-    strong{
-        align-self: center;
-        text-align: center;
+    strong {
+      align-self: center;
+      text-align: center;
     }
-}
-p{
+  }
+  p {
     margin: 20px;
+    margin-bottom: 200px;
     width: 50%;
-    strong{
-        font-size: 20px;
+    strong {
+      font-size: 20px;
     }
+  }
 }
 
 @media only screen and (width <= 767px) {
-    .publication{
-       width: 90%;
-    }
-    img{
-        width: 80%;
-    }
-    p{
-        margin: 20px;
-        width: 80%;
-        strong{
-            font-size: 20px;
-        }
+  .publication {
+    width: 90%;
+  }
+  img {
+    width: 80%;
+  }
+  p {
+    margin: 20px;
+    width: 80%;
+    strong {
+      font-size: 20px;
     }
   }
+}

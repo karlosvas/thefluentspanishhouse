@@ -4,7 +4,7 @@ import Auth from "../components/Auth";
 import Languajes from "../components/Languajes";
 import Theme from "../components/Theme";
 import { type Translations } from "../../types/types";
-import "../styles/header.css";
+import "../styles/layouts/header.css";
 import { Route, Routes } from "react-router-dom";
 
 type NavType = {

@@ -3,10 +3,11 @@ import CardBlog from "../components/CardBlog";
 import ContactForm from "../components/ContactForm";
 import Prices from "../components/Prices";
 import AboutMe from "../components/AboutMe";
+import Carrousel from "../components/Carrousel";
 import { type Translations } from "../../types/types";
 import "../styles/main/main.css";
 
-const Main: React.FC<Translations> = ({ translation }) => {
+const ContentMain: React.FC<Translations> = ({ translation }) => {
   const navInfo: string[] = translation("navInfo", { returnObjects: true });
 
   return (
@@ -40,7 +41,11 @@ const Main: React.FC<Translations> = ({ translation }) => {
           />
         </div>
 
-        <CardBlog translation={translation} />
+        {window.innerWidth >= 764 ? (
+          <CardBlog translation={translation} />
+        ) : (
+          <Carrousel translation={translation} />
+        )}
 
         <h2 id="hreviews">{navInfo[1]}</h2>
         <Coments />
@@ -56,4 +61,4 @@ const Main: React.FC<Translations> = ({ translation }) => {
   );
 };
 
-export default Main;
+export default ContentMain;

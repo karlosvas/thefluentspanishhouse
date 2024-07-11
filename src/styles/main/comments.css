@@ -1,44 +1,45 @@
-#hreviews{
-  margin: 0;
+#hreviews {
+  margin-left: 20px;
   margin-top: 200px;
 }
-main > #reviews{
-    animation: reveal linear both;
-    animation-timeline: view();
-    animation-range: entry 20% cover 30%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    scroll-margin-top: 300px;
-    margin-right: 50px;
+main > #reviews {
+  animation: reveal linear both;
+  animation-timeline: view();
+  animation-range: entry 20% cover 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 50px;
 
-    iframe{
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      margin: 10px;
-      z-index: -10;
-      border: none;
-      overflow: hidden; 
-      margin-left: 30px;
+  iframe {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    z-index: -10;
+    border: none;
+    overflow: hidden;
+    margin-left: 30px;
+  }
+  iframe:nth-child(2) {
+    scale: 1.1;
+    height: 200px;
+  }
+}
+
+@media only screen and (width <= 767px) {
+  main > #reviews {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    margin-right: 20px;
+    iframe {
+      transform: scale(0.7);
+      transform-origin: center;
     }
-    iframe:nth-child(2){
-      scale: 1.1;
-      height: 200px;
+    iframe:nth-child(2) {
+      scale: 1;
     }
   }
-
-  @media only screen and (width <= 767px) {
-    main > #reviews{
-      flex-direction: column;
-      width: 100%;
-      height: auto;
-      margin-right: 20px;
-      scroll-margin-top: 100px;
-      iframe{
-        transform: scale(0.7);
-        transform-origin: center; 
-      }
-      iframe:nth-child(2){
-        scale: 1;
-      }
-    }
+  #hreviews {
+    margin-left: 20px;
   }
+}

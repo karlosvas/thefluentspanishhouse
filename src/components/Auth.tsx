@@ -67,7 +67,7 @@ const Auth: React.FC<Translations> = ({ translation }) => {
               onClick={() => toogleFormType("")}
             ></div>
             <div className="modalAuth">
-              <div className="modal-content">
+              <div className="modalContent">
                 <span className="closeAuth" onClick={() => toogleFormType("")}>
                   &times;
                 </span>

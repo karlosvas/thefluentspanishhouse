@@ -1,5 +1,5 @@
 import Header from "../layouts/Header";
-import Main from "../layouts/Main";
+import Main from "../layouts/ContentMain";
 import Footer from "../layouts/Footer";
 import { useTranslation } from "react-i18next";
 import { Route, Routes } from "react-router-dom";

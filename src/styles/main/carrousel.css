@@ -1,0 +1,50 @@
+#blogCarrusel{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    grid-template-columns: repeat(1, 1fr);
+    height: auto;
+    width: 80%;
+    margin-top: 100px;
+}
+
+#carouselExampleIndicators{
+    .carousel-inner{
+        background-color: var(--secondary-white);
+        color: var(--primary-black);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        height: 500px;
+        animation: reveal linear both;
+        animation-timeline: view();
+        animation-range: entry 20% cover 30%;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        a {
+            text-decoration: none;
+            color: inherit; 
+            cursor: pointer; 
+            h3 {
+                padding: 0;
+                padding-top: 10px;
+                text-align: center;
+            }
+            p {
+                width: 90%;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                line-clamp: 3;
+                -webkit-box-orient: vertical;
+                text-overflow: ellipsis;
+                white-space: normal;
+                text-wrap: pretty;
+            }
+        }
+        .carousel-item > img{
+            object-fit: cover;
+            border-radius: 5px;
+            height: 300px;
+        }
+    }
+}

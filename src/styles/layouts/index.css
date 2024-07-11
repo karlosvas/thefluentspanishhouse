@@ -162,10 +162,13 @@ html.dark {
     scroll-margin-top: 100px;
   }
   #blog{
-    scroll-margin-top: 500px;
+    scroll-margin-top: 350px;
   }
   #hprices{
     scroll-margin-top: 100px;
+  }
+  #reviews{
+    scroll-margin-top: 200px;
   }
 }
 
@@ -184,5 +187,9 @@ html.dark {
 
   #contactForm{
     scroll-margin-top: 200px;
+  }
+
+  #reviews{
+    scroll-margin-top: 300px;
   }
 }

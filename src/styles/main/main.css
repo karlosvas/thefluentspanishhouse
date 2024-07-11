@@ -1,4 +1,4 @@
-.bgBanner{
+.bgBanner {
   position: absolute;
   background-color: var(--primary-yellow);
   width: 100%;
@@ -6,7 +6,7 @@
   z-index: -10;
 }
 
-#banner{
+#banner {
   width: 100%;
   box-shadow: 5px 5px 5px var(--secondary-blue);
 }
@@ -19,12 +19,12 @@ main {
   align-items: center;
   flex-direction: column;
 
-  h2{
+  h2 {
     align-self: self-start;
     margin-left: 100px;
     animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 20% cover 30%;
+    animation-timeline: view();
+    animation-range: entry 20% cover 30%;
   }
 
   #mainTitle {
@@ -38,7 +38,7 @@ main {
       text-shadow: 0 2px 2px var(--primary-blue);
       color: var(--primary-blue);
     }
-    p{
+    p {
       width: 100%;
       text-align: center;
       margin: auto;
@@ -46,19 +46,22 @@ main {
       font-style: italic;
     }
   }
-} 
+}
 
 /* Moviles */
 @media only screen and (width <= 767px) {
-  main{
-    #mainTitle{
+  main {
+    #mainTitle {
       padding: 0;
       margin-top: 50px;
       font-size: 15px;
       text-wrap: pretty;
-      h1{
+      h1 {
         font-size: 40px;
       }
+    }
+    img {
+      width: 100%;
     }
   }
 }

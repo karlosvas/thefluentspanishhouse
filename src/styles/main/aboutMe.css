@@ -1,27 +1,37 @@
-.aboutMe{
+#haboutme {
+  margin-left: 20px;
+}
+
+.divAboutMe {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  img {
     animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 20% cover 30%;
+    animation-timeline: view();
+    animation-range: entry 20% cover 30%;
+    border-radius: 5px;
+    width: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .aboutMe {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 30%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 80%;
     text-align: center;
-}
-main > img{
-    animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 20% cover 30%;
-    border-radius: 5px;
-    width: auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
 
-  
-
-@media (width <= 764px) {
-  main > img{
-   width: 100%;
-}
+    p {
+      margin: 10px;
+      width: 50%;
+      strong {
+        font-size: 20px;
+      }
+    }
+  }
 }

@@ -1,4 +1,4 @@
-footer{
+footer {
   text-align: center;
   background-color: var(--primary-black);
   height: 20vh;
@@ -9,10 +9,10 @@ footer{
   align-items: start;
   flex-direction: column;
   border-top: 1px solid transparent;
-  a{
+  a {
     color: var(--primary-white);
   }
-  .svgIcons{
+  .svgIcons {
     padding-right: 10px;
     margin-left: 50px;
     height: 25px;
