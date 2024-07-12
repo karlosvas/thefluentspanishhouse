@@ -16,6 +16,7 @@ function Languajes() {
           strokeWidth="1.5"
           stroke="currentColor"
           className="svgIcon"
+          width="30px"
         >
           <path
             strokeLinecap="round"

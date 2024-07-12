@@ -1,28 +1,14 @@
-import { useEffect, useState } from "react";
+import { type ThemeProps } from "../../types/types";
 
-function Theme() {
-  const [theme, setTheme] = useState("light");
-
-  const toggleTheme = () => {
+const Theme: React.FC<ThemeProps> = ({ theme, setTheme }) => {
+  const toggleThemeSVG = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) setTheme(savedTheme);
-    else setTheme("light");
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
 
   return (
     <>
       <svg
-        onClick={toggleTheme}
+        onClick={toggleThemeSVG}
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -38,6 +24,6 @@ function Theme() {
       </svg>
     </>
   );
-}
+};
 
 export default Theme;

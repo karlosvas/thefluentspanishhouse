@@ -8,7 +8,7 @@
   --primary-white: #f0faff;
   --secondary-white: #ffffff;
   --secondary-white: rgb(228, 239, 255);
-  --primary-black: #242424;
+  --primary-black: #0e1016;
   --primary-yellow: #ffbd59;
 
   color-scheme: light dark;
@@ -32,7 +32,7 @@ h1 {
   line-height: 1.1;
 }
 
-h2{
+h2 {
   margin-top: 200px;
 }
 
@@ -55,14 +55,14 @@ a {
 a:hover {
   color: var(--primary-blue);
 }
-li{
+li {
   transition: color 0.25s;
 }
 
 button:hover {
   border-color: var(--primary-blue);
 }
-svg{
+svg {
   transition: color 0.25s;
 }
 svg:hover {
@@ -73,10 +73,11 @@ li:hover {
 }
 
 @keyframes reveal {
-  from{
+  from {
     opacity: 0;
     translate: 0 50px;
-  } to {
+  }
+  to {
     opacity: 1;
     translate: 0 0;
   }
@@ -88,7 +89,6 @@ html.light {
   color: var(--primary-black);
   transition: background-color 0.3s ease, color 0.1s ease;
   header {
-    background-color: var(--primary-white);
     transition: background-color 0.3s ease, color 0.1s ease;
     nav > ul > li a {
       color: var(--primary-black);
@@ -99,36 +99,45 @@ html.light {
       }
       background-color: var(--primary-black);
     }
-    .menuLeft{
+    .menuLeft {
       background-color: var(--primary-white);
       color: var(--primary-black);
     }
   }
   body {
-    background: linear-gradient(to bottom, transparent 0%, transparent 80%, var(--secondary-blue) 100%, transparent 100%);
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 80%,
+      var(--secondary-blue) 100%,
+      transparent 100%
+    );
   }
 }
 
 /* Estilos para tema oscuro */
 html.dark {
-  background-color: var(--primary-black);
-  color: var(--primary-white);
   transition: background-color 0.3s ease, color 0.1s ease;
-  main {
-    #blog > .cardBlog {
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.234);
-    }
-    .divPracing > .cardPracing{
-      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.234);
-    }
-    #contactForm{
-      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.234);
-    }
-    #mainTitle > #title{
-      text-shadow: 0 2px 2px var(--primary-blue);
+  body {
+    background-color: var(--primary-black);
+    color: var(--primary-white);
+    main {
+      #blog > .cardBlog {
+        box-shadow: 5px 5px 5px rgba(255, 255, 255, 0.234);
+      }
+      .divPracing > .cardPracing {
+        box-shadow: 5px 5px 5px rgba(255, 255, 255, 0.234);
+      }
+      #contactForm {
+        box-shadow: 5px 5px 5px rgba(255, 255, 255, 0.234);
+      }
+      #mainTitle > #title {
+        text-shadow: 0 2px 2px var(--primary-blue);
+      }
     }
   }
   header {
+    color: var(--primary-white);
     background-color: var(--primary-black);
     transition: background-color 0.3s ease, color 0.1s ease;
     nav > ul > li a {
@@ -140,56 +149,59 @@ html.dark {
       }
       background-color: var(--primary-white);
     }
-    .modalAuth{
+    .modalAuth {
       color: var(--primary-white);
       background-color: var(--primary-black);
     }
-    .googleAuth{
+    .googleAuth {
       border: 2px solid var(--primary-white);
     }
-    .menuLeft{
+    .menuLeft {
       background-color: var(--primary-black);
       color: var(--primary-white);
     }
   }
-  footer{
+  footer {
     border-top: 1px solid #ddd;
   }
 }
 
 @media (width <= 768px) {
-  #banner,#contactForm, #haboutme {
+  #banner,
+  #contactForm,
+  #haboutme {
     scroll-margin-top: 100px;
   }
-  #blog{
+  #blog {
     scroll-margin-top: 350px;
   }
-  #hprices{
+  #hprices {
     scroll-margin-top: 100px;
   }
-  #reviews{
+  #reviews {
     scroll-margin-top: 200px;
   }
 }
 
 @media (width >= 1200px) {
-  #banner, #haboutme {
+  #banner,
+  #haboutme {
     scroll-margin-top: 100px;
   }
-  
-  #blog{
+
+  #blog {
     scroll-margin-top: 400px;
   }
-  
-  #hprices{
+
+  #hprices {
     scroll-margin-top: 250px;
   }
 
-  #contactForm{
+  #contactForm {
     scroll-margin-top: 200px;
   }
 
-  #reviews{
+  #reviews {
     scroll-margin-top: 300px;
   }
 }

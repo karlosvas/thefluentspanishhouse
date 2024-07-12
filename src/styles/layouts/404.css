@@ -1,0 +1,23 @@
+body .error {
+  background-color: #0e1016;
+  color: var(--primary-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  flex-direction: column;
+  h1 {
+    text-shadow: 1px 1px 1px var(--primary-white);
+    font-weight: 900;
+  }
+  section {
+    display: flex;
+    align-items: end;
+    padding: 10px;
+    a {
+      padding: 10px;
+      padding-left: 20px;
+    }
+  }
+}

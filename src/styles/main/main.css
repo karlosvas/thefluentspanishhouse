@@ -1,14 +1,11 @@
-.bgBanner {
-  position: absolute;
-  background-color: var(--primary-yellow);
-  width: 100%;
-  height: 680px;
-  z-index: -10;
-}
-
 #banner {
   width: 100%;
-  box-shadow: 5px 5px 5px var(--secondary-blue);
+  box-shadow: 0 2px 5px var(--secondary-blue);
+}
+
+body {
+  background-color: var(--primary-white);
+  color: var(--primary-black);
 }
 
 main {
@@ -52,7 +49,7 @@ main {
 @media only screen and (width <= 767px) {
   main {
     #mainTitle {
-      padding: 0;
+      padding: 10px;
       margin-top: 50px;
       font-size: 15px;
       text-wrap: pretty;

@@ -34,4 +34,16 @@
       }
     }
   }
+  img {
+    width: auto;
+  }
+}
+
+@media only screen and (width <= 767px) {
+  .divAboutMe > img {
+    width: 90%;
+  }
+  .divAboutMe > .aboutMe > p {
+    width: 100%;
+  }
 }

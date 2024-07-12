@@ -1,17 +1,21 @@
-header{
+header {
+  background-color: var(--primary-white);
   width: 100%;
   height: 90px;
   position: sticky;
   top: 0;
   z-index: 999;
-  
+
   .header {
-    a{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    a {
       text-decoration: none;
-      color: inherit; 
+      color: inherit;
       cursor: pointer;
     }
-
 
     a:hover {
       color: var(--primary-blue);
@@ -19,21 +23,20 @@ header{
 
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
     height: 90px;
     user-select: none;
-    
-    #logo{
+
+    #logo {
       height: 45px;
       width: 50px;
       border-radius: 3px;
     }
-  
-    nav{
+
+    nav {
+      padding-top: 8px;
       margin-left: 200px;
-      ul{
+      ul {
         list-style-type: none;
         display: flex;
         li {
@@ -43,44 +46,43 @@ header{
         }
       }
     }
-    
-    .svgIcon{
+
+    .svgIcon {
       margin-right: 15px;
       height: 25px;
       cursor: pointer;
     }
-    
+
     .auth {
       display: flex;
       justify-content: center;
       align-items: center;
-      #register{
+      #register {
         background-color: var(--primary-blue);
         color: var(--primary-white);
         border: 2px solid transparent;
         transition: all 0.3s;
       }
-      #register:hover{
+      #register:hover {
         background-color: var(--secondary-blue);
         color: var(--primary-black);
       }
-      #singIn{
+      #singIn {
         background-color: var(--secondary-blue);
         color: var(--primary-black);
         transition: all 0.3s;
         border: 2px solid transparent;
       }
-      #singIn:hover{
+      #singIn:hover {
         background-color: #87d9ffc0;
       }
     }
-    .navIcons{
+    .navIcons {
       display: flex;
       justify-content: center;
       align-items: center;
     }
     .divLang {
-      padding-top: 8px;
       position: relative;
       cursor: pointer;
       #modalLanguajes {
@@ -89,86 +91,83 @@ header{
         top: 100%;
         left: -20px;
         padding: 10px;
-        z-index: 100; 
+        z-index: 100;
         a:hover {
           color: var(--primary-blue);
         }
       }
     }
-    }
+  }
 }
 /* Moviles */
 @media only screen and (width <= 767px) {
-  header{
+  header {
     height: 50px;
-    .header{
+    .header {
       align-items: end;
       justify-content: center;
       height: 50px;
 
-      nav{
+      nav {
         margin-left: 0;
         ul > li {
-            font-size: 13px;
-            padding: 0 5px;
+          font-size: 13px;
+          padding: 0 5px;
         }
       }
-      #hamburger{
+      #hamburger {
         position: absolute;
         left: 20px;
-        top: 15px;
+        top: 11px;
         height: 20px;
         width: 20px;
         margin-left: 10px;
       }
-      .menuLeft{
-        margin-top: 10px;
-        padding-top: 15px;
+      .menuLeft {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
         user-select: none;
         display: flex;
-        justify-content: start;
+        justify-content: space-between;
         flex-direction: column;
         position: absolute;
         left: -30px;
         color: var(--primary-white);
         background-color: var(--primary-black);
-        height: 100vh;
+        height: 94vh;
         width: 70vw;
-        z-index: 50;
-        section{
+        z-index: 20;
+        margin-top: 10px;
+        section {
           display: flex;
-          justify-content: space-between;
+          justify-content: space-around;
           align-items: center;
-          padding: 5px 70px;
+          padding: 10px 50px;
           border-top: 2px solid #ddd;
           font-weight: 500;
         }
-        section:last-child{
-          border-bottom: 2px solid #ddd;
-        }
       }
-      .svgIcon{
+      .svgIcon {
         display: flex;
         justify-content: end;
         align-items: center;
       }
-      .auth{
+      .auth {
         margin: 15px 0;
       }
       #modalLanguajes {
         margin-top: 5px;
       }
-      .modalBackdrop{
+      .modalBackdrop {
         top: 50px;
+        z-index: 10;
       }
     }
   }
 }
 
-/* Tablets */
-@media (width >= 768px) and (width <= 1024px) {
+/* @media (width >= 768px) and (width <= 1024px) {
 }
 
-/* Portatiles */
 @media (width <= 1040px) {
-}
+} */

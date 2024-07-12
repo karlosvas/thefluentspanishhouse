@@ -10,6 +10,7 @@
   animation-range: entry 20% cover 30%;
   color: var(--primary-black);
   .cardPracing {
+    padding: 30px 0;
     margin: 0 50px;
     background-color: var(--secondary-white);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -19,7 +20,6 @@
     align-items: center;
     flex-direction: column;
     border-radius: 10px;
-    padding-bottom: 20px;
     height: 400px;
     ul {
       align-self: flex-start;

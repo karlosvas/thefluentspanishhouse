@@ -12,17 +12,30 @@ export interface ButtonProps {
 }
 
 export type CardType = {
+    id: string,
     title: string;
     content: string;
 };
 
 export type PublicationType = {
-    publication: {
-        title: string;
-        content: string;
-    }
+    publication: CardType | undefined
 };
 
 export type RouteParams = {
     id: string;
   };
+
+export type ContentPublicationType = {
+    publication: CardType | undefined,
+    index: number
+}
+
+
+export type NavType = {
+    navInfo: string[];
+};
+
+export interface ThemeProps {
+    theme: string;
+    setTheme: React.Dispatch<React.SetStateAction<string>>; // Tipo de la función setTheme
+  }

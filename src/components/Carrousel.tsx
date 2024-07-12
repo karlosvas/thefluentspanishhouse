@@ -17,7 +17,7 @@ const Carrousel: React.FC<Translations> = ({ translation }) => {
         >
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <Link to={`/publication/${0}`}>
+              <Link to={`/publication/${cardsBlog[0].id}`}>
                 <img className="d-block w-100" src="img/0.png" />
                 <h3>{cardsBlog[0].title}</h3>
                 <p>{cardsBlog[0].content}</p>
@@ -26,18 +26,16 @@ const Carrousel: React.FC<Translations> = ({ translation }) => {
             {cardsBlog
               .filter((_, index) => index !== 0)
               .map((publication, index) => (
-                <>
-                  <div className="carousel-item" key={index}>
-                    <Link to={`publication/${(index + 1) % cardsBlog.length}`}>
-                      <img
-                        src={`img/${(index + 1) % cardsBlog.length}.png`}
-                        alt={publication.title}
-                      />
-                      <h3>{publication.title}</h3>
-                      <p>{publication.content}</p>
-                    </Link>
-                  </div>
-                </>
+                <div className="carousel-item" key={publication.id}>
+                  <Link to={`publication/${publication.id}`}>
+                    <img
+                      src={`img/${(index + 1) % cardsBlog.length}.png`}
+                      alt={publication.title}
+                    />
+                    <h3>{publication.title}</h3>
+                    <p>{publication.content}</p>
+                  </Link>
+                </div>
               ))}
           </div>
           <a
