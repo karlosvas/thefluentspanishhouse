@@ -1,6 +1,11 @@
 .publicationMain {
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
   .publication {
+    padding: 20px;
     width: 50%;
     display: flex;
     justify-content: center;
@@ -25,13 +30,20 @@
 
 @media only screen and (width <= 767px) {
   .publicationMain {
-    img {
-      width: 90%;
-    }
-    p {
+    .publication {
       width: 100%;
-      strong {
-        font-size: 30px;
+      h2 {
+        margin: 25px 0;
+        text-align: center;
+      }
+      img {
+        width: 100%;
+      }
+      p {
+        width: 100%;
+        strong {
+          font-size: 30px;
+        }
       }
     }
   }

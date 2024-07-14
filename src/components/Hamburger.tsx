@@ -1,10 +1,12 @@
 import { useState } from "react";
-import Auth from "./Auth";
-import Languajes from "./Languajes";
-import Theme from "./Theme";
-import { toggleModal } from "../scripts/modal";
+import Languajes from "./svg/Language";
+import Theme from "./svg/Theme";
+import Exit from "./svg/Exit";
+import Account from "./svg/Account";
+import Settings from "./svg/Settings";
+import Profile from "./Profile";
 import { type Translations, ThemeProps } from "../../types/types";
-import { Exit } from "./svg/Exit";
+import "../styles/layouts/hamburger.css";
 
 const Hamburger: React.FC<Translations & ThemeProps> = ({
   translation,
@@ -12,7 +14,7 @@ const Hamburger: React.FC<Translations & ThemeProps> = ({
   setTheme,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const hamburger: string[] = translation("hamburger", { returnObjects: true });
+  const [closing, setClosing] = useState(false);
 
   const handleScroll = (showModal: boolean) => {
     showModal
@@ -21,9 +23,22 @@ const Hamburger: React.FC<Translations & ThemeProps> = ({
   };
 
   const handleClick = () => {
-    toggleModal(showModal, setShowModal);
-    handleScroll(!showModal);
+    if (showModal) {
+      setClosing(true);
+      setTimeout(() => {
+        setShowModal(false);
+        setClosing(false);
+        handleScroll(false);
+      }, 500);
+    } else {
+      setShowModal(true);
+      handleScroll(true);
+    }
   };
+
+  const hamburger = translation
+    ? translation("hamburger", { returnObjects: true })
+    : [];
 
   return (
     <>
@@ -43,59 +58,36 @@ const Hamburger: React.FC<Translations & ThemeProps> = ({
             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
           />
         </svg>
-        {showModal && (
+        {(showModal || closing) && (
           <>
-            <div className="menuLeft">
-              <div className="auth">
-                <Auth translation={translation} />
-              </div>
+            <div className={`menuLeft ${closing ? "closing" : ""}`}>
+              <Profile translation={translation} />
               <div className="config">
+                {location.pathname !== "/" && (
+                  <section>
+                    <Exit>{hamburger[0]}</Exit>
+                  </section>
+                )}
                 <section>
-                  Exit <Exit />
+                  <Theme theme={theme} setTheme={setTheme}>
+                    {hamburger[1]}
+                  </Theme>
                 </section>
                 <section>
-                  {hamburger[0]} <Theme theme={theme} setTheme={setTheme} />
+                  <Languajes>{hamburger[2]}</Languajes>
                 </section>
                 <section>
-                  {hamburger[1]} <Languajes />
+                  <Account>{hamburger[3]}</Account>
                 </section>
                 <section>
-                  Cuenta
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    className="svgIcon"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                    />
-                  </svg>
-                </section>
-                <section>
-                  Ajustes
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    className="svgIcon"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
-                    />
-                  </svg>
+                  <Settings>{hamburger[4]}</Settings>
                 </section>
               </div>
             </div>
-            <div className="modalBackdrop" onClick={handleClick}></div>
+            <div
+              className={`modalBackdrop ${closing ? "closing" : ""}`}
+              onClick={handleClick}
+            ></div>
           </>
         )}
       </div>

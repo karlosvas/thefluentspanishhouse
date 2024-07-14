@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Hamburger from "../components/Hamburger";
 import Auth from "../components/Auth";
-import Languajes from "../components/Languajes";
-import Theme from "../components/Theme";
+import Languajes from "../components/svg/Language";
+import Theme from "../components/svg/Theme";
 import { type Translations, type NavType } from "../../types/types";
 import "../styles/layouts/header.css";
 import { useLocation } from "react-router";
-import { Exit } from "../components/svg/Exit";
+import Exit from "../components/svg/Exit";
 
 const MainNav: React.FC<NavType> = ({ navInfo }) => {
   return (
@@ -52,6 +52,9 @@ const Header: React.FC<Translations> = ({ translation }) => {
   }, [theme]);
 
   const location = useLocation();
+  const hamburger = translation
+    ? translation("hamburger", { returnObjects: true })
+    : [];
 
   return (
     <>
@@ -76,16 +79,26 @@ const Header: React.FC<Translations> = ({ translation }) => {
               </a>
             )
           ) : (
-            <Hamburger
-              translation={translation}
-              theme={theme}
-              setTheme={setTheme}
-            />
+            <>
+              <Hamburger
+                translation={translation}
+                theme={theme}
+                setTheme={setTheme}
+              />
+            </>
           )}
-          {location.pathname === "/" && <MainNav navInfo={navInfo} />}
+          {location.pathname === "/" ? (
+            <MainNav navInfo={navInfo} />
+          ) : (
+            window.innerWidth < 766 && <Exit optionalClass="exitPublication" />
+          )}
           {window.innerWidth > 766 && (
             <div className="navIcons">
-              {location.pathname !== "/" && <Exit />}
+              {location.pathname !== "/" && (
+                <Exit optionalClass="exitHeader">
+                  {hamburger && hamburger[0]}
+                </Exit>
+              )}
               <Theme theme={theme} setTheme={setTheme} />
               <Languajes />
               <Auth translation={translation} />

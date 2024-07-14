@@ -4,6 +4,10 @@ export interface  Translations {
     translation: TFunction<"global", undefined>;
 }
 
+export interface  OptionalTranslations {
+    translation?: TFunction<"global", undefined>;
+}
+
 export interface ButtonProps {
     children: ReactNode;
     event?: () => void;
@@ -37,5 +41,15 @@ export type NavType = {
 
 export interface ThemeProps {
     theme: string;
-    setTheme: React.Dispatch<React.SetStateAction<string>>; // Tipo de la función setTheme
+    setTheme: React.Dispatch<React.SetStateAction<string>>;
+    children?: ReactNode;
+}
+
+export type ChildrenType = {
+    children?: ReactNode;
+}
+  
+interface OptionalClass {
+    children?: ReactNode;
+    optionalClass?: string;
   }

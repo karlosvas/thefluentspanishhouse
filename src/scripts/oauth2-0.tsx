@@ -30,27 +30,31 @@ export const isLogged = () => {
   return auth.currentUser != null;
 };
 
+export const getUser = () => {
+  return auth.currentUser;
+};
+
 // Proveedor de Google
 const providerGoogle = new GoogleAuthProvider();
 
 // Iniciar sesión con Google
-export function signInWithGoogle(toggleModal: (type: string) => void) {
-  signInWithPopup(auth, providerGoogle)
-    .then((result) => {
-      // Este callback se ejecuta cuando el usuario se autentica correctamente
-      const user = result.user.displayName;
-      toast.success(
-        <span>
-          Welcome back <b>{user}</b>!
-        </span>
-      );
-      toggleModal("");
-    })
-    .catch((error) => {
-      toast.error(`Authentication failed`);
-      console.error(error);
-    });
+export async function signInWithGoogle(toggleModal: (type: string) => void) {
+  try {
+    const result = await signInWithPopup(auth, providerGoogle);
+    // Este callback se ejecuta cuando el usuario se autentica correctamente
+    const user = result.user.displayName;
+    toast.success(
+      <span>
+        Welcome back <b>{user}</b>!
+      </span>
+    );
+    toggleModal("");
+  } catch (error) {
+    toast.error(`Authentication failed`);
+    console.error(error);
+  }
 }
+
 // Iniciar sesión en local
 export const localSingin = async (email: string, password: string) => {
   signInWithEmailAndPassword(auth, email, password)
@@ -103,6 +107,7 @@ export const registerWithGoogle = async () => {
     console.error(error);
   }
 };
+
 // Registrarse en local
 export const localRegister = async (
   email: string,
@@ -113,32 +118,33 @@ export const localRegister = async (
     toast.error("You are already logged in");
     return;
   }
+
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Usuario registrado correctamente
       const user = userCredential.user;
-      if (user) {
-        updateProfile(user, { displayName: username })
-          .then(() => {
-            // Actualización del perfil exitosa
-            toast.success(
-              <span>
-                Welcome <b>{userCredential.user.displayName}</b>!
-              </span>
-            );
-          })
-          .catch((error) => {
-            // Error al actualizar el perfil
-            toast.error("Error creating user");
-            console.error(error.code, error.message);
-          });
-      }
+      return updateProfile(user, { displayName: username })
+        .then(() => {
+          toast.success(
+            <span>
+              Welcome <b>{user.displayName}</b>!
+            </span>
+          );
+        })
+        .catch((error) => {
+          toast.error("Error updating profile");
+          console.error(error.code, error.message);
+        });
+    })
+    .then(() => {
+      signInWithEmailAndPassword(auth, email, password);
     })
     .catch((error) => {
       console.error(error.message);
-      if (error.code == "auth/email-already-in-use")
-        toast.error("The user has already been registered previously ❌");
-      else toast.error(`Error during registration`);
+      if (error.code === "auth/email-already-in-use") {
+        toast.error("The email address is already in use ❌");
+      } else {
+        toast.error(`Error during registration`);
+      }
     });
 };
 
@@ -146,17 +152,21 @@ export const localRegister = async (
 export function signOutUser(
   buttonRef: React.RefObject<HTMLButtonElement> | null
 ) {
-  signOut(auth)
-    .then(() => {
-      // El usuario se ha desconectado exitosamente
-      toast.success("User successfully disconnected");
-      if (buttonRef && buttonRef.current) {
-        buttonRef.current.textContent = "Sing in";
-      }
-    })
-    .catch((error) => {
-      // Manejar errores de desconexión
-      toast.error("Error disconnecting user");
-      console.error(error);
-    });
+  return new Promise<void>((resolve, reject) => {
+    signOut(auth)
+      .then(() => {
+        // El usuario se ha desconectado exitosamente
+        toast.success("User successfully disconnected");
+        if (buttonRef && buttonRef.current) {
+          buttonRef.current.textContent = "Sign in";
+        }
+        resolve(); // Resuelve la promesa cuando se completa el signOut
+      })
+      .catch((error) => {
+        // Manejar errores de desconexión
+        toast.error("Error disconnecting user");
+        console.error(error);
+        reject(error); // Rechaza la promesa si hay un error
+      });
+  });
 }

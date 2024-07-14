@@ -1,6 +1,7 @@
 import "../styles/publication/main-publication.css";
 import { type ContentPublicationType } from "../../types/types";
-// import Comments from "../components/UserComent";
+import Comments from "../components/UserComent";
+
 const ContentPublication: React.FC<ContentPublicationType> = ({
   publication,
   index,
@@ -27,7 +28,7 @@ const ContentPublication: React.FC<ContentPublicationType> = ({
             cupiditate placeat voluptatem!
           </p>
         </div>
-        {/* <Comments /> */}
+        <Comments />
       </main>
     </>
   );

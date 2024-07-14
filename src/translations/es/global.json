@@ -2,7 +2,7 @@
   "title": "The Fluent Spanish House",
   "descriptionTitle": "\"He conocido de primera mano las dificultades de los estudiantes de español para dominar mi idioma. Memorizar reglas y vocabulario no son las claves para la fluidez. Necesitas construir una base gramatical sólida. Mis cursos brindan orientación y soluciones, ¡Da un paso más!\"",
   "navInfo": ["Blog", "Reseñas", "Sobre mi", "Price", "Contacto"],
-  "hamburger": ["Tema", "Idioma"],
+  "hamburger": ["Salir", "Tema", "Idioma", "Cuenta", "Configuración"],
   "buttons": ["Iniciar Sesión", "Cerrar sesión", "Registrarse", "Enviar"],
   "cardsBlog": [
     {

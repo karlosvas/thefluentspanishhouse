@@ -12,8 +12,14 @@ import { toggleModal } from "../scripts/modal";
 import Button from "./Buuton";
 import "../styles/main/modalAuth.css";
 import { type Translations } from "../../types/types";
+interface AuthProps {
+  onLoginChange?: (isLoggedIn: boolean) => void;
+}
 
-const Auth: React.FC<Translations> = ({ translation }) => {
+const Auth: React.FC<Translations & AuthProps> = ({
+  translation,
+  onLoginChange,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [formType, setFormType] = useState("login");
   const [username, setUsername] = useState("");
@@ -30,9 +36,15 @@ const Auth: React.FC<Translations> = ({ translation }) => {
 
   const authLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    typeLoginRegisterRef.current?.textContent === buttons[2]
-      ? localRegister(email, password, username)
-      : localSingin(email, password);
+    if (typeLoginRegisterRef.current?.textContent === buttons[2]) {
+      localRegister(email, password, username).then(() => {
+        if (onLoginChange) onLoginChange(isLogged());
+      });
+    } else {
+      localSingin(email, password).then(() => {
+        if (onLoginChange) onLoginChange(isLogged());
+      });
+    }
 
     setUsername("");
     setPassword("");
@@ -41,14 +53,25 @@ const Auth: React.FC<Translations> = ({ translation }) => {
   };
 
   const loginOrLogout = () => {
-    isLogged() ? signOutUser(logRef) : toogleFormType("login");
+    if (isLogged()) {
+      signOutUser(logRef).then(() => {
+        if (onLoginChange) onLoginChange(isLogged());
+      });
+    } else {
+      toogleFormType("login");
+    }
   };
 
   const googleAuth = () => {
-    console.log(typeLoginRegisterRef.current?.textContent);
-    typeLoginRegisterRef.current?.textContent === buttons[2]
-      ? registerWithGoogle()
-      : signInWithGoogle(toogleFormType);
+    if (typeLoginRegisterRef.current?.textContent === buttons[2]) {
+      registerWithGoogle().then(() => {
+        if (onLoginChange) onLoginChange(isLogged());
+      });
+    } else {
+      signInWithGoogle(toogleFormType).then(() => {
+        if (onLoginChange) onLoginChange(isLogged());
+      });
+    }
   };
 
   return (

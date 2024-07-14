@@ -1,0 +1,25 @@
+.comments {
+  width: 100%;
+  padding: 20px 0;
+  padding-left: 25%;
+  background-color: var(--secondary-white);
+  form {
+    padding: 10px;
+    textarea {
+      width: 300px;
+    }
+  }
+  ul {
+    padding-left: 10px;
+  }
+  ul > li {
+    margin: 0;
+    padding: 25px 0;
+    list-style: none;
+    border-top: 1px solid #ddd;
+    width: 80%;
+  }
+  .oldComments > h3 {
+    padding-top: 50px;
+  }
+}

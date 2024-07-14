@@ -31,7 +31,7 @@ const ContentMain: React.FC<Translations> = ({ translation }) => {
           alt="Banner with inspiring images"
         />
       )}
-      <main>
+      <main className="main-index">
         <div id="mainTitle">
           <h1 id="title">{translation("title")}</h1>
           <p

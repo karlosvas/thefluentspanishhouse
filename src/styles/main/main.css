@@ -8,7 +8,7 @@ body {
   color: var(--primary-black);
 }
 
-main {
+.main-index {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;

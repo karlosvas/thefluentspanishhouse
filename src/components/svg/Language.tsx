@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { toggleModal } from "../scripts/modal";
-function Languajes() {
+import { toggleModal } from "../../scripts/modal";
+import { type ChildrenType } from "../../../types/types";
+
+export const Languajes: React.FC<ChildrenType> = ({ children }) => {
   const { i18n } = useTranslation("global");
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-      <div className="divLang">
+      <div
+        className="divLang menuSection"
+        onClick={() => toggleModal(showModal, setShowModal)}
+      >
         <svg
-          onClick={() => toggleModal(showModal, setShowModal)}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -45,9 +49,10 @@ function Languajes() {
             </a>
           </div>
         )}
+        {children}
       </div>
     </>
   );
-}
+};
 
 export default Languajes;
