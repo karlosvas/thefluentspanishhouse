@@ -53,3 +53,12 @@ interface OptionalClass {
     children?: ReactNode;
     optionalClass?: string;
   }
+
+
+export interface Comment {
+    id: string;
+    user: string;
+    email: string;
+    img: string | null,
+    data: string;
+  }

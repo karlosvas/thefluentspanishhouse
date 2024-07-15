@@ -1,6 +1,6 @@
-import "../styles/publication/main-publication.css";
+import Comments from "../components/publications/UserComent";
 import { type ContentPublicationType } from "../../types/types";
-import Comments from "../components/UserComent";
+import "../styles/publication/main-publication.css";
 
 const ContentPublication: React.FC<ContentPublicationType> = ({
   publication,

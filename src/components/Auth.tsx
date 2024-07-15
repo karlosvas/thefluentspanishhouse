@@ -7,7 +7,7 @@ import {
   localRegister,
   localSingin,
 } from "../scripts/oauth2-0";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { toggleModal } from "../scripts/modal";
 import Button from "./Buuton";
 import "../styles/main/modalAuth.css";
@@ -37,13 +37,23 @@ const Auth: React.FC<Translations & AuthProps> = ({
   const authLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (typeLoginRegisterRef.current?.textContent === buttons[2]) {
-      localRegister(email, password, username).then(() => {
-        if (onLoginChange) onLoginChange(isLogged());
-      });
+      localRegister(email, password, username)
+        .then(() => {
+          if (onLoginChange) onLoginChange(isLogged());
+        })
+        .catch((error) => {
+          if (error.code === "auth/email-already-in-use")
+            toast.error("The email address is already in use ❌");
+        });
     } else {
-      localSingin(email, password).then(() => {
-        if (onLoginChange) onLoginChange(isLogged());
-      });
+      localSingin(email, password)
+        .then(() => {
+          if (onLoginChange) onLoginChange(isLogged());
+        })
+        .catch((error) => {
+          if (error.code === "auth/invalid-credential")
+            toast.error(`You are not registered`);
+        });
     }
 
     setUsername("");

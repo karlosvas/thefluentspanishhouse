@@ -56,28 +56,29 @@ export async function signInWithGoogle(toggleModal: (type: string) => void) {
 }
 
 // Iniciar sesión en local
-export const localSingin = async (email: string, password: string) => {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Usuario autenticado correctamente
-      const user = userCredential.user.displayName;
-      toast.success(
-        <span>
-          Welcome back <b>{user}</b>!
-        </span>
-      );
-    })
-    .catch((error) => {
-      // Ocurrió un error durante la autenticación
-      if (error.code === "auth/invalid-credential")
-        toast.error(`You are not registered`);
-      else toast.error(`Authentication failed`);
-      console.error(error);
-    });
-};
+export async function localSingin(email: string, password: string) {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    // Usuario autenticado correctamente
+    const user = userCredential.user.displayName;
+    toast.success(
+      <span>
+        Welcome back <b>{user}</b>!
+      </span>
+    );
+  } catch (error) {
+    // Ocurrió un error durante la autenticación
+    toast.error(`Authentication failed`);
+    console.error(error);
+  }
+}
 
 // Registrarse con google
-export const registerWithGoogle = async () => {
+export async function registerWithGoogle() {
   // Si te logeas te inpide registrarte
   if (isLogged()) {
     toast.error("You are already logged in");
@@ -106,50 +107,40 @@ export const registerWithGoogle = async () => {
     toast.error("Error registering with Google");
     console.error(error);
   }
-};
+}
 
 // Registrarse en local
-export const localRegister = async (
+export async function localRegister(
   email: string,
   password: string,
   username: string
-) => {
-  if (isLogged()) {
-    toast.error("You are already logged in");
-    return;
+) {
+  try {
+    if (isLogged()) {
+      toast.error("You are already logged in");
+      return;
+    }
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+    await updateProfile(user, { displayName: username });
+    toast.success(
+      <span>
+        Welcome <b>{user.displayName}</b>!
+      </span>
+    );
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    console.error("Error during registration:", error);
+    toast.error(`Error during registration`);
   }
-
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      return updateProfile(user, { displayName: username })
-        .then(() => {
-          toast.success(
-            <span>
-              Welcome <b>{user.displayName}</b>!
-            </span>
-          );
-        })
-        .catch((error) => {
-          toast.error("Error updating profile");
-          console.error(error.code, error.message);
-        });
-    })
-    .then(() => {
-      signInWithEmailAndPassword(auth, email, password);
-    })
-    .catch((error) => {
-      console.error(error.message);
-      if (error.code === "auth/email-already-in-use") {
-        toast.error("The email address is already in use ❌");
-      } else {
-        toast.error(`Error during registration`);
-      }
-    });
-};
+}
 
 // Deslogearse
-export function signOutUser(
+export async function signOutUser(
   buttonRef: React.RefObject<HTMLButtonElement> | null
 ) {
   return new Promise<void>((resolve, reject) => {

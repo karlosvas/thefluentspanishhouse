@@ -135,6 +135,12 @@ html.dark {
         text-shadow: 0 2px 2px var(--primary-blue);
       }
     }
+    .publicationMain > .comments {
+      background-color: var(--primary-black);
+    }
+    .publicationMain > .comments > .oldComments > ul > li:hover {
+      color: var(--primary-white);
+    }
   }
   header {
     color: var(--primary-white);
