@@ -38,7 +38,7 @@ export const getUser = () => {
 const providerGoogle = new GoogleAuthProvider();
 
 // Iniciar sesión con Google
-export async function signInWithGoogle(toggleModal: (type: string) => void) {
+export async function signInWithGoogle() {
   try {
     const result = await signInWithPopup(auth, providerGoogle);
     // Este callback se ejecuta cuando el usuario se autentica correctamente
@@ -48,7 +48,6 @@ export async function signInWithGoogle(toggleModal: (type: string) => void) {
         Welcome back <b>{user}</b>!
       </span>
     );
-    toggleModal("");
   } catch (error) {
     toast.error(`Authentication failed`);
     console.error(error);
@@ -56,7 +55,7 @@ export async function signInWithGoogle(toggleModal: (type: string) => void) {
 }
 
 // Iniciar sesión en local
-export async function localSingin(email: string, password: string) {
+export async function localSignin(email: string, password: string) {
   try {
     const userCredential = await signInWithEmailAndPassword(
       auth,
@@ -96,12 +95,13 @@ export async function registerWithGoogle() {
       const signInMethods = await fetchSignInMethodsForEmail(auth, email);
       if (signInMethods && signInMethods.length > 0)
         toast.error(`The user has already been registered previously ❌`);
-      else
+      else {
         toast.success(
           <span>
             Welcome <b>{userCredential.user.displayName}</b>!
           </span>
         );
+      }
     } else toast.error("The user does not have an email");
   } catch (error) {
     toast.error("Error registering with Google");

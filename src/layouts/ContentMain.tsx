@@ -1,4 +1,4 @@
-import Coments from "../components/Comments";
+import Coments from "../components/Reviews";
 import CardBlog from "../components/CardBlog";
 import ContactForm from "../components/ContactForm";
 import Prices from "../components/Prices";

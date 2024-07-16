@@ -1,4 +1,4 @@
-import Comments from "../components/publications/UserComent";
+import UserComments from "../components/publications/CommentPublication";
 import { type ContentPublicationType } from "../../types/types";
 import "../styles/publication/main-publication.css";
 
@@ -28,7 +28,7 @@ const ContentPublication: React.FC<ContentPublicationType> = ({
             cupiditate placeat voluptatem!
           </p>
         </div>
-        <Comments />
+        <UserComments />
       </main>
     </>
   );

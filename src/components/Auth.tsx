@@ -1,20 +1,17 @@
-import { useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import {
   signInWithGoogle,
   registerWithGoogle,
   signOutUser,
   isLogged,
   localRegister,
-  localSingin,
+  localSignin,
 } from "../scripts/oauth2-0";
 import toast, { Toaster } from "react-hot-toast";
-import { toggleModal } from "../scripts/modal";
+import { toogleFormType } from "../scripts/modal";
 import Button from "./Buuton";
 import "../styles/main/modalAuth.css";
-import { type Translations } from "../../types/types";
-interface AuthProps {
-  onLoginChange?: (isLoggedIn: boolean) => void;
-}
+import { type AuthProps, type Translations } from "../../types/types";
 
 const Auth: React.FC<Translations & AuthProps> = ({
   translation,
@@ -22,33 +19,32 @@ const Auth: React.FC<Translations & AuthProps> = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [formType, setFormType] = useState("login");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [ID, setUser] = useState({
+    username: "",
+    password: "",
+    email: "",
+  });
   const logRef = useRef<HTMLButtonElement>(null);
   const typeLoginRegisterRef = useRef<HTMLHeadingElement>(null);
   const buttons: string[] = translation("buttons", { returnObjects: true });
 
-  const toogleFormType = (type: string) => {
-    setFormType(type);
-    toggleModal(showModal, setShowModal);
-  };
-
   const authLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (typeLoginRegisterRef.current?.textContent === buttons[2]) {
-      localRegister(email, password, username)
+      localRegister(ID.email, ID.password, ID.username)
         .then(() => {
           if (onLoginChange) onLoginChange(isLogged());
+          toogleFormType("", setFormType, showModal, setShowModal);
         })
         .catch((error) => {
           if (error.code === "auth/email-already-in-use")
             toast.error("The email address is already in use ❌");
         });
     } else {
-      localSingin(email, password)
+      localSignin(ID.email, ID.password)
         .then(() => {
           if (onLoginChange) onLoginChange(isLogged());
+          toogleFormType("", setFormType, showModal, setShowModal);
         })
         .catch((error) => {
           if (error.code === "auth/invalid-credential")
@@ -56,10 +52,21 @@ const Auth: React.FC<Translations & AuthProps> = ({
         });
     }
 
-    setUsername("");
-    setPassword("");
-    setEmail("");
-    setShowModal(false);
+    setUser({ username: "", password: "", email: "" });
+  };
+
+  const googleAuth = () => {
+    if (typeLoginRegisterRef.current?.textContent === buttons[2]) {
+      registerWithGoogle().then(() => {
+        if (onLoginChange) onLoginChange(isLogged());
+        toogleFormType("", setFormType, showModal, setShowModal);
+      });
+    } else {
+      signInWithGoogle().then(() => {
+        if (onLoginChange) onLoginChange(isLogged());
+        toogleFormType("", setFormType, showModal, setShowModal);
+      });
+    }
   };
 
   const loginOrLogout = () => {
@@ -67,41 +74,48 @@ const Auth: React.FC<Translations & AuthProps> = ({
       signOutUser(logRef).then(() => {
         if (onLoginChange) onLoginChange(isLogged());
       });
-    } else {
-      toogleFormType("login");
-    }
+    } else toogleFormType("login", setFormType, showModal, setShowModal);
   };
 
-  const googleAuth = () => {
-    if (typeLoginRegisterRef.current?.textContent === buttons[2]) {
-      registerWithGoogle().then(() => {
-        if (onLoginChange) onLoginChange(isLogged());
-      });
-    } else {
-      signInWithGoogle(toogleFormType).then(() => {
-        if (onLoginChange) onLoginChange(isLogged());
-      });
-    }
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
   };
 
   return (
     <>
       <div className="auth">
-        <button id="singIn" onClick={() => loginOrLogout()} ref={logRef}>
+        <button id="signIn" onClick={() => loginOrLogout()} ref={logRef}>
           {isLogged() ? buttons[1] : buttons[0]}
         </button>
-        <Button event={() => toogleFormType("register")} id="register">
+        <Button
+          event={() =>
+            toogleFormType("register", setFormType, showModal, setShowModal)
+          }
+          id="register"
+        >
           {buttons[2]}
         </Button>
         {showModal && (
           <>
             <div
               className="modalBackdrop"
-              onClick={() => toogleFormType("")}
+              onClick={() =>
+                toogleFormType("", setFormType, showModal, setShowModal)
+              }
             ></div>
             <div className="modalAuth">
               <div className="modalContent">
-                <span className="closeAuth" onClick={() => toogleFormType("")}>
+                <span
+                  className="closeAuth"
+                  onClick={() =>
+                    toogleFormType("", setFormType, showModal, setShowModal)
+                  }
+                >
                   &times;
                 </span>
                 <h2 ref={typeLoginRegisterRef}>
@@ -112,8 +126,9 @@ const Auth: React.FC<Translations & AuthProps> = ({
                     Email
                     <input
                       type="text"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      name="email"
+                      value={ID.email}
+                      onChange={handleInputChange}
                       required
                     />
                   </label>
@@ -121,8 +136,9 @@ const Auth: React.FC<Translations & AuthProps> = ({
                     Username
                     <input
                       type="text"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      name="username"
+                      value={ID.username}
+                      onChange={handleInputChange}
                       required
                     />
                   </label>
@@ -130,8 +146,9 @@ const Auth: React.FC<Translations & AuthProps> = ({
                     Password
                     <input
                       type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      name="password"
+                      value={ID.password}
+                      onChange={handleInputChange}
                       required
                     />
                   </label>

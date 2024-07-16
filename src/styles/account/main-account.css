@@ -1,0 +1,44 @@
+#mainAccount {
+  background-color: var(--primary-white);
+  height: 100vh;
+  width: 100vw;
+  padding-top: 100px;
+  .profile {
+    img,
+    svg {
+      width: 100px;
+      height: 100px;
+    }
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    list-style-type: none;
+    margin-right: 50px;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    margin-left: 10px;
+    color: var(--primary-black);
+  }
+
+  input:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  button {
+    display: none;
+  }
+  section {
+    margin: 50px 20px;
+  }
+}

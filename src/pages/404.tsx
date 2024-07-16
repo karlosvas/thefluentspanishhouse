@@ -21,7 +21,7 @@ export const Error = () => {
           <Link to="/">Go Home</Link>
         </section>
         <p>
-          Si crees que es debido a un bug o error abre una Issue en Github
+          If you think it's due to a bug or error, open an Issue on Github
           <a
             href="https://github.com/karlosvas/thefluentspanishhouse/issues"
             target="blank"
@@ -29,7 +29,7 @@ export const Error = () => {
             <strong> @karlosvas/thefluentspanishhouse ❤️</strong>
           </a>
           <br />
-          Opcionalmente envia un correo a carlosvassan@gmail.com
+          Optionally, you can send an email to carlosvassan@gmail.com"
         </p>
       </div>
       <Toaster />

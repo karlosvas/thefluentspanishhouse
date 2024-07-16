@@ -3,7 +3,7 @@ import Languajes from "./svg/Language";
 import Theme from "./svg/Theme";
 import Exit from "./svg/Exit";
 import Account from "./svg/Account";
-import Settings from "./svg/Settings";
+// import Settings from "./svg/Settings";
 import Profile from "./Profile";
 import { type Translations, ThemeProps } from "../../types/types";
 import "../styles/layouts/hamburger.css";
@@ -79,9 +79,9 @@ const Hamburger: React.FC<Translations & ThemeProps> = ({
                 <section>
                   <Account>{hamburger[3]}</Account>
                 </section>
-                <section>
+                {/* <section>
                   <Settings>{hamburger[4]}</Settings>
-                </section>
+                </section> */}
               </div>
             </div>
             <div

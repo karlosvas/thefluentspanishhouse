@@ -1,25 +1,27 @@
 import { useEffect, useState } from "react";
-import CrudApp from "../db/CrudApp";
-import Helper from "../db/Helper";
+import CommentCard from "../render_data/CommentCard";
 import "../../styles/publication/comments.css";
 import { getUser } from "../../scripts/oauth2-0";
 import { type Comment } from "../../../types/types";
 import { v4 as uuidv4 } from "uuid";
 
-const Comments = () => {
+const CommentPublication = () => {
   // Estado de los comentarios actuales, y del Text Area
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
 
   //Usuario actual
   const user = getUser();
-
-  // Api helper y su url
-  const api = Helper();
-  const url_api =
-    import.meta.env.VITE_ENV === "development"
-      ? import.meta.env.VITE_API_LOCAL_URL
-      : import.meta.env.VITE_API_URL;
+  let url_api;
+  if (import.meta.env.VITE_VERCEL_ENV === "production") {
+    // Estamos desplegados en Vercel
+    url_api = `https://${
+      import.meta.env.VITE_VERCEL_PROJECT_PRODUCTION_URL
+    }/api/comments`;
+  } else {
+    // Estamos en entorno local
+    url_api = "http://localhost:3001/api/comments";
+  }
 
   // Cada vez que se pulsa una tecla
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -29,11 +31,10 @@ const Comments = () => {
   // Cada vez que se envia el formulario
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     if (newComment.trim() !== "") {
-      const newCommentData = {
-        id: uuidv4().toString(),
-        user: user?.displayName || "Anonyme",
+      const newCommentData: Comment = {
+        id_comment: uuidv4().toString(),
+        id_user: user?.displayName || "Anonyme",
         email: user?.email || "Anonyme@gmail.com",
         img: user?.photoURL || null,
         data: newComment,
@@ -44,9 +45,7 @@ const Comments = () => {
       setNewComment("");
 
       try {
-        await api.post(url_api, {
-          body: JSON.stringify(newCommentData),
-        });
+        await postComment(newCommentData);
         console.log("Datos enviados correctamente:");
       } catch (error) {
         console.error("Error:", error);
@@ -54,21 +53,44 @@ const Comments = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(url_api);
-    api
-      .get(url_api)
-      .then((res) => {
-        if (!res.err && Array.isArray(res)) {
-          setComments(res);
-        } else {
-          setComments([]);
-        }
-      })
-      .catch((e) => {
-        console.error(e);
-        setComments([]);
+  const getComments = async () => {
+    try {
+      const response = await fetch(url_api, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
+      if (!response.ok)
+        throw new Error("Hubo un problema al obtener los datos.");
+      const data = await response.json();
+      Array.isArray(data) && data.length !== 0 && setComments(data);
+
+      if (!response.ok)
+        throw new Error("Hubo un problema al obtener los datos.");
+    } catch (error) {
+      console.error("Error al obtener datos:", error);
+    }
+  };
+
+  const postComment = async (newCommentData: Comment) => {
+    try {
+      const response = await fetch(url_api, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newCommentData),
+      });
+      if (!response.ok)
+        throw new Error("Hubo un problema al crear el comentario.");
+    } catch (error) {
+      console.error("Error al enviar el comentario:", error);
+    }
+  };
+
+  useEffect(() => {
+    getComments();
   }, []);
 
   return (
@@ -91,12 +113,11 @@ const Comments = () => {
         {comments.length === 0 ? (
           <p>No hay comentarios aún.</p>
         ) : (
-          // Itera para mostrar todos los comentarios
-          <CrudApp comments={comments} />
+          <CommentCard comments={comments} />
         )}
       </div>
     </div>
   );
 };
 
-export default Comments;
+export default CommentPublication;

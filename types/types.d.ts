@@ -56,9 +56,13 @@ interface OptionalClass {
 
 
 export interface Comment {
-    id: string;
-    user: string;
+    id_comment: string;
+    id_user: string;
     email: string;
     img: string | null,
     data: string;
+}
+
+  export interface AuthProps {
+    onLoginChange?: (isLoggedIn: boolean) => void;
   }
