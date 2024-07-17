@@ -16,7 +16,7 @@ export interface ButtonProps {
 }
 
 export type CardType = {
-    id: string,
+    id: string;
     title: string;
     content: string;
 };
@@ -57,10 +57,11 @@ interface OptionalClass {
 
 export interface Comment {
     id_comment: string;
+    id_publication: string;
     id_user: string;
     email: string;
-    img: string | null,
-    data: string;
+    img: string | null;
+    data: string
 }
 
   export interface AuthProps {

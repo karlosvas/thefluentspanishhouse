@@ -7,7 +7,7 @@
     "dev": "vite & npm run back",
     "start": "vite & npm run back",
     "back": "node src/backend/server.js",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node src/backend/server.js",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -19,6 +19,7 @@
     "express": "^4.19.2",
     "firebase": "^10.12.3",
     "i18next": "^23.11.5",
+    "mongoose": "^8.5.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
@@ -26,9 +27,7 @@
     "react-i18next": "^14.1.2",
     "react-router": "^6.24.1",
     "react-router-dom": "^6.24.1",
-    "sqlite3": "^5.1.7",
-    "uuid": "^10.0.0",
-    "vercel": "^35.0.1"
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
