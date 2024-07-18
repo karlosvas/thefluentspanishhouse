@@ -12,3 +12,9 @@ export const toogleFormType = (type: string,  setFormType:Dispatch<SetStateActio
   setFormType(type);
   toggleModal(showModal, setShowModal);
 };
+
+export const handleScroll = (showModal: boolean) => {
+  showModal
+    ? (document.body.style.overflow = "hidden")
+    : (document.body.style.overflow = "auto");
+};

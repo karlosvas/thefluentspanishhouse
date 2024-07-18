@@ -7,6 +7,7 @@ import Account from "./svg/Account";
 import Profile from "./Profile";
 import { type Translations, ThemeProps } from "../../types/types";
 import "../styles/layouts/hamburger.css";
+import { handleScroll } from "../scripts/modal";
 
 const Hamburger: React.FC<Translations & ThemeProps> = ({
   translation,
@@ -15,12 +16,6 @@ const Hamburger: React.FC<Translations & ThemeProps> = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [closing, setClosing] = useState(false);
-
-  const handleScroll = (showModal: boolean) => {
-    showModal
-      ? (document.body.style.overflow = "hidden")
-      : (document.body.style.overflow = "auto");
-  };
 
   const handleClick = () => {
     if (showModal) {

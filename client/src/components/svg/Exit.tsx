@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { type ChildrenType, OptionalClass } from "../../../types/types";
+import { handleScroll } from "../../scripts/modal";
 
 const Exit: React.FC<ChildrenType & OptionalClass> = ({
   children,
   optionalClass,
 }) => {
   return (
-    <Link to="/" id="exit">
+    <Link to="/" id="exit" onClick={() => handleScroll(false)}>
       <div className={`menuSection ${optionalClass}`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
