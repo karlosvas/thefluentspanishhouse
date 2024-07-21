@@ -6,25 +6,30 @@ import {
   isLogged,
   localRegister,
   localSignin,
+  // getUser,
 } from "../scripts/oauth2-0";
-import toast, { Toaster } from "react-hot-toast";
 import { toogleFormType } from "../scripts/modal";
+// import { handleScroll, toogleFormType } from "../scripts/modal";
+import toast, { Toaster } from "react-hot-toast";
 import Button from "./Buuton";
-import "../styles/main/modalAuth.css";
 import { type AuthProps, type Translations } from "../../types/types";
+import "../styles/main/modalAuth.css";
+// import UploadPublication from "./UploadPublication";
 
 const Auth: React.FC<Translations & AuthProps> = ({
   translation,
   onLoginChange,
+  logged,
 }) => {
   const [showModal, setShowModal] = useState(false);
+  // const [showModalPost, setShowModalPost] = useState(false);
+  // const [closing, setClosing] = useState(false);
   const [formType, setFormType] = useState("login");
   const [ID, setUser] = useState({
     username: "",
     password: "",
     email: "",
   });
-  const logRef = useRef<HTMLButtonElement>(null);
   const typeLoginRegisterRef = useRef<HTMLHeadingElement>(null);
   const buttons: string[] = translation("buttons", { returnObjects: true });
 
@@ -71,27 +76,46 @@ const Auth: React.FC<Translations & AuthProps> = ({
 
   const loginOrLogout = () => {
     if (isLogged()) {
-      signOutUser(logRef).then(() => {
+      signOutUser().then(() => {
         if (onLoginChange) onLoginChange(isLogged());
       });
-    } else toogleFormType("login", setFormType, showModal, setShowModal);
+    } else {
+      toogleFormType("login", setFormType, showModal, setShowModal);
+    }
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setUser((prevUser) => ({
       ...prevUser,
       [name]: value,
     }));
   };
 
+  // const user = getUser();
+  // const handlePublicationChange = () => {
+  //   if (showModalPost) {
+  //     setClosing(true);
+  //     setTimeout(() => {
+  //       setShowModalPost(false);
+  //       setClosing(false);
+  //       handleScroll(false);
+  //     }, 500);
+  //   } else {
+  //     setShowModalPost(true);
+  //     handleScroll(true);
+  //   }
+  // };
+
   return (
     <>
+      {/* {showModalPost && (
+        <UploadPublication closing={closing} event={handlePublicationChange} />
+      )} */}
       <div className="auth">
-        <button id="signIn" onClick={() => loginOrLogout()} ref={logRef}>
-          {isLogged() ? buttons[1] : buttons[0]}
-        </button>
+        <Button id="signIn" event={loginOrLogout}>
+          {logged ? buttons[1] : buttons[0]}
+        </Button>
         <Button
           event={() =>
             toogleFormType("register", setFormType, showModal, setShowModal)
@@ -100,6 +124,12 @@ const Auth: React.FC<Translations & AuthProps> = ({
         >
           {buttons[2]}
         </Button>
+        {/* {logged && user?.email === "mar411geca@gmail.com" && (
+          <Button event={handlePublicationChange} id="upload">
+            Upload
+          </Button>
+        )} */}
+
         {showModal && (
           <>
             <div

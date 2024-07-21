@@ -54,7 +54,7 @@ const ContentMain: React.FC<Translations> = ({ translation }) => {
         <AboutMe />
 
         <h2 id="hprices">{navInfo[3]}</h2>
-        <Prices />
+        <Prices translation={translation} />
         <ContactForm translation={translation} />
       </main>
     </>

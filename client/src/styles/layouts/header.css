@@ -112,7 +112,7 @@ header {
   }
 }
 /* Moviles */
-@media only screen and (width <= 767px) {
+@media only screen and (width <= 766px) {
   header {
     height: 50px;
     .header {

@@ -52,9 +52,7 @@ a {
   font-weight: 500;
   text-decoration: inherit;
 }
-a:hover {
-  color: var(--primary-blue);
-}
+
 li {
   transition: color 0.25s;
 }
@@ -62,14 +60,19 @@ li {
 button:hover {
   border-color: var(--primary-blue);
 }
-svg {
-  transition: color 0.25s;
+a:hover {
+  color: var(--primary-blue);
 }
+
 svg:hover {
   color: var(--primary-blue);
 }
 li:hover {
   color: var(--primary-blue);
+}
+
+svg {
+  transition: color 0.25s;
 }
 
 @keyframes reveal {
@@ -94,14 +97,22 @@ html.light {
       color: var(--primary-black);
     }
     #modalLanguajes {
+      border: 1px solid #ddd;
+      background-color: var(--primary-white);
       a {
-        color: var(--primary-white);
+        color: var(--primary-black);
       }
-      background-color: var(--primary-black);
     }
     .menuLeft {
       background-color: var(--primary-white);
       color: var(--primary-black);
+      #modalLanguajes {
+        border: 1px solid #ddd;
+        background-color: var(--primary-white);
+        a {
+          color: var(--primary-black);
+        }
+      }
     }
   }
   body {
@@ -118,6 +129,32 @@ html.light {
 /* Estilos para tema oscuro */
 html.dark {
   transition: background-color 0.3s ease, color 0.1s ease;
+  header {
+    color: var(--primary-white);
+    background-color: var(--primary-black);
+    transition: background-color 0.3s ease, color 0.1s ease;
+    nav > ul > li a {
+      color: var(--primary-white);
+    }
+    #modalLanguajes {
+      background-color: var(--primary-black);
+      border: 1px solid #ddd;
+      a {
+        color: var(--primary-white);
+      }
+    }
+    .modalAuth {
+      color: var(--primary-white);
+      background-color: var(--primary-black);
+    }
+    .googleAuth {
+      border: 2px solid var(--primary-white);
+    }
+    .menuLeft {
+      background-color: var(--primary-black);
+      color: var(--primary-white);
+    }
+  }
   body {
     background-color: var(--primary-black);
     color: var(--primary-white);
@@ -139,31 +176,6 @@ html.dark {
       background-color: var(--primary-black);
     }
     .publicationMain > .comments > .oldComments > ul > li:hover {
-      color: var(--primary-white);
-    }
-  }
-  header {
-    color: var(--primary-white);
-    background-color: var(--primary-black);
-    transition: background-color 0.3s ease, color 0.1s ease;
-    nav > ul > li a {
-      color: var(--primary-white);
-    }
-    #modalLanguajes {
-      a {
-        color: var(--primary-black);
-      }
-      background-color: var(--primary-white);
-    }
-    .modalAuth {
-      color: var(--primary-white);
-      background-color: var(--primary-black);
-    }
-    .googleAuth {
-      border: 2px solid var(--primary-white);
-    }
-    .menuLeft {
-      background-color: var(--primary-black);
       color: var(--primary-white);
     }
   }

@@ -16,10 +16,9 @@
     align-items: end;
     list-style-type: none;
     margin-right: 50px;
-  }
-
-  li {
-    margin-bottom: 10px;
+    li {
+      margin-bottom: 10px;
+    }
   }
 
   input {
@@ -28,6 +27,7 @@
     border-bottom: 1px solid #ddd;
     margin-left: 10px;
     color: var(--primary-black);
+    width: 210px;
   }
 
   input:focus {
@@ -39,6 +39,9 @@
     display: none;
   }
   section {
-    margin: 50px 20px;
+    margin-top: 50px;
+  }
+  h3 {
+    margin-left: 20px;
   }
 }

@@ -1,6 +1,0 @@
-GET https://thefluentspanishhouse-server.vercel.app/api/comments/3f93e2d8-b09d-4b88-a7b6-2e8e627ae3e7
-Content-Type: application/json
-
-###
-GET https://thefluentspanishhouse-client.vercel.app/
-Content-Type: application/json

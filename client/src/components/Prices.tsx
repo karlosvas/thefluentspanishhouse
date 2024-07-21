@@ -1,52 +1,66 @@
+import { type Translations } from "../../types/types";
 import "../styles/main/prices.css";
-const Prices = () => {
+
+const Prices: React.FC<Translations> = ({ translation }) => {
+  const prices = translation("pricing", { returnObjects: true });
+
   return (
     <>
       <div className="divPracing">
         <div className="cardPracing">
-          <h3>Clases Básicas</h3>
+          <h3>{prices[0].type}</h3>
           <div className="price">
-            <h1>$50</h1>
-            <small>/ mes</small>
+            <h1>{prices[0].price}</h1>
+            <small>{prices[0].duration}</small>
           </div>
           <ul>
-            <li>Acceso a recursos en línea</li>
-            <li>Clases grupales</li>
-            <li>1 hora semanal</li>
-            <li className="notPrivileges">Soporte por correo y chat</li>
-            <li className="notPrivileges">Clases privadas</li>
-            <li className="notPrivileges">Acceso a contenido exclusivo</li>
-            <li className="notPrivileges">Soporte 24/7</li>
+            {(() => {
+              const listItems = [];
+              for (let i = 0; i < prices[0].features.length; i++) {
+                listItems.push(
+                  <li key={i} className={i >= 3 ? "notPrivileges" : ""}>
+                    {prices[0].features[i]}
+                  </li>
+                );
+              }
+              return listItems;
+            })()}
           </ul>
         </div>
         <div className="cardPracing">
-          <h3>Clases Intermedias</h3>
+          <h3>{prices[1].type}</h3>
           <div className="price">
-            <h1>$100</h1>
-            <small>/ mes</small>
+            <h1>{prices[1].price}</h1>
+            <small>{prices[1].duration}</small>
           </div>
           <ul>
-            <li>Acceso a recursos en línea</li>
-            <li>Clases grupales y privadas</li>
-            <li>2 horas semanales</li>
-            <li>Soporte por correo y chat</li>
-            <li className="notPrivileges">Acceso a contenido exclusivo</li>
-            <li className="notPrivileges">Soporte 24/7</li>
+            {(() => {
+              const listItems = [];
+              for (let i = 0; i < prices[1].features.length; i++) {
+                listItems.push(
+                  <li key={i} className={i >= 4 ? "notPrivileges" : ""}>
+                    {prices[1].features[i]}
+                  </li>
+                );
+              }
+              return listItems;
+            })()}
           </ul>
         </div>
         <div className="cardPracing">
-          <h3>Clases Avanzadas</h3>
+          <h3>{prices[2].type}</h3>
           <div className="price">
-            <h1>$200</h1>
-            <small>/ mes</small>
+            <h1>{prices[2].price}</h1>
+            <small>{prices[2].duration}</small>
           </div>
           <ul>
-            <li>Acceso a contenido exclusivo</li>
-            <li>Clases grupales y privadas</li>
-            <li>4 horas semanales</li>
-            <li>Soporte por correo y chat</li>
-            <li>Acceso a contenido exclusivo</li>
-            <li>Soporte 24/7</li>
+            {(() => {
+              const listItems = [];
+              for (let i = 0; i < prices[2].features.length; i++) {
+                listItems.push(<li key={i}>{prices[2].features[i]}</li>);
+              }
+              return listItems;
+            })()}
           </ul>
         </div>
       </div>

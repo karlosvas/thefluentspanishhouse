@@ -1,32 +1,47 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import i18next from "i18next";
-import { I18nextProvider, initReactI18next } from "react-i18next";
-import global_es from "./translations/es/global.json";
-import global_en from "./translations/en/global.json";
-import "./styles/layouts/index.css";
+import i18n from "i18next";
 import { BrowserRouter } from "react-router-dom";
+import "./styles/layouts/index.css";
+import { I18nextProvider, initReactI18next } from "react-i18next";
+import HttpBackend from "i18next-http-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
 
-i18next.use(initReactI18next).init({
-  interpolation: { escapeValue: false },
-  lng: "en",
-  resources: {
-    es: {
-      global: global_es,
-    },
-    en: {
-      global: global_en,
-    },
-  },
-});
+const url_api =
+  import.meta.env.VITE_VERCEL_ENV === "production"
+    ? `https://thefluentspanishhouse-server.vercel.app`
+    : import.meta.env.VITE_VERCEL_ENV === "preview"
+    ? `https://${import.meta.env.VITE_VERCEL_URL}-server`
+    : "http://localhost:3001";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <I18nextProvider i18n={i18next}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </I18nextProvider>
-  </React.StrictMode>
-);
+i18n
+  .use(HttpBackend)
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    fallbackLng: "en",
+    preload: ["en", "es"],
+    ns: ["global"],
+    defaultNS: "global",
+    backend: {
+      loadPath: `${url_api}/api/translations/{{lng}}/{{ns}}`,
+    },
+    interpolation: {
+      escapeValue: false,
+    },
+  })
+  .then(() => {
+    ReactDOM.createRoot(document.getElementById("root")!).render(
+      <React.StrictMode>
+        <I18nextProvider i18n={i18n}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </I18nextProvider>
+      </React.StrictMode>
+    );
+  })
+  .catch((error) => {
+    console.error("i18next initialization failed", error);
+  });

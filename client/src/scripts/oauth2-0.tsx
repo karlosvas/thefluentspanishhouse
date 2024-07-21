@@ -140,17 +140,12 @@ export async function localRegister(
 }
 
 // Deslogearse
-export async function signOutUser(
-  buttonRef: React.RefObject<HTMLButtonElement> | null
-) {
+export async function signOutUser() {
   return new Promise<void>((resolve, reject) => {
     signOut(auth)
       .then(() => {
         // El usuario se ha desconectado exitosamente
         toast.success("User successfully disconnected");
-        if (buttonRef && buttonRef.current) {
-          buttonRef.current.textContent = "Sign in";
-        }
         resolve(); // Resuelve la promesa cuando se completa el signOut
       })
       .catch((error) => {

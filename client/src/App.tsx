@@ -6,7 +6,8 @@ import { Error } from "./pages/404";
 import Account from "./pages/Account";
 
 function App() {
-  const [t] = useTranslation("global");
+  const [t] = useTranslation();
+
   return (
     <>
       <Routes>

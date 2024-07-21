@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { toggleModal } from "../../scripts/modal";
 import { type ChildrenType } from "../../../types/types";
@@ -6,12 +6,43 @@ import { type ChildrenType } from "../../../types/types";
 export const Languajes: React.FC<ChildrenType> = ({ children }) => {
   const { i18n } = useTranslation("global");
   const [showModal, setShowModal] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const handleModalLanguageChange = (lang: string) => {
+    i18n
+      .changeLanguage(lang)
+      .then(() => {
+        console.log("Language changed to:", i18n.language); // Verifica el idioma actual
+      })
+      .catch((error) => {
+        console.error("Error changing language:", error);
+      });
+    setShowModal(false);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      setShowModal(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showModal]);
 
   return (
     <>
       <div
         className="divLang menuSection"
         onClick={() => toggleModal(showModal, setShowModal)}
+        ref={modalRef}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -30,23 +61,9 @@ export const Languajes: React.FC<ChildrenType> = ({ children }) => {
         </svg>
         {showModal && (
           <div id="modalLanguajes">
-            <a
-              onClick={() => {
-                i18n.changeLanguage("es");
-                setShowModal(false);
-              }}
-            >
-              Spanish
-            </a>
+            <a onClick={() => handleModalLanguageChange("es")}>Spanish</a>
             <br />
-            <a
-              onClick={() => {
-                i18n.changeLanguage("en");
-                setShowModal(false);
-              }}
-            >
-              English
-            </a>
+            <a onClick={() => handleModalLanguageChange("en")}>English</a>
           </div>
         )}
         {children}
