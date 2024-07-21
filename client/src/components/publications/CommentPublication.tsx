@@ -17,9 +17,7 @@ const CommentPublication = () => {
   const user = getUser();
   const url_api =
     import.meta.env.VITE_VERCEL_ENV === "production"
-      ? `https://thefluentspanishhouse-server.vercel.app/api/comments`
-      : import.meta.env.VITE_VERCEL_ENV === "preview"
-      ? `https://${import.meta.env.VITE_VERCEL_URL}-server/api/comments`
+      ? `${import.meta.env.VITE_URL_API}/api/comments`
       : "http://localhost:3001/api/comments";
 
   // Cada vez que se pulsa una tecla

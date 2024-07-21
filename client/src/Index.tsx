@@ -10,9 +10,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 
 const url_api =
   import.meta.env.VITE_VERCEL_ENV === "production"
-    ? `https://thefluentspanishhouse-server.vercel.app`
-    : import.meta.env.VITE_VERCEL_ENV === "preview"
-    ? `https://${import.meta.env.VITE_VERCEL_URL}-server`
+    ? import.meta.env.VITE_URL_API
     : "http://localhost:3001";
 
 i18n
