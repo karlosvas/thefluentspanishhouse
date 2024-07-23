@@ -44,6 +44,7 @@ export const Languajes: React.FC<ChildrenType> = ({ children }) => {
         onClick={() => toggleModal(showModal, setShowModal)}
         ref={modalRef}
       >
+        {children}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -66,7 +67,6 @@ export const Languajes: React.FC<ChildrenType> = ({ children }) => {
             <a onClick={() => handleModalLanguageChange("en")}>English</a>
           </div>
         )}
-        {children}
       </div>
     </>
   );

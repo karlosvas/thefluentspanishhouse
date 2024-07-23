@@ -30,13 +30,9 @@ export type RouteParams = {
   id: string;
 };
 
-export type ContentPublicationType = {
-  publication: CardType | undefined;
-  index: number;
-};
-
 export type NavType = {
   navInfo: string[];
+  hamburger: string[];
 };
 
 export interface ThemeProps {

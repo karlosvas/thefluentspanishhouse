@@ -1,6 +1,9 @@
 #banner {
   width: 100%;
-  box-shadow: 0 2px 5px var(--secondary-blue);
+  height: 40vh;
+  object-fit: cover;
+  box-shadow: 0 1px 10px var(--primary-black);
+  object-position: top;
 }
 
 body {
@@ -28,7 +31,7 @@ body {
     animation: reveal linear both;
     animation-timeline: view();
     animation-range: entry 20% cover 30%;
-    padding: 100px 100px 0 100px;
+    padding: 50px 100px 0 100px;
     margin-top: 100px;
     text-align: center;
     #title {
@@ -46,7 +49,27 @@ body {
 }
 
 /* Moviles */
+@media only screen and (width <= 1200px) {
+  #banner {
+    object-position: center;
+  }
+}
+
+/* Moviles */
 @media only screen and (width <= 767px) {
+  #banner {
+    object-position: bottom;
+  }
+  .main-index > #mainTitle {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    margin-top: 30px;
+    p {
+      padding: 0 30px;
+      font-size: 13px;
+    }
+  }
   main {
     #mainTitle {
       padding: 10px;

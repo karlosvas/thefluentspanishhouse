@@ -45,3 +45,37 @@
     margin-left: 20px;
   }
 }
+
+@media only screen and (width <= 767px) {
+  #mainAccount {
+    padding-top: 0;
+    ul {
+      padding-left: 0;
+      margin-right: 30px;
+    }
+
+    input {
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid #ddd;
+      margin-left: 10px;
+      color: var(--primary-black);
+      width: 210px;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    button {
+      display: none;
+    }
+    section {
+      margin-top: 50px;
+    }
+    h3 {
+      margin-left: 20px;
+    }
+  }
+}

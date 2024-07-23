@@ -3,22 +3,23 @@ interface EditProps {
 }
 
 export const Edit: React.FC<EditProps> = ({ commentText }) => {
-  const url_api =
-    import.meta.env.VITE_VERCEL_ENV === "production"
-      ? `https://${
-          import.meta.env.VITE_VERCEL_PROJECT_PRODUCTION_URL
-        }-server/api/comments`
-      : import.meta.env.VITE_VERCEL_ENV === "preview"
-      ? `https://${import.meta.env.VITE_VERCEL_URL}-server/api/comments`
-      : "http://localhost:3001/api/comments";
+  console.log(commentText);
+  // const url_api =
+  //   import.meta.env.VITE_VERCEL_ENV === "production"
+  //     ? `https://${
+  //         import.meta.env.VITE_VERCEL_PROJECT_PRODUCTION_URL
+  //       }-server/api/comments`
+  //     : import.meta.env.VITE_VERCEL_ENV === "preview"
+  //     ? `https://${import.meta.env.VITE_VERCEL_URL}-server/api/comments`
+  //     : "http://localhost:3001/api/comments";
 
-  fetch(url_api, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "aplication/json",
-    },
-    body: JSON.stringify({ newComment: commentText }),
-  });
+  // fetch(url_api, {
+  //   method: "PUT",
+  //   headers: {
+  //     "Content-Type": "aplication/json",
+  //   },
+  //   body: JSON.stringify({ newComment: commentText }),
+  // });
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

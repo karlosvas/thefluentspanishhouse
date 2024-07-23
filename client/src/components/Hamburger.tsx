@@ -1,12 +1,9 @@
 import { useState } from "react";
-import Languajes from "./svg/Language";
-import Theme from "./svg/Theme";
-import Exit from "./svg/Exit";
-import Account from "./svg/Account";
 import Profile from "./Profile";
 import { handleScroll } from "../scripts/modal";
 import { type Translations, type ThemeProps } from "../../types/types";
 import "../styles/layouts/hamburger.css";
+import MainNav from "./MainNav";
 
 const Hamburger: React.FC<Translations & ThemeProps> = ({
   translation,
@@ -34,6 +31,8 @@ const Hamburger: React.FC<Translations & ThemeProps> = ({
     ? translation("hamburger", { returnObjects: true })
     : [];
 
+  const navInfo: string[] = translation("navInfo", { returnObjects: true });
+
   return (
     <>
       <div id="hamburger">
@@ -42,7 +41,7 @@ const Hamburger: React.FC<Translations & ThemeProps> = ({
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
           viewBox="0 0 24 24"
-          strokeWidth="2"
+          strokeWidth="3"
           stroke="currentColor"
           className="svgIcon"
         >
@@ -57,22 +56,12 @@ const Hamburger: React.FC<Translations & ThemeProps> = ({
             <div className={`menuLeft ${closing ? "closing" : ""}`}>
               <Profile translation={translation} />
               <div className="config">
-                {location.pathname !== "/" && (
-                  <section>
-                    <Exit>{hamburger[0]}</Exit>
-                  </section>
-                )}
-                <section>
-                  <Theme theme={theme} setTheme={setTheme}>
-                    {hamburger[1]}
-                  </Theme>
-                </section>
-                <section>
-                  <Languajes>{hamburger[2]}</Languajes>
-                </section>
-                <section>
-                  <Account>{hamburger[3]}</Account>
-                </section>
+                <MainNav
+                  navInfo={navInfo}
+                  hamburger={hamburger}
+                  theme={theme}
+                  setTheme={setTheme}
+                />
               </div>
             </div>
             <div

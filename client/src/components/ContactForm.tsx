@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { type Translations } from "../../types/types";
 import Button from "./Buuton";
-import "../styles/main/contactForm.css";
+import "../styles/contact/main-contact.css";
 
 const ContactForm: React.FC<Translations> = ({ translation }) => {
   const [fullName, setFullName] = useState("");

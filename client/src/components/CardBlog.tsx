@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { type Translations, CardType } from "../../types/types";
-import "../styles/main/blog.css";
 import CardPlaceholder from "./PlaceHolder";
 
 const CardBlog: React.FC<Translations> = ({ translation }) => {
@@ -9,43 +8,43 @@ const CardBlog: React.FC<Translations> = ({ translation }) => {
     returnObjects: true,
   });
 
-  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [loadedImages, setLoadedImages] = useState<boolean[]>(
+    new Array(cardsBlog.length).fill(false)
+  );
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setImagesLoaded(true);
-    }, 1000);
-
-    return () => clearTimeout(timeout);
-  }, []);
+  const handleImageLoad = (index: number) => {
+    setLoadedImages((prevLoadedImages) => {
+      const newLoadedImages = [...prevLoadedImages];
+      newLoadedImages[index] = true;
+      return newLoadedImages;
+    });
+  };
 
   return (
-    <>
-      <div id="blog">
-        {cardsBlog.map((publication, index) => (
-          <div className="cardBlog" key={publication.id}>
-            <Link
-              to={`/publication/${publication.id}`}
-              style={{
-                textDecoration: "none",
-                color: "inherit",
-                fontWeight: "normal",
-              }}
-            >
-              {!imagesLoaded && <CardPlaceholder />}{" "}
-              {/* Mostrar el placeholder mientras se carga */}
-              <img
-                src={`/img/${index}.png`}
-                alt=""
-                style={{ display: imagesLoaded ? "block" : "none" }} // Mostrar la imagen solo cuando esté cargada
-              />
-              <h3>{publication.title}</h3>
-              <p>{publication.content}</p>
-            </Link>
-          </div>
-        ))}
-      </div>
-    </>
+    <div id="blog">
+      {cardsBlog.map((publication, index) => (
+        <div className="cardBlog" key={publication.id}>
+          <Link
+            to={`/publication/${publication.id}`}
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              fontWeight: "normal",
+            }}
+          >
+            {!loadedImages[index] && <CardPlaceholder />}
+            <img
+              src={`/img/${index}.png`}
+              alt=""
+              onLoad={() => handleImageLoad(index)}
+              style={{ display: loadedImages[index] ? "block" : "none" }}
+            />
+            <h3>{publication.title}</h3>
+            <p>{publication.content}</p>
+          </Link>
+        </div>
+      ))}
+    </div>
   );
 };
 

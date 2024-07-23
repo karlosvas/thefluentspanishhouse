@@ -1,0 +1,82 @@
+#contactForm {
+  animation: reveal linear both;
+  animation-timeline: view();
+  animation-range: entry 20% cover 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 200px auto;
+  background-color: var(--secondary-white);
+  color: var(--primary-black);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  scroll-margin-top: 100px;
+  padding: 30px;
+
+  h2 {
+    align-self: center;
+    margin: 0;
+  }
+
+  p {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 30%;
+    align-self: flex-start;
+    text-wrap: pretty;
+    margin: 16px;
+    width: 100%;
+  }
+
+  label {
+    width: 100%;
+    margin: 0 0 8px 0;
+  }
+
+  input,
+  textarea {
+    resize: none;
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  textarea {
+    height: 70px;
+  }
+
+  button {
+    background-color: var(--primary-blue);
+    color: var(--primary-white);
+    transition: all 0.3s;
+    color: #fff;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 2px 5px var(--primary-blue);
+  }
+
+  button:hover {
+    background-color: var(--secondary-blue);
+    color: var(--primary-black);
+    box-shadow: 0 2px 5px var(--secondary-blue);
+  }
+}
+
+@media only screen and (width <= 767px) {
+  #contactForm {
+    scroll-margin-top: 0;
+    margin: 10px auto 26px auto;
+    background-color: var(--secondary-white);
+    color: var(--primary-black);
+  }
+}

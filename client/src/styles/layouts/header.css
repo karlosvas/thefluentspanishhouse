@@ -23,7 +23,6 @@ header {
 
     max-width: 1200px;
     margin: 0 auto;
-
     height: 90px;
     user-select: none;
 
@@ -48,33 +47,28 @@ header {
     }
 
     .svgIcon {
-      margin-right: 15px;
-      height: 25px;
-      cursor: pointer;
+      margin-right: 10px;
+      height: 30px;
     }
 
     .auth {
       display: flex;
       justify-content: center;
       align-items: center;
-      #register {
+      button {
         background-color: var(--primary-blue);
         color: var(--primary-white);
+      }
+      button:hover {
+        color: var(--primary-black);
+      }
+      #register {
         border: 2px solid transparent;
         transition: all 0.3s;
-      }
-      #register:hover {
-        background-color: var(--secondary-blue);
-        color: var(--primary-black);
       }
       #signIn {
-        background-color: var(--secondary-blue);
-        color: var(--primary-black);
         transition: all 0.3s;
         border: 2px solid transparent;
-      }
-      #signIn:hover {
-        background-color: #87d9ffc0;
       }
     }
     .navIcons {
@@ -111,6 +105,19 @@ header {
     }
   }
 }
+
+/* Portátil and tablet */
+@media only screen and (width <= 1200px) {
+  header .header > nav {
+    margin-left: 100px;
+  }
+  .header > nav > ul {
+    margin: 0;
+    padding: 0;
+    width: 50vw;
+  }
+}
+
 /* Moviles */
 @media only screen and (width <= 766px) {
   header {
@@ -119,32 +126,18 @@ header {
       align-items: end;
       justify-content: center;
       height: 50px;
-
       nav {
         margin-left: 0;
         ul > li {
-          font-size: 13px;
+          font-size: 1em;
           padding: 0 5px;
         }
       }
-      #hamburger {
-        position: absolute;
-        left: 20px;
-        top: 11px;
-        height: 20px;
-        width: 20px;
-        margin-left: 10px;
-      }
-      .svgIcon {
-        display: flex;
-        justify-content: end;
-        align-items: center;
-      }
-      .auth {
-        margin: 15px 0;
-      }
-      #modalLanguajes {
-        margin-top: 5px;
+      .divLang {
+        #modalLanguajes {
+          top: -90%;
+          left: 80px;
+        }
       }
     }
   }

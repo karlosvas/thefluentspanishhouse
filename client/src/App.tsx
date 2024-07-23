@@ -4,6 +4,9 @@ import { Route, Routes } from "react-router-dom";
 import Publications from "./pages/Publications";
 import { Error } from "./pages/404";
 import Account from "./pages/Account";
+import Blog from "./pages/Blog";
+import AboutMe from "./pages/AboutMe";
+import Contact from "./pages/Contact";
 
 function App() {
   const [t] = useTranslation();
@@ -18,6 +21,9 @@ function App() {
         />
         <Route path="/account" element={<Account translation={t} />} />
         <Route path="*" element={<Error />} />
+        <Route path="/blog" element={<Blog translation={t} />} />
+        <Route path="/aboutme" element={<AboutMe translation={t} />} />
+        <Route path="/contact" element={<Contact translation={t} />} />
       </Routes>
     </>
   );
