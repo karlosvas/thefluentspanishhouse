@@ -50,14 +50,14 @@ const MainNav: React.FC<NavType & ThemeProps> = ({
           <>
             <li>
               <Theme theme={theme} setTheme={setTheme}>
-                {hamburger[1]}
+                {hamburger[0]}
               </Theme>
             </li>
             <li>
-              <Languajes>{hamburger[2]}</Languajes>
+              <Languajes>{hamburger[1]}</Languajes>
             </li>
             <li>
-              <Account>{hamburger[3]}</Account>
+              <Account>{hamburger[2]}</Account>
             </li>
           </>
         )}

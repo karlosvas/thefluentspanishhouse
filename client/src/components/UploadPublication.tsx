@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { type UploadPublicationProps } from "../../types/types";
 import "../styles/publication/uploadfiles.css";
-import Button from "./Buuton";
+import Button from "./reusable/Buuton";
 
 const UploadPublication: React.FC<UploadPublicationProps> = ({
   closing,

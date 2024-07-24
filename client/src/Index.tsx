@@ -40,6 +40,4 @@ i18n
       </React.StrictMode>
     );
   })
-  .catch((error) => {
-    console.error("i18next initialization failed", error);
-  });
+  .catch((e) => console.error(e));

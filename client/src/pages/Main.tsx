@@ -6,6 +6,9 @@ import "../styles/main/main.css";
 import Inscriptions from "../components/Insription";
 
 const Main: React.FC<Translations> = ({ translation }) => {
+  const descriptionTitle: string = translation("descriptionTitle", {
+    returnObjects: true,
+  });
   return (
     <>
       <Header translation={translation} />
@@ -33,15 +36,12 @@ const Main: React.FC<Translations> = ({ translation }) => {
           <h1 id="title">{translation("title")}</h1>
           <p
             dangerouslySetInnerHTML={{
-              __html:
-                `<strong>Descubre el español con fluidez y precisión junto a Marta Gutiérrez Fonseca.</strong> Nuestro objetivo es ayudarte a consolidar estructuras gramaticales esenciales, garantizando que hables con confianza y una pronunciación impecable. Desde niveles principiantes hasta avanzados, cada clase está diseñada para hacerte dominar el idioma de manera dinámica y efectiva.`
-                  .split(".")
-                  .join(".<br>"),
+              __html: descriptionTitle.split(".").join(".<br>"),
             }}
           />
         </div>
         <Prices translation={translation} />
-        <Inscriptions />
+        <Inscriptions translation={translation} />
       </main>
       <Footer />
     </>

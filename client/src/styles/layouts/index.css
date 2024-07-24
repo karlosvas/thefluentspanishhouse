@@ -8,7 +8,7 @@
   --primary-white: #f0faff;
   --secondary-white: #ffffff;
   --secondary-white: rgb(228, 239, 255);
-  --primary-black: #0e1016;
+  --primary-black: #1f2028;
   --primary-yellow: #ffbd59;
 
   color-scheme: light dark;
@@ -17,6 +17,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  box-sizing: border-box;
   overflow-x: hidden;
 }
 
@@ -42,8 +43,7 @@ button {
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--primary-blue);
   cursor: pointer;
   transition: border-color 0.25s;
   margin: 5px;
@@ -64,11 +64,8 @@ a:hover {
   color: var(--primary-blue);
 }
 
-svg:hover {
-  color: var(--primary-blue);
-}
 li:hover {
-  color: var(--primary-blue);
+  color: var(--primary-white);
 }
 
 svg {
@@ -137,8 +134,8 @@ html.dark {
       color: var(--primary-white);
     }
     #modalLanguajes {
+      border: 1px solid #343434;
       background-color: var(--primary-black);
-      border: 1px solid #ddd;
       a {
         color: var(--primary-white);
       }

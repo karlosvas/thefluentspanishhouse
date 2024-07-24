@@ -11,10 +11,10 @@ const Theme: React.FC<ThemeProps> = ({ theme, setTheme, children }) => {
         {children}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill="none"
+          fill="#f0faff"
           viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
+          strokeWidth="1.3"
+          stroke="#1f2028"
           className="svgIcon"
         >
           <path

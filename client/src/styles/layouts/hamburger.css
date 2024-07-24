@@ -1,141 +1,157 @@
-@media only screen and (width <= 766px) {
-  #hamburger {
-    position: absolute;
-    left: 20px;
-    top: 10px;
-    height: 20px;
-    width: 20px;
-    margin-left: 10px;
-  }
+#hamburger {
+  z-index: 999;
+  position: absolute;
+  left: 20px;
+  top: 10px;
+  height: 20px;
+  width: 20px;
+  margin-left: 10px;
+}
 
+.auth {
+  margin: 15px 0;
+}
+
+.menuLeft {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-top: 10px;
+  user-select: none;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  position: absolute;
+  left: -30px;
+  color: var(--primary-white);
+  background-color: var(--primary-black);
+  height: 95vh;
+  width: 70vw;
+  z-index: 999;
+  font-size: 1em;
+  animation: slideDown 0.5s ease-out;
   .auth {
-    margin: 15px 0;
-  }
-
-  .menuLeft {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    margin-top: 10px;
-    user-select: none;
-    display: flex;
-    justify-content: start;
-    flex-direction: column;
-    position: absolute;
-    left: -30px;
-    color: var(--primary-white);
-    background-color: var(--primary-black);
-    height: 95vh;
-    width: 70vw;
-    z-index: 20;
-    font-size: 1em;
-    animation: slideDown 0.5s ease-out;
-    .auth {
-      width: 100%;
-      button {
-        padding: 5px;
-        border-radius: 3px;
-        margin-left: 10px;
-      }
-    }
-    .svgIcon {
-      display: none;
-    }
-    nav {
-      margin-left: 0;
-      ul {
-        flex-direction: column;
-        justify-content: center;
-        align-items: start;
-        margin-bottom: 0;
-        li {
-          margin: 5px;
-          border-top: 1px solid #ddd;
-        }
-      }
-    }
-  }
-
-  .menuLeft.closing {
-    animation: slideUp 0.5s ease-out forwards;
-  }
-
-  .menuLeft section {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    padding: 10px 0;
-    padding-left: 50px;
-    border-top: 2px solid #ddd;
-    font-weight: 500;
-  }
-
-  .menuLeft section:hover {
-    color: var(--primary-blue);
-  }
-
-  .modalBackdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
-    animation: bgDown 0.5s ease-out;
-  }
-
-  .modalBackdrop.closing {
-    animation: bgUp 0.5s ease-out forwards;
-  }
-
-  .menuSection {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  @media only screen and (width <= 766px) {
-    .modalBackdrop {
-      position: fixed;
-      top: 50px;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      animation: bgDown 0.5s ease-out;
+    button {
+      padding: 5px;
+      border-radius: 3px;
+      margin-left: 10px;
     }
   }
-
-  @keyframes slideDown {
-    from {
-      transform: translateX(-100%);
-    }
-    to {
-      transform: translateX(0);
+  .svgIcon {
+    display: none;
+    z-index: 999;
+  }
+  nav {
+    margin-left: 0;
+    ul {
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      margin-bottom: 0;
+      li {
+        margin: 5px;
+        border-top: 1px solid #ddd;
+      }
     }
   }
+}
 
-  @keyframes slideUp {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-100%);
-    }
+.menuLeft.closing {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+.menuLeft section {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 10px 0;
+  padding-left: 50px;
+  border-top: 2px solid #ddd;
+  font-weight: 500;
+}
+
+.menuLeft section:hover {
+  color: var(--primary-blue);
+}
+
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: bgDown 0.5s ease-out;
+}
+
+.modalBackdrop.closing {
+  animation: bgUp 0.5s ease-out forwards;
+}
+
+.menuSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalBackdrop {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: bgDown 0.5s ease-out;
+}
+
+@media only screen and (width <= 766px) and (width >= 380px) {
+  #hamburger {
+    top: 20px;
   }
-
-  @keyframes bgDown {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  .modalBackdrop {
+    top: 63px;
   }
+  .menuLeft {
+    margin-top: 12px;
+  }
+}
 
-  @keyframes bgUp {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
+@media only screen and (width <= 1100px) and (width >= 768px) {
+  .menuLeft {
+    width: 40vw;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes bgDown {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bgUp {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

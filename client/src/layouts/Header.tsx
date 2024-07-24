@@ -8,6 +8,7 @@ import { isLogged } from "../scripts/oauth2-0";
 import { type Translations } from "../../types/types";
 import "../styles/layouts/header.css";
 import MainNav from "../components/MainNav";
+import Theme from "../components/svg/Theme";
 
 const Header: React.FC<Translations> = ({ translation }) => {
   // Estados
@@ -45,12 +46,20 @@ const Header: React.FC<Translations> = ({ translation }) => {
   const handleLoginChange = (status: boolean) => {
     setLogged(status);
   };
-
+  // Informacion del nav del header
   const navInfo: string[] = translation("navInfo", { returnObjects: true });
 
   return (
     <>
       <header>
+        <section id="sect">
+          <div className="waves">
+            <div className="wave" id="wave1"></div>
+            <div className="wave" id="wave2"></div>
+            <div className="wave" id="wave3"></div>
+            <div className="wave" id="wave4"></div>
+          </div>
+        </section>
         <div className="header">
           {window.innerWidth >= 766 ? (
             location.pathname === "/" ? (
@@ -79,25 +88,22 @@ const Header: React.FC<Translations> = ({ translation }) => {
               />
             </>
           )}
-          {location.pathname === "/"
-            ? window.innerWidth > 766 && (
-                <MainNav
-                  navInfo={navInfo}
-                  hamburger={hamburger}
-                  theme={theme}
-                  setTheme={setTheme}
-                />
-              )
-            : window.innerWidth <= 766 && (
-                <Exit optionalClass="exitPublication" />
-              )}
+          {window.innerWidth > 766 ? (
+            <MainNav
+              navInfo={navInfo}
+              hamburger={hamburger}
+              theme={theme}
+              setTheme={setTheme}
+            />
+          ) : (
+            window.innerWidth <= 766 &&
+            location.pathname !== "/" && (
+              <Exit optionalClass="exitPublication" />
+            )
+          )}
           {window.innerWidth > 766 && (
             <div className="navIcons">
-              {location.pathname !== "/" && (
-                <Exit optionalClass="exitHeader">
-                  {hamburger && hamburger[0]}
-                </Exit>
-              )}
+              <Theme theme={theme} setTheme={setTheme} />
               <Languajes />
               <Auth
                 translation={translation}

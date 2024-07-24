@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { type Translations } from "../../types/types";
-import Button from "./Buuton";
+import Button from "./reusable/Buuton";
 import "../styles/contact/main-contact.css";
 
 const ContactForm: React.FC<Translations> = ({ translation }) => {

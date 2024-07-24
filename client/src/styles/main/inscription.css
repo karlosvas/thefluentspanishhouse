@@ -1,18 +1,17 @@
 .incriptions {
-  h2 {
-    margin: 0;
-    margin-top: 150px;
-    margin-bottom: 20px;
-    text-align: center;
-    width: 100vw;
-    text-shadow: 0 2px 2px var(--primary-blue);
-    color: var(--primary-blue);
-  }
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100vw;
+  h2 {
+    font-size: 1.8em;
+    margin: 0;
+    margin-top: 150px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100vw;
+  }
   button {
     width: 20vw;
     background-color: var(--primary-blue);
@@ -33,8 +32,7 @@
       margin-bottom: 20px;
       text-align: center;
       width: 100vw;
-      text-shadow: 0 2px 2px var(--primary-blue);
-      color: var(--primary-blue);
+      color: var(--primary-black);
     }
     display: flex;
     justify-content: center;
@@ -49,22 +47,20 @@
 
 @media only screen and (width <= 766px) {
   .incriptions {
-    h2 {
-      margin: 0;
-      margin-bottom: 20px;
-      text-align: center;
-      width: 100vw;
-      text-shadow: 0 2px 2px var(--primary-blue);
-      color: var(--primary-blue);
-    }
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 100vw;
+    margin-bottom: 100px;
+    h2 {
+      margin: 0;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 100vw;
+    }
     button {
       width: 70vw;
     }
-    margin-bottom: 100px;
   }
 }

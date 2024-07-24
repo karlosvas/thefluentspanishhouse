@@ -29,12 +29,14 @@ const translationSchema = new Schema({
   translations: {
     title: { type: String },
     descriptionTitle: { type: String },
+    aboutme: [String],
     navInfo: [String],
     hamburger: [String],
     buttons: [String],
     cardsBlog: [cardBlogSchema],
     contact: [String],
     pricing: [priceCardSchema],
+    inscriptions: [String],
   },
 });
 

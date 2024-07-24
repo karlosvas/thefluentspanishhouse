@@ -1,40 +1,52 @@
 header {
+  position: fixed;
   background-color: var(--primary-white);
   width: 100%;
-  height: 90px;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-
+  height: 10vh;
+  z-index: 800;
   .header {
+    height: 10vh;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    user-select: none;
+    margin: 0 30px;
 
     a {
       text-decoration: none;
       color: inherit;
       cursor: pointer;
+      transition: all 0.25s;
+      z-index: 999;
+    }
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.25s;
+      height: 6vh;
     }
 
-    a:hover {
-      color: var(--primary-blue);
+    li:hover {
+      background-color: var(--primary-blue);
+      a {
+        color: var(--primary-white);
+      }
     }
-
-    max-width: 1200px;
-    margin: 0 auto;
-    height: 90px;
-    user-select: none;
 
     #logo {
+      z-index: 120;
       height: 45px;
       width: 50px;
       border-radius: 3px;
+      margin-left: 5vw;
     }
 
     nav {
+      z-index: 120;
       padding-top: 8px;
-      margin-left: 200px;
+      padding-left: 7vw;
       ul {
         list-style-type: none;
         display: flex;
@@ -72,6 +84,8 @@ header {
       }
     }
     .navIcons {
+      z-index: 120;
+
       display: flex;
       justify-content: center;
       align-items: center;
@@ -106,23 +120,73 @@ header {
   }
 }
 
+header {
+  #sect {
+    position: absolute;
+    top: 0;
+    .waves {
+      height: 10vh;
+      position: relative;
+      opacity: 0.5;
+      .wave {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 10vh;
+        background: url(/img/wave.png);
+        background-size: 1000px 10vh;
+      }
+      #wave1 {
+        opacity: 1;
+        bottom: 0;
+        z-index: 100;
+        animation: animate 4s linear infinite;
+      }
+      #wave2 {
+        opacity: 0.5;
+        bottom: 10px;
+        z-index: 99;
+        animation: animate 4s linear infinite;
+      }
+      #wave3 {
+        opacity: 0.2;
+        bottom: 15px;
+        z-index: 98;
+        animation: animate 4s linear infinite;
+      }
+      #wave4 {
+        opacity: 0.7;
+        bottom: 20px;
+        z-index: 99;
+        animation: animate 4s linear infinite;
+      }
+    }
+  }
+}
+
 /* Portátil and tablet */
 @media only screen and (width <= 1200px) {
-  header .header > nav {
-    margin-left: 100px;
-  }
-  .header > nav > ul {
-    margin: 0;
-    padding: 0;
-    width: 50vw;
+  header .header {
+    #logo {
+      margin-left: 10px;
+    }
+    nav {
+      padding: 0;
+      margin: 0;
+      ul {
+        width: 50vw;
+      }
+    }
   }
 }
 
 /* Moviles */
 @media only screen and (width <= 766px) {
   header {
-    height: 50px;
+    height: 7.5vh;
     .header {
+      z-index: 999;
       align-items: end;
       justify-content: center;
       height: 50px;
@@ -140,5 +204,20 @@ header {
         }
       }
     }
+    #sect {
+      top: 7vh;
+      .waves {
+        height: 0.5vh;
+      }
+    }
+  }
+}
+
+@keyframes animate {
+  0% {
+    background-position-x: 1000px;
+  }
+  100% {
+    background-position-x: 0px;
   }
 }

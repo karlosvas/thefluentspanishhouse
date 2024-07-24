@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import {
   signInWithGoogle,
   registerWithGoogle,
@@ -6,15 +6,14 @@ import {
   isLogged,
   localRegister,
   localSignin,
-  // getUser,
+  getUser,
 } from "../scripts/oauth2-0";
-import { toogleFormType } from "../scripts/modal";
-// import { handleScroll, toogleFormType } from "../scripts/modal";
+import { handleScroll, toogleFormType } from "../scripts/modal";
 import toast, { Toaster } from "react-hot-toast";
-import Button from "./Buuton";
-import { type AuthProps, type Translations } from "../../types/types";
+import Button from "./reusable/Buuton";
+import UploadPublication from "./UploadPublication";
 import "../styles/main/modalAuth.css";
-// import UploadPublication from "./UploadPublication";
+import { type AuthProps, type Translations } from "../../types/types";
 
 const Auth: React.FC<Translations & AuthProps> = ({
   translation,
@@ -22,8 +21,8 @@ const Auth: React.FC<Translations & AuthProps> = ({
   logged,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  // const [showModalPost, setShowModalPost] = useState(false);
-  // const [closing, setClosing] = useState(false);
+  const [showModalPost, setShowModalPost] = useState(false);
+  const [closing, setClosing] = useState(false);
   const [formType, setFormType] = useState("login");
   const [ID, setUser] = useState({
     username: "",
@@ -56,7 +55,6 @@ const Auth: React.FC<Translations & AuthProps> = ({
             toast.error(`You are not registered`);
         });
     }
-
     setUser({ username: "", password: "", email: "" });
   };
 
@@ -92,26 +90,30 @@ const Auth: React.FC<Translations & AuthProps> = ({
     }));
   };
 
-  // const user = getUser();
-  // const handlePublicationChange = () => {
-  //   if (showModalPost) {
-  //     setClosing(true);
-  //     setTimeout(() => {
-  //       setShowModalPost(false);
-  //       setClosing(false);
-  //       handleScroll(false);
-  //     }, 500);
-  //   } else {
-  //     setShowModalPost(true);
-  //     handleScroll(true);
-  //   }
-  // };
+  const user = getUser();
+  const handlePublicationChange = () => {
+    if (showModalPost) {
+      setClosing(true);
+      setTimeout(() => {
+        setShowModalPost(false);
+        setClosing(false);
+        handleScroll(false);
+      }, 500);
+    } else {
+      setShowModalPost(true);
+      handleScroll(true);
+    }
+  };
+
+  useEffect(() => {
+    handleScroll(showModal);
+  }, [showModal]);
 
   return (
     <>
-      {/* {showModalPost && (
+      {showModalPost && (
         <UploadPublication closing={closing} event={handlePublicationChange} />
-      )} */}
+      )}
       <div className="auth">
         <Button id="signIn" event={loginOrLogout}>
           {logged ? buttons[1] : buttons[0]}
@@ -124,11 +126,11 @@ const Auth: React.FC<Translations & AuthProps> = ({
         >
           {buttons[2]}
         </Button>
-        {/* {logged && user?.email === "mar411geca@gmail.com" && (
+        {logged && user?.email === "mar411geca@gmail.com" && (
           <Button event={handlePublicationChange} id="upload">
             Upload
           </Button>
-        )} */}
+        )}
 
         {showModal && (
           <>

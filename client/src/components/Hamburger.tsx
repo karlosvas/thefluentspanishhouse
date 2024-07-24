@@ -1,9 +1,8 @@
 import { useState } from "react";
 import Profile from "./Profile";
-import { handleScroll } from "../scripts/modal";
+import MainNav from "./MainNav";
 import { type Translations, type ThemeProps } from "../../types/types";
 import "../styles/layouts/hamburger.css";
-import MainNav from "./MainNav";
 
 const Hamburger: React.FC<Translations & ThemeProps> = ({
   translation,
@@ -14,16 +13,15 @@ const Hamburger: React.FC<Translations & ThemeProps> = ({
   const [closing, setClosing] = useState(false);
 
   const handleClick = () => {
+    console.log("Clicked!"); // Log de verificación
     if (showModal) {
       setClosing(true);
       setTimeout(() => {
         setShowModal(false);
         setClosing(false);
-        handleScroll(false);
       }, 500);
     } else {
       setShowModal(true);
-      handleScroll(true);
     }
   };
 
