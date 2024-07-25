@@ -17,8 +17,8 @@ const CommentPublication = () => {
   const user = getUser();
   const url_api =
     import.meta.env.VITE_VERCEL_ENV === "production"
-      ? `${import.meta.env.VITE_URL_API}/api/comments`
-      : "http://localhost:3001/api/comments";
+      ? import.meta.env.VITE_URL_API
+      : "http://localhost:3001";
 
   // Cada vez que se pulsa una tecla
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -53,7 +53,7 @@ const CommentPublication = () => {
 
   const getComments = async () => {
     try {
-      const response = await fetch(`${url_api}/${id}`, {
+      const response = await fetch(`${url_api}/api/comments/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

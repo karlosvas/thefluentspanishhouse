@@ -1,7 +1,7 @@
 footer {
   text-align: center;
   background-color: var(--primary-black);
-  height: 20vh;
+  height: 20dvh;
   width: auto;
   color: var(--primary-white);
   display: flex;

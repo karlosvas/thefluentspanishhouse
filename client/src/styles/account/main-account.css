@@ -1,8 +1,7 @@
-#mainAccount {
+.mainAccount {
   background-color: var(--primary-white);
   height: 100vh;
   width: 100vw;
-  padding-top: 100px;
   .profile {
     img,
     svg {
@@ -47,8 +46,12 @@
 }
 
 @media only screen and (width <= 767px) {
-  #mainAccount {
-    padding-top: 0;
+  .mainAccount {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+
     ul {
       padding-left: 0;
       margin-right: 30px;

@@ -6,6 +6,7 @@
   width: 100vw;
   .publication {
     padding: 20px;
+    margin-bottom: 50px;
     width: 50%;
     display: flex;
     justify-content: center;
@@ -13,11 +14,18 @@
     flex-direction: column;
     h2 {
       align-self: center;
-      margin: 0;
+      margin-bottom: 50px;
+      margin-top: 10px;
     }
     strong {
       align-self: center;
       text-align: center;
+    }
+    img {
+      height: 40vh;
+      width: 45vw;
+      object-fit: cover;
+      border-radius: 5px;
     }
   }
   p {
@@ -28,7 +36,23 @@
   }
 }
 
-@media only screen and (width <= 767px) {
+/* Portátil and tablet */
+@media only screen and (width <= 1200px) {
+  .publicationMain {
+    .publication {
+      width: 80vw;
+      h2 {
+        margin: 50px 0;
+      }
+      img {
+        width: 70vw;
+      }
+    }
+  }
+}
+
+/* Moviles */
+@media only screen and (width <= 766px) {
   .publicationMain {
     .publication {
       width: 100%;

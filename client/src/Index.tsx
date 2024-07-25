@@ -7,6 +7,7 @@ import "./styles/layouts/index.css";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import HttpBackend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
+import { setupAuthPersistence } from "../src/scripts/oauth2-0.tsx"; // Asegúrate de ajustar la ruta según tu estructura
 
 const url_api =
   import.meta.env.VITE_VERCEL_ENV === "production"
@@ -28,6 +29,9 @@ i18n
     interpolation: {
       escapeValue: false,
     },
+  })
+  .then(() => {
+    return setupAuthPersistence();
   })
   .then(() => {
     ReactDOM.createRoot(document.getElementById("root")!).render(

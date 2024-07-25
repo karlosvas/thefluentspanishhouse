@@ -160,9 +160,6 @@ html.dark {
       .divPracing > .cardPracing {
         box-shadow: 5px 5px 5px rgba(255, 255, 255, 0.234);
       }
-      #contactForm {
-        box-shadow: 5px 5px 5px rgba(255, 255, 255, 0.234);
-      }
       #mainTitle > #title {
         text-shadow: 0 2px 2px var(--primary-blue);
       }
@@ -175,6 +172,9 @@ html.dark {
     }
     .mainBlog #blog .cardBlog {
       background-color: var(--primary-black);
+      color: var(--primary-white);
+    }
+    .mainAccount input {
       color: var(--primary-white);
     }
   }

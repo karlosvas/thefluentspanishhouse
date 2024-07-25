@@ -7,7 +7,7 @@ export function toggleModal(
   setShowModal(!showModal);
 }
 
-export const toogleFormType = (
+export const toggleFormType = (
   type: string,
   setFormType: Dispatch<SetStateAction<string>>,
   showModal: boolean,

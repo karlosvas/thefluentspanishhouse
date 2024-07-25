@@ -46,7 +46,7 @@ body {
   }
 }
 
-/* Moviles */
+/* Portátil and Tablet */
 @media only screen and (width <= 1200px) {
   #banner {
     object-position: center;

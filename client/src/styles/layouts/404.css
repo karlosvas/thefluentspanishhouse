@@ -4,9 +4,12 @@ body .error {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100dvh;
   width: 100vw;
   flex-direction: column;
+  p {
+    padding: 20px;
+  }
   h1 {
     text-shadow: 1px 1px 1px var(--primary-white);
     font-weight: 900;

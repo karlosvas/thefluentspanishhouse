@@ -8,7 +8,7 @@ import {
   localSignin,
   getUser,
 } from "../scripts/oauth2-0";
-import { handleScroll, toogleFormType } from "../scripts/modal";
+import { handleScroll, toggleFormType } from "../scripts/modal";
 import toast, { Toaster } from "react-hot-toast";
 import Button from "./reusable/Buuton";
 import UploadPublication from "./UploadPublication";
@@ -24,86 +24,82 @@ const Auth: React.FC<Translations & AuthProps> = ({
   const [showModalPost, setShowModalPost] = useState(false);
   const [closing, setClosing] = useState(false);
   const [formType, setFormType] = useState("login");
-  const [ID, setUser] = useState({
-    username: "",
-    password: "",
-    email: "",
-  });
+  const [ID, setID] = useState({ username: "", password: "", email: "" });
   const typeLoginRegisterRef = useRef<HTMLHeadingElement>(null);
-  const buttons: string[] = translation("buttons", { returnObjects: true });
+  const buttons = translation("buttons", { returnObjects: true });
 
-  const authLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (typeLoginRegisterRef.current?.textContent === buttons[2]) {
-      localRegister(ID.email, ID.password, ID.username)
-        .then(() => {
-          if (onLoginChange) onLoginChange(isLogged());
-          toogleFormType("", setFormType, showModal, setShowModal);
-        })
-        .catch((error) => {
-          if (error.code === "auth/email-already-in-use")
-            toast.error("The email address is already in use ❌");
-        });
-    } else {
-      localSignin(ID.email, ID.password)
-        .then(() => {
-          if (onLoginChange) onLoginChange(isLogged());
-          toogleFormType("", setFormType, showModal, setShowModal);
-        })
-        .catch((error) => {
-          if (error.code === "auth/invalid-credential")
-            toast.error(`You are not registered`);
-        });
+    const isRegister = typeLoginRegisterRef.current?.textContent === buttons[2];
+
+    try {
+      if (isRegister) {
+        await localRegister(ID.email, ID.password, ID.username);
+      } else {
+        await localSignin(ID.email, ID.password);
+      }
+      onLoginChange?.(isLogged());
+      toggleFormType("", setFormType, showModal, setShowModal);
+    } catch (error) {
+      // Verifica si el error tiene una propiedad 'code'
+      const firebaseError = error as { code?: string };
+      const errorMessage =
+        isRegister && firebaseError.code === "auth/email-already-in-use"
+          ? "The email address is already in use ❌"
+          : !isRegister && firebaseError.code === "auth/invalid-credential"
+          ? "You are not registered"
+          : "An error occurred";
+      toast.error(errorMessage);
     }
-    setUser({ username: "", password: "", email: "" });
+    setID({ username: "", password: "", email: "" });
   };
 
-  const googleAuth = () => {
-    if (typeLoginRegisterRef.current?.textContent === buttons[2]) {
-      registerWithGoogle().then(() => {
-        if (onLoginChange) onLoginChange(isLogged());
-        toogleFormType("", setFormType, showModal, setShowModal);
-      });
-    } else {
-      signInWithGoogle().then(() => {
-        if (onLoginChange) onLoginChange(isLogged());
-        toogleFormType("", setFormType, showModal, setShowModal);
-      });
+  const handleGoogleAuth = async () => {
+    const isRegister = typeLoginRegisterRef.current?.textContent === buttons[2];
+    try {
+      if (isRegister) {
+        await registerWithGoogle();
+      } else {
+        await signInWithGoogle();
+      }
+      onLoginChange?.(isLogged());
+      toggleFormType("", setFormType, showModal, setShowModal);
+    } catch (error) {
+      toast.error("An error occurred with Google authentication");
     }
   };
 
-  const loginOrLogout = () => {
+  const handleLoginOrLogout = async () => {
     if (isLogged()) {
-      signOutUser().then(() => {
-        if (onLoginChange) onLoginChange(isLogged());
-      });
+      await signOutUser();
+      onLoginChange?.(isLogged());
     } else {
-      toogleFormType("login", setFormType, showModal, setShowModal);
+      toggleFormType("login", setFormType, showModal, setShowModal);
     }
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
+    setID((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handlePublicationChange = () => {
+    setShowModalPost((prev) => {
+      const newState = !prev;
+      if (newState) handleScroll(true);
+      else {
+        setClosing(true);
+        setTimeout(() => {
+          setShowModalPost(false);
+          setClosing(false);
+          handleScroll(false);
+        }, 500);
+      }
+      return newState;
+    });
   };
 
   const user = getUser();
-  const handlePublicationChange = () => {
-    if (showModalPost) {
-      setClosing(true);
-      setTimeout(() => {
-        setShowModalPost(false);
-        setClosing(false);
-        handleScroll(false);
-      }, 500);
-    } else {
-      setShowModalPost(true);
-      handleScroll(true);
-    }
-  };
 
   return (
     <>
@@ -111,12 +107,12 @@ const Auth: React.FC<Translations & AuthProps> = ({
         <UploadPublication closing={closing} event={handlePublicationChange} />
       )}
       <div className="auth">
-        <Button id="signIn" event={loginOrLogout}>
+        <Button id="signIn" event={handleLoginOrLogout}>
           {logged ? buttons[1] : buttons[0]}
         </Button>
         <Button
           event={() =>
-            toogleFormType("register", setFormType, showModal, setShowModal)
+            toggleFormType("register", setFormType, showModal, setShowModal)
           }
           id="register"
         >
@@ -127,13 +123,12 @@ const Auth: React.FC<Translations & AuthProps> = ({
             Upload
           </Button>
         )}
-
         {showModal && (
           <>
             <div
               className="modalBackdrop"
               onClick={() =>
-                toogleFormType("", setFormType, showModal, setShowModal)
+                toggleFormType("", setFormType, showModal, setShowModal)
               }
             ></div>
             <div className="modalAuth">
@@ -141,7 +136,7 @@ const Auth: React.FC<Translations & AuthProps> = ({
                 <span
                   className="closeAuth"
                   onClick={() =>
-                    toogleFormType("", setFormType, showModal, setShowModal)
+                    toggleFormType("", setFormType, showModal, setShowModal)
                   }
                 >
                   &times;
@@ -149,7 +144,7 @@ const Auth: React.FC<Translations & AuthProps> = ({
                 <h2 ref={typeLoginRegisterRef}>
                   {formType === "login" ? buttons[0] : buttons[2]}
                 </h2>
-                <form onSubmit={authLogin} className="login-form">
+                <form onSubmit={handleFormSubmit} className="login-form">
                   <label>
                     Email
                     <input
@@ -182,13 +177,11 @@ const Auth: React.FC<Translations & AuthProps> = ({
                   </label>
                   <Button type="submit">{buttons[3]}</Button>
                 </form>
-                <div className="googleAuth" onClick={googleAuth}>
+                <div className="googleAuth" onClick={handleGoogleAuth}>
                   Continuar con
                   <svg
                     id="svgGoogle"
                     xmlns="http://www.w3.org/2000/svg"
-                    x="0px"
-                    y="0px"
                     width="20"
                     height="20"
                     viewBox="0 0 48 48"

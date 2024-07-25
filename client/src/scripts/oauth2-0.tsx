@@ -1,15 +1,18 @@
 import { initializeApp } from "firebase/app";
 import {
   updateProfile,
-  getAuth,
   signInWithPopup,
   signInWithEmailAndPassword,
   signOut,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   fetchSignInMethodsForEmail,
+  getAuth,
+  setPersistence,
+  browserLocalPersistence,
 } from "firebase/auth";
 import { toast } from "react-hot-toast";
+import { type User } from "firebase/auth";
 
 // Configuración firebase, como es una página estática no puedo utilizar .env :)
 const firebaseConfig = {
@@ -30,8 +33,21 @@ export const isLogged = () => {
   return auth.currentUser != null;
 };
 
-export const getUser = () => {
+export const getUser = (): User | null => {
   return auth.currentUser;
+};
+
+// presistencia
+export const setupAuthPersistence = async () => {
+  const auth = getAuth();
+  try {
+    return await setPersistence(auth, browserLocalPersistence);
+  } catch (error) {
+    console.error(
+      "Error al configurar la persistencia de la autenticación:",
+      error
+    );
+  }
 };
 
 // Proveedor de Google
