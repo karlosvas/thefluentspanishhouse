@@ -9,22 +9,24 @@ const AboutMe: React.FC<Translations> = ({ translation }) => {
   return (
     <>
       <Header translation={translation} />
-      <h2 id="haboutme">{navInfo[2]}</h2>
-      <div className="divAboutMe">
-        <img src="/img/profe.png" alt="" />
-        <div className="aboutMe">
-          <p
-            dangerouslySetInnerHTML={{
-              __html: aboutme[0].split(".").join(".<br>"),
-            }}
-          />
-          <p
-            dangerouslySetInnerHTML={{
-              __html: aboutme[1].split(".").join(".<br>"),
-            }}
-          />
+      <main className="aboutme">
+        <h2 id="haboutme">{navInfo[2]}</h2>
+        <div className="divAboutMe">
+          <img src="/img/profe.png" alt="" />
+          <div className="aboutMe">
+            <p
+              dangerouslySetInnerHTML={{
+                __html: aboutme[0].split(".").join(".<br>"),
+              }}
+            />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: aboutme[1].split(".").join(".<br>"),
+              }}
+            />
+          </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </>
   );

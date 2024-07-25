@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import {
   signInWithGoogle,
   registerWithGoogle,
@@ -104,10 +104,6 @@ const Auth: React.FC<Translations & AuthProps> = ({
       handleScroll(true);
     }
   };
-
-  useEffect(() => {
-    handleScroll(showModal);
-  }, [showModal]);
 
   return (
     <>

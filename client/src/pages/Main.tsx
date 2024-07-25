@@ -1,9 +1,9 @@
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import Prices from "../components/Prices";
+import Inscriptions from "../components/Insription";
 import { type Translations } from "../../types/types";
 import "../styles/main/main.css";
-import Inscriptions from "../components/Insription";
 
 const Main: React.FC<Translations> = ({ translation }) => {
   const descriptionTitle: string = translation("descriptionTitle", {

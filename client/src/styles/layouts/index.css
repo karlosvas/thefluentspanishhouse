@@ -156,9 +156,7 @@ html.dark {
     background-color: var(--primary-black);
     color: var(--primary-white);
     main {
-      #blog > .cardBlog {
-        box-shadow: 5px 5px 5px rgba(255, 255, 255, 0.234);
-      }
+      background-color: var(--primary-black);
       .divPracing > .cardPracing {
         box-shadow: 5px 5px 5px rgba(255, 255, 255, 0.234);
       }
@@ -173,6 +171,10 @@ html.dark {
       background-color: var(--primary-black);
     }
     .publicationMain > .comments > .oldComments > ul > li:hover {
+      color: var(--primary-white);
+    }
+    .mainBlog #blog .cardBlog {
+      background-color: var(--primary-black);
       color: var(--primary-white);
     }
   }

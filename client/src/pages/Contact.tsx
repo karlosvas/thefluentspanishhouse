@@ -7,7 +7,9 @@ const Contact: React.FC<Translations> = ({ translation }) => {
   return (
     <>
       <Header translation={translation} />
-      <ContactForm translation={translation} />
+      <main className="contact">
+        <ContactForm translation={translation} />
+      </main>
       <Footer />
     </>
   );

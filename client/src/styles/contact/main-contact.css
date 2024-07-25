@@ -1,3 +1,10 @@
+.contact {
+  background-color: var(--primary-white);
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 #contactForm {
   animation: reveal linear both;
   animation-timeline: view();
@@ -10,11 +17,9 @@
   padding: 16px;
   border-radius: 8px;
   max-width: 400px;
-  margin: 200px auto;
   background-color: var(--secondary-white);
   color: var(--primary-black);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  scroll-margin-top: 100px;
   padding: 30px;
 
   h2 {
@@ -74,8 +79,7 @@
 
 @media only screen and (width <= 767px) {
   #contactForm {
-    scroll-margin-top: 0;
-    margin: 10px auto 26px auto;
+    margin: 13vh 0;
     background-color: var(--secondary-white);
     color: var(--primary-black);
   }
