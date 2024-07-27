@@ -16,11 +16,13 @@ export interface ButtonProps {
   children: ReactNode;
 }
 
-export type CardType = {
-  id: string;
+export interface PublicationCardType {
+  id?: string;
   title: string;
+  subtitle: string;
   content: string;
-};
+  base64_img: string;
+}
 
 export type PublicationType = {
   publication: CardType | undefined;
@@ -64,7 +66,11 @@ export interface AuthProps {
   logged: boolean;
 }
 
-export interface UploadPublicationProps {
+export interface FormPublicationProps {
   closing: boolean;
   event: () => void;
+}
+
+export interface EditType {
+  commentText: string;
 }

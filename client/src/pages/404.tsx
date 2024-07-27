@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
 import { useEffect, useRef } from "react";
-import "../styles/layouts/404.css";
+import toast, { Toaster } from "react-hot-toast";
+import "../styles/404.css";
 
 export const Error = () => {
   const errorShownRef = useRef(false);

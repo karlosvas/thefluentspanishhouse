@@ -26,7 +26,7 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
+export const auth = getAuth(firebaseApp);
 
 // Verificar si actualmente está logeado
 export const isLogged = () => {

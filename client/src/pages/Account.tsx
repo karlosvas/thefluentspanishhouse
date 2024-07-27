@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { Toaster } from "react-hot-toast";
-import Profile from "../components/Profile";
+import Profile from "../components/header-components/Profile";
 import Header from "../layouts/Header";
-import Edit from "../components/svg/Edit";
-import Trash from "../components/svg/Trash";
+import Edit from "../components/svg-component/Edit";
+import Trash from "../components/svg-component/Trash";
+import { type User, getAuth, onAuthStateChanged } from "firebase/auth";
 import { type Translations } from "../../types/types";
-import { type User } from "firebase/auth";
-import "../styles/account/main-account.css";
+import "../styles/main-account.css";
 
 const Account: React.FC<Translations> = ({ translation }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -91,7 +89,6 @@ const Account: React.FC<Translations> = ({ translation }) => {
           )}
         </section>
       </main>
-      <Toaster />
     </>
   );
 };

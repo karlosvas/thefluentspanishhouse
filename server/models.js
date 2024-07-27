@@ -1,20 +1,26 @@
 import { Schema, model } from "mongoose";
 
 const commentSchema = new Schema({
-  id_comment: String,
-  id_publication: String,
-  id_user: String,
-  email: String,
-  img: String,
-  data: String,
+  _id: { type: Schema.Types.ObjectId, required: true },
+  id_comment: { type: String, required: true },
+  id_publication: { type: String, required: true },
+  id_user: { type: String, required: true },
+  email: { type: String, required: true },
+  img: { type: String, required: false },
+  data: { type: String, required: true },
 });
 export const modelComment = model("Comment", commentSchema, "comments");
 
-const cardBlogSchema = new Schema({
-  id: { type: String, required: true },
-  title: { type: String, required: true },
-  content: { type: String, required: true },
-});
+const cardBlogSchema = new Schema(
+  {
+    id: { type: String, required: true },
+    title: { type: String, required: true },
+    subtitle: { type: String, required: true },
+    content: { type: String, required: true },
+    base64_img: { type: String, required: false },
+  },
+  { _id: false }
+);
 
 const priceCardSchema = new Schema({
   type: { type: String, required: true },
@@ -24,6 +30,7 @@ const priceCardSchema = new Schema({
 });
 
 const translationSchema = new Schema({
+  _id: { type: String, required: true },
   language: { type: String, required: true },
   namespace: { type: String, required: true },
   translations: {
@@ -40,7 +47,7 @@ const translationSchema = new Schema({
   },
 });
 
-export const moodelTranslation = model(
+export const modelTranslation = model(
   "Translation",
   translationSchema,
   "translations"

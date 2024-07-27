@@ -23,5 +23,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "@types", "src/backend/scripts/comments_logic.ts", "src/backend/scripts/server.ts"]
+  "include": ["src", "@types", "src/backend/scripts/comments_logic.ts", "src/backend/scripts/server.ts", "public/constants"]
 }

@@ -1,9 +1,8 @@
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
-import Prices from "../components/Prices";
-import Inscriptions from "../components/Insription";
+import Prices from "../components/pages-components/main/Prices";
 import { type Translations } from "../../types/types";
-import "../styles/main/main.css";
+import "../styles/main.css";
 
 const Main: React.FC<Translations> = ({ translation }) => {
   const descriptionTitle: string = translation("descriptionTitle", {
@@ -41,7 +40,6 @@ const Main: React.FC<Translations> = ({ translation }) => {
           />
         </div>
         <Prices translation={translation} />
-        <Inscriptions translation={translation} />
       </main>
       <Footer />
     </>

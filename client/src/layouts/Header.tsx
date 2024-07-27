@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import Hamburger from "../components/Hamburger";
-import Auth from "../components/Auth";
-import Languajes from "../components/svg/Language";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import Exit from "../components/svg/Exit";
+import Hamburger from "../components/header-components/Hamburger";
+import Auth from "../components/header-components/Auth";
+import Exit from "../components/svg-component/Exit";
+import MainNav from "../components/header-components/MainNav";
+import Theme from "../components/svg-component/Theme";
 import { isLogged } from "../scripts/oauth2-0";
 import { type Translations } from "../../types/types";
-import "../styles/layouts/header.css";
-import MainNav from "../components/MainNav";
-import Theme from "../components/svg/Theme";
+import "../styles/header.css";
 
 const Header: React.FC<Translations> = ({ translation }) => {
   // Estados
@@ -104,7 +103,6 @@ const Header: React.FC<Translations> = ({ translation }) => {
           {window.innerWidth > 766 && (
             <div className="navIcons">
               <Theme theme={theme} setTheme={setTheme} />
-              <Languajes />
               <Auth
                 translation={translation}
                 onLoginChange={handleLoginChange}

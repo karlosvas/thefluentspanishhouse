@@ -1,4 +1,5 @@
 import { type ButtonProps } from "../../../types/types";
+
 export default function Button({ children, event, id, type }: ButtonProps) {
   return (
     <button type={type} onClick={event} id={id}>

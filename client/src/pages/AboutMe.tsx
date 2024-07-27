@@ -1,7 +1,7 @@
-import { type Translations } from "../../types/types";
 import Footer from "../layouts/Footer";
 import Header from "../layouts/Header";
-import "../styles/aboutme/main-aboutMe.css";
+import { type Translations } from "../../types/types";
+import "../styles/main-aboutme.css";
 
 const AboutMe: React.FC<Translations> = ({ translation }) => {
   const navInfo: string[] = translation("navInfo", { returnObjects: true });

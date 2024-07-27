@@ -1,7 +1,7 @@
-import { type Translations } from "../../types/types";
-import ContactForm from "../components/ContactForm";
+import ContactForm from "../components/pages-components/contact/ContactForm";
 import Footer from "../layouts/Footer";
 import Header from "../layouts/Header";
+import { type Translations } from "../../types/types";
 
 const Contact: React.FC<Translations> = ({ translation }) => {
   return (
