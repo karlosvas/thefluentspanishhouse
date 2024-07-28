@@ -1,4 +1,4 @@
-import { modelComment, modelTranslation } from "./models.js";
+import { modelComment, modelPublication } from "./models.js";
 import { connectDB } from "./mongodb.js";
 import { Types } from "mongoose";
 import express from "express";
@@ -42,24 +42,6 @@ app.get("/api/comments/:id", async (req, res) => {
   }
 });
 
-// Carga las traduciones para i18n
-app.get("/api/translations/:lng/:ns", async (req, res) => {
-  const { lng, ns } = req.params;
-  try {
-    const translation = await modelTranslation.findOne({
-      language: lng,
-      namespace: ns,
-    });
-    if (translation) {
-      res.json(translation.translations);
-    } else {
-      res.status(404).json({ error: "Translations not found" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
 // Agregar comentarios
 app.post("/api/comments", async (req, res) => {
   const { id_comment, id_publication, id_user, email, img, data } = req.body;
@@ -83,27 +65,64 @@ app.post("/api/comments", async (req, res) => {
   }
 });
 
+// Obtener publicaciones
+app.get("/api/publications", async (req, res) => {
+  try {
+    const publication = await modelPublication.find();
+
+    if (!publication) {
+      return res.status(404).json({ message: "Publication not found" });
+    }
+
+    res.status(200).json(publication[0]);
+  } catch (error) {
+    console.error("Error retrieving publication:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+app.get("/api/publications/:id", async (req, res) => {
+  try {
+    const publication = await modelPublication.find();
+
+    if (!publication) {
+      return res.status(404).json({ message: "Publication not found" });
+    }
+
+    const arrPublication = publication[0].cardsBlog;
+
+    res.status(200).json(arrPublication);
+  } catch (error) {
+    console.error("Error retrieving publication:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// Nuevas publicaciones
 app.post("/api/newpublication", async (req, res) => {
   try {
     const { title, subtitle, content, base64_img } = req.body;
-    if (!title || !content) {
+
+    if (!title || !subtitle || !content) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // Validar formato de image si se proporciona
+    // Validar formato de imagen si se proporciona
     if (base64_img && !/^data:image\/[a-zA-Z]+;base64,/.test(base64_img)) {
       return res.status(400).json({ message: "Invalid image format" });
     }
 
-    // Busca la traducción por el _id correcto
-    const translation = await modelTranslation.findOne({
-      _id: "en_global", // Asegúrate de usar el valor correcto para _id
-    });
+    // Encuentra el primer documento o crea uno nuevo si no existe
+    let publication = await modelPublication.findOne();
 
-    if (!translation)
-      return res.status(404).json({ message: "Translation not found" });
+    if (!publication) {
+      publication = new modelPublication({
+        _id: new Types.ObjectId(),
+        cardsBlog: [],
+      });
+    }
 
-    // Crea un nuevo cardBlog
+    // Crear una nueva tarjeta y añadirla al array cardsBlog
     const newCardBlog = {
       id: new Types.ObjectId().toString(),
       title,
@@ -112,11 +131,10 @@ app.post("/api/newpublication", async (req, res) => {
       base64_img,
     };
 
-    // Añade el nuevo cardBlog al array de cardsBlog
-    translation.translations.cardsBlog.push(newCardBlog);
+    publication.cardsBlog.push(newCardBlog);
 
-    // Guarda la traducción actualizada
-    await translation.save();
+    // Guardar el documento actualizado
+    await publication.save();
 
     res
       .status(201)

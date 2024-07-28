@@ -1,16 +1,11 @@
 import ContactForm from "../components/pages-components/contact/ContactForm";
-import Footer from "../layouts/Footer";
-import Header from "../layouts/Header";
-import { type Translations } from "../../types/types";
 
-const Contact: React.FC<Translations> = ({ translation }) => {
+const Contact = () => {
   return (
     <>
-      <Header translation={translation} />
       <main className="contact">
-        <ContactForm translation={translation} />
+        <ContactForm />
       </main>
-      <Footer />
     </>
   );
 };

@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import Profile from "../components/header-components/Profile";
-import Header from "../layouts/Header";
 import Edit from "../components/svg-component/Edit";
 import Trash from "../components/svg-component/Trash";
 import { type User, getAuth, onAuthStateChanged } from "firebase/auth";
-import { type Translations } from "../../types/types";
 import "../styles/main-account.css";
 
-const Account: React.FC<Translations> = ({ translation }) => {
+const Account = () => {
   const [user, setUser] = useState<User | null>(null);
   const [displayName, setDisplayName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -50,9 +48,8 @@ const Account: React.FC<Translations> = ({ translation }) => {
 
   return (
     <>
-      <Header translation={translation} />
       <main className="mainAccount">
-        <Profile translation={translation} />
+        <Profile />
         <section>
           <h3>Información</h3>
           {user ? (

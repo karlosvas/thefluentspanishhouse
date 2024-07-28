@@ -10,23 +10,18 @@ import {
 } from "../../scripts/oauth2-0";
 import { toggleFormType } from "../../scripts/modal";
 import Button from "../reusable/Buuton";
-import { type AuthProps, type Translations } from "../../../types/types";
+import { type AuthProps } from "../../../types/types";
 import "../../styles/modal-auth.css";
 
-const Auth: React.FC<Translations & AuthProps> = ({
-  translation,
-  onLoginChange,
-  logged,
-}) => {
+const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
   const [showModal, setShowModal] = useState(false);
   const [formType, setFormType] = useState("login");
   const [ID, setID] = useState({ username: "", password: "", email: "" });
   const typeLoginRegisterRef = useRef<HTMLHeadingElement>(null);
-  const buttons = translation("buttons", { returnObjects: true });
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const isRegister = typeLoginRegisterRef.current?.textContent === buttons[2];
+    const isRegister = typeLoginRegisterRef.current?.textContent === "Register";
 
     try {
       if (isRegister) {
@@ -56,7 +51,7 @@ const Auth: React.FC<Translations & AuthProps> = ({
   };
 
   const handleGoogleAuth = async () => {
-    const isRegister = typeLoginRegisterRef.current?.textContent === buttons[2];
+    const isRegister = typeLoginRegisterRef.current?.textContent === "Register";
     try {
       const user = isRegister
         ? await registerWithGoogle()
@@ -93,7 +88,7 @@ const Auth: React.FC<Translations & AuthProps> = ({
     <>
       <div className="auth">
         <Button id="signIn" event={handleLoginOrLogout}>
-          {logged ? buttons[1] : buttons[0]}
+          {logged ? "Logout" : "Sign In"}
         </Button>
         <Button
           event={() =>
@@ -101,7 +96,7 @@ const Auth: React.FC<Translations & AuthProps> = ({
           }
           id="register"
         >
-          {buttons[2]}
+          Register
         </Button>
         {showModal && (
           <>
@@ -122,7 +117,7 @@ const Auth: React.FC<Translations & AuthProps> = ({
                   &times;
                 </span>
                 <h2 ref={typeLoginRegisterRef}>
-                  {formType === "login" ? buttons[0] : buttons[2]}
+                  {formType === "login" ? "Sign In" : "Register"}
                 </h2>
                 <form onSubmit={handleFormSubmit} className="login-form">
                   <label>
@@ -155,10 +150,10 @@ const Auth: React.FC<Translations & AuthProps> = ({
                       required
                     />
                   </label>
-                  <Button type="submit">{buttons[3]}</Button>
+                  <Button type="submit">Submit</Button>
                 </form>
                 <div className="googleAuth" onClick={handleGoogleAuth}>
-                  Continuar con
+                  Continue with
                   <svg
                     id="svgGoogle"
                     xmlns="http://www.w3.org/2000/svg"

@@ -46,45 +46,6 @@ body {
   }
 }
 
-/* Portátil and Tablet */
-@media only screen and (width <= 1200px) {
-  #banner {
-    object-position: center;
-  }
-}
-
-/* Moviles */
-@media only screen and (width <= 767px) {
-  #banner {
-    object-position: bottom;
-    height: 50vh;
-  }
-  .main-index > #mainTitle {
-    width: 100vw;
-    margin: 0;
-    padding: 0;
-    margin-top: 30px;
-    p {
-      padding: 0 30px;
-      font-size: 13px;
-    }
-  }
-  .main-index {
-    #mainTitle {
-      padding: 10px;
-      margin-top: 50px;
-      font-size: 15px;
-      text-wrap: pretty;
-      h1 {
-        font-size: 40px;
-      }
-    }
-    img {
-      width: 100%;
-    }
-  }
-}
-
 #hprices {
   margin-left: 20px;
 }
@@ -120,17 +81,17 @@ body {
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       width: 350px;
       display: flex;
-      justify-content: start;
+      justify-content: space-around;
       align-items: center;
       flex-direction: column;
       border-radius: 10px;
-      height: auto;
+      min-height: 60vh;
 
       ul {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: self-start;
+        align-items: self-strat;
         list-style: none;
         margin-bottom: 0;
         button {
@@ -165,7 +126,7 @@ body {
   }
 }
 
-/* POrtátiles and Tablets */
+/* Portátiles and Tablets */
 @media only screen and (width <= 1200px) {
   .divPracing {
     .cardPracing {
@@ -198,6 +159,45 @@ body {
     }
     .cardPracing:first-child {
       margin-top: 0;
+    }
+  }
+}
+
+/* Portátil and Tablet */
+@media only screen and (width <= 1200px) and (width >= 767px) {
+  #banner {
+    object-position: center;
+  }
+}
+
+/* Moviles */
+@media only screen and (width <= 767px) {
+  #banner {
+    object-position: bottom;
+    height: 50vh;
+  }
+  .main-index > #mainTitle {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    margin-top: 30px;
+    p {
+      padding: 0 30px;
+      font-size: 13px;
+    }
+  }
+  .main-index {
+    #mainTitle {
+      padding: 10px;
+      margin-top: 50px;
+      font-size: 15px;
+      text-wrap: pretty;
+      h1 {
+        font-size: 40px;
+      }
+    }
+    img {
+      width: 100%;
     }
   }
 }

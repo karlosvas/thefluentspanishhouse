@@ -6,10 +6,9 @@ import Exit from "../components/svg-component/Exit";
 import MainNav from "../components/header-components/MainNav";
 import Theme from "../components/svg-component/Theme";
 import { isLogged } from "../scripts/oauth2-0";
-import { type Translations } from "../../types/types";
 import "../styles/header.css";
 
-const Header: React.FC<Translations> = ({ translation }) => {
+const Header = () => {
   // Estados
   const [theme, setTheme] = useState<string>(getTheme());
 
@@ -36,9 +35,6 @@ const Header: React.FC<Translations> = ({ translation }) => {
   const location = useLocation();
 
   // Objeto de traducción del hamburger
-  const hamburger = translation
-    ? translation("hamburger", { returnObjects: true })
-    : [];
 
   // Botones de login
   const [logged, setLogged] = useState<boolean>(isLogged());
@@ -46,7 +42,6 @@ const Header: React.FC<Translations> = ({ translation }) => {
     setLogged(status);
   };
   // Informacion del nav del header
-  const navInfo: string[] = translation("navInfo", { returnObjects: true });
 
   return (
     <>
@@ -80,20 +75,11 @@ const Header: React.FC<Translations> = ({ translation }) => {
             )
           ) : (
             <>
-              <Hamburger
-                translation={translation}
-                theme={theme}
-                setTheme={setTheme}
-              />
+              <Hamburger theme={theme} setTheme={setTheme} />
             </>
           )}
           {window.innerWidth > 766 ? (
-            <MainNav
-              navInfo={navInfo}
-              hamburger={hamburger}
-              theme={theme}
-              setTheme={setTheme}
-            />
+            <MainNav theme={theme} setTheme={setTheme} />
           ) : (
             window.innerWidth <= 766 &&
             location.pathname !== "/" && (
@@ -103,11 +89,7 @@ const Header: React.FC<Translations> = ({ translation }) => {
           {window.innerWidth > 766 && (
             <div className="navIcons">
               <Theme theme={theme} setTheme={setTheme} />
-              <Auth
-                translation={translation}
-                onLoginChange={handleLoginChange}
-                logged={logged}
-              />
+              <Auth onLoginChange={handleLoginChange} logged={logged} />
             </div>
           )}
         </div>

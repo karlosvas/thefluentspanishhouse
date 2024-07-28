@@ -1,9 +1,8 @@
 import { useState } from "react";
 import Button from "../../reusable/Buuton";
-import { type Translations } from "../../../../types/types";
 import "../../../styles/main-contact.css";
 
-const ContactForm: React.FC<Translations> = ({ translation }) => {
+const ContactForm = () => {
   const [fullName, setFullName] = useState("");
   const [deliveryNote, setDeliveryNote] = useState("");
 
@@ -12,14 +11,12 @@ const ContactForm: React.FC<Translations> = ({ translation }) => {
     console.log({ fullName, deliveryNote });
   };
 
-  const contact: string[] = translation("contact", { returnObjects: true });
-
   return (
     <form id="contactForm" onSubmit={handleSubmit}>
-      <h2>{contact[0]}</h2>
-      <p>{contact[1]}</p>
+      <h2>Contact me</h2>
+      <p>Do you want to sign up? Ask me any question you have</p>
       <label>
-        {contact[2]}
+        Full Name
         <input
           type="text"
           value={fullName}
@@ -29,7 +26,7 @@ const ContactForm: React.FC<Translations> = ({ translation }) => {
         />
       </label>
       <label>
-        {contact[3]}
+        Delivery note
         <textarea
           value={deliveryNote}
           onChange={(e) => setDeliveryNote(e.target.value)}
@@ -37,7 +34,7 @@ const ContactForm: React.FC<Translations> = ({ translation }) => {
           required
         ></textarea>
       </label>
-      <Button type="submit">{contact[4]}</Button>
+      <Button type="submit">Submit</Button>
     </form>
   );
 };

@@ -1,26 +1,21 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CardPlaceholder from "./PlaceHolder";
-import {
-  type Translations,
-  type PublicationCardType,
-} from "../../../../types/types";
+import { type PublicationCardType } from "../../../../types/types";
 import FormPublication from "../../render-data/FormPublication";
 import { getUser } from "../../../scripts/oauth2-0";
 import { handleChangeModal } from "../../../scripts/modal";
 import Button from "../../reusable/Buuton";
+import { url_api } from "../../../constants/global";
 
-const CardsPublicationBlog: React.FC<Translations> = ({ translation }) => {
+const CardsPublicationBlog = () => {
   const [showModalPost, setShowModalPost] = useState(false);
   const [closing, setClosing] = useState(false);
-
-  const cardsBlog: PublicationCardType[] = translation("cardsBlog", {
-    returnObjects: true,
-  });
-
+  const [cardsBlog, setCardsBlog] = useState<PublicationCardType[]>([]);
   const [loadedImages, setLoadedImages] = useState<boolean[]>(
     new Array(cardsBlog.length).fill(false)
   );
+  const uploadRef = useRef<HTMLButtonElement | null>(null);
 
   const handleImageLoad = (index: number) => {
     setLoadedImages((prevLoadedImages) => {
@@ -36,6 +31,29 @@ const CardsPublicationBlog: React.FC<Translations> = ({ translation }) => {
 
   const user = getUser();
 
+  useEffect(() => {
+    const loadPublications = async () => {
+      try {
+        const response = await fetch(`${url_api}/api/publications`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok)
+          throw new Error("Hubo un problema al obtener los datos.");
+        const data = await response.json();
+        const cardsBlog = data.cardsBlog;
+        Array.isArray(cardsBlog) &&
+          cardsBlog.length !== 0 &&
+          setCardsBlog(cardsBlog);
+      } catch (error) {
+        console.error("Error al obtener datos:", error);
+      }
+    };
+    loadPublications();
+  }, []);
+
   return (
     <div id="blog">
       {/* Renderiza el formulario si showModalPost es verdadero */}
@@ -46,45 +64,39 @@ const CardsPublicationBlog: React.FC<Translations> = ({ translation }) => {
         />
       )}
 
-      {/* Renderiza el mensaje si no hay publicaciones */}
-      {cardsBlog.length === 0 ? (
-        <>
-          <h1 id="emptyTitle">Actualmente no hay disponible ningun post</h1>
-        </>
-      ) : (
-        // Renderiza la lista de publicaciones
-        cardsBlog.map((publication, index) => (
-          <div className="cardBlog" key={publication.id}>
-            <Link
-              to={`/publication/${publication.id}`}
-              style={{
-                textDecoration: "none",
-                color: "inherit",
-                fontWeight: "normal",
-              }}
-            >
-              {!loadedImages[index] && <CardPlaceholder />}
-              <div className="img-container">
-                {publication.base64_img ? (
-                  <img
-                    src={publication.base64_img}
-                    alt="Imagen de la publicación"
-                    onLoad={() => handleImageLoad(index)}
-                  />
-                ) : (
-                  <img
-                    src={`/img/${index % cardsBlog.length}.png`}
-                    alt="Imagen de la publicación"
-                    onLoad={() => handleImageLoad(index)}
-                  />
-                )}
-              </div>
-              <h3>{publication.title}</h3>
-              <p>{publication.subtitle}</p>
-            </Link>
-          </div>
-        ))
-      )}
+      {/* // Renderiza la lista de publicaciones */}
+      {cardsBlog.map((publication, index) => (
+        <div className="cardBlog" key={publication.id}>
+          <Link
+            to={`/publication/${publication.id}`}
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              fontWeight: "normal",
+            }}
+          >
+            {!loadedImages[index] && <CardPlaceholder />}
+            <div className="img-container">
+              {publication.base64_img ? (
+                <img
+                  src={publication.base64_img}
+                  alt="Imagen de la publicación"
+                  onLoad={() => handleImageLoad(index)}
+                />
+              ) : (
+                <img
+                  src={`/img/${index % cardsBlog.length}.png`}
+                  alt="Imagen de la publicación"
+                  onLoad={() => handleImageLoad(index)}
+                />
+              )}
+            </div>
+            <h3>{publication.title}</h3>
+            <p>{publication.subtitle}</p>
+          </Link>
+        </div>
+      ))}
+      {/* )} */}
 
       {/* Renderiza el botón solo para usuarios específicos */}
       {(user?.email === "carlosvassan@gmail.com" ||

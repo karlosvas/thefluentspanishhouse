@@ -11,57 +11,21 @@ const commentSchema = new Schema({
 });
 export const modelComment = model("Comment", commentSchema, "comments");
 
-const cardBlogSchema = new Schema(
-  {
-    id: { type: String, required: true },
-    title: { type: String, required: true },
-    subtitle: { type: String, required: true },
-    content: { type: String, required: true },
-    base64_img: { type: String, required: false },
-  },
-  { _id: false }
-);
-
-const priceCardSchema = new Schema(
-  {
-    type: { type: String, required: true },
-    price: { type: String, required: true },
-    duration: { type: String, required: true },
-    features: [String],
-  },
-  { _id: false }
-);
-
-const translationSchema = new Schema({
-  _id: { type: String, required: true },
-  language: { type: String, required: true },
-  namespace: { type: String, required: true },
-  translations: {
-    title: { type: String },
-    descriptionTitle: { type: String },
-    aboutme: [String],
-    navInfo: [String],
-    hamburger: [String],
-    buttons: [String],
-    cardsBlog: [cardBlogSchema],
-    contact: [String],
-    pricing: [priceCardSchema],
-    inscriptions: [String],
-    terms: {
-      title: { type: String },
-      content: { type: String },
-    },
-    privacy: {
-      privacy: { type: String },
-      title: { type: String },
-      effectiveDate: { type: String },
-      content: { type: String },
-    },
-  },
+const cardSchema = new Schema({
+  id: { type: String, required: true },
+  title: { type: String, required: true },
+  subtitle: { type: String, required: true },
+  content: { type: String, required: true },
+  base64_img: { type: String, required: false },
 });
 
-export const modelTranslation = model(
-  "Translation",
-  translationSchema,
-  "translations"
+const cardBlogSchema = new Schema({
+  _id: { type: Schema.Types.ObjectId, required: true },
+  cardsBlog: [cardSchema],
+});
+
+export const modelPublication = model(
+  "CardBlog",
+  cardBlogSchema,
+  "publications"
 );

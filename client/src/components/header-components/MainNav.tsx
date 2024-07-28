@@ -1,14 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import Theme from "../svg-component/Theme";
 import Account from "../svg-component/Account";
-import { type NavType, type ThemeProps } from "../../../types/types";
+import { type ThemeProps } from "../../../types/types";
 
-const MainNav: React.FC<NavType & ThemeProps> = ({
-  navInfo,
-  hamburger,
-  theme,
-  setTheme,
-}) => {
+const MainNav: React.FC<ThemeProps> = ({ theme, setTheme }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -22,38 +17,38 @@ const MainNav: React.FC<NavType & ThemeProps> = ({
       <ul>
         <li>
           <a href="/" onClick={handleClick("/")}>
-            {navInfo[0]}
+            Home
           </a>
         </li>
         <li>
           <a href="/blog" onClick={handleClick("/blog")}>
-            {navInfo[1]}
+            Blog
           </a>
         </li>
         <li>
           <a href="/aboutme" onClick={handleClick("/aboutme")}>
-            {navInfo[2]}
+            About me
           </a>
         </li>
         <li>
           <a href="/newsetler" onClick={handleClick("/newsetler")}>
-            {navInfo[3]}
+            Newsetler
           </a>
         </li>
         <li>
           <a href="/contact" onClick={handleClick("/contact")}>
-            {navInfo[4]}
+            Contact
           </a>
         </li>
         {window.innerWidth <= 766 && (
           <>
             <li>
               <Theme theme={theme} setTheme={setTheme}>
-                {hamburger[0]}
+                Theme
               </Theme>
             </li>
             <li>
-              <Account>{hamburger[2]}</Account>
+              <Account>Account</Account>
             </li>
           </>
         )}

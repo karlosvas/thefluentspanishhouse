@@ -1,15 +1,11 @@
 import { useState } from "react";
 import Profile from "./Profile";
 import MainNav from "./MainNav";
-import { type Translations, type ThemeProps } from "../../../types/types";
-import "../../styles/hamburger.css";
 import { handleScroll } from "../../scripts/modal";
+import { type ThemeProps } from "../../../types/types";
+import "../../styles/hamburger.css";
 
-const Hamburger: React.FC<Translations & ThemeProps> = ({
-  translation,
-  theme,
-  setTheme,
-}) => {
+const Hamburger: React.FC<ThemeProps> = ({ translation, theme, setTheme }) => {
   const [showModal, setShowModal] = useState(false);
   const [closing, setClosing] = useState(false);
 
@@ -25,12 +21,6 @@ const Hamburger: React.FC<Translations & ThemeProps> = ({
     }
     handleScroll(!showModal);
   };
-
-  const hamburger = translation
-    ? translation("hamburger", { returnObjects: true })
-    : [];
-
-  const navInfo: string[] = translation("navInfo", { returnObjects: true });
 
   return (
     <>
@@ -55,12 +45,7 @@ const Hamburger: React.FC<Translations & ThemeProps> = ({
             <div className={`menuLeft ${closing ? "closing" : ""}`}>
               <Profile translation={translation} />
               <div className="config">
-                <MainNav
-                  navInfo={navInfo}
-                  hamburger={hamburger}
-                  theme={theme}
-                  setTheme={setTheme}
-                />
+                <MainNav theme={theme} setTheme={setTheme} />
               </div>
             </div>
             <div

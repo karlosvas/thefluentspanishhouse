@@ -2,7 +2,7 @@ footer {
   text-align: center;
   background-color: var(--primary-black);
   height: 20dvh;
-  width: auto;
+  width: 100vw;
   color: var(--primary-white);
   display: flex;
   justify-content: space-around;

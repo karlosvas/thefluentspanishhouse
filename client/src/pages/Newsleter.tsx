@@ -1,13 +1,7 @@
-import { Translations } from "../../types/types";
-import Footer from "../layouts/Footer";
-import Header from "../layouts/Header";
-
-const Newsetler: React.FC<Translations> = ({ translation }) => {
+const Newsetler = () => {
   return (
     <>
-      <Header translation={translation} />
       <main className="main-newsleter"></main>
-      <Footer />
     </>
   );
 };

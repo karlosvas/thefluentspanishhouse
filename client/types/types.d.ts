@@ -1,9 +1,5 @@
 export type TFunction = (key: string, options?: object) => string;
 
-export interface Translations {
-  translation: TFunction<"global", undefined>;
-}
-
 export interface OptionalTranslations {
   translation?: TFunction<"global", undefined>;
 }
@@ -13,6 +9,7 @@ export interface ButtonProps {
   type?: "submit";
   ref?: React.Ref<HTMLButtonElement>;
   event?: () => void;
+  ref?: React.Ref<HTMLButtonElement>;
   children: ReactNode;
 }
 
@@ -36,11 +33,6 @@ export type PublicationType = {
 
 export type RouteParams = {
   id: string;
-};
-
-export type NavType = {
-  navInfo: string[];
-  hamburger: string[];
 };
 
 export interface ThemeProps {

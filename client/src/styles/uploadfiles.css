@@ -12,11 +12,12 @@
   color: var(--primary-black);
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 100% !important;
-  padding: 20px;
+  box-sizing: border-box;
   animation: bgDown 0.3s ease-out;
-  .svgIcons:hover {
-    color: var(--primary-white);
-  }
+}
+
+#upload .svgIcons:hover {
+  color: var(--primary-white);
 }
 
 .uploadPublication {
@@ -144,7 +145,7 @@
 /* Moviles */
 @media only screen and (width <= 766px) {
   #upload {
-    top: 0vh;
+    top: 2px;
     right: 40vw;
   }
   .uploadPublication {
