@@ -166,7 +166,7 @@ body {
 }
 
 /* POrtátiles and Tablets */
-@media only screen and (width <= 1200px) {
+@media only screen and (width <= 1200px) and (width >= 767px) {
   .divPracing {
     .cardPracing {
       margin: 0 10px;
@@ -180,13 +180,13 @@ body {
     flex-direction: column;
     .flex-card {
       flex-direction: column;
-    }
-    .cardPracing {
-      width: 100vw;
-      height: fit-content;
-      border-radius: 0;
-      margin: 0;
-      border-top: 1px solid #ddd;
+      .cardPracing {
+        width: 100vw;
+        height: fit-content;
+        border-radius: 0;
+        margin: 0;
+        border-top: 1px solid #ddd;
+      }
     }
     h2 {
       width: 100vw;

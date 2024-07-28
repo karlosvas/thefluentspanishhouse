@@ -56,17 +56,19 @@ function Footer() {
         <section>
           © 2024 The Fluent Spanish House. Todos los derechos reservados.
         </section>
-        <section>
-          <nav>
-            <a href="/info" target="_blank">
-              Términos y condiciones
-            </a>{" "}
-            <br />
-            <a href="/info" target="_blank">
-              Política de privacidad
-            </a>
-          </nav>
-        </section>
+        {window.innerWidth >= 766 && (
+          <section>
+            <nav>
+              <a href="/info" target="_blank">
+                Términos y condiciones
+              </a>{" "}
+              <br />
+              <a href="/info" target="_blank">
+                Política de privacidad
+              </a>
+            </nav>
+          </section>
+        )}
       </footer>
     </>
   );

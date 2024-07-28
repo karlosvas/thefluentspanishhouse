@@ -140,16 +140,8 @@
         margin: 0;
         background-color: var(--primary-white);
         color: var(--primary-black);
-        height: 350px;
+        height: auto;
         width: 80vw;
-
-        a > #lala {
-          height: 350px;
-          width: 290px;
-          #holder {
-            width: 100px;
-          }
-        }
 
         h3 {
           padding-top: 10px;

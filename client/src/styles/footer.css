@@ -30,6 +30,18 @@ footer {
   }
 }
 
-/* @media only screen and (width <= 746) {
-
-} */
+@media only screen and (width <= 766px) {
+  footer {
+    text-align: start;
+    section {
+      padding: 10px;
+      width: 35vw;
+      .svgIcons {
+        margin-left: 10px;
+      }
+    }
+    section:first-of-type {
+      width: 65vw;
+    }
+  }
+}

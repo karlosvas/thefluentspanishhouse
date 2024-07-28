@@ -158,7 +158,7 @@ const Auth: React.FC<Translations & AuthProps> = ({
                   <Button type="submit">{buttons[3]}</Button>
                 </form>
                 <div className="googleAuth" onClick={handleGoogleAuth}>
-                  Continuar con
+                  Continue with
                   <svg
                     id="svgGoogle"
                     xmlns="http://www.w3.org/2000/svg"
