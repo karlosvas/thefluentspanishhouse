@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CardPlaceholder from "./PlaceHolder";
 import { type PublicationCardType } from "../../../../types/types";
@@ -25,8 +25,24 @@ const CardsPublicationBlog = () => {
     });
   };
 
+  const getOption = useCallback(() => {
+    if (window.innerWidth >= 1024) return ["12vw", "13vw"];
+    if (window.innerWidth >= 766) return ["12vw", "14vw"];
+    return ["40vw", "40vw"];
+  }, []);
+
+  const options = getOption();
+
   const handlePublicationChange = () => {
     handleChangeModal(showModalPost, setClosing, setShowModalPost);
+
+    if (uploadRef.current) {
+      if (showModalPost) {
+        setTimeout(() => {
+          if (uploadRef.current) uploadRef.current.style.right = options[0];
+        }, 500);
+      } else uploadRef.current.style.right = options[1];
+    }
   };
 
   const user = getUser();
@@ -101,7 +117,7 @@ const CardsPublicationBlog = () => {
       {/* Renderiza el botón solo para usuarios específicos */}
       {(user?.email === "carlosvassan@gmail.com" ||
         user?.email === "mar411geca@gmail.com") && (
-        <Button event={handlePublicationChange} id="upload">
+        <Button event={handlePublicationChange} id="upload" ref={uploadRef}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

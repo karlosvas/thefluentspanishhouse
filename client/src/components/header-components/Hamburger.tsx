@@ -5,7 +5,7 @@ import { handleScroll } from "../../scripts/modal";
 import { type ThemeProps } from "../../../types/types";
 import "../../styles/hamburger.css";
 
-const Hamburger: React.FC<ThemeProps> = ({ translation, theme, setTheme }) => {
+const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
   const [showModal, setShowModal] = useState(false);
   const [closing, setClosing] = useState(false);
 
@@ -43,7 +43,7 @@ const Hamburger: React.FC<ThemeProps> = ({ translation, theme, setTheme }) => {
         {(showModal || closing) && (
           <>
             <div className={`menuLeft ${closing ? "closing" : ""}`}>
-              <Profile translation={translation} />
+              <Profile />
               <div className="config">
                 <MainNav theme={theme} setTheme={setTheme} />
               </div>
