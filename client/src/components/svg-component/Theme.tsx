@@ -16,7 +16,7 @@ const Theme: React.FC<ThemeProps> = ({ theme, setTheme, children }) => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="#ddd"
-            className="svgIcon"
+            className="svgIcons"
           >
             <path
               strokeLinecap="round"
@@ -31,7 +31,7 @@ const Theme: React.FC<ThemeProps> = ({ theme, setTheme, children }) => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="#f0faff"
-            className="svgIcon"
+            className="svgIcons"
           >
             <path
               strokeLinecap="round"

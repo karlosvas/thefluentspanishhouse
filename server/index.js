@@ -4,6 +4,7 @@ import { Types } from "mongoose";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import https from "https";
 dotenv.config();
 
 const app = express();
@@ -124,6 +125,66 @@ app.post("/api/newpublication", async (req, res) => {
     console.error("Error adding card blog:", error); // Imprime el error en la consola
     res.status(500).json({ message: "Server error", error: error.message });
   }
+});
+
+app.post("/api/mailchamp", async (req, res) => {
+  const { email, name, lastname, interests } = req.body;
+
+  const newUserChamp = {
+    members: [
+      {
+        email_address: email,
+        status: "subscribed",
+        merge_fields: {
+          FNAME: name,
+          LNAME: lastname,
+          INTERESTSS: interests,
+        },
+      },
+    ],
+  };
+
+  const jsonChamp = JSON.stringify(newUserChamp);
+
+  const apiKey = process.env.MAILCHIMP_API;
+  const dataCenter = process.env.MAILCHIMP_SERVER_PREFIX;
+  const url = `https://${dataCenter}.api.mailchimp.com/3.0/lists/21cf8c94a8`;
+
+  const options = {
+    method: "POST",
+    auth: `karlosvas:${apiKey}`,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const request = https.request(url, options, function (response) {
+    let data = "";
+    response.on("data", (chunk) => {
+      data += chunk;
+    });
+
+    response.on("end", () => {
+      const responseData = JSON.parse(data);
+      if (response.statusCode === 200) {
+        res.status(200).send("Suscripción enviada");
+      } else if (responseData.title === "Member Exists") {
+        res.status(400).send("El usuario ya está suscrito");
+      } else {
+        console.error(responseData);
+        res.status(response.statusCode).send(responseData);
+      }
+    });
+  });
+
+  request.on("error", (error) => {
+    console.error("Error al enviar la solicitud:", error);
+    res.status(500).send("Error al enviar la solicitud");
+  });
+
+  // Enviar la información a Mailchimp
+  request.write(jsonChamp);
+  request.end();
 });
 
 const PORT_BACKEND = process.env.PORT;

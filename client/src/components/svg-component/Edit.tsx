@@ -1,4 +1,4 @@
-import { url_api } from "../../../public/constants/global";
+import { url_api } from "../../constants/global";
 import { type EditType } from "../../../types/types";
 
 const Edit: React.FC<EditType> = (commentText) => {

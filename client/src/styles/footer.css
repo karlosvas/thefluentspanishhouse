@@ -5,18 +5,28 @@ footer {
   width: auto;
   color: var(--primary-white);
   display: flex;
-  justify-content: center;
-  align-items: start;
-  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
   border-top: 1px solid transparent;
   a {
+    transition: color 0.2s;
     color: var(--primary-white);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--primary-blue);
   }
   .svgIcons {
     padding-right: 10px;
     margin-left: 50px;
     height: 25px;
     width: 25px;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: self-start;
   }
 }
 

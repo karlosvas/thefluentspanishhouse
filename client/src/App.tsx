@@ -7,6 +7,8 @@ import Account from "./pages/Account";
 import Blog from "./pages/Blog";
 import AboutMe from "./pages/AboutMe";
 import Contact from "./pages/Contact";
+import Info from "./pages/Info";
+// import Newsetler from "./pages/Newsleter";
 
 function App() {
   const [t] = useTranslation();
@@ -23,6 +25,8 @@ function App() {
         <Route path="/blog" element={<Blog translation={t} />} />
         <Route path="/aboutme" element={<AboutMe translation={t} />} />
         <Route path="/contact" element={<Contact translation={t} />} />
+        {/* <Route path="/newsetler" element={<Newsetler translation={t} />} /> */}
+        <Route path="/info" element={<Info translation={t} />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </>

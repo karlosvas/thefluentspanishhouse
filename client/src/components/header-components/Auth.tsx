@@ -36,7 +36,11 @@ const Auth: React.FC<Translations & AuthProps> = ({
       }
       onLoginChange?.(isLogged());
       toggleFormType("", setFormType, showModal, setShowModal);
-      location.reload();
+      if (
+        ID.email == "carlosvassan@gmail.com" ||
+        ID.email == "mar411geca@gmail.com"
+      )
+        location.reload();
     } catch (error) {
       // Verifica si el error tiene una propiedad 'code'
       const firebaseError = error as { code?: string };
@@ -54,14 +58,17 @@ const Auth: React.FC<Translations & AuthProps> = ({
   const handleGoogleAuth = async () => {
     const isRegister = typeLoginRegisterRef.current?.textContent === buttons[2];
     try {
-      if (isRegister) {
-        await registerWithGoogle();
-      } else {
-        await signInWithGoogle();
-      }
+      const user = isRegister
+        ? await registerWithGoogle()
+        : await signInWithGoogle();
+
       onLoginChange?.(isLogged());
       toggleFormType("", setFormType, showModal, setShowModal);
-      location.reload();
+      if (
+        user?.email == "carlosvassan@gmail.com" ||
+        ID.email == "mar411geca@gmail.com"
+      )
+        location.reload();
     } catch (error) {
       toast.error("An error occurred with Google authentication");
     }

@@ -9,12 +9,13 @@ import {
 } from "../../types/types";
 import "../styles/main-publication.css";
 
-export const Publications: React.FC<Translations> = ({ translation }) => {
+const Publications: React.FC<Translations> = ({ translation }) => {
   const cardsBlog: PublicationCardType[] = translation("cardsBlog", {
     returnObjects: true,
   });
   const { id } = useParams<RouteParams>();
-  const publication = cardsBlog.find((card) => card.id === id);
+  const index = cardsBlog.findIndex((card) => card.id === id);
+  const publication = cardsBlog[index];
 
   return (
     <>
@@ -22,7 +23,14 @@ export const Publications: React.FC<Translations> = ({ translation }) => {
       <main className="publicationMain">
         <div className="publication">
           <h2>{publication?.title}</h2>
-          <img src={publication?.base64_img} alt="" />
+          {publication?.base64_img ? (
+            <img src={publication?.base64_img} alt="Imagen de la publicación" />
+          ) : (
+            <img
+              src={`/img/${index % cardsBlog.length}.png`}
+              alt="Imagen de la publicación"
+            />
+          )}
           <strong>{publication?.subtitle}</strong>
           <p>{publication?.content}</p>
         </div>

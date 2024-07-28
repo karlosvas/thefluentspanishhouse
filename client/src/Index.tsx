@@ -7,8 +7,9 @@ import { I18nextProvider, initReactI18next } from "react-i18next";
 import HttpBackend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { setupAuthPersistence } from "../src/scripts/oauth2-0.tsx"; // Asegúrate de ajustar la ruta según tu estructura
-import { url_api } from "../public/constants/global.ts";
+import { url_api } from "./constants/global.ts";
 import "./styles/index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 i18n
   .use(HttpBackend)

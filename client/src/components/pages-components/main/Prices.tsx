@@ -1,5 +1,8 @@
-import { type Translations } from "../../../../types/types";
+import { useState } from "react";
 import Button from "../../reusable/Buuton";
+import { type Translations } from "../../../../types/types";
+import FormSuscribe from "../../render-data/FormSuscribe";
+import { handleChangeModal } from "../../../scripts/modal";
 
 const Prices: React.FC<Translations> = ({ translation }) => {
   const prices = translation("pricing", { returnObjects: true });
@@ -7,8 +10,24 @@ const Prices: React.FC<Translations> = ({ translation }) => {
     returnObjects: true,
   });
 
+  const [showModalSuscribe, setShowModalSuscribe] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const [buttonName, setButtonName] = useState("");
+
+  const handleSusribeChange = (name: string) => {
+    if (name !== "form") setButtonName(name);
+    handleChangeModal(showModalSuscribe, setClosing, setShowModalSuscribe);
+  };
+
   return (
     <>
+      {showModalSuscribe && (
+        <FormSuscribe
+          closing={closing}
+          handleChange={() => handleSusribeChange("form")}
+          buttonName={buttonName}
+        />
+      )}
       <div className="divPracing">
         <h2>What do our classes offer?</h2>
         <div className="flex-card">
@@ -30,7 +49,9 @@ const Prices: React.FC<Translations> = ({ translation }) => {
                 }
                 return listItems;
               })()}
-              <Button>{inscription[0]}</Button>
+              <Button event={() => handleSusribeChange("FreeClass")}>
+                {inscription[0]}
+              </Button>
             </ul>
           </div>
           <div className="cardPracing">
@@ -51,7 +72,9 @@ const Prices: React.FC<Translations> = ({ translation }) => {
                 }
                 return listItems;
               })()}
-              <Button>{inscription[1]}</Button>
+              <Button event={() => handleSusribeChange("GroupClass")}>
+                {inscription[1]}
+              </Button>
             </ul>
           </div>
           <div className="cardPracing">
@@ -68,7 +91,9 @@ const Prices: React.FC<Translations> = ({ translation }) => {
                 }
                 return listItems;
               })()}
-              <Button>{inscription[2]}</Button>
+              <Button event={() => handleSusribeChange("PrivatedClass")}>
+                {inscription[2]}
+              </Button>
             </ul>
           </div>
         </div>

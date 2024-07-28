@@ -22,7 +22,7 @@ const Exit: React.FC<ChildrenType & OptionalClass> = ({
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="svgIcon"
+          className="svgIcons"
         >
           <path
             strokeLinecap="round"

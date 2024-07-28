@@ -29,7 +29,7 @@ body {
     animation: reveal linear both;
     animation-timeline: view();
     animation-range: entry 20% cover 30%;
-    padding: 50px 50px;
+    padding: 50px 0;
     margin-top: 50px;
     text-align: center;
     #title {

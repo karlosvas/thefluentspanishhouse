@@ -8,7 +8,7 @@
   padding: 20px;
   border-radius: 5px;
   width: fit-content;
-  height: 40vh;
+  height: auto;
   padding: 0 50px;
   text-align: center;
   font-weight: 500;
@@ -72,6 +72,7 @@
     align-items: center;
     width: 220px;
     border: 2px solid var(--primary-black);
+    margin-bottom: 20px;
     #svgGoogle {
       margin-left: 10px;
     }
@@ -79,12 +80,13 @@
 }
 
 .modalBackdrop {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
 }
 
 .modalBackdropLog {
@@ -95,6 +97,7 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
+  overflow: hidden;
 }
 
 /* Moviles */

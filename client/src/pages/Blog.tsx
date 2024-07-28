@@ -1,5 +1,5 @@
 import Header from "../layouts/Header";
-import CardBlog from "../components/pages-components/blog/CardBlog";
+import CardsPublicationBlog from "../components/pages-components/blog/CardsPublicationBlog";
 import Footer from "../layouts/Footer";
 import { type Translations } from "../../types/types";
 import "../styles/main-blog.css";
@@ -9,7 +9,7 @@ const Blog: React.FC<Translations> = ({ translation }) => {
     <>
       <Header translation={translation} />
       <main className="mainBlog">
-        <CardBlog translation={translation} />
+        <CardsPublicationBlog translation={translation} />
       </main>
       <Footer />
     </>

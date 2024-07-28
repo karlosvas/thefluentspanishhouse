@@ -24,6 +24,12 @@ export interface PublicationCardType {
   base64_img: string;
 }
 
+export interface SubscriberType {
+  name: string;
+  lastname: string;
+  email: string;
+}
+
 export type PublicationType = {
   publication: CardType | undefined;
 };
@@ -66,9 +72,14 @@ export interface AuthProps {
   logged: boolean;
 }
 
+type HandleSubscribeChange = () => void;
+type HandlePublicationChange = () => void;
+type Handler = HandleSubscribeChange | HandlePublicationChange;
+
 export interface FormPublicationProps {
   closing: boolean;
-  event: () => void;
+  handleChange: Handler;
+  buttonName?: stirng;
 }
 
 export interface EditType {

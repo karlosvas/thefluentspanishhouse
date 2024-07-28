@@ -7,10 +7,10 @@ import {
 } from "../../../../types/types";
 import FormPublication from "../../render-data/FormPublication";
 import { getUser } from "../../../scripts/oauth2-0";
-import { handleScroll } from "../../../scripts/modal";
+import { handleChangeModal } from "../../../scripts/modal";
 import Button from "../../reusable/Buuton";
 
-const CardBlog: React.FC<Translations> = ({ translation }) => {
+const CardsPublicationBlog: React.FC<Translations> = ({ translation }) => {
   const [showModalPost, setShowModalPost] = useState(false);
   const [closing, setClosing] = useState(false);
 
@@ -31,19 +31,7 @@ const CardBlog: React.FC<Translations> = ({ translation }) => {
   };
 
   const handlePublicationChange = () => {
-    setShowModalPost((prev) => {
-      const newState = !prev;
-      if (newState) handleScroll(true);
-      else {
-        setClosing(true);
-        setTimeout(() => {
-          setShowModalPost(false);
-          setClosing(false);
-          handleScroll(false);
-        }, 500);
-      }
-      return newState;
-    });
+    handleChangeModal(showModalPost, setClosing, setShowModalPost);
   };
 
   const user = getUser();
@@ -52,7 +40,10 @@ const CardBlog: React.FC<Translations> = ({ translation }) => {
     <div id="blog">
       {/* Renderiza el formulario si showModalPost es verdadero */}
       {showModalPost && (
-        <FormPublication closing={closing} event={handlePublicationChange} />
+        <FormPublication
+          closing={closing}
+          handleChange={handlePublicationChange}
+        />
       )}
 
       {/* Renderiza el mensaje si no hay publicaciones */}
@@ -82,7 +73,7 @@ const CardBlog: React.FC<Translations> = ({ translation }) => {
                   />
                 ) : (
                   <img
-                    src={`img/${index}.png`}
+                    src={`/img/${index % cardsBlog.length}.png`}
                     alt="Imagen de la publicación"
                     onLoad={() => handleImageLoad(index)}
                   />
@@ -99,11 +90,26 @@ const CardBlog: React.FC<Translations> = ({ translation }) => {
       {(user?.email === "carlosvassan@gmail.com" ||
         user?.email === "mar411geca@gmail.com") && (
         <Button event={handlePublicationChange} id="upload">
-          Upload
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="svgIcons"
+            width="30px"
+            height="30px"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
+            />
+          </svg>
         </Button>
       )}
     </div>
   );
 };
 
-export default CardBlog;
+export default CardsPublicationBlog;

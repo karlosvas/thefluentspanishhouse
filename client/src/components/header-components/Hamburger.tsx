@@ -3,6 +3,7 @@ import Profile from "./Profile";
 import MainNav from "./MainNav";
 import { type Translations, type ThemeProps } from "../../../types/types";
 import "../../styles/hamburger.css";
+import { handleScroll } from "../../scripts/modal";
 
 const Hamburger: React.FC<Translations & ThemeProps> = ({
   translation,
@@ -13,7 +14,6 @@ const Hamburger: React.FC<Translations & ThemeProps> = ({
   const [closing, setClosing] = useState(false);
 
   const handleClick = () => {
-    console.log("Clicked!"); // Log de verificación
     if (showModal) {
       setClosing(true);
       setTimeout(() => {
@@ -23,6 +23,7 @@ const Hamburger: React.FC<Translations & ThemeProps> = ({
     } else {
       setShowModal(true);
     }
+    handleScroll(!showModal);
   };
 
   const hamburger = translation

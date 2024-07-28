@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { url_api } from "../../../public/constants/global";
+import { url_api } from "../../constants/global";
 import {
   type FormPublicationProps,
   type PublicationCardType,
 } from "../../../types/types";
 import "../../styles/uploadfiles.css";
+import toast from "react-hot-toast";
 
 const FormPublication: React.FC<FormPublicationProps> = ({
   closing,
-  event,
+  handleChange,
 }) => {
   const [error, setError] = useState("");
   const [newPublication, setNewPublication] = useState<PublicationCardType>({
@@ -17,6 +18,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     content: "",
     base64_img: "",
   });
+  const [imagePreview, setImagePreview] = useState<string>("");
 
   const resizeImage = (
     file: File,
@@ -28,14 +30,12 @@ const FormPublication: React.FC<FormPublicationProps> = ({
       reader.onload = () => {
         const img = new Image();
         img.onload = () => {
-          // Crear un canvas para redimensionar la imagen
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
           if (!ctx) {
             reject(new Error("No se pudo obtener el contexto del canvas"));
             return;
           }
-          // Calcular nuevas dimensiones
           let width = img.width;
           let height = img.height;
           if (width > maxWidth) {
@@ -46,11 +46,9 @@ const FormPublication: React.FC<FormPublicationProps> = ({
             width = Math.round((maxHeight / height) * width);
             height = maxHeight;
           }
-          // Establecer el tamaño del canvas y dibujar la imagen
           canvas.width = width;
           canvas.height = height;
           ctx.drawImage(img, 0, 0, width, height);
-          // Convertir el canvas a Base64
           const dataUrl = canvas.toDataURL("image/jpeg", 1);
           resolve(dataUrl);
         };
@@ -78,6 +76,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
             ...prev,
             base64_img: resizedBase64Image,
           }));
+          setImagePreview(resizedBase64Image);
         } catch (error) {
           setError("Error al redimensionar la imagen.");
           console.error(error);
@@ -86,7 +85,9 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     }
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = event.target;
     setNewPublication((prev) => ({
       ...prev,
@@ -94,11 +95,8 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     }));
   };
 
-  const handleSubmitPost = async (
-    event: React.FormEvent<HTMLButtonElement>
-  ) => {
+  const handleSubmitPost = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     try {
       const response = await fetch(`${url_api}/api/newpublication`, {
         method: "POST",
@@ -120,11 +118,39 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     }
   };
 
+  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    if (file && !file.type.startsWith("image/")) {
+      setError("Please select an image file");
+      toast.error("Please select an image file");
+    } else {
+      setError("");
+      if (file) {
+        try {
+          const resizedBase64Image = await resizeImage(file, 800, 600);
+          setNewPublication((prev) => ({
+            ...prev,
+            base64_img: resizedBase64Image,
+          }));
+          setImagePreview(resizedBase64Image);
+        } catch (error) {
+          setError("Error al redimensionar la imagen.");
+          console.error(error);
+        }
+      }
+    }
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <div className={`uploadPublication ${closing ? "closing" : ""}`}>
         <h3>New Publication</h3>
-        <form>
+        <form onSubmit={handleSubmitPost}>
           <ul>
             <li>
               Title
@@ -132,6 +158,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
                 type="text"
                 name="title"
                 value={newPublication.title}
+                required
                 onChange={handleInputChange}
               />
             </li>
@@ -141,32 +168,50 @@ const FormPublication: React.FC<FormPublicationProps> = ({
                 type="text"
                 name="subtitle"
                 value={newPublication.subtitle}
+                required
                 onChange={handleInputChange}
               />
             </li>
             <li>
               New content
-              <input
-                type="text"
+              <br />
+              <textarea
                 name="content"
                 value={newPublication.content}
                 onChange={handleInputChange}
+                required
+                rows={4}
+                cols={50}
               />
             </li>
             <li>
-              <input type="file" accept="image/*" onChange={handleFileChange} />
+              <div onDrop={handleDrop} onDragOver={handleDragOver}>
+                <label className="custom-file-upload">
+                  <input
+                    type="file"
+                    id="fileInput"
+                    onChange={handleFileChange}
+                  />
+                  {imagePreview ? (
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      style={{ maxWidth: "100px", marginTop: "10px" }}
+                    />
+                  ) : (
+                    <p>Select or drag the image</p>
+                  )}
+                </label>
+              </div>
               {error && <p>{error}</p>}
             </li>
-            <button id="submitPost" type="submit" onClick={handleSubmitPost}>
-              Enviar
+            <button id="submitPost" type="submit">
+              Submit
             </button>
           </ul>
         </form>
       </div>
-      <div
-        className={`modalBackdropLog ${closing ? "closing" : ""}`}
-        onClick={event}
-      ></div>
+      <div className="modalBackdropLog" onClick={handleChange}></div>
     </>
   );
 };

@@ -18,10 +18,10 @@
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
   box-sizing: border-box;
-  overflow-x: hidden;
 }
 
 body {
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
   min-width: 320px;
@@ -210,5 +210,23 @@ html.dark {
 
   #reviews {
     scroll-margin-top: 300px;
+  }
+}
+
+@keyframes bgDown {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bgUp {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

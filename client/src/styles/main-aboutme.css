@@ -5,64 +5,66 @@
   margin-top: 50px;
 }
 
-.aboutme {
-  background-color: var(--primary-white);
-  padding-bottom: 100px;
-}
-
-.divAboutMe {
+.main-aboutme {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  img {
-    animation: reveal linear both;
-    animation-timeline: view();
-    animation-range: entry 20% cover 30%;
-    border-radius: 5px;
-    width: auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .aboutMe {
-    animation: reveal linear both;
-    animation-timeline: view();
-    animation-range: entry 20% cover 30%;
+  background-color: var(--primary-white);
+  .div-aboutme {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 80%;
     text-align: center;
-
+    padding-bottom: 100px;
     p {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 30%;
       margin: 10px;
       width: 50%;
       strong {
         font-size: 20px;
       }
     }
-  }
-  img {
-    width: auto;
+    img {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 30%;
+      border-radius: 5px;
+      width: 40vw;
+      height: auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
   }
 }
 
+@media only screen and (width <= 1200px) {
+  .main-aboutme {
+    .div-aboutme {
+      img {
+        width: 70vw;
+      }
+    }
+  }
+}
 @media only screen and (width <= 766px) {
   #haboutme {
     margin: 20px 0;
     text-align: center;
   }
-  .divAboutMe {
-    padding-bottom: 100px;
-    h2 {
-      margin-top: 20px;
-    }
-    img {
-      width: 90%;
-    }
-    .aboutMe > p {
-      width: 100%;
+  .main-aboutme {
+    p {
+      width: 100vw;
       font-size: 0.8em;
+    }
+    .div-aboutme {
+      padding-bottom: 100px;
+      h2 {
+        margin-top: 20px;
+      }
     }
   }
 }

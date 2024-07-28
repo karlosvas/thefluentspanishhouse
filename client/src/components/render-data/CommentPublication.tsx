@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { v4 as uuidv4 } from "uuid";
 import { getUser } from "../../scripts/oauth2-0";
-import { url_api } from "../../../public/constants/global";
+import { url_api } from "../../constants/global";
 import CommentCard from "../pages-components/blog/CommentCard";
 import { type Comment } from "../../../types/types";
 import "../../styles/comments.css";

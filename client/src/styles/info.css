@@ -1,0 +1,30 @@
+.main-terminos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 100px;
+  background-color: var(--primary-white);
+  h2 {
+    text-align: center;
+    scroll-margin: 150px;
+  }
+  p {
+    width: 50vw;
+  }
+  section {
+    margin: 100px 0;
+  }
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 10vh;
+    background-color: var(--primary-black);
+    box-sizing: border-box;
+    .svgIcons {
+      width: 30px;
+    }
+  }
+}

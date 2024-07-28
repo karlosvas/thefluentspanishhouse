@@ -1,6 +1,5 @@
 import Card from "react-bootstrap/Card";
 import Placeholder from "react-bootstrap/Placeholder";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 function CardPlaceholder() {
   return (

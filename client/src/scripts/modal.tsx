@@ -15,12 +15,11 @@ export const toggleFormType = (
 ) => {
   setFormType(type);
   toggleModal(showModal, setShowModal);
+  handleScroll(!showModal);
 };
 
 export const handleScroll = (showModal: boolean) => {
-  showModal
-    ? (document.body.style.overflow = "hidden")
-    : (document.body.style.overflow = "auto");
+  document.body.style.overflowY = showModal ? "hidden" : "auto";
 };
 
 export const handleChangeModal = (

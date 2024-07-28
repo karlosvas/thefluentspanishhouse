@@ -22,12 +22,15 @@ const cardBlogSchema = new Schema(
   { _id: false }
 );
 
-const priceCardSchema = new Schema({
-  type: { type: String, required: true },
-  price: { type: String, required: true },
-  duration: { type: String, required: true },
-  features: [String],
-});
+const priceCardSchema = new Schema(
+  {
+    type: { type: String, required: true },
+    price: { type: String, required: true },
+    duration: { type: String, required: true },
+    features: [String],
+  },
+  { _id: false }
+);
 
 const translationSchema = new Schema({
   _id: { type: String, required: true },
@@ -44,6 +47,16 @@ const translationSchema = new Schema({
     contact: [String],
     pricing: [priceCardSchema],
     inscriptions: [String],
+    terms: {
+      title: { type: String },
+      content: { type: String },
+    },
+    privacy: {
+      privacy: { type: String },
+      title: { type: String },
+      effectiveDate: { type: String },
+      content: { type: String },
+    },
   },
 });
 

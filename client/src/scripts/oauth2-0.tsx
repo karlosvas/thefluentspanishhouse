@@ -64,6 +64,7 @@ export async function signInWithGoogle() {
         Welcome back <b>{user}</b>!
       </span>
     );
+    return auth.currentUser;
   } catch (error) {
     toast.error(`Authentication failed`);
     console.error(error);
@@ -118,6 +119,7 @@ export async function registerWithGoogle() {
           </span>
         );
       }
+      return auth.currentUser;
     } else toast.error("The user does not have an email");
   } catch (error) {
     toast.error("Error registering with Google");
