@@ -7,7 +7,7 @@ import { type PublicationCardType, type RouteParams } from "../../types/types";
 import "../styles/main-publication.css";
 
 const Publications = () => {
-  const [cardsBlog, setCardsBlog] = useState<PublicationCardType[]>([]);
+  const [publication, setPublication] = useState<PublicationCardType>();
   const [imageLoading, setImageLoading] = useState<boolean>(false);
 
   const { id } = useParams<RouteParams>();
@@ -23,8 +23,8 @@ const Publications = () => {
       if (!response.ok)
         throw new Error("Hubo un problema al obtener los datos.");
 
-      const arrPublication = await response.json();
-      setCardsBlog(arrPublication);
+      const publication = await response.json();
+      setPublication(publication);
       setImageLoading(true);
     } catch (error) {
       console.error("Error al obtener datos:", error);
@@ -33,10 +33,7 @@ const Publications = () => {
 
   useEffect(() => {
     loadPublications();
-  }, [id]);
-
-  const indexSelected = cardsBlog.findIndex((card) => card.id === id);
-  const publication = cardsBlog[indexSelected];
+  }, []);
 
   return (
     <>
@@ -53,7 +50,7 @@ const Publications = () => {
             />
           ) : (
             <img
-              src={`/img/${indexSelected % cardsBlog.length}.png`}
+              src={`/img/${Math.random() % 5}.png`}
               alt="Imagen de la publicación"
               style={{ display: imageLoading ? "block" : "none" }}
             />

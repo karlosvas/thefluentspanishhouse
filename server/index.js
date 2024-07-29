@@ -69,12 +69,9 @@ app.post("/api/comments", async (req, res) => {
 app.get("/api/publications", async (req, res) => {
   try {
     const publication = await modelPublication.find();
-
-    if (!publication) {
+    if (!publication)
       return res.status(404).json({ message: "Publication not found" });
-    }
-
-    res.status(200).json(publication[0]);
+    res.status(200).json(publication);
   } catch (error) {
     console.error("Error retrieving publication:", error);
     res.status(500).json({ message: "Server error", error: error.message });
@@ -83,15 +80,17 @@ app.get("/api/publications", async (req, res) => {
 
 app.get("/api/publications/:id", async (req, res) => {
   try {
-    const publication = await modelPublication.find();
-
-    if (!publication) {
+    const id = req.params.id;
+    // Verifica si el id es un ObjectId válido
+    if (!Types.ObjectId.isValid(id))
+      return res.status(400).json({ message: "Invalid publication ID" });
+    // Encuentra la publicación por id
+    const publication = await modelPublication.findById(id);
+    // Si no se encuentra la publicación
+    if (!publication)
       return res.status(404).json({ message: "Publication not found" });
-    }
-
-    const arrPublication = publication[0].cardsBlog;
-
-    res.status(200).json(arrPublication);
+    // Devuelve el elemento encontrado
+    res.status(200).json(publication);
   } catch (error) {
     console.error("Error retrieving publication:", error);
     res.status(500).json({ message: "Server error", error: error.message });
@@ -99,48 +98,31 @@ app.get("/api/publications/:id", async (req, res) => {
 });
 
 // Nuevas publicaciones
+// Nuevas publicaciones
 app.post("/api/newpublication", async (req, res) => {
   try {
     const { title, subtitle, content, base64_img } = req.body;
-
-    if (!title || !subtitle || !content) {
+    // Validar campos requeridos
+    if (!title || !subtitle || !content)
       return res.status(400).json({ message: "Missing required fields" });
-    }
-
     // Validar formato de imagen si se proporciona
-    if (base64_img && !/^data:image\/[a-zA-Z]+;base64,/.test(base64_img)) {
+    if (base64_img && !/^data:image\/[a-zA-Z]+;base64,/.test(base64_img))
       return res.status(400).json({ message: "Invalid image format" });
-    }
-
-    // Encuentra el primer documento o crea uno nuevo si no existe
-    let publication = await modelPublication.findOne();
-
-    if (!publication) {
-      publication = new modelPublication({
-        _id: new Types.ObjectId(),
-        cardsBlog: [],
-      });
-    }
-
-    // Crear una nueva tarjeta y añadirla al array cardsBlog
-    const newCardBlog = {
-      id: new Types.ObjectId().toString(),
+    // Crear una nueva tarjeta de blog
+    const newCardBlog = new modelPublication({
+      _id: new Types.ObjectId(),
       title,
       subtitle,
       content,
       base64_img,
-    };
-
-    publication.cardsBlog.push(newCardBlog);
-
-    // Guardar el documento actualizado
-    await publication.save();
-
+    });
+    // Guardar el nuevo documento en la base de datos
+    await newCardBlog.save();
     res
       .status(201)
       .json({ message: "Card blog added successfully", cardBlog: newCardBlog });
   } catch (error) {
-    console.error("Error adding card blog:", error); // Imprime el error en la consola
+    console.error("Error adding card blog:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });

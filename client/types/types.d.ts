@@ -14,7 +14,7 @@ export interface ButtonProps {
 }
 
 export interface PublicationCardType {
-  id?: string;
+  _id: string;
   title: string;
   subtitle: string;
   content: string;

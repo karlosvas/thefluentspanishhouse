@@ -87,7 +87,6 @@
 
 .uploadPublication .custom-file-upload {
   display: inline-block;
-  padding: 10px 0;
   cursor: pointer;
   color: var(--primary-black);
   border-radius: 5px;
@@ -101,7 +100,8 @@
 }
 
 .uploadPublication .custom-file-upload img {
-  min-width: 20vw;
+  max-height: 20vh;
+  padding: 10px;
 }
 
 .uploadPublication textarea {

@@ -13,6 +13,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
 }) => {
   const [error, setError] = useState("");
   const [newPublication, setNewPublication] = useState<PublicationCardType>({
+    _id: "",
     title: "",
     subtitle: "",
     content: "",
@@ -110,7 +111,6 @@ const FormPublication: React.FC<FormPublicationProps> = ({
           base64_img: newPublication.base64_img,
         }),
       });
-
       if (response.ok) window.location.reload();
       else console.error("Error al enviar el post");
     } catch (error) {
@@ -193,11 +193,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
                     onChange={handleFileChange}
                   />
                   {imagePreview ? (
-                    <img
-                      src={imagePreview}
-                      alt="Preview"
-                      style={{ maxWidth: "100px", marginTop: "10px" }}
-                    />
+                    <img src={imagePreview} alt="Preview" />
                   ) : (
                     <p>Select or drag the image</p>
                   )}

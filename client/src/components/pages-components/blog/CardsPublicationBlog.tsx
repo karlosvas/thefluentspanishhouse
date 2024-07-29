@@ -59,10 +59,7 @@ const CardsPublicationBlog = () => {
         if (!response.ok)
           throw new Error("Hubo un problema al obtener los datos.");
         const data = await response.json();
-        const cardsBlog = data.cardsBlog;
-        Array.isArray(cardsBlog) &&
-          cardsBlog.length !== 0 &&
-          setCardsBlog(cardsBlog);
+        Array.isArray(data) && data.length !== 0 && setCardsBlog(data);
       } catch (error) {
         console.error("Error al obtener datos:", error);
       }
@@ -82,9 +79,9 @@ const CardsPublicationBlog = () => {
 
       {/* // Renderiza la lista de publicaciones */}
       {cardsBlog.map((publication, index) => (
-        <div className="cardBlog" key={publication.id}>
+        <div className="cardBlog" key={publication._id}>
           <Link
-            to={`/publication/${publication.id}`}
+            to={`/publication/${publication._id}`}
             style={{
               textDecoration: "none",
               color: "inherit",
