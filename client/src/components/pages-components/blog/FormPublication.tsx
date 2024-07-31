@@ -1,24 +1,16 @@
 import { useState } from "react";
-import { url_api } from "../../constants/global";
-import {
-  type FormPublicationProps,
-  type PublicationCardType,
-} from "../../../types/types";
-import "../../styles/uploadfiles.css";
 import toast from "react-hot-toast";
+import { handleSubmitPost } from "../../../scripts/render-data";
+import "../../../styles/uploadfiles.css";
+import { type FormPublicationProps } from "../../../../types/types";
 
 const FormPublication: React.FC<FormPublicationProps> = ({
   closing,
   handleChange,
+  newPublication,
+  setNewPublication,
 }) => {
   const [error, setError] = useState("");
-  const [newPublication, setNewPublication] = useState<PublicationCardType>({
-    _id: "",
-    title: "",
-    subtitle: "",
-    content: "",
-    base64_img: "",
-  });
   const [imagePreview, setImagePreview] = useState<string>("");
 
   const resizeImage = (
@@ -96,28 +88,6 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     }));
   };
 
-  const handleSubmitPost = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    try {
-      const response = await fetch(`${url_api}/api/newpublication`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: newPublication.title,
-          subtitle: newPublication.subtitle,
-          content: newPublication.content,
-          base64_img: newPublication.base64_img,
-        }),
-      });
-      if (response.ok) window.location.reload();
-      else console.error("Error al enviar el post");
-    } catch (error) {
-      console.error("Error al enviar el post:", error);
-    }
-  };
-
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
@@ -146,11 +116,15 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     event.preventDefault();
   };
 
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    await handleSubmitPost(event, newPublication);
+  };
+
   return (
     <>
       <div className={`uploadPublication ${closing ? "closing" : ""}`}>
         <h3>New Publication</h3>
-        <form onSubmit={handleSubmitPost}>
+        <form onSubmit={onSubmit}>
           <ul>
             <li>
               Title

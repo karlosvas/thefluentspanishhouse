@@ -71,9 +71,20 @@ type Handler = HandleSubscribeChange | HandlePublicationChange;
 export interface FormPublicationProps {
   closing: boolean;
   handleChange: Handler;
-  buttonName?: stirng;
+  buttonName?: string;
+  newPublication: PublicationCardType;
+  setNewPublication: React.Dispatch<React.SetStateAction<PublicationCardType>>;
+}
+export interface FormSuscriberProps {
+  closing: boolean;
+  handleChange: Handler;
+  buttonName?: string;
 }
 
 export interface EditType {
   commentText: string;
 }
+
+export type PublicationsProp = {
+  publications: PublicationCardType[];
+};

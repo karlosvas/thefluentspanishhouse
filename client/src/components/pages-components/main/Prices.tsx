@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "../../reusable/Buuton";
-import FormSuscribe from "../../render-data/FormSuscribe";
+import FormSuscribe from "../../pages-components/main/FormSuscribe";
 import { handleChangeModal } from "../../../scripts/modal";
 
 const Prices = () => {

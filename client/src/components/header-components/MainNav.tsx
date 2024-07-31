@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Theme from "../svg-component/Theme";
 import Account from "../svg-component/Account";
 import { type ThemeProps } from "../../../types/types";
@@ -16,29 +16,29 @@ const MainNav: React.FC<ThemeProps> = ({ theme, setTheme }) => {
     <nav>
       <ul>
         <li>
-          <a href="/" onClick={handleClick("/")}>
+          <Link to="/" onClick={handleClick("/")}>
             Home
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="/blog" onClick={handleClick("/blog")}>
+          <Link to="/blog" onClick={handleClick("/blog")}>
             Blog
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="/aboutme" onClick={handleClick("/aboutme")}>
+          <Link to="/aboutme" onClick={handleClick("/aboutme")}>
             About me
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="/newsetler" onClick={handleClick("/newsetler")}>
+          <Link to="/newsetler" onClick={handleClick("/newsetler")}>
             Newsetler
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="/contact" onClick={handleClick("/contact")}>
+          <Link to="/contact" onClick={handleClick("/contact")}>
             Contact
-          </a>
+          </Link>
         </li>
         {window.innerWidth <= 766 && (
           <>

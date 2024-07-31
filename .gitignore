@@ -28,4 +28,4 @@ dist-ssr
 
 # Petitions
 *.http
-ej.json
+.vercel

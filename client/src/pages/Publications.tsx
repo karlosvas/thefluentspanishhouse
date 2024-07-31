@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import UserComments from "../components/render-data/CommentPublication";
+import UserComments from "../components/pages-components/publications/CommentPublication";
 import { useEffect, useState } from "react";
 import { url_api } from "../constants/global";
-import PlaceholderPublications from "../components/render-data/PlaceholderPublication";
+import PlaceholderPublications from "../components/pages-components/blog/PlaceholderPublication";
 import { type PublicationCardType, type RouteParams } from "../../types/types";
 import "../styles/main-publication.css";
 

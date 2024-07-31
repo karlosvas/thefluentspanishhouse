@@ -1,14 +1,7 @@
-import { url_api } from "../../constants/global";
 import { type EditType } from "../../../types/types";
 
-const Edit: React.FC<EditType> = (commentText) => {
-  fetch(`${url_api}/api/comments`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "aplication/json",
-    },
-    body: JSON.stringify({ newComment: commentText }),
-  });
+const Edit: React.FC<EditType> = ({ commentText }) => {
+  console.log(commentText);
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

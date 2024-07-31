@@ -1,19 +1,30 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
-import { setupAuthPersistence } from "../src/scripts/oauth2-0.tsx"; // Asegúrate de ajustar la ruta según tu estructura
-import "./styles/index.css";
+import App from "./App.tsx";
+import { setupAuthPersistence } from "../src/scripts/oauth2-0.tsx"; // Ajusta la ruta según tu estructura
+import { loadPublications } from "./scripts/render-data.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/index.css";
+import { type PublicationCardType } from "../types/types";
 
-setupAuthPersistence()
-  .then(() => {
+const initializeApp = async () => {
+  try {
+    const publications: PublicationCardType[] = await loadPublications();
+    await setupAuthPersistence();
+
+    // Renderiza la aplicación después de que ambas promesas se hayan completado
     ReactDOM.createRoot(document.getElementById("root")!).render(
       <React.StrictMode>
         <BrowserRouter>
-          <App />
+          <App publications={publications} />
         </BrowserRouter>
       </React.StrictMode>
     );
-  })
-  .catch((e) => console.error(e));
+  } catch (error) {
+    console.error("Error during initialization:", error);
+  }
+};
+
+// Llama a la función para iniciar el proceso
+initializeApp();

@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { FormPublicationProps, SubscriberType } from "../../../types/types";
-import { url_api } from "../../constants/global";
-import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
-import Buuton from "../reusable/Buuton";
+import Buuton from "../../reusable/Buuton";
+import { handleSubmitSubscription } from "../../../scripts/render-data";
+import {
+  type FormSuscriberProps,
+  type SubscriberType,
+} from "../../../../types/types";
 
-const FormSuscribe: React.FC<FormPublicationProps> = ({
+const FormSuscribe: React.FC<FormSuscriberProps> = ({
   closing,
   handleChange,
   buttonName,
@@ -26,38 +28,20 @@ const FormSuscribe: React.FC<FormPublicationProps> = ({
     }));
   };
 
-  const handleSubmitPost = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    try {
-      const response = await fetch(`${url_api}/api/mailchamp`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: newSubscriber.name,
-          lastname: newSubscriber.lastname,
-          email: newSubscriber.email,
-          interests: buttonName,
-        }),
-      });
-
-      response.ok
-        ? toast.success("Submitted successfully")
-        : toast.error("Error when sending the data");
-
-      response.ok ? handleChange() : "";
-    } catch (error) {
-      console.error("Error al enviar el post:", error);
-    }
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    await handleSubmitSubscription(
+      event,
+      handleChange,
+      newSubscriber,
+      buttonName
+    );
   };
 
   return (
     <>
       <div className={`uploadPublication ${closing ? "closing" : ""}`}>
         <h3>{buttonName}</h3>
-        <form onSubmit={handleSubmitPost}>
+        <form onSubmit={onSubmit}>
           <ul>
             <li>
               Email
