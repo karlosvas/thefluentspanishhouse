@@ -187,6 +187,15 @@ app.post("/api/mailchamp", async (req, res) => {
   request.end();
 });
 
+app.get("/api/test", async (req, res) => {
+  try {
+    const previewUrl = process.env.VERCEL_URL;
+    res.send(previewUrl);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener la URL de preview" });
+  }
+});
+
 const PORT_BACKEND = process.env.PORT;
 app.listen(PORT_BACKEND, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT_BACKEND}`);
