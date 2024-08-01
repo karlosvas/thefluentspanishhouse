@@ -98,7 +98,6 @@ app.get("/api/publications/:id", async (req, res) => {
 });
 
 // Nuevas publicaciones
-// Nuevas publicaciones
 app.post("/api/newpublication", async (req, res) => {
   try {
     const { title, subtitle, content, base64_img } = req.body;
@@ -185,6 +184,18 @@ app.post("/api/mailchamp", async (req, res) => {
   // Enviar la información a Mailchimp
   request.write(jsonChamp);
   request.end();
+});
+
+app.get("/api/test", async (req, res) => {
+  try {
+    const previewUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
+    if (!previewUrl) throw new Error("NEXT_PUBLIC_VERCEL_URL no está definida");
+    res.send(previewUrl);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error en el servidor para obtener URL de preview" });
+  }
 });
 
 const PORT_BACKEND = process.env.PORT;
