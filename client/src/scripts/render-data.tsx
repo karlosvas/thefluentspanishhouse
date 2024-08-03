@@ -1,42 +1,86 @@
 import { url_api } from "../constants/global";
+import Helper from "./helper";
+import toast from "react-hot-toast";
+import { Dispatch, SetStateAction } from "react";
 import {
   type PublicationCardType,
   type SubscriberType,
   type Comment,
 } from "../../types/types";
-import Helper from "./helper";
-import toast from "react-hot-toast";
 
 const app = Helper();
 
-export const handleSubmitPost = async (
-  event: React.FormEvent<HTMLFormElement>,
-  newPublication: PublicationCardType
-) => {
-  event.preventDefault();
+///////////////////////////// GET /////////////////////////////
+export const getUrlTest = async () => {
   try {
-    const response = await app.post(`${url_api}/api/newpublication`, {
-      body: JSON.stringify(newPublication),
-    });
-    if (response.ok) window.location.reload();
-    else console.error("Error al enviar el post");
-  } catch (error) {
-    console.error("Error al enviar el post:", error);
-  }
-};
-
-export const loadPublications = async () => {
-  try {
-    const response = await app.get(`${url_api}/api/publications`, {
+    return await app.get(`${import.meta.env.VITE_URL_API}/api/test`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
-    if (!response.ok) throw new Error("Hubo un problema al obtener los datos.");
-    const data = await response.json();
-    return data;
+  } catch (error) {
+    console.error(
+      "Error al hacer fetch para obtener la URL de los test desde el cliente",
+      error
+    );
+    throw error;
+  }
+};
+export const getComments = async (id: string | undefined) => {
+  try {
+    return await app.get(`${url_api}/api/comments/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error("Error al obtener datos:", error);
+    throw error;
+  }
+};
+export const loadPublication = async (
+  setPublication: Dispatch<SetStateAction<PublicationCardType | undefined>>,
+  setImageLoading: Dispatch<SetStateAction<boolean>>,
+  id: string | undefined
+) => {
+  try {
+    const publication = await app.get(`${url_api}/api/publications/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    setPublication(publication);
+    setImageLoading(true);
+    return publication;
+  } catch (error) {
+    console.error("Error al obtener datos:", error);
+  }
+};
+export const loadPublications = async () => {
+  try {
+    return await app.get(`${url_api}/api/publications`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.error("Error al obtener datos:", error);
+  }
+};
+
+///////////////////////////// POST /////////////////////////////
+export const postComment = async (newCommentData: Comment) => {
+  try {
+    await app.post(`${url_api}/api/comments/`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newCommentData),
+    });
+  } catch (error) {
+    console.error("Error al enviar el comentario:", error);
   }
 };
 
@@ -47,77 +91,40 @@ export const handleSubmitSubscription = async (
   buttonName: string | undefined
 ) => {
   event.preventDefault();
-
+  if (!url_api) throw new Error("URL API no inicializada");
   try {
-    const response = await app.post(`${url_api}/api/mailchamp`, {
+    const mailChampSubscribe = {
+      ...newSubscriber,
+      interests: buttonName,
+    };
+    await app.post(`${url_api}/api/mailchamp`, {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        name: newSubscriber.name,
-        lastname: newSubscriber.lastname,
-        email: newSubscriber.email,
-        interests: buttonName,
-      }),
+      body: JSON.stringify(mailChampSubscribe),
     });
-
-    response.ok
-      ? toast.success("Submitted successfully")
-      : toast.error("Error when sending the data");
-
-    response.ok ? handleChange() : "";
+    toast.success("Submitted successfully");
+    handleChange();
   } catch (error) {
     console.error("Error al enviar el post:", error);
   }
 };
 
-export const getComments = async (id: string | undefined) => {
+export const handleSubmitPost = async (
+  event: React.FormEvent<HTMLFormElement>,
+  newPublication: PublicationCardType
+) => {
+  event.preventDefault();
   try {
-    const response = await app.get(`${url_api}/api/comments/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const response = await app.post(`${url_api}/api/newpublication`, {
+      body: JSON.stringify(newPublication),
     });
-    if (!response.ok) throw new Error("Hubo un problema al obtener los datos.");
-    const data = await response.json();
-    return data;
+    if (response) window.location.reload();
+    else {
+      toast.error("Error al enviar el post");
+      throw Error;
+    }
   } catch (error) {
-    console.error("Error al obtener datos:", error);
-  }
-};
-
-export const postComment = async (newCommentData: Comment) => {
-  try {
-    const response = await app.post(`${url_api}/api/comments/`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newCommentData),
-    });
-    if (!response.ok)
-      throw new Error("Hubo un problema al crear el comentario.");
-  } catch (error) {
-    console.error("Error al enviar el comentario:", error);
-  }
-};
-
-export const getUrlTest = async () => {
-  try {
-    const response = await fetch(`${import.meta.env.VITE_URL_API}/api/test`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) throw new Error("Network response was not ok");
-    const text = await response.text();
-    console.log("Succes", text);
-    return text;
-  } catch (error) {
-    console.error(
-      "Error al hacer fetch para obtener la URL de los test desde el cliente",
-      error
-    );
-    throw error;
+    console.error("Error al enviar el post:", error);
   }
 };

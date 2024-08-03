@@ -37,7 +37,7 @@ export type RouteParams = {
 
 export interface ThemeProps {
   theme: string;
-  setTheme: React.Dispatch<React.SetStateAction<string>>;
+  setTheme: Dispatch<SetStateAction<string>>;
   children?: ReactNode;
 }
 
@@ -73,7 +73,7 @@ export interface FormPublicationProps {
   handleChange: Handler;
   buttonName?: string;
   newPublication: PublicationCardType;
-  setNewPublication: React.Dispatch<React.SetStateAction<PublicationCardType>>;
+  setNewPublication: Dispatch<SetStateAction<PublicationCardType>>;
 }
 export interface FormSuscriberProps {
   closing: boolean;

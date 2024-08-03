@@ -7,13 +7,11 @@ import { loadPublications } from "./scripts/render-data.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/index.css";
 import { type PublicationCardType } from "../types/types";
-import { initializeUrlApi } from "./constants/global.ts";
 
 const initializeApp = async () => {
   try {
     const publications: PublicationCardType[] = await loadPublications();
     await setupAuthPersistence();
-    await initializeUrlApi();
 
     // Renderiza la aplicación después de que ambas promesas se hayan completado
     ReactDOM.createRoot(document.getElementById("root")!).render(

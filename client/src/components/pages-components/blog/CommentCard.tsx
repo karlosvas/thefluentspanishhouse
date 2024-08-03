@@ -1,13 +1,24 @@
 import ImgUser from "../../svg-component/ImgUser";
+import { useState } from "react";
 import { type Comment } from "../../../../types/types";
 
 const CommentCard = ({ comments }: { comments: Comment[] }) => {
+  const [imgError, setImgError] = useState(false);
+
   return (
     <ul>
       {comments.map((comment) => (
         <li key={comment.id_comment}>
           <div>
-            {comment.img ? <img src={comment.img} /> : <ImgUser />}
+            {comment.img && !imgError ? (
+              <img
+                src={comment.img}
+                alt="User profile image"
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <ImgUser />
+            )}
             <section>
               <strong>{comment.id_user}</strong>
               <small>

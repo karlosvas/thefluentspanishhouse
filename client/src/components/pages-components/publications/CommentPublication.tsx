@@ -12,7 +12,8 @@ const CommentPublication = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
 
-  const { id } = useParams();
+  // Id de la publicación
+  const { id } = useParams<{ id: string }>();
 
   //Usuario actual
   const user = getUser();
@@ -48,8 +49,11 @@ const CommentPublication = () => {
     }
   };
 
+  // Obtener comentarios cuando el componente se monta o cuando cambia el id
   useEffect(() => {
-    getComments(id);
+    getComments(id).then((data) => {
+      setComments(data);
+    });
   }, []);
 
   return (

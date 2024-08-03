@@ -60,15 +60,15 @@ const CardsPublicationBlog: React.FC<PublicationsProp> = ({ publications }) => {
   const user = getUser();
 
   useEffect(() => {
+    if (Array.isArray(publications) && publications.length !== 0)
+      setCardsBlog(publications as PublicationCardType[]);
+  }, []);
+
+  useEffect(() => {
     const data = loadPublications();
     if (Array.isArray(data) && data.length !== 0)
       setCardsBlog(data as PublicationCardType[]);
   }, [newPublication]);
-
-  useEffect(() => {
-    if (Array.isArray(publications) && publications.length !== 0)
-      setCardsBlog(publications as PublicationCardType[]);
-  }, []);
 
   return (
     <div id="blog">
@@ -93,21 +93,13 @@ const CardsPublicationBlog: React.FC<PublicationsProp> = ({ publications }) => {
               fontWeight: "normal",
             }}
           >
-            {!loadedImages[index] && <CardPlaceholder />}
+            {!loadedImages && <CardPlaceholder />}
             <div className="img-container">
-              {publication.base64_img ? (
-                <img
-                  src={publication.base64_img}
-                  alt="Imagen de la publicación"
-                  onLoad={() => handleImageLoad(index)}
-                />
-              ) : (
-                <img
-                  src={`/img/${index % cardsBlog.length}.png`}
-                  alt="Imagen de la publicación"
-                  onLoad={() => handleImageLoad(index)}
-                />
-              )}
+              <img
+                src={publication.base64_img}
+                alt="Imagen de la publicación"
+                onLoad={() => handleImageLoad(index)}
+              />
             </div>
             <h3>{publication.title}</h3>
             <p>{publication.subtitle}</p>
