@@ -8,29 +8,29 @@ import https from "https";
 dotenv.config();
 
 const app = express();
+
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Configuración global de CORS
+const allowedOrigins = [
+  process.env.URL_WEB,
+  process.env.URL_WEB_TEST,
+  process.env.URL_WEB_LOCAL,
+];
+
 app.use(
   cors({
-    origin: "*",
+    origin: allowedOrigins,
     methods: "GET,POST,PUT,DELETE,OPTIONS",
     allowedHeaders: "Content-Type,Authorization",
-    credentials: false,
+    credentials: true,
   })
 );
-
-// Uso de json
-app.use(express.json());
-
-// Manejo explícito de solicitudes OPTIONS
-app.options("*", cors());
 
 // Conexión a la base de datos
 await connectDB();
 
-// Rutas
 // Carga de comentarios al entrar en una publicación
 app.get("/api/comments/:id", async (req, res) => {
   const { id } = req.params;
@@ -78,6 +78,7 @@ app.get("/api/publications", async (req, res) => {
   }
 });
 
+// Entrar en la publicación selecionada
 app.get("/api/publications/:id", async (req, res) => {
   try {
     const id = req.params.id;
@@ -98,7 +99,6 @@ app.get("/api/publications/:id", async (req, res) => {
 });
 
 // Nuevas publicaciones
-// Nuevas publicaciones
 app.post("/api/newpublication", async (req, res) => {
   try {
     const { title, subtitle, content, base64_img } = req.body;
@@ -106,7 +106,10 @@ app.post("/api/newpublication", async (req, res) => {
     if (!title || !subtitle || !content)
       return res.status(400).json({ message: "Missing required fields" });
     // Validar formato de imagen si se proporciona
-    if (base64_img && !/^data:image\/[a-zA-Z]+;base64,/.test(base64_img))
+    if (
+      (base64_img && !/^data:image\/[a-zA-Z]+;base64,/.test(base64_img)) ||
+      /^\d+$/.test(base64_img)
+    )
       return res.status(400).json({ message: "Invalid image format" });
     // Crear una nueva tarjeta de blog
     const newCardBlog = new modelPublication({
@@ -127,6 +130,7 @@ app.post("/api/newpublication", async (req, res) => {
   }
 });
 
+// Nuevas suscripciones a mailchamp
 app.post("/api/mailchamp", async (req, res) => {
   const { email, name, lastname, interests } = req.body;
 
@@ -187,16 +191,40 @@ app.post("/api/mailchamp", async (req, res) => {
   request.end();
 });
 
+// Obtenemos la url de los preview para hacer testing
 app.get("/api/test", async (req, res) => {
   try {
     const previewUrl = process.env.VERCEL_URL;
+    if (!previewUrl) throw new Error("VERCEL_URL no está definida");
     res.send(previewUrl);
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener la URL de preview" });
+    res
+      .status(500)
+      .json({ error: "Error en el servidor para obtener URL de preview" });
+  }
+});
+
+// Eliminar publicaciones
+app.delete("/api/publications/del/:id", async (req, res) => {
+  const id = req.params.id;
+  // Verifica si el id es un ObjectId válido
+  if (!Types.ObjectId.isValid(id))
+    return res.status(400).json({ message: "Invalid publication ID" });
+  try {
+    // Encuentra y elimina la publicación por id
+    const result = await modelPublication.findByIdAndDelete(id);
+    // Si no se encuentra ninguna publicación con ese ID
+    if (!result)
+      return res.status(404).json({ message: "Publication not found" });
+    // Publicación eliminada exitosamente
+    res.status(200).json({ message: "Publication deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting publication:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
 const PORT_BACKEND = process.env.PORT;
 app.listen(PORT_BACKEND, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT_BACKEND}`);
+  console.log(`Server runing: http://localhost:${PORT_BACKEND}`);
 });

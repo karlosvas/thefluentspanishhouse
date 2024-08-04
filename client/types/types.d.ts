@@ -37,7 +37,7 @@ export type RouteParams = {
 
 export interface ThemeProps {
   theme: string;
-  setTheme: React.Dispatch<React.SetStateAction<string>>;
+  setTheme: Dispatch<SetStateAction<string>>;
   children?: ReactNode;
 }
 
@@ -71,9 +71,20 @@ type Handler = HandleSubscribeChange | HandlePublicationChange;
 export interface FormPublicationProps {
   closing: boolean;
   handleChange: Handler;
-  buttonName?: stirng;
+  buttonName?: string;
+  newPublication: PublicationCardType;
+  setNewPublication: Dispatch<SetStateAction<PublicationCardType>>;
+}
+export interface FormSuscriberProps {
+  closing: boolean;
+  handleChange: Handler;
+  buttonName?: string;
 }
 
 export interface EditType {
   commentText: string;
 }
+
+export type PublicationsProp = {
+  publications: PublicationCardType[];
+};

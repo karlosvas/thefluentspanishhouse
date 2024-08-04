@@ -103,13 +103,7 @@ html.light {
     }
   }
   body {
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      transparent 80%,
-      var(--secondary-blue) 100%,
-      transparent 100%
-    );
+    background-color: var(--primary-white);
   }
 }
 

@@ -1,20 +1,32 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CardPlaceholder from "./PlaceHolder";
-import { type PublicationCardType } from "../../../../types/types";
-import FormPublication from "../../render-data/FormPublication";
+import FormPublication from "./FormPublication";
 import { getUser } from "../../../scripts/oauth2-0";
 import { handleChangeModal } from "../../../scripts/modal";
 import Button from "../../reusable/Buuton";
-import { url_api } from "../../../constants/global";
+import { loadPublications } from "../../../scripts/render-data";
+import {
+  type PublicationsProp,
+  type PublicationCardType,
+} from "../../../../types/types";
 
-const CardsPublicationBlog = () => {
+const CardsPublicationBlog: React.FC<PublicationsProp> = ({ publications }) => {
   const [showModalPost, setShowModalPost] = useState(false);
   const [closing, setClosing] = useState(false);
   const [cardsBlog, setCardsBlog] = useState<PublicationCardType[]>([]);
   const [loadedImages, setLoadedImages] = useState<boolean[]>(
     new Array(cardsBlog.length).fill(false)
   );
+
+  const [newPublication, setNewPublication] = useState<PublicationCardType>({
+    _id: "",
+    title: "",
+    subtitle: "",
+    content: "",
+    base64_img: "",
+  });
+
   const uploadRef = useRef<HTMLButtonElement | null>(null);
 
   const handleImageLoad = (index: number) => {
@@ -48,24 +60,15 @@ const CardsPublicationBlog = () => {
   const user = getUser();
 
   useEffect(() => {
-    const loadPublications = async () => {
-      try {
-        const response = await fetch(`${url_api}/api/publications`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!response.ok)
-          throw new Error("Hubo un problema al obtener los datos.");
-        const data = await response.json();
-        Array.isArray(data) && data.length !== 0 && setCardsBlog(data);
-      } catch (error) {
-        console.error("Error al obtener datos:", error);
-      }
-    };
-    loadPublications();
+    if (Array.isArray(publications) && publications.length !== 0)
+      setCardsBlog(publications as PublicationCardType[]);
   }, []);
+
+  useEffect(() => {
+    const data = loadPublications();
+    if (Array.isArray(data) && data.length !== 0)
+      setCardsBlog(data as PublicationCardType[]);
+  }, [newPublication]);
 
   return (
     <div id="blog">
@@ -74,6 +77,8 @@ const CardsPublicationBlog = () => {
         <FormPublication
           closing={closing}
           handleChange={handlePublicationChange}
+          newPublication={newPublication}
+          setNewPublication={setNewPublication}
         />
       )}
 
@@ -88,21 +93,13 @@ const CardsPublicationBlog = () => {
               fontWeight: "normal",
             }}
           >
-            {!loadedImages[index] && <CardPlaceholder />}
+            {!loadedImages && <CardPlaceholder />}
             <div className="img-container">
-              {publication.base64_img ? (
-                <img
-                  src={publication.base64_img}
-                  alt="Imagen de la publicación"
-                  onLoad={() => handleImageLoad(index)}
-                />
-              ) : (
-                <img
-                  src={`/img/${index % cardsBlog.length}.png`}
-                  alt="Imagen de la publicación"
-                  onLoad={() => handleImageLoad(index)}
-                />
-              )}
+              <img
+                src={publication.base64_img}
+                alt="Imagen de la publicación"
+                onLoad={() => handleImageLoad(index)}
+              />
             </div>
             <h3>{publication.title}</h3>
             <p>{publication.subtitle}</p>

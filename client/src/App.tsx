@@ -9,9 +9,10 @@ import Contact from "./pages/Contact";
 import Info from "./pages/Info";
 import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
+import { type PublicationsProp } from "../types/types";
 // import Newsetler from './pages/Newsetler'; // Descomentar si se necesita
 
-function App() {
+const App: React.FC<PublicationsProp> = ({ publications }) => {
   const location = useLocation();
   const exclude = ["/info", "/404"];
 
@@ -25,7 +26,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/publication/:id" element={<Publications />} />
         <Route path="/account" element={<Account />} />
-        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog" element={<Blog publications={publications} />} />
         <Route path="/aboutme" element={<AboutMe />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/info" element={<Info />} />
@@ -36,6 +37,6 @@ function App() {
       {!shouldHideHeaderFooter && <Footer />}
     </>
   );
-}
+};
 
 export default App;

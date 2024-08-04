@@ -1,6 +1,8 @@
-const url_api =
-  import.meta.env.VITE_VERCEL_ENV === "production"
-    ? import.meta.env.VITE_URL_API
-    : "http://localhost:8080";
+const env = import.meta.env.VITE_VERCEL_ENV;
 
-export { url_api };
+export const url_api =
+  env === "production"
+    ? import.meta.env.VITE_URL_API
+    : env === "preview"
+    ? import.meta.env.VITE_URL_API_TEST
+    : import.meta.env.VITE_URL_API_LOCAL;

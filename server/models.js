@@ -11,7 +11,7 @@ const commentSchema = new Schema({
 });
 export const modelComment = model("Comment", commentSchema, "comments");
 
-const cardBlogSchema = new Schema({
+const publicationBlogSchema = new Schema({
   _id: { type: Schema.Types.ObjectId, required: true },
   title: { type: String, required: true },
   subtitle: { type: String, required: true },
@@ -20,7 +20,7 @@ const cardBlogSchema = new Schema({
 });
 
 export const modelPublication = model(
-  "CardBlog",
-  cardBlogSchema,
+  "PublicationBlog",
+  publicationBlogSchema,
   "publications"
 );

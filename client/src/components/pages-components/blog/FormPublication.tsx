@@ -1,24 +1,19 @@
 import { useState } from "react";
-import { url_api } from "../../constants/global";
-import {
-  type FormPublicationProps,
-  type PublicationCardType,
-} from "../../../types/types";
-import "../../styles/uploadfiles.css";
 import toast from "react-hot-toast";
+import { handleSubmitPost } from "../../../scripts/render-data";
+import "../../../styles/uploadfiles.css";
+import {
+  type PublicationCardType,
+  type FormPublicationProps,
+} from "../../../../types/types";
 
 const FormPublication: React.FC<FormPublicationProps> = ({
   closing,
   handleChange,
+  newPublication,
+  setNewPublication,
 }) => {
   const [error, setError] = useState("");
-  const [newPublication, setNewPublication] = useState<PublicationCardType>({
-    _id: "",
-    title: "",
-    subtitle: "",
-    content: "",
-    base64_img: "",
-  });
   const [imagePreview, setImagePreview] = useState<string>("");
 
   const resizeImage = (
@@ -73,7 +68,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
       if (file) {
         try {
           const resizedBase64Image = await resizeImage(file, 800, 600);
-          setNewPublication((prev) => ({
+          setNewPublication((prev: PublicationCardType) => ({
             ...prev,
             base64_img: resizedBase64Image,
           }));
@@ -90,32 +85,10 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    setNewPublication((prev) => ({
+    setNewPublication((prev: PublicationCardType) => ({
       ...prev,
       [name]: value,
     }));
-  };
-
-  const handleSubmitPost = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    try {
-      const response = await fetch(`${url_api}/api/newpublication`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: newPublication.title,
-          subtitle: newPublication.subtitle,
-          content: newPublication.content,
-          base64_img: newPublication.base64_img,
-        }),
-      });
-      if (response.ok) window.location.reload();
-      else console.error("Error al enviar el post");
-    } catch (error) {
-      console.error("Error al enviar el post:", error);
-    }
   };
 
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
@@ -129,7 +102,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
       if (file) {
         try {
           const resizedBase64Image = await resizeImage(file, 800, 600);
-          setNewPublication((prev) => ({
+          setNewPublication((prev: PublicationCardType) => ({
             ...prev,
             base64_img: resizedBase64Image,
           }));
@@ -146,11 +119,36 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     event.preventDefault();
   };
 
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const fileInput = document.getElementById(
+      "fileInput"
+    ) as HTMLInputElement | null;
+
+    if (fileInput) {
+      // Verifica si se ha seleccionado un archivo
+      if (!newPublication.title) {
+        setError("Please enter a title");
+        return;
+      } else if (!newPublication.subtitle) {
+        setError("Please enter a subtitle");
+        return;
+      } else if (!newPublication.content) {
+        setError("Please enter content for the post");
+        return;
+      } else if (!fileInput.files?.[0]) {
+        setError("Please select a file.");
+        return;
+      }
+    }
+    await handleSubmitPost(event, newPublication);
+  };
+
   return (
     <>
       <div className={`uploadPublication ${closing ? "closing" : ""}`}>
         <h3>New Publication</h3>
-        <form onSubmit={handleSubmitPost}>
+        <form onSubmit={onSubmit}>
           <ul>
             <li>
               Title
@@ -158,7 +156,6 @@ const FormPublication: React.FC<FormPublicationProps> = ({
                 type="text"
                 name="title"
                 value={newPublication.title}
-                required
                 onChange={handleInputChange}
               />
             </li>
@@ -168,7 +165,6 @@ const FormPublication: React.FC<FormPublicationProps> = ({
                 type="text"
                 name="subtitle"
                 value={newPublication.subtitle}
-                required
                 onChange={handleInputChange}
               />
             </li>
@@ -179,7 +175,6 @@ const FormPublication: React.FC<FormPublicationProps> = ({
                 name="content"
                 value={newPublication.content}
                 onChange={handleInputChange}
-                required
                 rows={4}
                 cols={50}
               />

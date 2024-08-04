@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { v4 as uuidv4 } from "uuid";
-import { getUser } from "../../scripts/oauth2-0";
-import { url_api } from "../../constants/global";
-import CommentCard from "../pages-components/blog/CommentCard";
-import { type Comment } from "../../../types/types";
-import "../../styles/comments.css";
+import { getUser } from "../../../scripts/oauth2-0";
+import CommentCard from "../blog/CommentCard";
+import { type Comment } from "../../../../types/types";
+import { getComments, postComment } from "../../../scripts/render-data";
+import "../../../styles/comments.css";
 
 const CommentPublication = () => {
   // Estado de los comentarios actuales, y del Text Area
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
 
-  const { id } = useParams();
+  // Id de la publicación
+  const { id } = useParams<{ id: string }>();
 
   //Usuario actual
   const user = getUser();
@@ -40,50 +41,19 @@ const CommentPublication = () => {
       setNewComment("");
 
       try {
-        await postComment(newCommentData);
+        const data = await postComment(newCommentData);
+        Array.isArray(data) && data.length !== 0 && setComments(data);
       } catch (error) {
         console.error("Error:", error);
       }
     }
   };
 
-  const getComments = async () => {
-    try {
-      const response = await fetch(`${url_api}/api/comments/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok)
-        throw new Error("Hubo un problema al obtener los datos.");
-      const data = await response.json();
-      Array.isArray(data) && data.length !== 0 && setComments(data);
-      if (!response.ok)
-        throw new Error("Hubo un problema al obtener los datos.");
-    } catch (error) {
-      console.error("Error al obtener datos:", error);
-    }
-  };
-
-  const postComment = async (newCommentData: Comment) => {
-    try {
-      const response = await fetch(`${url_api}/api/comments/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newCommentData),
-      });
-      if (!response.ok)
-        throw new Error("Hubo un problema al crear el comentario.");
-    } catch (error) {
-      console.error("Error al enviar el comentario:", error);
-    }
-  };
-
+  // Obtener comentarios cuando el componente se monta o cuando cambia el id
   useEffect(() => {
-    getComments();
+    getComments(id).then((data) => {
+      setComments(data);
+    });
   }, []);
 
   return (
