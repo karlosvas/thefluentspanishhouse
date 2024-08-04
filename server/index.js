@@ -1,10 +1,13 @@
 import { modelComment, modelPublication } from "./models.js";
 import { connectDB } from "./mongodb.js";
 import { Types } from "mongoose";
+import { subscribeUser } from "./mailchamp.js";
+import { sendEmail } from "./resend.js";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import https from "https";
+import { Resend } from "resend";
+
 dotenv.config();
 
 const app = express();
@@ -133,62 +136,13 @@ app.post("/api/newpublication", async (req, res) => {
 // Nuevas suscripciones a mailchamp
 app.post("/api/mailchamp", async (req, res) => {
   const { email, name, lastname, interests } = req.body;
-
-  const newUserChamp = {
-    members: [
-      {
-        email_address: email,
-        status: "subscribed",
-        merge_fields: {
-          FNAME: name,
-          LNAME: lastname,
-          INTERESTSS: interests,
-        },
-      },
-    ],
-  };
-
-  const jsonChamp = JSON.stringify(newUserChamp);
-
-  const apiKey = process.env.MAILCHIMP_API;
-  const dataCenter = process.env.MAILCHIMP_SERVER_PREFIX;
-  const url = `https://${dataCenter}.api.mailchimp.com/3.0/lists/21cf8c94a8`;
-
-  const options = {
-    method: "POST",
-    auth: `karlosvas:${apiKey}`,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  const request = https.request(url, options, function (response) {
-    let data = "";
-    response.on("data", (chunk) => {
-      data += chunk;
-    });
-
-    response.on("end", () => {
-      const responseData = JSON.parse(data);
-      if (response.statusCode === 200) {
-        res.status(200).send("Suscripción enviada");
-      } else if (responseData.title === "Member Exists") {
-        res.status(400).send("El usuario ya está suscrito");
-      } else {
-        console.error(responseData);
-        res.status(response.statusCode).send(responseData);
-      }
-    });
-  });
-
-  request.on("error", (error) => {
-    console.error("Error al enviar la solicitud:", error);
-    res.status(500).send("Error al enviar la solicitud");
-  });
-
-  // Enviar la información a Mailchimp
-  request.write(jsonChamp);
-  request.end();
+  try {
+    const result = await subscribeUser(email, name, lastname, interests);
+    res.status(200).send(result);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send(error.message);
+  }
 });
 
 // Obtenemos la url de los preview para hacer testing
@@ -201,6 +155,17 @@ app.get("/api/test", async (req, res) => {
     res
       .status(500)
       .json({ error: "Error en el servidor para obtener URL de preview" });
+  }
+});
+
+app.post("/api/newnote", async (req, res) => {
+  const { email, name, note } = req.body;
+  const resend = new Resend(process.env.RESEND_API);
+  try {
+    await sendEmail({ email, name, note }, resend);
+    res.status(200).send("Correo enviado");
+  } catch (error) {
+    res.status(500).send("Error al enviar el correo");
   }
 });
 
