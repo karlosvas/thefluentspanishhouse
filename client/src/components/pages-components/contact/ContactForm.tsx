@@ -1,14 +1,33 @@
-import { useState } from "react";
-import Button from "../../reusable/Buuton";
-import "../../../styles/main-contact.css";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { sendEmail } from "../../../scripts/render-data";
+import { getUser } from "../../../scripts/oauth2-0";
 
 const ContactForm = () => {
-  const [fullName, setFullName] = useState("");
-  const [deliveryNote, setDeliveryNote] = useState("");
+  const user = getUser();
+  const [contact, setContact] = useState({
+    email: user?.email,
+    name: "",
+    note: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ fullName, deliveryNote });
+    await sendEmail(contact);
+    setContact({
+      email: user?.email,
+      name: "",
+      note: "",
+    });
+  };
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setContact((prevContact) => ({
+      ...prevContact,
+      [name]: value,
+    }));
   };
 
   return (
@@ -19,22 +38,22 @@ const ContactForm = () => {
         Full Name
         <input
           type="text"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-          placeholder=""
+          name="name"
+          value={contact.name}
+          onChange={handleChange}
           required
         />
       </label>
       <label>
         Delivery note
         <textarea
-          value={deliveryNote}
-          onChange={(e) => setDeliveryNote(e.target.value)}
-          placeholder=""
+          name="note"
+          value={contact.note}
+          onChange={handleChange}
           required
         ></textarea>
       </label>
-      <Button type="submit">Submit</Button>
+      <button type="submit">Submit</button>{" "}
     </form>
   );
 };
