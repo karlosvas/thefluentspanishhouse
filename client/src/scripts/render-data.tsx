@@ -128,3 +128,22 @@ export const handleSubmitPost = async (
     console.error("Error al enviar el post:", error);
   }
 };
+
+export const sendEmail = async (contact: {
+  email: string | null | undefined;
+  name: string;
+  note: string;
+}) => {
+  try {
+    const response = await app.post(`${url_api}/api/newnote`, {
+      body: JSON.stringify(contact),
+    });
+    if (response) toast.success("Todo bien");
+    else {
+      toast.error("Error al enviar el post");
+      throw Error;
+    }
+  } catch (error) {
+    console.error("Error al enviar el post:", error);
+  }
+};
