@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Profile from "./Profile";
 import MainNav from "./MainNav";
 import { handleScroll } from "../../scripts/modal";
 import { type ThemeProps } from "../../../types/types";
 import "../../styles/hamburger.css";
+import { useLocation } from "react-router-dom";
 
 const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
   const [showModal, setShowModal] = useState(false);
   const [closing, setClosing] = useState(false);
+  const location = useLocation();
 
   const handleClick = () => {
     if (showModal) {
@@ -15,12 +17,23 @@ const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
       setTimeout(() => {
         setShowModal(false);
         setClosing(false);
-      }, 500);
+      }, 300);
     } else {
       setShowModal(true);
     }
     handleScroll(!showModal);
   };
+
+  useEffect(() => {
+    if (showModal) {
+      setClosing(true);
+      setTimeout(() => {
+        setShowModal(false);
+        setClosing(false);
+      }, 300);
+    }
+    handleScroll(false);
+  }, [location]);
 
   return (
     <>

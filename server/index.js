@@ -3,8 +3,9 @@ import { connectDB } from "./mongodb.js";
 import { Types } from "mongoose";
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import https from "https";
+import dotenv from "dotenv";
+import { submitNote } from "./nodemailer.js";
 dotenv.config();
 
 const app = express();
@@ -191,7 +192,7 @@ app.post("/api/mailchamp", async (req, res) => {
   request.end();
 });
 
-// Obtenemos la url de los preview para hacer testing
+// Obtener la URL de los preview para hacer testing
 app.get("/api/test", async (req, res) => {
   try {
     const previewUrl = process.env.VERCEL_URL;
@@ -221,6 +222,16 @@ app.delete("/api/publications/del/:id", async (req, res) => {
   } catch (error) {
     console.error("Error deleting publication:", error);
     res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+app.post("/api/note", async (req, res) => {
+  const { email_user, name_user, note } = req.body;
+  try {
+    await submitNote(email_user, name_user, note);
+    res.status(200).send({ message: "Email sent successfully" });
+  } catch (error) {
+    res.status(500).send({ message: "Error sending email", error });
   }
 });
 

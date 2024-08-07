@@ -88,3 +88,9 @@ export interface EditType {
 export type PublicationsProp = {
   publications: PublicationCardType[];
 };
+
+export interface NoteType {
+  email_user: string | null | undefined;
+  name_user: string;
+  note: string;
+}

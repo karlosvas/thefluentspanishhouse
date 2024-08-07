@@ -60,12 +60,17 @@ function Footer() {
           <section>
             <nav>
               <a href="/info" target="_blank">
-                Terms and Conditions
-              </a>{" "}
+                License
+              </a>
               <br />
               <a href="/info" target="_blank">
                 Privacy Policy
               </a>
+              <br />
+              <a href="/info" target="_blank">
+                Terms and Conditions
+              </a>{" "}
+              <br />
             </nav>
           </section>
         )}

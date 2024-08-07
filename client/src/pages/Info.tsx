@@ -26,10 +26,6 @@ const Info = () => {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <>
       <main className="main-terminos">
@@ -89,6 +85,22 @@ const Info = () => {
             Consent By using our services, you agree to this privacy policy.
             Thank you for trusting The Fluent Spanish House for your Spanish
             learning
+          </p>
+        </section>
+        <section>
+          <h2 id="license">License</h2>
+          <p>
+            The content and code of this website are subject to the terms of the
+            license specified in our LICENSE file. You can review the full
+            license in our{" "}
+            <a
+              href="https://github.com/karlosvas/thefluentspanishhouse/blob/main/LICENSE"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub repository
+            </a>
+            .
           </p>
         </section>
       </main>

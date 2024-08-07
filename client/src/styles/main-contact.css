@@ -5,6 +5,7 @@
   justify-content: center;
   align-items: center;
 }
+
 #contactForm {
   animation: reveal linear both;
   animation-timeline: view();
@@ -16,7 +17,7 @@
   border: 1px solid #ddd;
   padding: 16px;
   border-radius: 8px;
-  max-width: 400px;
+  max-width: 500px;
   background-color: var(--secondary-white);
   color: var(--primary-black);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -52,6 +53,8 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    background-color: #5c70a1;
+    font-weight: 500;
   }
   textarea {
     height: 70px;
@@ -78,9 +81,14 @@
 }
 
 @media only screen and (width <= 767px) {
+  .contact {
+    background-color: var(--secondary-white);
+  }
   #contactForm {
     margin: 13vh 0;
     background-color: var(--secondary-white);
     color: var(--primary-black);
+    width: 100%;
+    border-radius: 0;
   }
 }

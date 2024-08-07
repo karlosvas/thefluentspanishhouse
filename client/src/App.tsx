@@ -10,6 +10,7 @@ import Info from "./pages/Info";
 import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
 import { type PublicationsProp } from "../types/types";
+import { useEffect } from "react";
 // import Newsetler from './pages/Newsetler'; // Descomentar si se necesita
 
 const App: React.FC<PublicationsProp> = ({ publications }) => {
@@ -18,6 +19,10 @@ const App: React.FC<PublicationsProp> = ({ publications }) => {
 
   // Determina si el Header y el Footer deben ser ocultados
   const shouldHideHeaderFooter = exclude.includes(location.pathname);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>

@@ -1,11 +1,12 @@
 import { url_api } from "../constants/global";
 import Helper from "./helper";
 import toast from "react-hot-toast";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, FormEvent, SetStateAction } from "react";
 import {
   type PublicationCardType,
   type SubscriberType,
   type Comment,
+  type NoteType,
 } from "../../types/types";
 
 const app = Helper();
@@ -111,7 +112,7 @@ export const handleSubmitSubscription = async (
 };
 
 export const handleSubmitPost = async (
-  event: React.FormEvent<HTMLFormElement>,
+  event: FormEvent<HTMLFormElement>,
   newPublication: PublicationCardType
 ) => {
   event.preventDefault();
@@ -126,5 +127,15 @@ export const handleSubmitPost = async (
     }
   } catch (error) {
     console.error("Error al enviar el post:", error);
+  }
+};
+
+export const submitNote = async (newNote: NoteType) => {
+  try {
+    await app.post(`${url_api}/api/note`, {
+      body: JSON.stringify(newNote),
+    });
+  } catch (error) {
+    console.error("Error to submit post", error);
   }
 };

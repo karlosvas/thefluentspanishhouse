@@ -179,10 +179,9 @@ header #sect {
       margin-left: 10px;
     }
     nav {
-      padding: 0;
-      margin: 0;
       ul {
-        width: 50vw;
+        width: 60vw;
+        margin: 0;
       }
     }
   }

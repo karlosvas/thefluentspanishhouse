@@ -74,14 +74,21 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
               />
             </li>
             <label>
+              <input type="checkbox" name="terminos" required /> I give my
+              consent to receive informational emails terms and conditions.
+            </label>
+            <label>
               <input type="checkbox" name="terminos" required /> I accept the{" "}
               <Link to="/info" target="_blank">
-                terms and conditions
+                terms and conditions.
               </Link>
             </label>
             <label>
-              <input type="checkbox" name="terminos" required /> I give my
-              consent to receive informational emails terms and conditions
+              <input type="checkbox" name="terminos" required /> I have read and
+              accept the{" "}
+              <Link to="/info" target="_blank">
+                privacity policity.
+              </Link>
             </label>
             <Buuton id="submitPost" type="submit">
               To subscribe
