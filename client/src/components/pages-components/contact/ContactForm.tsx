@@ -3,10 +3,13 @@ import Button from "../../reusable/Buuton";
 import "../../../styles/main-contact.css";
 import { submitNote } from "../../../scripts/render-data";
 import { type NoteType } from "../../../../types/types";
-import { getUser } from "../../../scripts/oauth2-0";
+import { getUser, isLogged } from "../../../scripts/oauth2-0";
+import toast from "react-hot-toast";
 
 const ContactForm = () => {
   const user = getUser();
+  const loggin = isLogged();
+
   const [newNote, setNewNote] = useState<NoteType>({
     email_user: user?.email,
     name_user: "",
@@ -15,7 +18,20 @@ const ContactForm = () => {
 
   const onSubmitNote = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await submitNote(newNote);
+    if (!loggin) {
+      toast.error("You must log in");
+      return;
+    }
+    try {
+      await submitNote(newNote);
+      setNewNote({
+        email_user: user?.email,
+        name_user: "",
+        note: "",
+      } as NoteType);
+    } catch (error) {
+      toast.error("An error occurred while sending the data");
+    }
   };
 
   const handleChange = (

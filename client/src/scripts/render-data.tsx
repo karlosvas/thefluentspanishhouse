@@ -132,9 +132,10 @@ export const handleSubmitPost = async (
 
 export const submitNote = async (newNote: NoteType) => {
   try {
-    await app.post(`${url_api}/api/note`, {
+    const response = await app.post(`${url_api}/api/note`, {
       body: JSON.stringify(newNote),
     });
+    if (response) toast.success("The email has been sent successfully");
   } catch (error) {
     console.error("Error to submit post", error);
   }
