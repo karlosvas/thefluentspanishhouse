@@ -22,7 +22,7 @@ const App: React.FC<PublicationsProp> = ({ publications }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [location]);
 
   return (
     <>

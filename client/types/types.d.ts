@@ -91,6 +91,7 @@ export type PublicationsProp = {
 
 export interface NoteType {
   email_user: string | null | undefined;
-  name_user: string;
+  username: string;
+  subject: string;
   note: string;
 }

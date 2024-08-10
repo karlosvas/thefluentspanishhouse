@@ -3,8 +3,8 @@ import Profile from "./Profile";
 import MainNav from "./MainNav";
 import { handleScroll } from "../../scripts/modal";
 import { type ThemeProps } from "../../../types/types";
-import "../../styles/hamburger.css";
 import { useLocation } from "react-router-dom";
+import "../../styles/hamburger.css";
 
 const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
   const [showModal, setShowModal] = useState(false);

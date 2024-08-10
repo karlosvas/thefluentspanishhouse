@@ -1,3 +1,8 @@
+#title-publication-ph,
+#subtitle-placeholder {
+  text-align: center;
+}
+
 .publicationMain {
   display: flex;
   justify-content: center;
@@ -18,6 +23,7 @@
       margin-top: 10px;
     }
     strong {
+      margin-top: 35px;
       align-self: center;
       text-align: center;
     }
@@ -29,6 +35,7 @@
     }
   }
   p {
+    align-self: flex-start;
     margin: 20px;
     strong {
       font-size: 20px;

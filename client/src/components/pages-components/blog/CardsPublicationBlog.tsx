@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CardPlaceholder from "./PlaceHolder";
 import FormPublication from "./FormPublication";
@@ -37,24 +37,8 @@ const CardsPublicationBlog: React.FC<PublicationsProp> = ({ publications }) => {
     });
   };
 
-  const getOption = useCallback(() => {
-    if (window.innerWidth >= 1024) return ["12vw", "13vw"];
-    if (window.innerWidth >= 766) return ["12vw", "14vw"];
-    return ["40vw", "40vw"];
-  }, []);
-
-  const options = getOption();
-
   const handlePublicationChange = () => {
     handleChangeModal(showModalPost, setClosing, setShowModalPost);
-
-    if (uploadRef.current) {
-      if (showModalPost) {
-        setTimeout(() => {
-          if (uploadRef.current) uploadRef.current.style.right = options[0];
-        }, 500);
-      } else uploadRef.current.style.right = options[1];
-    }
   };
 
   const user = getUser();

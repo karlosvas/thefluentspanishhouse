@@ -15,7 +15,6 @@ const Account = () => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        console.log(currentUser);
         setUser(currentUser);
         setDisplayName(currentUser.displayName || "");
         setEmail(currentUser.email || "");

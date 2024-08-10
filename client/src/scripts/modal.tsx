@@ -20,8 +20,6 @@ export const toggleFormType = (
 
 export const handleScroll = (showModal: boolean) => {
   document.body.style.overflowY = showModal ? "hidden" : "auto";
-  if (window.innerWidth >= 766)
-    document.body.style.paddingRight = showModal ? "17px" : "0px";
 };
 
 export const handleChangeModal = (

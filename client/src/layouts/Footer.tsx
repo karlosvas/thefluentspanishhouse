@@ -53,9 +53,7 @@ function Footer() {
             The Fluent Spanish House
           </a>
         </section>
-        <section>
-          © 2024 The Fluent Spanish House. Todos los derechos reservados.
-        </section>
+        <section>© 2024 The Fluent Spanish House. All rights reserved.</section>
         {window.innerWidth >= 766 && (
           <section>
             <nav>

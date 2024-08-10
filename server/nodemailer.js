@@ -11,14 +11,16 @@ let transporter = createTransport({
   },
 });
 
-export async function submitNote(email_user, name_user, note) {
+export async function submitNote(email_user, username, subject, note) {
   // Datos del correo
   let mailOptions = {
-    from: email_user,
+    from: `"${email_user} via TheFluentSpanishHouse" ${process.env.USER_GMAIL}`,
     to: process.env.USER_GMAIL,
-    subject: name_user,
-    text: note,
+    subject: subject,
+    text: `The user ${username} sent you this message:\n\n${note}`,
+    replyTo: email_user,
   };
+
   // Enviar el correo
   try {
     const info = await transporter.sendMail(mailOptions);

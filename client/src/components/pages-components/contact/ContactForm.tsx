@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../../reusable/Buuton";
+// import "../../../styles/main-contact.css";
 import "../../../styles/main-contact.css";
 import { submitNote } from "../../../scripts/render-data";
 import { type NoteType } from "../../../../types/types";
@@ -12,27 +13,10 @@ const ContactForm = () => {
 
   const [newNote, setNewNote] = useState<NoteType>({
     email_user: user?.email,
-    name_user: "",
+    username: "",
+    subject: "",
     note: "",
   });
-
-  const onSubmitNote = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!loggin) {
-      toast.error("You must log in");
-      return;
-    }
-    try {
-      await submitNote(newNote);
-      setNewNote({
-        email_user: user?.email,
-        name_user: "",
-        note: "",
-      } as NoteType);
-    } catch (error) {
-      toast.error("An error occurred while sending the data");
-    }
-  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -44,33 +28,152 @@ const ContactForm = () => {
     }));
   };
 
+  const inputRefs = useRef<(HTMLInputElement | HTMLTextAreaElement | null)[]>(
+    []
+  );
+
+  const onSubmitNote = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!loggin) {
+      toast.error("You must log in");
+      return;
+    }
+    try {
+      await submitNote(newNote);
+      setNewNote({
+        email_user: user?.email,
+        username: "",
+        subject: "",
+        note: "",
+      } as NoteType);
+    } catch (error) {
+      toast.error("An error occurred while sending the data");
+    }
+  };
+
+  useEffect(() => {
+    const focusFunc: EventListener = (e) => {
+      const target = e.target as HTMLInputElement | HTMLTextAreaElement;
+      const parent = target.parentNode as HTMLElement;
+      parent.classList.add("focus");
+    };
+
+    const blurFunc: EventListener = (e) => {
+      const target = e.target as HTMLInputElement | HTMLTextAreaElement;
+      const parent = target.parentNode as HTMLElement;
+      if (target.value === "") parent.classList.remove("focus");
+    };
+
+    inputRefs.current.forEach((input) => {
+      if (input) {
+        input.addEventListener("focus", focusFunc);
+        input.addEventListener("blur", blurFunc);
+      }
+    });
+
+    return () => {
+      inputRefs.current.forEach((input) => {
+        if (input) {
+          input.removeEventListener("focus", focusFunc);
+          input.removeEventListener("blur", blurFunc);
+        }
+      });
+    };
+  }, []);
+
   return (
-    <form id="contactForm" onSubmit={onSubmitNote}>
-      <h2>Contact me</h2>
-      <p>Do you want to sign up? Ask me any question you have</p>
-      <label>
-        Full Name
-        <input
-          type="text"
-          name="name_user"
-          value={newNote.name_user}
-          onChange={handleChange}
-          placeholder=""
-          required
-        />
-      </label>
-      <label>
-        Delivery note
-        <textarea
-          name="note"
-          value={newNote.note}
-          onChange={handleChange}
-          placeholder=""
-          required
-        ></textarea>
-      </label>
-      <Button type="submit">Submit</Button>
-    </form>
+    <div className="container">
+      <span className="big-circle"></span>
+      <img src="img/shape.png" className="square" alt="" />
+      <div className="form">
+        <div className="contact-info">
+          <h3 className="title">Let's get in touch</h3>
+          <p className="text">
+            Do you want to sign up? Ask me any question you have
+          </p>
+
+          <div className="info">
+            <div className="information">
+              <img src="img/location.png" className="icon" alt="" />
+              <p>Around the world</p>
+            </div>
+            <div className="information">
+              <img src="img/email.png" className="icon" alt="" />
+              <p>mar411geca@gmail.com</p>
+            </div>
+            <div className="information">
+              <img src="img/phone.png" className="icon" alt="" />
+              <p>+34617286125</p>
+            </div>
+          </div>
+
+          <div className="social-media">
+            <p>Connect with us :</p>
+            <div className="social-icons">
+              <a href="#">
+                <i className="fab fa-facebook-f">F</i>
+              </a>
+              <a href="#">
+                <i className="fab fa-twitter">X</i>
+              </a>
+              <a href="#">
+                <i className="fab fa-github">&lt;/&gt;</i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="contact-form">
+          <span className="circle one"></span>
+          <span className="circle two"></span>
+
+          <form autoComplete="off" onSubmit={onSubmitNote}>
+            <h3 className="title">Contact us</h3>
+            <div className="input-container">
+              <input
+                type="text"
+                name="username"
+                className="input"
+                value={newNote.username}
+                required
+                onChange={handleChange}
+                ref={(el) => el && (inputRefs.current[0] = el)}
+              />
+              <label htmlFor="username">Username</label>
+              <span>Username</span>
+            </div>
+            <div className="input-container">
+              <input
+                type="text"
+                name="subject"
+                className="input"
+                required
+                value={newNote.subject}
+                onChange={handleChange}
+                ref={(el) => el && (inputRefs.current[2] = el)}
+              />
+              <label htmlFor="subject">Subject</label>
+              <span>Subject</span>
+            </div>
+            <div className="input-container textarea">
+              <textarea
+                name="note"
+                className="input"
+                value={newNote.note}
+                onChange={handleChange}
+                required
+                ref={(el) => el && (inputRefs.current[3] = el)}
+              ></textarea>
+              <label htmlFor="note">Message</label>
+              <span>Message</span>
+            </div>
+            <Button type="submit" id="btn">
+              Submit
+            </Button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

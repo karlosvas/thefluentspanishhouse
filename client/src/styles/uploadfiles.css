@@ -121,8 +121,8 @@
   border-radius: 5px;
 }
 
-.uploadPublication #submitPost:hover {
-  background-color: var(--secondary-blue);
+.uploadPublication #submitPost:focus {
+  outline: 5px solid var(--secondary-blue);
 }
 
 .uploadPublication.closing {
@@ -152,7 +152,7 @@
     width: 90vw;
     margin-top: 20px;
     form ul {
-      padding: 0 20px;
+      padding: 0;
     }
   }
 }

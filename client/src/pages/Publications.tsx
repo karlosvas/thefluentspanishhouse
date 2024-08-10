@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
 import UserComments from "../components/pages-components/publications/CommentPublication";
 import { useEffect, useState } from "react";
-import PlaceholderPublications from "../components/pages-components/blog/PlaceholderPublication";
-import { type PublicationCardType, type RouteParams } from "../../types/types";
-import "../styles/main-publication.css";
+import PlaceholderPublications from "../components/pages-components/publications/PlaceholderPublication";
 import { loadPublication } from "../scripts/render-data";
+import "../styles/main-publication.css";
+import { type PublicationCardType, type RouteParams } from "../../types/types";
 
 const Publications = () => {
   const [publication, setPublication] = useState<PublicationCardType>();
@@ -13,16 +13,18 @@ const Publications = () => {
   const { id } = useParams<RouteParams>();
 
   useEffect(() => {
-    loadPublication(setPublication, setImageLoading, id);
+    setTimeout(() => {
+      loadPublication(setPublication, setImageLoading, id);
+    }, 3000);
   }, []);
 
   return (
     <>
       <main className="publicationMain">
+        {!imageLoading && <PlaceholderPublications />}
+        {/* Mostrar el placeholder mientras se carga */}
         <div className="publication">
           <h2>{publication?.title}</h2>
-          {!imageLoading && <PlaceholderPublications />}
-          {/* Mostrar el placeholder mientras se carga */}
           <img
             src={publication?.base64_img}
             alt="Imagen de la publicación"

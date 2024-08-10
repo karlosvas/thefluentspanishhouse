@@ -226,10 +226,9 @@ app.delete("/api/publications/del/:id", async (req, res) => {
 });
 
 app.post("/api/note", async (req, res) => {
-  const { email_user, name_user, note } = req.body;
-  console.log(email_user, note);
+  const { email_user, username, subject, note } = req.body;
   try {
-    await submitNote(email_user, name_user, note);
+    await submitNote(email_user, username, subject, note);
     res.status(200).send({ message: "Email sent successfully" });
   } catch (error) {
     res.status(500).send({ message: "Error sending email", error });
