@@ -6,6 +6,7 @@ import {
   type FormSuscriberProps,
   type SubscriberType,
 } from "../../../../types/types";
+import toast from "react-hot-toast";
 
 const FormSuscribe: React.FC<FormSuscriberProps> = ({
   closing,
@@ -29,12 +30,16 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
   };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    await handleSubmitSubscription(
-      event,
-      handleChange,
-      newSubscriber,
-      buttonName
-    );
+    try {
+      await handleSubmitSubscription(
+        event,
+        handleChange,
+        newSubscriber,
+        buttonName
+      );
+    } catch (error) {
+      toast.error("The information sent is not valid");
+    }
   };
 
   return (

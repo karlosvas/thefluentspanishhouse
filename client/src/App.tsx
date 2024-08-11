@@ -11,6 +11,7 @@ import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
 import { type PublicationsProp } from "../types/types";
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 // import Newsetler from './pages/Newsetler'; // Descomentar si se necesita
 
 const App: React.FC<PublicationsProp> = ({ publications }) => {
@@ -40,6 +41,7 @@ const App: React.FC<PublicationsProp> = ({ publications }) => {
         <Route path="*" element={<Navigate to="/404" />} />
       </Routes>
       {!shouldHideHeaderFooter && <Footer />}
+      <Toaster position="bottom-right" />
     </>
   );
 };

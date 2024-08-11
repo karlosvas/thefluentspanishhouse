@@ -6,6 +6,7 @@ import cors from "cors";
 import https from "https";
 import dotenv from "dotenv";
 import { submitNote } from "./nodemailer.js";
+import { validateEmail } from "./utilities.js";
 dotenv.config();
 
 const app = express();
@@ -135,6 +136,8 @@ app.post("/api/newpublication", async (req, res) => {
 app.post("/api/mailchamp", async (req, res) => {
   const { email, name, lastname, interests } = req.body;
 
+  if (!validateEmail(email)) return res.status(400).send("Email inválido");
+
   const newUserChamp = {
     members: [
       {
@@ -171,10 +174,10 @@ app.post("/api/mailchamp", async (req, res) => {
 
     response.on("end", () => {
       const responseData = JSON.parse(data);
-      if (response.statusCode === 200) {
-        res.status(200).send("Suscripción enviada");
-      } else if (responseData.title === "Member Exists") {
+      if (responseData.title === "Member Exists") {
         res.status(400).send("El usuario ya está suscrito");
+      } else if (response.statusCode === 200) {
+        res.status(200).send({ message: "Subscription sent successfully" });
       } else {
         console.error(responseData);
         res.status(response.statusCode).send(responseData);

@@ -43,12 +43,12 @@ const MainNav: React.FC<ThemeProps> = ({ theme, setTheme }) => {
         {window.innerWidth <= 766 && (
           <>
             <li>
+              <Account>Account</Account>
+            </li>
+            <li>
               <Theme theme={theme} setTheme={setTheme}>
                 Theme
               </Theme>
-            </li>
-            <li>
-              <Account>Account</Account>
             </li>
           </>
         )}

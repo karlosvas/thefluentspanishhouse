@@ -1,5 +1,5 @@
 import { ChangeEvent, useRef, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import {
   signInWithGoogle,
   registerWithGoogle,
@@ -183,7 +183,6 @@ const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
             </div>
           </>
         )}
-        <Toaster position="bottom-right" />
       </div>
     </>
   );

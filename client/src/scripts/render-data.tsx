@@ -98,16 +98,17 @@ export const handleSubmitSubscription = async (
       ...newSubscriber,
       interests: buttonName,
     };
-    await app.post(`${url_api}/api/mailchamp`, {
+    const response = await app.post(`${url_api}/api/mailchamp`, {
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(mailChampSubscribe),
     });
-    toast.success("Submitted successfully");
+    if (response) toast.success("Submitted successfully");
     handleChange();
   } catch (error) {
     console.error("Error al enviar el post:", error);
+    throw Error;
   }
 };
 

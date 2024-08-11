@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import Button from "../../reusable/Buuton";
-// import "../../../styles/main-contact.css";
 import "../../../styles/main-contact.css";
 import { submitNote } from "../../../scripts/render-data";
 import { type NoteType } from "../../../../types/types";
@@ -110,13 +109,16 @@ const ContactForm = () => {
           <div className="social-media">
             <p>Connect with us :</p>
             <div className="social-icons">
-              <a href="#">
+              <a
+                href="https://www.facebook.com/thefluentspanishhouse/"
+                target="_blank"
+              >
                 <i className="fab fa-facebook-f">F</i>
               </a>
-              <a href="#">
-                <i className="fab fa-twitter">X</i>
-              </a>
-              <a href="#">
+              <a
+                href="https://github.com/karlosvas/thefluentspanishhouse"
+                target="_blank"
+              >
                 <i className="fab fa-github">&lt;/&gt;</i>
               </a>
             </div>

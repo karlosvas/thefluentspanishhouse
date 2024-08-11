@@ -178,6 +178,9 @@ html.dark {
     .big-circle:after {
       background-color: var(--primary-black);
     }
+    .uploadPublication {
+      color: var(--primary-black);
+    }
   }
   footer {
     border-top: 1px solid #ddd;
@@ -185,8 +188,10 @@ html.dark {
 }
 
 @media (width <= 768px) {
-  html.dark body .container > .form {
-    border: none;
+  html.dark body {
+    .container > .form {
+      border: none;
+    }
   }
   #banner,
   #contactForm,
