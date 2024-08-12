@@ -12,7 +12,7 @@ import Footer from "./layouts/Footer";
 import { type PublicationsProp } from "../types/types";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
-// import Newsetler from './pages/Newsetler'; // Descomentar si se necesita
+import Newsetler from "./pages/Newsletter";
 
 const App: React.FC<PublicationsProp> = ({ publications }) => {
   const location = useLocation();
@@ -36,6 +36,7 @@ const App: React.FC<PublicationsProp> = ({ publications }) => {
         <Route path="/aboutme" element={<AboutMe />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/info" element={<Info />} />
+        <Route path="/newsetler" element={<Newsetler />} />
         <Route path="/404" element={<Error />} />
         {/* Maneja rutas no encontradas */}
         <Route path="*" element={<Navigate to="/404" />} />

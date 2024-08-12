@@ -20,7 +20,8 @@
     text-align: center;
     padding-bottom: 200px;
     figure {
-      img {
+      img,
+      .card-img-placeholder {
         animation: reveal linear both;
         animation-timeline: view();
         animation-range: entry 20% cover 30%;
@@ -55,7 +56,8 @@
 @media only screen and (width <= 1200px) and (width >= 766px) {
   .main-aboutme {
     .div-aboutme {
-      img {
+      figure img,
+      .card-img-placeholder {
         width: 70vw;
       }
       p,
@@ -73,6 +75,10 @@
   .main-aboutme {
     .div-aboutme {
       padding-bottom: 100px;
+      figure img,
+      .card-img-placeholder {
+        width: 80vw;
+      }
       p,
       figure > figcaption {
         width: 80vw;
@@ -80,9 +86,6 @@
       }
       h2 {
         margin-top: 50px;
-      }
-      figure img {
-        width: 80vw;
       }
     }
   }

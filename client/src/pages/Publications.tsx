@@ -19,10 +19,10 @@ const Publications = () => {
   }, []);
 
   return (
-    <>
-      <main className="publicationMain">
-        {!imageLoading && <PlaceholderPublications />}
-        {/* Mostrar el placeholder mientras se carga */}
+    <main className="publicationMain">
+      {!imageLoading ? (
+        <PlaceholderPublications />
+      ) : (
         <div className="publication">
           <h2>{publication?.title}</h2>
           <img
@@ -33,9 +33,10 @@ const Publications = () => {
           <strong>{publication?.subtitle}</strong>
           <p>{publication?.content}</p>
         </div>
-        <UserComments />
-      </main>
-    </>
+      )}
+
+      <UserComments />
+    </main>
   );
 };
 

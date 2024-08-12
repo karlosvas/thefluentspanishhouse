@@ -1,8 +1,3 @@
-#title-publication-ph,
-#subtitle-placeholder {
-  text-align: center;
-}
-
 .publicationMain {
   display: flex;
   justify-content: center;
@@ -10,14 +5,18 @@
   flex-direction: column;
   width: 100vw;
   .publication {
+    height: fit-content;
+    width: 50%;
     padding: 20px;
     margin-bottom: 50px;
-    width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    h2 {
+    h2,
+    .title-ph {
+      width: 90%;
+      text-align: center;
       align-self: center;
       margin-bottom: 50px;
       margin-top: 10px;
@@ -27,14 +26,17 @@
       align-self: center;
       text-align: center;
     }
-    img {
+    img,
+    .card-img-placeholder {
       height: 40vh;
       width: 45vw;
       object-fit: cover;
       border-radius: 5px;
     }
   }
-  p {
+  p,
+  .parragraf-ph {
+    width: 95%;
     align-self: flex-start;
     margin: 20px;
     strong {
@@ -48,10 +50,12 @@
   .publicationMain {
     .publication {
       width: 80vw;
-      h2 {
+      h2,
+      .title-ph {
         margin: 50px 0;
       }
-      img {
+      img,
+      .card-img-placeholder {
         width: 70vw;
       }
     }
@@ -63,18 +67,32 @@
   .publicationMain {
     .publication {
       width: 100%;
-      h2 {
+      h2,
+      .title-ph {
         margin: 25px 0;
         text-align: center;
       }
-      img {
+      img,
+      .card-img-placeholder {
         width: 100%;
       }
-      p {
+      p,
+      .parragraf-ph {
         width: 100%;
         strong {
           font-size: 30px;
         }
+      }
+    }
+    .oldComments {
+      svg,
+      img {
+        min-width: 30px;
+        padding: 0;
+        margin: 0;
+      }
+      section {
+        padding-left: 10px;
       }
     }
   }

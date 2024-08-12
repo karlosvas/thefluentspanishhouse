@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import "../styles/404.css";
 
 export const Error = () => {
@@ -32,7 +32,6 @@ export const Error = () => {
           Optionally, you can send an email to carlosvassan@gmail.com"
         </p>
       </div>
-      <Toaster />
     </>
   );
 };

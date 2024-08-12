@@ -1,0 +1,37 @@
+.main-newsletter {
+  background-color: #fffbf2;
+  .newsletter-intro {
+    text-align: center;
+    padding: 5vh;
+    h1 {
+      margin: 0;
+    }
+  }
+
+  .newsletter-articles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    h2 {
+      margin: 0;
+    }
+
+    .newsletter-article {
+      display: flex;
+      align-items: center;
+      border: 1px solid rgb(34, 18, 9);
+      figure {
+        img {
+          margin: 50px;
+          max-height: 30vh;
+          object-fit: contain;
+        }
+      }
+      .article-content {
+        padding: 50px 10px;
+        flex-direction: column;
+      }
+    }
+  }
+}
