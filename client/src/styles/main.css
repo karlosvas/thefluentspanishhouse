@@ -127,15 +127,18 @@ body {
 }
 
 /* Portátiles and Tablets */
-@media only screen and (width <= 1200px) {
+@media only screen and (width <= 1200px) and (width > 766px) {
   .divPracing {
     .cardPracing {
       margin: 0 10px;
     }
   }
+  #banner {
+    object-position: center;
+  }
 }
 /* Moviles */
-@media only screen and (width <= 767px) {
+@media only screen and (width <= 766px) {
   .divPracing {
     margin: 100px 0;
     flex-direction: column;
@@ -162,20 +165,9 @@ body {
       margin-top: 0;
     }
   }
-}
-
-/* Portátil and Tablet */
-@media only screen and (width <= 1200px) and (width >= 767px) {
   #banner {
-    object-position: center;
-  }
-}
-
-/* Moviles */
-@media only screen and (width <= 767px) {
-  #banner {
+    height: 90%;
     object-position: bottom;
-    height: 50vh;
   }
   .main-index {
     .divPracing {
@@ -193,9 +185,6 @@ body {
         padding: 0 30px;
         font-size: 13px;
       }
-    }
-    img {
-      width: 100%;
     }
   }
 }

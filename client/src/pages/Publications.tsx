@@ -20,21 +20,17 @@ const Publications = () => {
 
   return (
     <main className="publicationMain">
-      {!imageLoading ? (
-        <PlaceholderPublications />
-      ) : (
-        <div className="publication">
-          <h2>{publication?.title}</h2>
-          <img
-            src={publication?.base64_img}
-            alt="Imagen de la publicación"
-            style={{ display: imageLoading ? "block" : "none" }}
-          />
-          <strong>{publication?.subtitle}</strong>
-          <p>{publication?.content}</p>
-        </div>
-      )}
-
+      {!imageLoading && <PlaceholderPublications />}
+      <div className="publication">
+        <h2>{publication?.title}</h2>
+        <img
+          src={publication?.base64_img}
+          alt="Imagen de la publicación"
+          style={{ display: imageLoading ? "block" : "none" }}
+        />
+        <strong>{publication?.subtitle}</strong>
+        <p>{publication?.content}</p>
+      </div>
       <UserComments />
     </main>
   );

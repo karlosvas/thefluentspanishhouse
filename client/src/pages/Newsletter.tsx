@@ -1,3 +1,4 @@
+import Button from "../components/reusable/Buuton";
 import "../styles/main-newsettler.css";
 
 const Newsletter = () => {
@@ -46,9 +47,59 @@ const Newsletter = () => {
             </p>
           </div>
           <figure>
-            <img src="./img/cafe.png" alt="Cafe" />
+            <img src="./img/newttseler.png" alt="Cafe" />
           </figure>
         </article>
+      </section>
+      <section className="newsletter-freecontent">
+        <article className="freecontent-article">
+          <figure>
+            <img src="./img/newttseler2.png" alt="Cafe" />
+          </figure>
+          <div className="freecontent-content">
+            <h2>Our Latest Client Project</h2>
+            <h4>WE ABSOLUTY LOVED WORKING WHIT THIS CLIENT!</h4>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
+              quae, officiis error asperiores quidem, assumenda at ut deserunt
+              iusto repellendus vitae laudantium placeat temporibus, ducimus
+              corrupti harum nobis! Provident, debitis?
+            </p>
+            <Button>SEE FULL CLASES STUDY</Button>
+          </div>
+        </article>
+        <div className="freecontent-felx">
+          <article className="freecontent-article">
+            <figure>
+              <img src="./img/paisaje.png" alt="Cafe" />
+            </figure>
+            <div className="freecontent-content">
+              <h3>Comming Up</h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quos
+                sint iure molestiae illo voluptatem, nam consequatur saepe
+                perferendis, necessitatibus facere quis omnis? Obcaecati facilis
+                ut soluta laboriosam ea reiciendis?
+              </p>
+            </div>
+            <Button>FIND OUT MORE</Button>
+          </article>
+          <article className="freecontent-article">
+            <figure>
+              <img src="./img/paisaje2.png" alt="Cafe" />
+            </figure>
+            <div className="freecontent-content">
+              <h3>Free Resouce</h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quos
+                sint iure molestiae illo voluptatem, nam consequatur saepe
+                perferendis, necessitatibus facere quis omnis? Obcaecati facilis
+                ut soluta laboriosam ea reiciendis?
+              </p>
+            </div>
+            <Button>INSTANT DOWNLOAD</Button>
+          </article>
+        </div>
       </section>
     </main>
   );

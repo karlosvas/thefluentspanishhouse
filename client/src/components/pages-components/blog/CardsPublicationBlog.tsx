@@ -66,6 +66,19 @@ const CardsPublicationBlog: React.FC<PublicationsProp> = ({ publications }) => {
         />
       )}
 
+      {cardsBlog.length === 0 && (
+        <h1
+          style={{
+            position: "absolute",
+            top: "35%",
+            fontSize: "30px",
+            textAlign: "center",
+          }}
+        >
+          No posts available...
+        </h1>
+      )}
+
       {/* // Renderiza la lista de publicaciones */}
       {cardsBlog.map((publication, index) => (
         <div className="cardBlog" key={publication._id}>
@@ -90,7 +103,6 @@ const CardsPublicationBlog: React.FC<PublicationsProp> = ({ publications }) => {
           </Link>
         </div>
       ))}
-      {/* )} */}
 
       {/* Renderiza el botón solo para usuarios específicos */}
       {(user?.email === "carlosvassan@gmail.com" ||

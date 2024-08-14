@@ -46,7 +46,7 @@
 }
 
 /* Portátil and tablet */
-@media only screen and (width <= 1200px) {
+@media only screen and (width <= 1200px) and (width > 766px) {
   .publicationMain {
     .publication {
       width: 80vw;
@@ -78,7 +78,7 @@
       }
       p,
       .parragraf-ph {
-        width: 100%;
+        margin: 10px;
         strong {
           font-size: 30px;
         }
