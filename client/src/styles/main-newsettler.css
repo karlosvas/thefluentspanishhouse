@@ -3,12 +3,38 @@
   margin: auto;
   background-color: var(--primary-white);
 
-  button {
-    background-color: rgb(13, 137, 141);
-    width: 250px;
+  p,
+  h1,
+  h2,
+  h3,
+  h4 {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 30%;
   }
 
-  .newsletter-intro {
+  button {
+    background-color: rgb(13, 68, 141);
+    width: 250px;
+    padding: 15px 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-bottom: 6px solid rgb(10, 48, 101);
+    border-right: 4px solid rgb(10, 48, 101);
+    transition: all 0.2s ease;
+  }
+
+  button:active {
+    border-bottom: 2px solid rgb(10, 48, 101);
+    border-right: 2px solid rgb(10, 48, 101);
+    transform: translateY(4px);
+  }
+
+  .nw-title {
     text-align: center;
     padding: 5vh;
     h1 {
@@ -16,7 +42,7 @@
     }
   }
 
-  .newsletter-articles {
+  .nw-articles {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,7 +51,7 @@
       margin: 0;
     }
 
-    .newsletter-article {
+    .nw-article {
       display: flex;
       align-items: center;
       border-top: 1px solid rgb(34, 18, 9);
@@ -44,7 +70,7 @@
   }
 }
 
-.newsletter-freecontent {
+.nw-freecontent {
   border-top: 1px solid rgb(34, 18, 9);
   margin: auto;
   text-align: center;
@@ -95,26 +121,19 @@
 /* Moviles */
 @media only screen and (width <= 766px) {
   .main-newsletter {
-    .newsletter-intro {
-      text-align: center;
-      padding: 5vh;
-      h1 {
-        margin: 0;
-      }
+    article {
+      padding: 100px 0;
     }
 
-    .newsletter-articles {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      h2,
+    .nw-articles {
       h3 {
         margin: 0;
       }
+      p {
+        padding: 10px;
+      }
 
-      .newsletter-article {
-        padding: 20px 0;
+      .nw-article {
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -138,8 +157,18 @@
       }
     }
 
+    .nw-freecontent p {
+      width: 90%;
+      padding: 10px;
+    }
+
+    .nw-freecontent {
+      padding-top: 0;
+    }
+
     .freecontent-felx {
       align-items: start;
+      padding: 0;
       article {
         width: 50dvw;
 

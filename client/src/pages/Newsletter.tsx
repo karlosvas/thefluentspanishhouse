@@ -4,12 +4,12 @@ import "../styles/main-newsettler.css";
 const Newsletter = () => {
   return (
     <main className="main-newsletter">
-      <section className="newsletter-intro">
+      <section className="nw-title">
         <small>WELCOME TO OUR</small>
         <h1>Weekly Newsletter</h1>
       </section>
-      <section className="newsletter-articles">
-        <article className="newsletter-article">
+      <section className="nw-articles">
+        <article className="nw-article">
           <figure>
             <img src="./img/cafe.png" alt="Cafe" />
           </figure>
@@ -36,7 +36,7 @@ const Newsletter = () => {
             </p>
           </div>
         </article>
-        <article className="newsletter-article">
+        <article className="nw-article">
           <div className="article-content">
             <h2>New Team Member Alert</h2>
             <p>
@@ -51,7 +51,7 @@ const Newsletter = () => {
           </figure>
         </article>
       </section>
-      <section className="newsletter-freecontent">
+      <section className="nw-freecontent">
         <article className="freecontent-article">
           <figure>
             <img src="./img/newttseler2.png" alt="Cafe" />

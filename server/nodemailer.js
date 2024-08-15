@@ -1,6 +1,4 @@
 import { createTransport } from "nodemailer";
-import dotenv from "dotenv";
-dotenv.config();
 
 // Configuración del transporte
 let transporter = createTransport({
@@ -12,7 +10,7 @@ let transporter = createTransport({
 });
 
 export async function submitNote(email_user, username, subject, note) {
-  // Datos del correo
+  // Datos del correo y opciones
   let mailOptions = {
     from: `"${email_user} via TheFluentSpanishHouse" ${process.env.USER_GMAIL}`,
     to: process.env.USER_GMAIL,
@@ -21,7 +19,7 @@ export async function submitNote(email_user, username, subject, note) {
     replyTo: email_user,
   };
 
-  // Enviar el correo
+  // Enviar el correo mediante el transporte
   try {
     const info = await transporter.sendMail(mailOptions);
     console.log("Email sent: " + info.response);
