@@ -1,7 +1,27 @@
+import { useState } from "react";
 import Button from "../components/reusable/Buuton";
 import "../styles/main-newsettler.css";
+import PlaceholderNewsletter from "../components/pages-components/newsletter/PlaceholderNewsletter";
 
 const Newsletter = () => {
+  const [imagesLoaded, setImagesLoaded] = useState<{
+    img1: boolean;
+    img2: boolean;
+    img3: boolean;
+    img4: boolean;
+    img5: boolean;
+  }>({
+    img1: false,
+    img2: false,
+    img3: false,
+    img4: false,
+    img5: false,
+  });
+
+  const handleImageLoad = (imgKey: keyof typeof imagesLoaded) => {
+    setImagesLoaded((prev) => ({ ...prev, [imgKey]: true }));
+  };
+
   return (
     <main className="main-newsletter">
       <section className="nw-title">
@@ -11,7 +31,13 @@ const Newsletter = () => {
       <section className="nw-articles">
         <article className="nw-article">
           <figure>
-            <img src="./img/cafe.png" alt="Cafe" />
+            {!imagesLoaded.img1 && <PlaceholderNewsletter />}
+            <img
+              src="./img/cafe.webp"
+              alt="Coffe image"
+              onLoad={() => handleImageLoad("img1")}
+              style={{ display: imagesLoaded.img1 ? "block" : "none" }}
+            />
           </figure>
           <div className="article-content">
             <h3>HEY, HOW ARE YOU?</h3>
@@ -47,14 +73,26 @@ const Newsletter = () => {
             </p>
           </div>
           <figure>
-            <img src="./img/newttseler.png" alt="Cafe" />
+            {!imagesLoaded.img2 && <PlaceholderNewsletter />}
+            <img
+              src="./img/newttseler.webp"
+              alt="Cafe"
+              onLoad={() => handleImageLoad("img2")}
+              style={{ display: imagesLoaded.img2 ? "block" : "none" }}
+            />
           </figure>
         </article>
       </section>
       <section className="nw-freecontent">
         <article className="freecontent-article">
           <figure>
-            <img src="./img/newttseler2.png" alt="Cafe" />
+            {!imagesLoaded.img3 && <PlaceholderNewsletter />}
+            <img
+              src="./img/newttseler2.webp"
+              alt="Cafe"
+              onLoad={() => handleImageLoad("img3")}
+              style={{ display: imagesLoaded.img3 ? "block" : "none" }}
+            />
           </figure>
           <div className="freecontent-content">
             <h2>Our Latest Client Project</h2>
@@ -71,7 +109,13 @@ const Newsletter = () => {
         <div className="freecontent-felx">
           <article className="freecontent-article">
             <figure>
-              <img src="./img/paisaje.png" alt="Cafe" />
+              {!imagesLoaded.img4 && <PlaceholderNewsletter />}
+              <img
+                src="./img/paisaje.webp"
+                alt="Cafe"
+                onLoad={() => handleImageLoad("img4")}
+                style={{ display: imagesLoaded.img4 ? "block" : "none" }}
+              />
             </figure>
             <div className="freecontent-content">
               <h3>Comming Up</h3>
@@ -86,7 +130,13 @@ const Newsletter = () => {
           </article>
           <article className="freecontent-article">
             <figure>
-              <img src="./img/paisaje2.png" alt="Cafe" />
+              {!imagesLoaded.img5 && <PlaceholderNewsletter />}
+              <img
+                src="./img/paisaje2.webp"
+                alt="Cafe"
+                onLoad={() => handleImageLoad("img5")}
+                style={{ display: imagesLoaded.img5 ? "block" : "none" }}
+              />
             </figure>
             <div className="freecontent-content">
               <h3>Free Resouce</h3>

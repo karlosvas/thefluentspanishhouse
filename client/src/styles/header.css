@@ -142,7 +142,7 @@ header #sect {
       bottom: 0;
       width: 100vw;
       height: 10vh;
-      background: url(/img/wave.png);
+      background: url(/img/wave.webp);
       background-size: 1000px 10vh;
     }
     #wave1 {
@@ -190,7 +190,7 @@ header #sect {
 /* Moviles */
 @media only screen and (width <= 766px) {
   header {
-    height: 7.5vh;
+    height: 7dvh;
     .header {
       z-index: 999;
       align-items: end;

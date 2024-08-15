@@ -3,6 +3,7 @@
   margin: auto;
   background-color: var(--primary-white);
 
+  img,
   p,
   h1,
   h2,
@@ -56,7 +57,8 @@
       align-items: center;
       border-top: 1px solid rgb(34, 18, 9);
       figure {
-        img {
+        img,
+        div {
           margin: 50px;
           max-height: 30vh;
           object-fit: contain;
@@ -78,10 +80,14 @@
   h2 {
     margin: 0;
   }
-  figure > img {
-    width: 85%;
-    max-height: 300px;
-    object-fit: cover;
+  figure {
+    img,
+    div {
+      width: 85%;
+      max-height: 300px;
+      object-fit: cover;
+      margin: auto;
+    }
   }
   p {
     margin: auto;
@@ -102,20 +108,6 @@
 }
 /* Portátil and tablet */
 /* @media only screen and (width <= 1200px) and (width > 766px) {
-  .main-newsletter {
-    .newsletter-intro {
-    }
-    .newsletter-articles {
-      .newsletter-article {
-        figure {
-          img {
-          }
-        }
-        .article-content {
-        }
-      }
-    }
-  }
 } */
 
 /* Moviles */
@@ -140,7 +132,8 @@
         border: 1px solid rgb(34, 18, 9);
         figure {
           margin-bottom: 0;
-          img {
+          img,
+          div {
             margin: 20px 50px 20px 50px;
             width: 90vw;
             object-fit: contain;
@@ -172,8 +165,11 @@
       article {
         width: 50dvw;
 
-        figure img {
-          height: 10vh;
+        figure {
+          img,
+          div {
+            height: 10vh;
+          }
         }
         button {
           width: 30vw;

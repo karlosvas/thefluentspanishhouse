@@ -14,7 +14,7 @@ const AboutMe = () => {
           <article>
             <figure>
               <img
-                src="/img/escritorio.png"
+                src="/img/escritorio.webp"
                 alt="Descripción de la imagen"
                 onLoad={() => setImageLoaded(true)}
                 style={{ display: imageLoaded ? "block" : "none" }}

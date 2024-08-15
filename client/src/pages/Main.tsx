@@ -9,9 +9,9 @@ const Main = () => {
 
   // Función para obtener la URL de la imagen según el tamaño de la ventana
   const getImageUrl = useCallback(() => {
-    if (window.innerWidth >= 1024) return "/img/banner-xl.png";
-    if (window.innerWidth >= 766) return "/img/banner-md.png";
-    return "/img/banner-sm.png";
+    if (window.innerWidth >= 1024) return "/img/banner-xl.webp";
+    if (window.innerWidth >= 766) return "/img/banner-md.webp";
+    return "/img/banner-sm.webp";
   }, []);
 
   useEffect(() => {
