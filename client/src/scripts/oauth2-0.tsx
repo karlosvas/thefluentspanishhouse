@@ -6,9 +6,6 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   fetchSignInMethodsForEmail,
-  getAuth,
-  setPersistence,
-  browserLocalPersistence,
   sendEmailVerification,
   type User,
 } from "firebase/auth";
@@ -23,19 +20,6 @@ export const isLogged = () => {
 
 export const getUser = (): User | null => {
   return auth.currentUser;
-};
-
-// presistencia
-export const setupAuthPersistence = async () => {
-  const auth = getAuth();
-  try {
-    return await setPersistence(auth, browserLocalPersistence);
-  } catch (error) {
-    console.error(
-      "Error al configurar la persistencia de la autenticación:",
-      error
-    );
-  }
 };
 
 // Proveedor de Google

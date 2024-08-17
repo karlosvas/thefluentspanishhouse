@@ -144,7 +144,8 @@ html.dark {
       color: var(--primary-white);
       background-color: var(--primary-black);
     }
-    .googleAuth {
+    .googleAuth,
+    .facebookAuth {
       border: 2px solid var(--primary-white);
     }
     .menuLeft {
@@ -194,9 +195,9 @@ html.dark {
       color: var(--primary-black);
     }
     .mainAccount {
-      color: var(--primary-black);
-      input {
-        color: var(--primary-black);
+      .ac-content {
+        background: var(--primary-black);
+        color: var(--primary-white);
       }
     }
   }

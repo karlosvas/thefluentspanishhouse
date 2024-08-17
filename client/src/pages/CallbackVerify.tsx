@@ -7,24 +7,25 @@ import {
 import { ChangeEvent, useEffect, useState } from "react";
 import { changeOptionsEmail } from "../scripts/firebase-users";
 import toast from "react-hot-toast";
+import ShowPassword from "../components/reusable/ShowPassword";
 
 export const CallbackVerify = () => {
-  const [password, setPassword] = useState("");
+  const [ID, setID] = useState({
+    username: "",
+    password: "",
+    email: "",
+  });
   const [searchParams] = useSearchParams();
   const [verification, setVerification] = useState(false);
 
   const navigate: NavigateFunction = useNavigate();
   const newEmail = searchParams.get("email");
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
   async function submitDataVerifyEmail(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
     if (newEmail) {
       try {
-        await changeOptionsEmail(password, navigate, newEmail);
+        await changeOptionsEmail(ID.password, navigate, newEmail);
         setVerification(true);
       } catch (error) {
         toast.error(
@@ -37,7 +38,7 @@ export const CallbackVerify = () => {
   }
 
   useEffect(() => {
-    if (!newEmail) navigate("/404");
+    // if (!newEmail) navigate("/404");
   }, []);
 
   return (
@@ -56,8 +57,11 @@ export const CallbackVerify = () => {
             <h1>Please enter your password to change to your email</h1>
             <Link to="/">Go Home</Link>
           </section>
+
           <form onSubmit={submitDataVerifyEmail}>
-            <input type="password" value={password} onChange={handleChange} />
+            <label>
+              <ShowPassword password={ID.password} setID={setID} />
+            </label>
             <button type="submit">Send</button>
           </form>
         </>

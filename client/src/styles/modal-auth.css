@@ -29,20 +29,31 @@
     font-size: medium;
     min-width: 310px;
 
-    input {
-      margin: 5px 0;
+    .input-email {
+      outline: none;
+      margin: 5px 10px;
       border-radius: 3px;
-      border: 1px solid #ccc;
+      border: 1px solid #e2e2ed;
       color: var(--primary-black);
       background-color: var(--primary-white);
       border-radius: 5px;
-      width: 200px;
+      width: 300px;
       margin-left: 10px;
       padding-left: 7px;
+      background-color: #fff;
+      -webkit-transition: -webkit-transform 0.2s;
+      transition: -webkit-transform 0.2s;
+      transition: transform 0.2s;
+      transition: transform 0.2s, -webkit-transform 0.2s;
+      transition: border 0.3s;
     }
+    .input-email:focus {
+      border-color: #09abc3;
+    }
+
     button[type="submit"] {
       background-color: var(--primary-blue);
-      padding: 3px;
+      padding: 5px;
       border-radius: 5px;
       margin: 50px 0 20px 0;
       text-align: center;
@@ -78,12 +89,16 @@
     transform: translateY(4px);
   }
 
-  .googleAuth {
-    margin: auto;
+  section {
+    max-width: 390px;
+    margin: 10px;
+  }
+  .googleAuth,
+  .facebookAuth {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 93%;
+    width: 100%;
     border: 2px solid var(--primary-black);
     margin-bottom: 10px;
     min-height: 30px;
@@ -104,9 +119,14 @@
   overflow: hidden;
 }
 
-/* Tablets */
-/* @media (width <= 1200px) and (width >= 767px) {
-} */
+@media (width <= 1200px) and (width >= 767px) {
+  .modalAuth {
+    .login-form {
+      align-items: end;
+      width: 430px;
+    }
+  }
+}
 
 /* Moviles */
 @media only screen and (width <= 766px) {
@@ -115,9 +135,24 @@
     width: 90vw;
     padding: 20px;
     padding-top: 0;
-    label {
-      text-align: start;
+
+    .login-form {
+      max-width: 310px;
+      .input-email {
+        width: 200px;
+      }
+      .password-container {
+        width: 200px;
+        svg {
+          margin-right: 20px;
+        }
+      }
     }
+
+    .providers-log {
+      width: 290px;
+    }
+
     .modalContent > h1 {
       padding-top: 50px;
       font-size: 40px;

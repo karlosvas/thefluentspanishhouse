@@ -37,8 +37,10 @@ body .error {
     margin-left: 10px;
     padding: 10px;
   }
-  input {
-    padding: 8px;
-    width: 300px;
+  .password-container {
+    padding: 20px 10px;
+    input {
+      height: fit-content;
+    }
   }
 }
