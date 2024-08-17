@@ -9,29 +9,28 @@
   border-radius: 5px;
   width: fit-content;
   height: auto;
-  padding: 0 50px;
   text-align: center;
   font-weight: 500;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  .modalContent > h2 {
-    margin-top: 0;
-  }
-
-  .modalContent > h2 {
+  padding: 50px 130px;
+  .modalContent > h1 {
     padding-top: 20px;
   }
+
   .login-form {
     padding: 10px;
     display: flex;
     justify-content: center;
     align-items: end;
     flex-direction: column;
+    font-size: medium;
+    min-width: 310px;
+
     input {
       margin: 5px 0;
-      font-size: medium;
       border-radius: 3px;
       border: 1px solid #ccc;
       color: var(--primary-black);
@@ -39,6 +38,15 @@
       border-radius: 5px;
       width: 200px;
       margin-left: 10px;
+      padding-left: 7px;
+    }
+    button[type="submit"] {
+      background-color: var(--primary-blue);
+      padding: 3px;
+      border-radius: 5px;
+      margin: 50px 0 20px 0;
+      text-align: center;
+      width: 100%;
     }
   }
 
@@ -48,21 +56,26 @@
     top: 10px;
     transition: color 0.3s;
     background-color: rgb(230, 52, 105);
-    padding: 0 6px;
+    padding: 5px 13px;
     border-radius: 5px;
+    font-size: 20px;
+    margin-top: 10px;
   }
 
   .closeAuth:hover {
     color: var(--primary-white);
   }
 
-  button[type="submit"] {
-    background-color: var(--primary-blue);
-    padding: 3px;
-    border-radius: 5px;
-    margin: 10px 0 40px 0;
-    text-align: center;
-    width: 100%;
+  .closeAuth {
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 5px rgb(155, 20, 61);
+    transition: all 0.2s ease;
+  }
+
+  .closeAuth:active {
+    box-shadow: 0px 2px rgb(155, 20, 61);
+    transform: translateY(4px);
   }
 
   .googleAuth {
@@ -70,10 +83,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 220px;
+    width: 93%;
     border: 2px solid var(--primary-black);
-    margin-bottom: 20px;
-    #svgGoogle {
+    margin-bottom: 10px;
+    min-height: 30px;
+    .providers {
       margin-left: 10px;
     }
   }
@@ -103,6 +117,10 @@
     padding-top: 0;
     label {
       text-align: start;
+    }
+    .modalContent > h1 {
+      padding-top: 50px;
+      font-size: 40px;
     }
   }
 }

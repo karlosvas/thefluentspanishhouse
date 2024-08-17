@@ -7,6 +7,7 @@ import MainNav from "../components/header-components/MainNav";
 import Theme from "../components/svg-component/Theme";
 import { isLogged } from "../scripts/oauth2-0";
 import "../styles/header.css";
+import Settings from "../components/svg-component/Settings";
 
 const Header = () => {
   // Estados
@@ -88,6 +89,7 @@ const Header = () => {
           )}
           {window.innerWidth > 766 && (
             <div className="navIcons">
+              <Settings />
               <Theme theme={theme} setTheme={setTheme} />
               <Auth onLoginChange={handleLoginChange} logged={logged} />
             </div>

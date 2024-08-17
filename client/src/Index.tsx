@@ -4,9 +4,9 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import { setupAuthPersistence } from "../src/scripts/oauth2-0.tsx"; // Ajusta la ruta según tu estructura
 import { loadPublications } from "./scripts/render-data.tsx";
+import { type PublicationCardType } from "../types/types";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/index.css";
-import { type PublicationCardType } from "../types/types";
 
 const initializeApp = async () => {
   try {

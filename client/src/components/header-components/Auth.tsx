@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import {
   signInWithGoogle,
@@ -16,7 +16,11 @@ import "../../styles/modal-auth.css";
 const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
   const [showModal, setShowModal] = useState(false);
   const [formType, setFormType] = useState("login");
-  const [ID, setID] = useState({ username: "", password: "", email: "" });
+  const [ID, setID] = useState({
+    username: "",
+    password: "",
+    email: "",
+  });
   const typeLoginRegisterRef = useRef<HTMLHeadingElement>(null);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,11 +41,10 @@ const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
       )
         location.reload();
     } catch (error) {
-      // Verifica si el error tiene una propiedad 'code'
       const firebaseError = error as { code?: string };
       const errorMessage =
         isRegister && firebaseError.code === "auth/email-already-in-use"
-          ? "The email address is already in use ❌"
+          ? "The email address is already in use. Please try logging in. ❌"
           : !isRegister && firebaseError.code === "auth/invalid-credential"
           ? "You are not registered"
           : "An error occurred";
@@ -51,6 +54,25 @@ const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
   };
 
   const handleGoogleAuth = async () => {
+    const isRegister = typeLoginRegisterRef.current?.textContent === "Register";
+    try {
+      const user = isRegister
+        ? await registerWithGoogle()
+        : await signInWithGoogle();
+
+      onLoginChange?.(isLogged());
+      toggleFormType("", setFormType, showModal, setShowModal);
+      if (
+        user?.email == "carlosvassan@gmail.com" ||
+        ID.email == "mar411geca@gmail.com"
+      )
+        location.reload();
+    } catch (error) {
+      toast.error("An error occurred with Google authentication");
+    }
+  };
+
+  const handleFacebookAuth = async () => {
     const isRegister = typeLoginRegisterRef.current?.textContent === "Register";
     try {
       const user = isRegister
@@ -82,6 +104,20 @@ const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setID((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const [showUsernameField, setShowUsernameField] = useState(false);
+
+  useEffect(() => {
+    if (typeLoginRegisterRef.current) {
+      setShowUsernameField(
+        typeLoginRegisterRef.current.textContent === "Register"
+      );
+    }
+  }, [formType]);
+
+  const forgotPasword = () => {
+    console.log("hola");
   };
 
   return (
@@ -116,9 +152,9 @@ const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
                 >
                   &times;
                 </span>
-                <h2 ref={typeLoginRegisterRef}>
+                <h1 ref={typeLoginRegisterRef}>
                   {formType === "login" ? "Sign In" : "Register"}
-                </h2>
+                </h1>
                 <form onSubmit={handleFormSubmit} className="login-form">
                   <label>
                     Email
@@ -130,16 +166,18 @@ const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
                       required
                     />
                   </label>
-                  <label>
-                    Username
-                    <input
-                      type="text"
-                      name="username"
-                      value={ID.username}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </label>
+                  {showUsernameField && (
+                    <label>
+                      Username
+                      <input
+                        type="text"
+                        name="username"
+                        value={ID.username}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </label>
+                  )}
                   <label>
                     Password
                     <input
@@ -150,15 +188,18 @@ const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
                       required
                     />
                   </label>
+                  <small onClick={() => forgotPasword}>
+                    Forgot your password?
+                  </small>
                   <Button type="submit">Submit</Button>
                 </form>
                 <div className="googleAuth" onClick={handleGoogleAuth}>
                   Continue with
                   <svg
-                    id="svgGoogle"
+                    className="providers"
                     xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
+                    width="23"
+                    height="23"
                     viewBox="0 0 48 48"
                   >
                     <path
@@ -177,6 +218,35 @@ const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
                       fill="#1976D2"
                       d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
                     ></path>
+                  </svg>
+                </div>
+                <div className="googleAuth" onClick={handleFacebookAuth}>
+                  Continue with
+                  <svg
+                    className="providers"
+                    xmlns="http://www.w3.org/2000/svg"
+                    x="0px"
+                    y="0px"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 100 100"
+                  >
+                    <polygon
+                      fill="#4b4dff"
+                      points="79,78 18.126,78 18.126,19 78.622,19"
+                    ></polygon>
+                    <path
+                      fill="#edf7f5"
+                      d="M43.835,75.54h9.873V53.657h5.915l0.807-7.377h-6.722l0.009-4.139c0-1.975,0.19-3.019,3.009-3.019 H61v-7.348h-7.348c-7.263,0-9.816,3.655-9.816,9.807v4.699H40v7.377h3.835V75.54z"
+                    ></path>
+                    <path
+                      fill="#4343bf"
+                      d="M82,81H15V16h67.052L82,81z M21,75h54.051l0.897-53H21V75z"
+                    ></path>
+                    <polygon
+                      fill="#3abcf8"
+                      points="85,85 21,85 21,75 75,75 75,22 85,22"
+                    ></polygon>
                   </svg>
                 </div>
               </div>

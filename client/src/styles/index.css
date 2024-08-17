@@ -113,6 +113,16 @@ html.light {
   }
 }
 
+#recaptcha-container {
+  width: 300px;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  z-index: 9999;
+}
+
 /* Estilos para tema oscuro */
 html.dark {
   transition: background-color 0.3s ease, color 0.1s ease;
@@ -182,6 +192,12 @@ html.dark {
     }
     .uploadPublication {
       color: var(--primary-black);
+    }
+    .mainAccount {
+      color: var(--primary-black);
+      input {
+        color: var(--primary-black);
+      }
     }
   }
   footer {

@@ -13,10 +13,11 @@ import { type PublicationsProp } from "../types/types";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import Newsetler from "./pages/Newsletter";
+import CallbackVerify from "./pages/CallbackVerify";
 
 const App: React.FC<PublicationsProp> = ({ publications }) => {
   const location = useLocation();
-  const exclude = ["/info", "/404"];
+  const exclude = ["/info", "/404", "/verify"];
 
   // Determina si el Header y el Footer deben ser ocultados
   const shouldHideHeaderFooter = exclude.includes(location.pathname);
@@ -38,6 +39,7 @@ const App: React.FC<PublicationsProp> = ({ publications }) => {
         <Route path="/info" element={<Info />} />
         <Route path="/newsetler" element={<Newsetler />} />
         <Route path="/404" element={<Error />} />
+        <Route path="/verify" element={<CallbackVerify />} />
         {/* Maneja rutas no encontradas */}
         <Route path="*" element={<Navigate to="/404" />} />
       </Routes>

@@ -1,4 +1,3 @@
-import { initializeApp } from "firebase/app";
 import {
   updateProfile,
   signInWithPopup,
@@ -10,23 +9,12 @@ import {
   getAuth,
   setPersistence,
   browserLocalPersistence,
+  sendEmailVerification,
+  type User,
 } from "firebase/auth";
 import { toast } from "react-hot-toast";
-import { type User } from "firebase/auth";
-
-// Configuración firebase, como es una página estática no puedo utilizar .env :)
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
-};
-
-const firebaseApp = initializeApp(firebaseConfig);
-export const auth = getAuth(firebaseApp);
+import { auth } from "./firebase-config";
+import { FirebaseError } from "firebase/app";
 
 // Verificar si actualmente está logeado
 export const isLogged = () => {
@@ -80,12 +68,27 @@ export async function localSignin(email: string, password: string) {
       password
     );
     // Usuario autenticado correctamente
-    const user = userCredential.user.displayName;
-    toast.success(
-      <span>
-        Welcome back <b>{user}</b>!
-      </span>
-    );
+    const user = userCredential.user;
+
+    if (user.emailVerified) {
+      toast.success(
+        <span>
+          Welcome back <b>{user.displayName}</b>!
+        </span>
+      );
+    } else {
+      toast(
+        "Doy you need verify your email. Please check your email for the verification link.",
+        {
+          duration: 10000,
+          style: {
+            background: "#333",
+            color: "#fff",
+          },
+          icon: "🔔",
+        }
+      );
+    }
   } catch (error) {
     // Ocurrió un error durante la autenticación
     toast.error(`Authentication failed`);
@@ -119,6 +122,7 @@ export async function registerWithGoogle() {
           </span>
         );
       }
+
       return auth.currentUser;
     } else toast.error("The user does not have an email");
   } catch (error) {
@@ -145,15 +149,53 @@ export async function localRegister(
     );
     const user = userCredential.user;
     await updateProfile(user, { displayName: username });
-    toast.success(
-      <span>
-        Welcome <b>{user.displayName}</b>!
-      </span>
-    );
+
+    if (user.emailVerified) {
+      toast.success(
+        <span>
+          Welcome again <b>{user.displayName}</b>!
+        </span>
+      );
+    } else {
+      toast("Welcome!, Please check your email for the verification link.", {
+        duration: 10000,
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+        icon: "🔔",
+      });
+
+      sendEmailVerification(user);
+    }
     await signInWithEmailAndPassword(auth, email, password);
-  } catch (error) {
-    console.error("Error during registration:", error);
-    toast.error(`Error during registration`);
+  } catch (error: unknown) {
+    if (error instanceof FirebaseError) {
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          toast.error(
+            "The email address is already in use. Please try logging in. ❌"
+          );
+          break;
+        case "auth/invalid-email":
+          toast.error("The email address is not valid.");
+          break;
+        case "auth/weak-password":
+          toast.error(
+            "The password is too weak. Please choose a stronger password."
+          );
+          break;
+        case "auth/network-request-failed":
+          toast.error(
+            "Network error. Please check your connection and try again."
+          );
+          break;
+        default:
+          toast.error(`Error during registration: ${error.message}`);
+      }
+    } else {
+      toast.error("An unexpected error occurred.");
+    }
   }
 }
 

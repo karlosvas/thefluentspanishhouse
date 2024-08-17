@@ -18,15 +18,17 @@ const Profile = () => {
   return (
     <>
       <div className="profile">
-        {logged && window.innerWidth <= 766 && (
-          <>
-            {img ? <img src={img} alt="Logo" /> : <ImgUser />}
-            <div className="username">
-              <strong>{name}</strong>
-              <small>{email}</small>
-            </div>
-          </>
-        )}
+        {infoUser &&
+          (window.innerWidth <= 766 ||
+            window.location.pathname === "/account") && (
+            <>
+              {img ? <img src={img} alt="Logo" /> : <ImgUser />}
+              <div className="username">
+                <strong>{name}</strong>
+                <small>{email}</small>
+              </div>
+            </>
+          )}
       </div>
       <div className="auth">
         <Auth onLoginChange={handleLoginChange} logged={logged} />

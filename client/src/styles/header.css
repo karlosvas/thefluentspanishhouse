@@ -211,9 +211,9 @@ header #sect {
       }
     }
     #sect {
-      top: 7vh;
+      top: 6.5dvh;
       .waves {
-        height: 0.5vh;
+        height: 0.5dvh;
       }
     }
   }

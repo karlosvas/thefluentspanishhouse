@@ -1,11 +1,10 @@
 #hamburger {
   z-index: 999;
   position: absolute;
-  left: 20px;
-  top: 10px;
+  left: 35px;
+  top: 30%;
   height: 20px;
   width: 20px;
-  margin-left: 10px;
 }
 
 .auth {
@@ -21,7 +20,7 @@
   justify-content: start;
   flex-direction: column;
   position: absolute;
-  left: -30px;
+  left: -40px;
   top: -20px;
   color: var(--primary-white);
   background-color: var(--primary-black);
@@ -36,6 +35,15 @@
       padding: 5px;
       border-radius: 3px;
       margin-left: 10px;
+    }
+  }
+  .username {
+    width: 70%;
+    strong,
+    small {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
   .svgIcons {
@@ -98,11 +106,5 @@
 @media only screen and (width <= 1100px) and (width >= 768px) {
   .menuLeft {
     width: 40vw;
-  }
-}
-
-@media only screen and (width <= 766px) and (width >= 380px) {
-  #hamburger {
-    top: 20px;
   }
 }

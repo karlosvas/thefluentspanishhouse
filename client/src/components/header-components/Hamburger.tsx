@@ -45,7 +45,7 @@ const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
           viewBox="0 0 24 24"
           strokeWidth="3"
           stroke="currentColor"
-          className="svgIcon"
+          className="svgIcons"
         >
           <path
             strokeLinecap="round"

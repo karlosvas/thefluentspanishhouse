@@ -1,3 +1,5 @@
+import { User } from "firebase/auth";
+
 export type TFunction = (key: string, options?: object) => string;
 
 export interface OptionalTranslations {
@@ -81,10 +83,6 @@ export interface FormSuscriberProps {
   buttonName?: string;
 }
 
-export interface EditType {
-  commentText: string;
-}
-
 export type PublicationsProp = {
   publications: PublicationCardType[];
 };
@@ -94,4 +92,19 @@ export interface NoteType {
   username: string;
   subject: string;
   note: string;
+}
+
+export interface ConfigUser {
+  user: User | string;
+  displayName: string;
+  email: string;
+  password: string;
+  phone: string;
+}
+
+export interface EditType {
+  commentText: string;
+  event: (index: number) => void;
+  index: number;
+  state: bolean;
 }
