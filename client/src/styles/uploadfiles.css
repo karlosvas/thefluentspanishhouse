@@ -23,14 +23,14 @@
 .uploadPublication {
   animation: bgDown 0.3s ease-out;
   position: fixed;
-  top: 50%;
+  top: 45%;
   left: 50%;
   background-color: white;
   padding: 20px;
   height: auto;
   width: 40vw;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 1001;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.5);
 }
@@ -70,19 +70,26 @@
 }
 
 .uploadPublication form ul li p {
-  color: rgb(235, 46, 46);
   font-weight: 500;
   margin-top: 10px;
   text-align: center;
 }
 
-.uploadPublication form ul li label p {
-  color: var(--primary-black);
-  font-weight: normal;
-}
-
 .uploadPublication form ul li:hover {
   background-color: transparent;
+}
+
+.uploadPublication form ul li {
+  margin-bottom: 10px;
+}
+
+.uploadPublication form label {
+  display: block;
+  font-size: 14px;
+}
+
+.uploadPublication form label input[type="checkbox"] {
+  margin-right: 5px;
 }
 
 .uploadPublication .custom-file-upload {

@@ -121,7 +121,8 @@ export const handleSubmitPost = async (
     const response = await app.post(`${url_api}/api/newpublication`, {
       body: JSON.stringify(newPublication),
     });
-    if (response) window.location.reload();
+    if (response && window.location.pathname === "/blog")
+      window.location.reload();
     else {
       toast.error("Error al enviar el post");
       throw Error;

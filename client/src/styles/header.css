@@ -173,12 +173,17 @@ header #sect {
 }
 
 /* Portátil and tablet */
-@media only screen and (width <= 1200px) {
+@media only screen and (width <= 1200px) and (width > 766px) {
   header .header {
     #logo {
       margin-left: 10px;
     }
+    .auth {
+      width: 200px;
+    }
     nav {
+      margin: 0;
+      padding: 0;
       ul {
         width: 60vw;
         margin: 0;

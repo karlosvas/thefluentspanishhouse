@@ -83,7 +83,7 @@ const ContactForm = () => {
   return (
     <div className="container">
       <span className="big-circle"></span>
-      <img src="img/shape.png" className="square" alt="" />
+      <img src="img/shape.webp" className="square" alt="" />
       <div className="form">
         <div className="contact-info">
           <h3 className="title">Let's get in touch</h3>
@@ -93,15 +93,15 @@ const ContactForm = () => {
 
           <div className="info">
             <div className="information">
-              <img src="img/location.png" className="icon" alt="" />
+              <img src="img/location.webp" className="icon" alt="" />
               <p>Around the world</p>
             </div>
             <div className="information">
-              <img src="img/email.png" className="icon" alt="" />
+              <img src="img/email.webp" className="icon" alt="" />
               <p>mar411geca@gmail.com</p>
             </div>
             <div className="information">
-              <img src="img/phone.png" className="icon" alt="" />
+              <img src="img/phone.webp" className="icon" alt="" />
               <p>+34617286125</p>
             </div>
           </div>

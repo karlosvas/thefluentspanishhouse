@@ -7,12 +7,14 @@ import {
   isLogged,
   localRegister,
   localSignin,
+  signInWithFacebook,
 } from "../../scripts/oauth2-0";
 import { toggleFormType } from "../../scripts/modal";
 import Button from "../reusable/Buuton";
 import { type AuthProps } from "../../../types/types";
-import "../../styles/modal-auth.css";
 import ShowPassword from "../reusable/ShowPassword";
+import { type User } from "firebase/auth";
+import "../../styles/modal-auth.css";
 
 const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
   const [showModal, setShowModal] = useState(false);
@@ -57,7 +59,7 @@ const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
   const handleGoogleAuth = async () => {
     const isRegister = typeLoginRegisterRef.current?.textContent === "Register";
     try {
-      const user = isRegister
+      const user: User | null = isRegister
         ? await registerWithGoogle()
         : await signInWithGoogle();
 
@@ -66,8 +68,9 @@ const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
       if (
         user?.email == "carlosvassan@gmail.com" ||
         ID.email == "mar411geca@gmail.com"
-      )
-        location.reload();
+      ) {
+        if (window.location.pathname === "/blog") location.reload();
+      }
     } catch (error) {
       toast.error("An error occurred with Google authentication");
     }
@@ -76,17 +79,18 @@ const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
   const handleFacebookAuth = async () => {
     const isRegister = typeLoginRegisterRef.current?.textContent === "Register";
     try {
-      const user = isRegister
-        ? await registerWithGoogle()
-        : await signInWithGoogle();
+      const user: User | null = isRegister
+        ? await signInWithFacebook()
+        : await signInWithFacebook();
 
       onLoginChange?.(isLogged());
       toggleFormType("", setFormType, showModal, setShowModal);
       if (
         user?.email == "carlosvassan@gmail.com" ||
-        ID.email == "mar411geca@gmail.com"
-      )
-        location.reload();
+        user?.email == "mar411geca@gmail.com"
+      ) {
+        if (window.location.pathname === "/blog") location.reload();
+      }
     } catch (error) {
       toast.error("An error occurred with Google authentication");
     }
@@ -160,7 +164,7 @@ const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
                   <label>
                     Email
                     <input
-                      className="input-email"
+                      className="inputs"
                       type="text"
                       name="email"
                       value={ID.email}
@@ -172,6 +176,7 @@ const Auth: React.FC<AuthProps> = ({ onLoginChange, logged }) => {
                     <label>
                       Username
                       <input
+                        className="inputs"
                         type="text"
                         name="username"
                         value={ID.username}

@@ -29,7 +29,7 @@
     font-size: medium;
     min-width: 310px;
 
-    .input-email {
+    .inputs {
       outline: none;
       margin: 5px 10px;
       border-radius: 3px;
@@ -47,7 +47,7 @@
       transition: transform 0.2s, -webkit-transform 0.2s;
       transition: border 0.3s;
     }
-    .input-email:focus {
+    .inputs:focus {
       border-color: #09abc3;
     }
 
@@ -59,34 +59,6 @@
       text-align: center;
       width: 100%;
     }
-  }
-
-  .closeAuth {
-    position: absolute;
-    right: 20px;
-    top: 10px;
-    transition: color 0.3s;
-    background-color: rgb(230, 52, 105);
-    padding: 5px 13px;
-    border-radius: 5px;
-    font-size: 20px;
-    margin-top: 10px;
-  }
-
-  .closeAuth:hover {
-    color: var(--primary-white);
-  }
-
-  .closeAuth {
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0px 5px rgb(155, 20, 61);
-    transition: all 0.2s ease;
-  }
-
-  .closeAuth:active {
-    box-shadow: 0px 2px rgb(155, 20, 61);
-    transform: translateY(4px);
   }
 
   section {
@@ -115,10 +87,11 @@
   width: 100%;
   height: 100dvh;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  z-index: 1000;
   overflow: hidden;
 }
 
+/* Portátil y tablets */
 @media (width <= 1200px) and (width >= 767px) {
   .modalAuth {
     .login-form {
@@ -138,7 +111,7 @@
 
     .login-form {
       max-width: 310px;
-      .input-email {
+      .inputs {
         width: 200px;
       }
       .password-container {

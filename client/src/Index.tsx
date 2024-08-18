@@ -7,6 +7,7 @@ import { loadPublications } from "./scripts/render-data.tsx";
 import { type PublicationCardType } from "../types/types";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/index.css";
+import "./styles/reusables/close.css";
 
 const initializeApp = async () => {
   try {

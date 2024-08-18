@@ -8,6 +8,7 @@ import {
   fetchSignInMethodsForEmail,
   sendEmailVerification,
   type User,
+  FacebookAuthProvider,
 } from "firebase/auth";
 import { toast } from "react-hot-toast";
 import { auth } from "./firebase-config";
@@ -26,7 +27,7 @@ export const getUser = (): User | null => {
 const providerGoogle = new GoogleAuthProvider();
 
 // Iniciar sesión con Google
-export async function signInWithGoogle() {
+export async function signInWithGoogle(): Promise<User | null> {
   try {
     const result = await signInWithPopup(auth, providerGoogle);
     // Este callback se ejecuta cuando el usuario se autentica correctamente
@@ -41,6 +42,7 @@ export async function signInWithGoogle() {
     toast.error(`Authentication failed`);
     console.error(error);
   }
+  return null;
 }
 
 // Iniciar sesión en local
@@ -81,11 +83,11 @@ export async function localSignin(email: string, password: string) {
 }
 
 // Registrarse con google
-export async function registerWithGoogle() {
+export async function registerWithGoogle(): Promise<User | null> {
   // Si te logeas te inpide registrarte
   if (isLogged()) {
     toast.error("You are already logged in");
-    return;
+    return null;
   }
 
   try {
@@ -113,6 +115,7 @@ export async function registerWithGoogle() {
     toast.error("Error registering with Google");
     console.error(error);
   }
+  return null;
 }
 
 // Registrarse en local
@@ -199,4 +202,29 @@ export async function signOutUser() {
         reject(error); // Rechaza la promesa si hay un error
       });
   });
+}
+
+const providerFacebook = new FacebookAuthProvider();
+
+export async function signInWithFacebook(): Promise<User | null> {
+  // Si te logeas te inpide registrarte
+  if (isLogged()) {
+    toast.error("You are already logged in");
+    return null;
+  }
+  signInWithPopup(auth, providerFacebook)
+    .then((result) => {
+      toast.success(
+        <span>
+          Welcome <b>{result.user.displayName}</b>!
+        </span>
+      );
+      return result.user;
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorCode, errorMessage);
+    });
+  return null;
 }

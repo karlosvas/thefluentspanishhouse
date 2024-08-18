@@ -45,6 +45,9 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
   return (
     <>
       <div className={`uploadPublication ${closing ? "closing" : ""}`}>
+        <span className="closeAuth" onClick={handleChange}>
+          &times;
+        </span>
         <h3>{buttonName}</h3>
         <form onSubmit={onSubmit}>
           <ul>
@@ -79,7 +82,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
               />
             </li>
             <label>
-              <input type="checkbox" name="terminos" required /> I give my
+              <input type="checkbox" name="terminos" required />I give my
               consent to receive informational emails terms and conditions.
             </label>
             <label>
