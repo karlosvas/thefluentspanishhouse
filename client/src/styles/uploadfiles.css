@@ -123,9 +123,14 @@
 
 .uploadPublication #submitPost {
   background-color: var(--primary-blue);
+  color: var(--primary-white);
   margin-top: 20px;
   align-self: flex-end;
   border-radius: 5px;
+}
+
+.uploadPublication #submitPost:hover {
+  color: var(--primary-black);
 }
 
 .uploadPublication #submitPost:focus {
