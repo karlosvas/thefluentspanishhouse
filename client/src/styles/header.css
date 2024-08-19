@@ -219,12 +219,3 @@ header #sect {
     }
   }
 }
-
-@keyframes animate {
-  0% {
-    background-position-x: 1000px;
-  }
-  100% {
-    background-position-x: 0px;
-  }
-}

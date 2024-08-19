@@ -6,6 +6,8 @@ import {
   type PublicationCardType,
   type FormPublicationProps,
 } from "../../../../types/types";
+import ButtonClose from "../../reusable/ButtonClose";
+import Backdrop from "../../reusable/Backdrop";
 
 const FormPublication: React.FC<FormPublicationProps> = ({
   closing,
@@ -146,7 +148,8 @@ const FormPublication: React.FC<FormPublicationProps> = ({
 
   return (
     <>
-      <div className={`uploadPublication ${closing ? "closing" : ""}`}>
+      <div className={"uploadPublication"}>
+        <ButtonClose handleSusribeChange={handleChange} />
         <h3>New Publication</h3>
         <form onSubmit={onSubmit}>
           <ul>
@@ -202,7 +205,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
           </ul>
         </form>
       </div>
-      <div className="modalBackdropLog" onClick={handleChange}></div>
+      <Backdrop handleSusribeChange={handleChange} closing={closing} />
     </>
   );
 };

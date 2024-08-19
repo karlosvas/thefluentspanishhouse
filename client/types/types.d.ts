@@ -70,6 +70,13 @@ type HandleSubscribeChange = () => void;
 type HandlePublicationChange = () => void;
 type Handler = HandleSubscribeChange | HandlePublicationChange;
 
+export interface ButtonCloseProps {
+  handleSusribeChange: Handler;
+}
+export interface BackdropProps {
+  handleSusribeChange: Handler;
+  closing: boolean;
+}
 export interface FormPublicationProps {
   closing: boolean;
   handleChange: Handler;
@@ -79,7 +86,7 @@ export interface FormPublicationProps {
 }
 export interface FormSuscriberProps {
   closing: boolean;
-  handleChange: Handler;
+  handleSusribeChange: Handler;
   buttonName?: string;
 }
 

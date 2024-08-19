@@ -18,7 +18,7 @@ const Prices = () => {
       {showModalSuscribe && (
         <FormSuscribe
           closing={closing}
-          handleChange={() => handleSusribeChange("form")}
+          handleSusribeChange={() => handleSusribeChange("form")}
           buttonName={buttonName}
         />
       )}

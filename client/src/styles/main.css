@@ -70,13 +70,19 @@ body {
     text-align: center;
   }
 
+  h2 {
+    margin-bottom: 0;
+  }
+
   .flex-card {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+
     .cardPracing {
       padding: 30px 0;
-      margin: 0 30px;
+      margin: 50px 30px 0 30px;
       background-color: var(--secondary-white);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       width: 350px;
@@ -128,7 +134,7 @@ body {
 }
 
 /* Portátiles and Tablets */
-@media only screen and (width <= 1200px) and (width > 766px) {
+@media only screen and (max-width: 1200px) and (min-width: 766px) {
   .divPracing {
     .cardPracing {
       margin: 0 10px;
@@ -138,6 +144,7 @@ body {
     object-position: center;
   }
 }
+
 /* Moviles */
 @media only screen and (width <= 766px) {
   .divPracing {

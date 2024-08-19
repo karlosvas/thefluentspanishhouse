@@ -13,9 +13,12 @@ import Button from "../reusable/Buuton";
 import ShowPassword from "../reusable/ShowPassword";
 import "../../styles/modal-auth.css";
 import { UserContext } from "../../App";
+import ButtonClose from "../reusable/ButtonClose";
+import Backdrop from "../reusable/Backdrop";
 
 const Auth = () => {
   const [showModal, setShowModal] = useState(false);
+  const [closing, setClosing] = useState(false);
   // Timo de formulario
   const [formType, setFormType] = useState<"login" | "register">("login");
   const typeLoginRegisterRef = useRef<HTMLHeadingElement>(null);
@@ -84,6 +87,17 @@ const Auth = () => {
     console.log("En proceso de ser contruido");
   };
 
+  function handleSusribeChange() {
+    if (showModal) {
+      setClosing(true);
+      setTimeout(() => {
+        toggleFormType(showModal, setShowModal);
+        setClosing(false);
+      }, 500);
+    } else {
+      toggleFormType(showModal, setShowModal);
+    }
+  }
   return (
     <div className="auth">
       <Button id="signIn" event={handleLoginOrLogout}>
@@ -99,18 +113,13 @@ const Auth = () => {
       </Button>
       {showModal && (
         <>
-          <div
-            className="modalBackdropLog"
-            onClick={() => toggleFormType(showModal, setShowModal)}
-          ></div>
+          <Backdrop
+            handleSusribeChange={handleSusribeChange}
+            closing={closing}
+          />
           <div className="modalAuth">
             <div className="modalContent">
-              <span
-                className="closeAuth"
-                onClick={() => toggleFormType(showModal, setShowModal)}
-              >
-                &times;
-              </span>
+              <ButtonClose handleSusribeChange={handleSusribeChange} />
               <h1 ref={typeLoginRegisterRef}>
                 {formType === "login" ? "Sign In" : "Register"}
               </h1>

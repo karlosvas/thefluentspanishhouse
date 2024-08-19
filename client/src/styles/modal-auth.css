@@ -80,17 +80,6 @@
   }
 }
 
-.modalBackdropLog {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100dvh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  overflow: hidden;
-}
-
 /* Portátil y tablets */
 @media (width <= 1200px) and (width >= 767px) {
   .modalAuth {
@@ -110,12 +99,11 @@
     padding-top: 0;
 
     .login-form {
-      max-width: 310px;
       .inputs {
-        width: 200px;
+        width: 190px;
       }
       .password-container {
-        width: 200px;
+        width: 190px;
         svg {
           margin-right: 20px;
         }

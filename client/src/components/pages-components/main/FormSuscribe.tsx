@@ -2,15 +2,17 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Buuton from "../../reusable/Buuton";
 import { handleSubmitSubscription } from "../../../scripts/render-data";
+import toast from "react-hot-toast";
+import ButtonClose from "../../reusable/ButtonClose";
+import Backdrop from "../../reusable/Backdrop";
 import {
   type FormSuscriberProps,
   type SubscriberType,
 } from "../../../../types/types";
-import toast from "react-hot-toast";
 
 const FormSuscribe: React.FC<FormSuscriberProps> = ({
   closing,
-  handleChange,
+  handleSusribeChange,
   buttonName,
 }) => {
   const [newSubscriber, setNewSubscriber] = useState<SubscriberType>({
@@ -33,7 +35,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
     try {
       await handleSubmitSubscription(
         event,
-        handleChange,
+        handleSusribeChange,
         newSubscriber,
         buttonName
       );
@@ -44,10 +46,8 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
 
   return (
     <>
-      <div className={`uploadPublication ${closing ? "closing" : ""}`}>
-        <span className="closeAuth" onClick={handleChange}>
-          &times;
-        </span>
+      <div className={`uploadPublication`}>
+        <ButtonClose handleSusribeChange={handleSusribeChange} />
         <h3>{buttonName}</h3>
         <form onSubmit={onSubmit}>
           <ul>
@@ -104,7 +104,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
           </ul>
         </form>
       </div>
-      <div className="modalBackdropLog" onClick={handleChange}></div>
+      <Backdrop handleSusribeChange={handleSusribeChange} closing={closing} />
     </>
   );
 };

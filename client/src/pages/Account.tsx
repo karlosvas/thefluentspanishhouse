@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Profile from "../components/header-components/Profile";
 import Edit from "../components/svg-component/Edit";
-import Trash from "../components/svg-component/Trash";
 import { ConfigUser } from "../../types/types";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "../styles/main-account.css";
@@ -100,7 +99,6 @@ const Account = () => {
                   index={0}
                   state={inputsState[0]}
                 />
-                <Trash />
               </li>
               <li>
                 Email
@@ -122,7 +120,6 @@ const Account = () => {
                   index={1}
                   state={inputsState[1]}
                 />
-                <Trash />
               </li>
               <li>
                 Phone
@@ -144,7 +141,6 @@ const Account = () => {
                   index={2}
                   state={inputsState[2]}
                 />
-                <Trash />
               </li>
             </ul>
           </section>

@@ -286,3 +286,30 @@ html.dark {
     transform: translateX(-100%);
   }
 }
+
+@keyframes reveal {
+  from {
+    transform: translateY(20px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow {
+  0% {
+    background-color: #7e7e7e;
+  }
+  100% {
+    background-color: #f3f8ff;
+  }
+}
+
+@keyframes animate {
+  0% {
+    background-position-x: 1000px;
+  }
+  100% {
+    background-position-x: 0px;
+  }
+}

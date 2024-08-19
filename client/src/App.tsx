@@ -34,7 +34,6 @@ const App = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("TOP LEVEL", user);
       setUser(user);
       setLoading(false);
     });

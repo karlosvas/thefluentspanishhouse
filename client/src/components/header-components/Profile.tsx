@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Auth from "./Auth";
 import ImgUser from "../svg-component/ImgUser";
 import "../../styles/profileicon.css";
 import { UserContext } from "../../App";
 
 const Profile = () => {
+  const [imgLoad, setImgLoad] = useState(false);
   const infoUser = useContext(UserContext);
   const img = infoUser?.photoURL;
   const email = infoUser?.email;
@@ -17,7 +18,17 @@ const Profile = () => {
           (window.innerWidth <= 766 ||
             window.location.pathname === "/account") && (
             <>
-              {img ? <img src={img} alt="Logo" /> : <ImgUser />}
+              {img ? (
+                <img
+                  src={img}
+                  alt="Photo profile user"
+                  onLoad={() => setImgLoad(true)}
+                  style={{ display: imgLoad ? "block" : "none" }}
+                />
+              ) : (
+                <ImgUser />
+              )}
+              {!imgLoad && <ImgUser />}
               <div className="username">
                 <strong>{name}</strong>
                 <small>{email}</small>

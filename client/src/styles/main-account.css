@@ -102,6 +102,9 @@
       flex-direction: column;
       ul {
         text-align: start;
+        li {
+          text-wrap: pretty;
+        }
       }
     }
   }
@@ -116,6 +119,9 @@
 
 /* Movil */
 @media only screen and (width <= 766px) {
+  .mainAccount {
+    height: 140dvh;
+  }
   .mainAccount .ac-content {
     background-color: var(--primary-white);
     ul {
@@ -123,6 +129,9 @@
     }
     input {
       width: 210px;
+    }
+    .help-center {
+      margin-top: 0;
     }
   }
 }

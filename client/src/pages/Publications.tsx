@@ -15,7 +15,7 @@ const Publications = () => {
   useEffect(() => {
     setTimeout(() => {
       loadPublication(setPublication, setImageLoading, id);
-    }, 3000);
+    }, 300);
   }, []);
 
   return (
