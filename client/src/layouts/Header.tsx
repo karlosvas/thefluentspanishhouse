@@ -5,7 +5,6 @@ import Auth from "../components/header-components/Auth";
 import Exit from "../components/svg-component/Exit";
 import MainNav from "../components/header-components/MainNav";
 import Theme from "../components/svg-component/Theme";
-import { isLogged } from "../scripts/oauth2-0";
 import "../styles/header.css";
 import Settings from "../components/svg-component/Settings";
 
@@ -35,15 +34,6 @@ const Header = () => {
   // Uri actual
   const location = useLocation();
 
-  // Objeto de traducción del hamburger
-
-  // Botones de login
-  const [logged, setLogged] = useState<boolean>(isLogged());
-  const handleLoginChange = (status: boolean) => {
-    setLogged(status);
-  };
-  // Informacion del nav del header
-
   return (
     <>
       <header>
@@ -60,7 +50,7 @@ const Header = () => {
             location.pathname === "/" ? (
               <a href="#">
                 <img
-                  src="/img/logo.webp"
+                  src="./logos/logo-o.webp"
                   alt="fluent spanish house logo"
                   id="logo"
                 />
@@ -68,7 +58,7 @@ const Header = () => {
             ) : (
               <a href="/">
                 <img
-                  src="/img/logo.webp"
+                  src="./logos/logo-o.webp"
                   alt="fluent spanish house logo"
                   id="logo"
                 />
@@ -91,7 +81,7 @@ const Header = () => {
             <div className="navIcons">
               <Settings />
               <Theme theme={theme} setTheme={setTheme} />
-              <Auth onLoginChange={handleLoginChange} logged={logged} />
+              <Auth />
             </div>
           )}
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Profile from "../components/header-components/Profile";
 import Edit from "../components/svg-component/Edit";
 import Trash from "../components/svg-component/Trash";
@@ -6,18 +6,16 @@ import { ConfigUser } from "../../types/types";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "../styles/main-account.css";
 import { useNavigate } from "react-router";
-import { auth } from "../scripts/firebase-config";
 import toast from "react-hot-toast";
-import { getUser } from "../scripts/oauth2-0";
+import { UserContext } from "../App";
 
 const Account = () => {
   const navigate = useNavigate();
+  const user = useContext(UserContext);
 
-  onAuthStateChanged(auth, (user) => {
-    if (!user && location.pathname === "/account") {
-      navigate("/");
-    }
-  });
+  if (!user && location.pathname === "/account") {
+    navigate("/");
+  }
 
   const [configUser, setConfigUser] = useState<ConfigUser>({
     user: "",
@@ -28,8 +26,8 @@ const Account = () => {
   });
   const [inputsState, setInputsState] = useState([false, false, false]);
 
+  const firebase_user = useContext(UserContext);
   const manejarClickSVG = (index: number) => {
-    const firebase_user = getUser();
     if (
       firebase_user?.providerData.some(
         (provider) => provider.providerId !== "password"

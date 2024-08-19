@@ -9,13 +9,15 @@ import Contact from "./pages/Contact";
 import Info from "./pages/Info";
 import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
-import { type PublicationsProp } from "../types/types";
-import { useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import Newsetler from "./pages/Newsletter";
 import CallbackVerify from "./pages/CallbackVerify";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 
-const App: React.FC<PublicationsProp> = ({ publications }) => {
+export const UserContext = createContext<User | null>(null);
+
+const App = () => {
   const location = useLocation();
   const exclude = ["/info", "/404", "/verify"];
 
@@ -26,27 +28,45 @@ const App: React.FC<PublicationsProp> = ({ publications }) => {
     window.scrollTo(0, 0);
   }, [location]);
 
-  return (
-    <>
-      {!shouldHideHeaderFooter && <Header />}
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/publication/:id" element={<Publications />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/blog" element={<Blog publications={publications} />} />
-        <Route path="/aboutme" element={<AboutMe />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/info" element={<Info />} />
-        <Route path="/newsetler" element={<Newsetler />} />
-        <Route path="/404" element={<Error />} />
-        <Route path="/verify" element={<CallbackVerify />} />
-        {/* Maneja rutas no encontradas */}
-        <Route path="*" element={<Navigate to="/404" />} />
-      </Routes>
-      {!shouldHideHeaderFooter && <Footer />}
-      <Toaster position="bottom-right" />
-    </>
-  );
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log("TOP LEVEL", user);
+      setUser(user);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [auth]);
+
+  if (!loading) {
+    return (
+      <>
+        <UserContext.Provider value={user}>
+          {!shouldHideHeaderFooter && <Header />}
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/publication/:id" element={<Publications />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/aboutme" element={<AboutMe />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/info" element={<Info />} />
+            <Route path="/newsetler" element={<Newsetler />} />
+            <Route path="/404" element={<Error />} />
+            <Route path="/verify" element={<CallbackVerify />} />
+            {/* Maneja rutas no encontradas */}
+            <Route path="*" element={<Navigate to="/404" />} />
+          </Routes>
+          {!shouldHideHeaderFooter && <Footer />}
+          <Toaster position="bottom-right" />
+        </UserContext.Provider>
+      </>
+    );
+  }
 };
 
 export default App;

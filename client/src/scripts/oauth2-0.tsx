@@ -5,7 +5,6 @@ import {
   signOut,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
-  fetchSignInMethodsForEmail,
   sendEmailVerification,
   type User,
   FacebookAuthProvider,
@@ -17,10 +16,6 @@ import { FirebaseError } from "firebase/app";
 // Verificar si actualmente está logeado
 export const isLogged = () => {
   return auth.currentUser != null;
-};
-
-export const getUser = (): User | null => {
-  return auth.currentUser;
 };
 
 // Proveedor de Google
@@ -56,6 +51,7 @@ export async function localSignin(email: string, password: string) {
     // Usuario autenticado correctamente
     const user = userCredential.user;
 
+    // Si no esta verificado se le avisa enviando un correo
     if (user.emailVerified) {
       toast.success(
         <span>
@@ -64,7 +60,7 @@ export async function localSignin(email: string, password: string) {
       );
     } else {
       toast(
-        "Doy you need verify your email. Please check your email for the verification link.",
+        "Do you need verify your email. Please check your email for the verification link.",
         {
           duration: 10000,
           style: {
@@ -80,42 +76,6 @@ export async function localSignin(email: string, password: string) {
     toast.error(`Authentication failed`);
     console.error(error);
   }
-}
-
-// Registrarse con google
-export async function registerWithGoogle(): Promise<User | null> {
-  // Si te logeas te inpide registrarte
-  if (isLogged()) {
-    toast.error("You are already logged in");
-    return null;
-  }
-
-  try {
-    // Lanza el flujo de autenticación con Google
-    const userCredential = await signInWithPopup(auth, providerGoogle);
-
-    // Verificar si el usuario ya estaba registrado previamente
-    const email = userCredential.user.email;
-
-    if (email) {
-      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-      if (signInMethods && signInMethods.length > 0)
-        toast.error(`The user has already been registered previously ❌`);
-      else {
-        toast.success(
-          <span>
-            Welcome <b>{userCredential.user.displayName}</b>!
-          </span>
-        );
-      }
-
-      return auth.currentUser;
-    } else toast.error("The user does not have an email");
-  } catch (error) {
-    toast.error("Error registering with Google");
-    console.error(error);
-  }
-  return null;
 }
 
 // Registrarse en local
@@ -144,7 +104,7 @@ export async function localRegister(
         </span>
       );
     } else {
-      toast("Welcome!, Please check your email for the verification link.", {
+      toast("Welcome! Please check your email for the verification link.", {
         duration: 10000,
         style: {
           background: "#333",
@@ -155,7 +115,6 @@ export async function localRegister(
 
       sendEmailVerification(user);
     }
-    await signInWithEmailAndPassword(auth, email, password);
   } catch (error: unknown) {
     if (error instanceof FirebaseError) {
       switch (error.code) {

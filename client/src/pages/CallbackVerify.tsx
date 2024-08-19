@@ -4,10 +4,11 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { changeOptionsEmail } from "../scripts/firebase-users";
 import toast from "react-hot-toast";
 import ShowPassword from "../components/reusable/ShowPassword";
+import { UserContext } from "../App";
 
 export const CallbackVerify = () => {
   const [ID, setID] = useState({
@@ -21,11 +22,13 @@ export const CallbackVerify = () => {
   const navigate: NavigateFunction = useNavigate();
   const newEmail = searchParams.get("email");
 
+  const user = useContext(UserContext);
+
   async function submitDataVerifyEmail(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
     if (newEmail) {
       try {
-        await changeOptionsEmail(ID.password, navigate, newEmail);
+        await changeOptionsEmail(ID.password, navigate, newEmail, user);
         setVerification(true);
       } catch (error) {
         toast.error(

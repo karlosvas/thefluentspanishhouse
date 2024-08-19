@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
+/////////////
 import { modelComment, modelPublication } from "./models.js";
 import { connectDB } from "./mongodb.js";
 import { Types } from "mongoose";
@@ -166,7 +167,13 @@ app.post("/api/mailchamp", async (req, res) => {
 // Envia nota al gmail de process.env.USER_GMAIL
 app.post("/api/note", async (req, res) => {
   const { email_user, username, subject, note } = req.body;
+  if (!email_user || !username || !subject || !note) {
+    console.log("heeel no hay datos");
+    return res.status(400).send({ message: "Missing required fields" });
+  }
+
   try {
+    console.log(email_user);
     await submitNote(email_user, username, subject, note);
     res.status(200).send({ message: "Email sent successfully" });
   } catch (error) {

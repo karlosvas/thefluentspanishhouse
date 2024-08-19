@@ -1,15 +1,14 @@
 import { createTransport } from "nodemailer";
 
-// Configuración del transporte
-let transporter = createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.USER_GMAIL,
-    pass: process.env.PASSWORD_GMAIL,
-  },
-});
-
 export async function submitNote(email_user, username, subject, note) {
+  // Configuración del transporte
+  let transporter = createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.USER_GMAIL,
+      pass: process.env.PASSWORD_GMAIL,
+    },
+  });
   // Datos del correo y opciones
   let mailOptions = {
     from: `"${email_user} via TheFluentSpanishHouse" ${process.env.USER_GMAIL}`,

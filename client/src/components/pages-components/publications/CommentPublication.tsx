@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { v4 as uuidv4 } from "uuid";
-import { getUser } from "../../../scripts/oauth2-0";
 import CommentCard from "../blog/CommentCard";
 import { type Comment } from "../../../../types/types";
 import { getComments, postComment } from "../../../scripts/render-data";
 import "../../../styles/comments.css";
+import { UserContext } from "../../../App";
 
 const CommentPublication = () => {
   // Estado de los comentarios actuales, y del Text Area
@@ -16,7 +16,7 @@ const CommentPublication = () => {
   const { id } = useParams<{ id: string }>();
 
   //Usuario actual
-  const user = getUser();
+  const user = useContext(UserContext);
 
   // Cada vez que se pulsa una tecla
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {

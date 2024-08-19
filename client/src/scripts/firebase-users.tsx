@@ -2,18 +2,17 @@ import {
   EmailAuthProvider,
   reauthenticateWithCredential,
   updateProfile,
+  User,
   verifyBeforeUpdateEmail,
 } from "firebase/auth";
 import toast from "react-hot-toast";
-import { getUser } from "./oauth2-0";
 import { NavigateFunction } from "react-router-dom";
 
 export const changeOptionsUser = async (
   commentText: string,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
+  user: User | null
 ) => {
-  const user = getUser();
-
   if (user) {
     if (!user.emailVerified) {
       toast.error("Do you need verify your email after change options");
@@ -49,22 +48,19 @@ export const changeOptionsUser = async (
 export const changeOptionsEmail = async (
   password: string,
   navigate: NavigateFunction,
-  newEmail: string
+  newEmail: string,
+  user: User | null
 ) => {
-  const currentUser = getUser();
-  if (currentUser && currentUser.email) {
-    const credential = EmailAuthProvider.credential(
-      currentUser.email,
-      password
-    );
-    await reauthenticateWithCredential(currentUser, credential);
+  if (user && user.email) {
+    const credential = EmailAuthProvider.credential(user.email, password);
+    await reauthenticateWithCredential(user, credential);
   } else {
     console.error("User not available or email missing");
     toast.error("User not available or email missing");
     return;
   }
 
-  if (newEmail) await verifyBeforeUpdateEmail(currentUser, newEmail);
+  if (newEmail) await verifyBeforeUpdateEmail(user, newEmail);
 
   toast.dismiss();
   toast(

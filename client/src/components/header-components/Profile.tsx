@@ -1,19 +1,14 @@
-import { getUser, isLogged } from "../../scripts/oauth2-0";
-import { useState } from "react";
+import { useContext } from "react";
 import Auth from "./Auth";
 import ImgUser from "../svg-component/ImgUser";
 import "../../styles/profileicon.css";
+import { UserContext } from "../../App";
 
 const Profile = () => {
-  const infoUser = getUser();
+  const infoUser = useContext(UserContext);
   const img = infoUser?.photoURL;
   const email = infoUser?.email;
   const name = infoUser?.displayName;
-
-  const [logged, setLogged] = useState<boolean>(isLogged());
-  const handleLoginChange = (status: boolean) => {
-    setLogged(status);
-  };
 
   return (
     <>
@@ -31,7 +26,7 @@ const Profile = () => {
           )}
       </div>
       <div className="auth">
-        <Auth onLoginChange={handleLoginChange} logged={logged} />
+        <Auth />
       </div>
     </>
   );

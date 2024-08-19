@@ -1,17 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CardPlaceholder from "./PlaceHolder";
 import FormPublication from "./FormPublication";
-import { getUser } from "../../../scripts/oauth2-0";
 import { handleChangeModal } from "../../../scripts/modal";
 import Button from "../../reusable/Buuton";
 import { loadPublications } from "../../../scripts/render-data";
-import {
-  type PublicationsProp,
-  type PublicationCardType,
-} from "../../../../types/types";
+import { type PublicationCardType } from "../../../../types/types";
+import { UserContext } from "../../../App";
 
-const CardsPublicationBlog: React.FC<PublicationsProp> = ({ publications }) => {
+const CardsPublicationBlog = () => {
   const [showModalPost, setShowModalPost] = useState(false);
   const [closing, setClosing] = useState(false);
   const [cardsBlog, setCardsBlog] = useState<PublicationCardType[]>([]);
@@ -41,17 +38,36 @@ const CardsPublicationBlog: React.FC<PublicationsProp> = ({ publications }) => {
     handleChangeModal(showModalPost, setClosing, setShowModalPost);
   };
 
-  const user = getUser();
+  const user = useContext(UserContext);
 
   useEffect(() => {
-    if (Array.isArray(publications) && publications.length !== 0)
-      setCardsBlog(publications as PublicationCardType[]);
+    const fetchPublications = async () => {
+      try {
+        const publications = await loadPublications();
+        if (Array.isArray(publications) && publications.length !== 0) {
+          setCardsBlog(publications as PublicationCardType[]);
+        }
+      } catch (error) {
+        console.error("Error loading publications:", error);
+      }
+    };
+
+    fetchPublications();
   }, []);
 
   useEffect(() => {
-    const data = loadPublications();
-    if (Array.isArray(data) && data.length !== 0)
-      setCardsBlog(data as PublicationCardType[]);
+    const fetchNewPublications = async () => {
+      try {
+        const data = await loadPublications();
+        if (Array.isArray(data) && data.length !== 0) {
+          setCardsBlog(data as PublicationCardType[]);
+        }
+      } catch (error) {
+        console.error("Error loading new publications:", error);
+      }
+    };
+
+    fetchNewPublications();
   }, [newPublication]);
 
   return (

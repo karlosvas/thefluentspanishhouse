@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router";
 import { type EditType } from "../../../types/types";
 import { changeOptionsUser } from "../../scripts/firebase-users";
+import { useContext } from "react";
+import { UserContext } from "../../App";
 
 const Edit: React.FC<EditType> = ({ commentText, event, index, state }) => {
   const navigate = useNavigate();
+  const user = useContext(UserContext);
 
   return (
     <>
@@ -19,7 +22,7 @@ const Edit: React.FC<EditType> = ({ commentText, event, index, state }) => {
           className="svgIcons"
           onClick={() => {
             event(index);
-            changeOptionsUser(commentText, navigate);
+            changeOptionsUser(commentText, navigate, user);
           }}
         >
           <path

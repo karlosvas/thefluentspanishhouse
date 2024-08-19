@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Button from "../../reusable/Buuton";
 import "../../../styles/main-contact.css";
 import { submitNote } from "../../../scripts/render-data";
 import { type NoteType } from "../../../../types/types";
-import { getUser, isLogged } from "../../../scripts/oauth2-0";
+import { isLogged } from "../../../scripts/oauth2-0";
 import toast from "react-hot-toast";
+import { UserContext } from "../../../App";
 
 const ContactForm = () => {
-  const user = getUser();
+  const user = useContext(UserContext);
   const loggin = isLogged();
 
   const [newNote, setNewNote] = useState<NoteType>({
@@ -36,11 +37,15 @@ const ContactForm = () => {
     if (!loggin) {
       toast.error("You must log in");
       return;
+    } else if (!user) {
+      toast.error("An unexpected error occurred, please wait and try again.");
+      return;
     }
     try {
+      console.log("Contect", user.email);
       await submitNote(newNote);
       setNewNote({
-        email_user: user?.email,
+        email_user: user.email,
         username: "",
         subject: "",
         note: "",
@@ -63,7 +68,9 @@ const ContactForm = () => {
       if (target.value === "") parent.classList.remove("focus");
     };
 
-    inputRefs.current.forEach((input) => {
+    const currentInputRefs = inputRefs.current;
+
+    currentInputRefs.forEach((input) => {
       if (input) {
         input.addEventListener("focus", focusFunc);
         input.addEventListener("blur", blurFunc);
@@ -71,7 +78,7 @@ const ContactForm = () => {
     });
 
     return () => {
-      inputRefs.current.forEach((input) => {
+      currentInputRefs.forEach((input) => {
         if (input) {
           input.removeEventListener("focus", focusFunc);
           input.removeEventListener("blur", blurFunc);
@@ -140,6 +147,7 @@ const ContactForm = () => {
                 required
                 onChange={handleChange}
                 ref={(el) => el && (inputRefs.current[0] = el)}
+                id="username"
               />
               <label htmlFor="username">Username</label>
               <span>Username</span>
@@ -153,6 +161,7 @@ const ContactForm = () => {
                 value={newNote.subject}
                 onChange={handleChange}
                 ref={(el) => el && (inputRefs.current[2] = el)}
+                id="subject"
               />
               <label htmlFor="subject">Subject</label>
               <span>Subject</span>
@@ -165,6 +174,7 @@ const ContactForm = () => {
                 onChange={handleChange}
                 required
                 ref={(el) => el && (inputRefs.current[3] = el)}
+                id="note"
               ></textarea>
               <label htmlFor="note">Message</label>
               <span>Message</span>

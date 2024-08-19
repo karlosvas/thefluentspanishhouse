@@ -21,6 +21,7 @@ header {
       width: auto;
       border-radius: 3px;
       margin-left: 5vw;
+      filter: drop-shadow(0 0 0.5rem var(--primary-blue));
     }
 
     a {

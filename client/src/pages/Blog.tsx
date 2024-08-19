@@ -1,12 +1,11 @@
 import CardsPublicationBlog from "../components/pages-components/blog/CardsPublicationBlog";
-import { type PublicationsProp } from "../../types/types";
 import "../styles/main-blog.css";
 
-const Blog: React.FC<PublicationsProp> = ({ publications }) => {
+const Blog = () => {
   return (
     <>
       <main className="mainBlog">
-        <CardsPublicationBlog publications={publications} />
+        <CardsPublicationBlog />
       </main>
     </>
   );

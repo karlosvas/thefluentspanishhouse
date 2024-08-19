@@ -8,12 +8,12 @@ export function toggleModal(
 }
 
 export const toggleFormType = (
-  type: string,
-  setFormType: Dispatch<SetStateAction<string>>,
   showModal: boolean,
-  setShowModal: Dispatch<SetStateAction<boolean>>
+  setShowModal: Dispatch<SetStateAction<boolean>>,
+  type?: "login" | "register",
+  setFormType?: Dispatch<SetStateAction<"login" | "register">>
 ) => {
-  setFormType(type);
+  if (type && setFormType) setFormType(type);
   toggleModal(showModal, setShowModal);
   handleScroll(!showModal);
 };
