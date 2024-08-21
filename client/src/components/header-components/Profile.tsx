@@ -18,17 +18,17 @@ const Profile = () => {
           (window.innerWidth <= 766 ||
             window.location.pathname === "/account") && (
             <>
-              {img ? (
+              {img !== null ? (
                 <img
                   src={img}
                   alt="Photo profile user"
                   onLoad={() => setImgLoad(true)}
+                  onError={() => setImgLoad(false)}
                   style={{ display: imgLoad ? "block" : "none" }}
                 />
               ) : (
                 <ImgUser />
               )}
-              {!imgLoad && <ImgUser />}
               <div className="username">
                 <strong>{name}</strong>
                 <small>{email}</small>

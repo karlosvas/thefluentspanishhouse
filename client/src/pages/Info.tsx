@@ -1,37 +1,12 @@
-import { useEffect, useState } from "react";
 import "../styles/info.css";
-import Theme from "../components/svg-component/Theme";
 import Footer from "../layouts/Footer";
+import SingleTheme from "../components/header-components/SingleTheme";
 
 const Info = () => {
-  // Estados
-  const [theme, setTheme] = useState<string>(getTheme());
-
-  // Recisar si estaba enteriormente en localstorage
-  function getTheme() {
-    const darkorligth = localStorage.getItem("theme");
-    return darkorligth || "light";
-  }
-
-  // Efectos para cambiar de tema
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) setTheme(savedTheme);
-    else setTheme("light");
-  }, [setTheme]);
-
-  useEffect(() => {
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
   return (
     <>
       <main className="main-terminos">
-        <span>
-          <Theme theme={theme} setTheme={setTheme} />
-        </span>
+        <SingleTheme />
         <section>
           <h2 id="terminos">Terms and Conditions</h2>
           <p>

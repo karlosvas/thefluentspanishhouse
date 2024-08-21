@@ -110,6 +110,17 @@ html.light {
   }
   body {
     background-color: var(--primary-white);
+    .error {
+      background-color: var(--primary-white);
+      color: var(--primary-black);
+      label[for="username"] input[type="text"] {
+        border: 1px solid #ddd;
+        outline: none;
+      }
+      label[for="username"] input[type="text"]:focus {
+        border-color: #09abc3;
+      }
+    }
   }
 }
 
@@ -211,43 +222,6 @@ html.dark {
     .container > .form {
       border: none;
     }
-  }
-  #banner,
-  #contactForm,
-  #haboutme {
-    scroll-margin-top: 100px;
-  }
-  #blog {
-    scroll-margin-top: 350px;
-  }
-  #hprices {
-    scroll-margin-top: 100px;
-  }
-  #reviews {
-    scroll-margin-top: 200px;
-  }
-}
-
-@media (width >= 1200px) {
-  #banner,
-  #haboutme {
-    scroll-margin-top: 100px;
-  }
-
-  #blog {
-    scroll-margin-top: 400px;
-  }
-
-  #hprices {
-    scroll-margin-top: 250px;
-  }
-
-  #contactForm {
-    scroll-margin-top: 200px;
-  }
-
-  #reviews {
-    scroll-margin-top: 300px;
   }
 }
 

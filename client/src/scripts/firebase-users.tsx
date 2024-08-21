@@ -1,4 +1,5 @@
 import {
+  deleteUser,
   EmailAuthProvider,
   reauthenticateWithCredential,
   sendPasswordResetEmail,
@@ -27,8 +28,9 @@ export const changeOptionsUser = async (
       const RAGEXEMAIL = /^[^@]+@gmail\.com$/;
       if (RAGEXEMAIL.test(commentText)) {
         toast.loading("Sending");
+        // newEmail
         const newEmail: string = commentText;
-        navigate(`/verify?email=${newEmail}`);
+        navigate("/verify", { state: { email: newEmail } });
         // } else if (!isNaN(Number(commentText))) {
       } else {
         const newUserName = commentText;
@@ -47,22 +49,32 @@ export const changeOptionsUser = async (
 };
 
 // "/verify"
+async function reutenticateFirebase(user: User | null, password: string) {
+  try {
+    if (user && user.email) {
+      const credential = EmailAuthProvider.credential(user.email, password);
+      await reauthenticateWithCredential(user, credential);
+    } else {
+      console.error("User not available or email missing");
+      toast.error("User not available or email missing");
+      return null;
+    }
+  } catch (error) {
+    console.error(error);
+    toast.error("An error occurred while re-authenticating the user");
+    return null;
+  }
+}
 export const changeOptionsEmail = async (
   password: string,
   navigate: NavigateFunction,
   newEmail: string,
   user: User | null
 ) => {
-  if (user && user.email) {
-    const credential = EmailAuthProvider.credential(user.email, password);
-    await reauthenticateWithCredential(user, credential);
-  } else {
-    console.error("User not available or email missing");
-    toast.error("User not available or email missing");
-    return;
-  }
+  const response = await reutenticateFirebase(user, password);
+  if (response === null) return;
 
-  if (newEmail) await verifyBeforeUpdateEmail(user, newEmail);
+  if (newEmail && user) await verifyBeforeUpdateEmail(user, newEmail);
 
   toast.dismiss();
   toast(
@@ -115,4 +127,31 @@ export function getProvider(user: User) {
       break;
   }
   return providerName;
+}
+
+export async function delateUserFirebase(user: User | null, password: string) {
+  if (!user) return;
+
+  try {
+    const response = await reutenticateFirebase(user, password);
+    if (response === null) throw new Error("An unexpected error occurred");
+    await deleteUser(user)
+      .then(() => {
+        toast.success(
+          "User deleted successfully, We hope to see you back soon",
+          {
+            duration: 10000,
+            style: {
+              background: "#333",
+              color: "#fff",
+            },
+          }
+        );
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  } catch (error) {
+    console.error(error);
+  }
 }

@@ -54,6 +54,9 @@
       margin-right: 30px;
       li {
         margin-bottom: 10px;
+        svg {
+          cursor: pointer;
+        }
       }
     }
 
@@ -80,7 +83,8 @@
       box-shadow: none;
     }
 
-    button {
+    #register,
+    #signIn {
       display: none;
     }
 
@@ -106,6 +110,17 @@
           text-wrap: pretty;
         }
       }
+    }
+    #delate-user {
+      display: block;
+      background-color: rgb(214, 53, 53);
+      color: var(--primary-white);
+      align-self: flex-end;
+      margin-right: 20vw;
+    }
+
+    #delate-user:hover {
+      background-color: rgb(238, 90, 90);
     }
   }
 }

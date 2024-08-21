@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import "../styles/404.css";
+import SingleTheme from "../components/header-components/SingleTheme";
 
 export const Error = () => {
   const errorShownRef = useRef(false);
@@ -15,6 +16,7 @@ export const Error = () => {
 
   return (
     <>
+      <SingleTheme />
       <div className="error">
         <section>
           <h1>Error 404</h1>

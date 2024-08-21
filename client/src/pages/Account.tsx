@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { UserContext } from "../App";
 import { getProvider } from "../scripts/firebase-users";
 import "../styles/main-account.css";
+import Button from "../components/reusable/Buuton";
 
 const Account = () => {
   const navigate = useNavigate();
@@ -74,120 +75,129 @@ const Account = () => {
     });
   }, []);
 
-  return (
-    <>
-      <main className="mainAccount">
-        <div className="ac-backdrop-img"></div>
-        <div className="ac-content">
-          <Profile />
-          <section className="ac-info">
-            <h3>Información</h3>
-            <ul>
-              <li>
-                User
-                <input
-                  type="text"
-                  name="displayName"
-                  value={configUser.displayName}
-                  onChange={handleInputChange}
-                  disabled={!inputsState[0]}
-                  style={{
-                    backgroundColor: inputsState[0]
-                      ? "transparent"
-                      : "rgba(128, 128, 128, 0.5)",
-                  }}
-                />
-                <Edit
-                  commentText={configUser.displayName}
-                  event={manejarClickSVG}
-                  index={0}
-                  state={inputsState[0]}
-                />
-              </li>
-              <li>
-                Email
-                <input
-                  type="text"
-                  name="email"
-                  value={configUser.email}
-                  onChange={handleInputChange}
-                  disabled={!inputsState[1]}
-                  style={{
-                    backgroundColor: inputsState[1]
-                      ? "transparent"
-                      : "rgba(128, 128, 128, 0.5)",
-                  }}
-                />
-                <Edit
-                  commentText={configUser.email}
-                  event={manejarClickSVG}
-                  index={1}
-                  state={inputsState[1]}
-                />
-              </li>
-              <li>
-                Phone
-                <input
-                  type="text"
-                  name="phone"
-                  value={configUser.phone}
-                  onChange={handleInputChange}
-                  disabled={!inputsState[2]}
-                  style={{
-                    backgroundColor: inputsState[2]
-                      ? "transparent"
-                      : "rgba(128, 128, 128, 0.5)",
-                  }}
-                />
-                <Edit
-                  commentText={configUser.phone}
-                  event={manejarClickSVG}
-                  index={2}
-                  state={inputsState[2]}
-                />
-              </li>
-            </ul>
-          </section>
-          <section className="help-center">
-            <h2>Help Center</h2>
-            <ul>
-              <li>
-                If you need to verify your account, <a href="">Click here</a>
-              </li>
-              <li>
-                I have lost my <a href="">password</a>
-              </li>
-              <li>
-                I want to contact the website{" "}
-                <a
-                  href="https://github.com/karlosvas/thefluentspanishhouse"
-                  target="_blank"
-                >
-                  owner
-                </a>
-              </li>
-              <li>
-                I want to contact{" "}
-                <a href="/contact" target="_blank">
-                  my teacher
-                </a>
-              </li>
+  const handleDelateUser = () => {
+    const email = user?.email;
+    const del = true;
+    navigate("/verify", { state: { email, del } });
+  };
 
-              <li>
-                Read our{" "}
-                <a href="/info" target="_blank">
-                  terms and conditions
-                </a>{" "}
-                and our{" "}
-                <a href="info" target="_blank">
-                  privacy policy
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
-      </main>
-    </>
+  return (
+    <main className="mainAccount">
+      <div className="ac-backdrop-img"></div>
+      <div className="ac-content">
+        <Profile />
+        <section className="ac-info">
+          <h3>Information</h3>
+          <ul>
+            <li>
+              User
+              <input
+                type="text"
+                name="displayName"
+                value={configUser.displayName}
+                onChange={handleInputChange}
+                disabled={!inputsState[0]}
+                style={{
+                  backgroundColor: inputsState[0]
+                    ? "transparent"
+                    : "rgba(128, 128, 128, 0.5)",
+                }}
+              />
+              <Edit
+                commentText={configUser.displayName}
+                event={manejarClickSVG}
+                index={0}
+                state={inputsState[0]}
+              />
+            </li>
+            <li>
+              Email
+              <input
+                type="text"
+                name="email"
+                value={configUser.email}
+                onChange={handleInputChange}
+                disabled={!inputsState[1]}
+                style={{
+                  backgroundColor: inputsState[1]
+                    ? "transparent"
+                    : "rgba(128, 128, 128, 0.5)",
+                }}
+              />
+              <Edit
+                commentText={configUser.email}
+                event={manejarClickSVG}
+                index={1}
+                state={inputsState[1]}
+              />
+            </li>
+            <li>
+              Phone
+              <input
+                type="text"
+                name="phone"
+                value={configUser.phone}
+                onChange={handleInputChange}
+                disabled={!inputsState[2]}
+                style={{
+                  backgroundColor: inputsState[2]
+                    ? "transparent"
+                    : "rgba(128, 128, 128, 0.5)",
+                }}
+              />
+              <Edit
+                commentText={configUser.phone}
+                event={manejarClickSVG}
+                index={2}
+                state={inputsState[2]}
+              />
+            </li>
+          </ul>
+          {user?.email && (
+            <Button id="delate-user" event={handleDelateUser}>
+              Delate User
+            </Button>
+          )}
+        </section>
+        <section className="help-center">
+          <h2>Help Center</h2>
+          <ul>
+            <li>
+              If you need to verify your account, <a href="">Click here</a>
+            </li>
+            <li>
+              I have lost my <a href="">password</a>
+            </li>
+            <li>
+              I want to contact the website{" "}
+              <a
+                href="https://github.com/karlosvas/thefluentspanishhouse"
+                target="_blank"
+              >
+                owner
+              </a>
+            </li>
+            <li>
+              I want to contact{" "}
+              <a href="/contact" target="_blank">
+                my teacher
+              </a>
+            </li>
+
+            <li>
+              Read our{" "}
+              <a href="/info" target="_blank">
+                terms and conditions
+              </a>{" "}
+              and our{" "}
+              <a href="info" target="_blank">
+                privacy policy
+              </a>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </main>
   );
 };
 

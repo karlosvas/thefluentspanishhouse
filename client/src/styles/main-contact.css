@@ -25,6 +25,7 @@
 .contact-form {
   background-color: var(--primary-blue);
   position: relative;
+  width: 110%;
 }
 
 .circle {
@@ -84,7 +85,7 @@ form {
 }
 
 .input {
-  width: 100%;
+  width: 95%;
   outline: none;
   border: 2px solid #fafafa;
   background: none;
@@ -358,9 +359,15 @@ textarea.input {
 
   .input {
     padding: 0.45rem 1.2rem;
+    width: 100%;
   }
 
   #btn {
     padding: 0.45rem 1.2rem;
+  }
+  .contact-form {
+    background-color: var(--primary-blue);
+    position: relative;
+    width: 100%;
   }
 }

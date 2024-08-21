@@ -1,0 +1,12 @@
+.singleTheme {
+  height: 10vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-black);
+  svg {
+    height: 30px;
+    width: 30px;
+  }
+}
