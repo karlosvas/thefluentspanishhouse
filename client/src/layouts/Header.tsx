@@ -50,7 +50,7 @@ const Header = () => {
             location.pathname === "/" ? (
               <a href="#">
                 <img
-                  src="./logos/logo-o.webp"
+                  src="./logos/logo.ico"
                   alt="fluent spanish house logo"
                   id="logo"
                 />
@@ -58,7 +58,7 @@ const Header = () => {
             ) : (
               <a href="/">
                 <img
-                  src="./logos/logo-o.webp"
+                  src="./logos/logo.ico"
                   alt="fluent spanish house logo"
                   id="logo"
                 />

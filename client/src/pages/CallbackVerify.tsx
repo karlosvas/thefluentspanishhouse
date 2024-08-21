@@ -41,7 +41,7 @@ export const CallbackVerify = () => {
   }
 
   useEffect(() => {
-    // if (!newEmail) navigate("/404");
+    if (!newEmail) navigate("/404");
   }, []);
 
   return (

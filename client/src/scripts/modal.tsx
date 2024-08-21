@@ -33,7 +33,7 @@ export const handleChangeModal = (
       setShowModal(false);
       setClosing(false);
       handleScroll(false);
-    }, 500);
+    }, 300);
   } else {
     setShowModal(true);
     handleScroll(true);

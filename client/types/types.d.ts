@@ -6,6 +6,11 @@ export interface OptionalTranslations {
   translation?: TFunction<"global", undefined>;
 }
 
+export interface CardsPublicationBlogProps {
+  cardsBlog: PublicationCardType[];
+  handlePublicationChange: Handler;
+}
+
 export interface ButtonProps {
   id?: string;
   type?: "submit";
@@ -69,6 +74,11 @@ export interface AuthProps {
 type HandleSubscribeChange = () => void;
 type HandlePublicationChange = () => void;
 type Handler = HandleSubscribeChange | HandlePublicationChange;
+
+export interface PlaceholderProps {
+  id?: string;
+  className?: string;
+}
 
 export interface ButtonCloseProps {
   handleSusribeChange: Handler;

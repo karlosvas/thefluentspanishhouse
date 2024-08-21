@@ -1,12 +1,14 @@
 import {
   EmailAuthProvider,
   reauthenticateWithCredential,
+  sendPasswordResetEmail,
   updateProfile,
   User,
   verifyBeforeUpdateEmail,
 } from "firebase/auth";
 import toast from "react-hot-toast";
 import { NavigateFunction } from "react-router-dom";
+import { auth } from "./firebase-config";
 
 export const changeOptionsUser = async (
   commentText: string,
@@ -79,3 +81,38 @@ export const changeOptionsEmail = async (
     navigate("/");
   }, 10000);
 };
+
+export function resetPassword(email: string) {
+  toast.loading("Sending");
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      toast.dismiss();
+      toast("Check your email for the password reset link. 📧", {
+        duration: 10000,
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+        icon: "🔔",
+      });
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorCode, errorMessage);
+    });
+}
+
+export function getProvider(user: User) {
+  const providerId = user.providerData[0].providerId;
+  let providerName = "";
+  switch (providerId) {
+    case "google.com":
+      providerName = "Google";
+      break;
+    case "facebook.com":
+      providerName = "Facebook";
+      break;
+  }
+  return providerName;
+}

@@ -289,10 +289,12 @@ html.dark {
 
 @keyframes reveal {
   from {
-    transform: translateY(20px);
+    transform: translateY(50px);
+    opacity: 0;
   }
   to {
     transform: translateY(0);
+    opacity: 1;
   }
 }
 

@@ -3,8 +3,8 @@ import UserComments from "../components/pages-components/publications/CommentPub
 import { useEffect, useState } from "react";
 import PlaceholderPublications from "../components/pages-components/publications/PlaceholderPublication";
 import { loadPublication } from "../scripts/render-data";
-import "../styles/main-publication.css";
 import { type PublicationCardType, type RouteParams } from "../../types/types";
+import "../styles/main-publication.css";
 
 const Publications = () => {
   const [publication, setPublication] = useState<PublicationCardType>();
@@ -13,9 +13,7 @@ const Publications = () => {
   const { id } = useParams<RouteParams>();
 
   useEffect(() => {
-    setTimeout(() => {
-      loadPublication(setPublication, setImageLoading, id);
-    }, 300);
+    loadPublication(setPublication, setImageLoading, id);
   }, []);
 
   return (

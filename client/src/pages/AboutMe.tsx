@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PlaceholderAboutme from "../components/pages-components/aboutme/PlaceholderAboutme";
+import PlaceholderImg from "../components/reusable/PlaceholderImg";
 import "../styles/main-aboutme.css";
 
 const AboutMe = () => {
@@ -10,10 +10,11 @@ const AboutMe = () => {
       <main className="main-aboutme">
         <div className="div-aboutme">
           <h2 id="haboutme">About me</h2>
-          {!imageLoaded && <PlaceholderAboutme />}
           <article>
             <figure>
+              {!imageLoaded && <PlaceholderImg className={"img-aboutme"} />}
               <img
+                className="img-aboutme"
                 src="/img/escritorio.webp"
                 alt="Descripción de la imagen"
                 onLoad={() => setImageLoaded(true)}

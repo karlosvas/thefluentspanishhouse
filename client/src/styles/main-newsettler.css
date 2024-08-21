@@ -54,13 +54,14 @@
     .nw-article {
       display: flex;
       align-items: center;
-      border-top: 1px solid rgb(34, 18, 9);
       figure {
-        img,
-        div {
-          margin: 50px;
-          max-height: 30vh;
-          object-fit: contain;
+        margin: 50px 10px;
+        .img-newsletter {
+          margin: 0;
+          height: 30vh;
+          width: 20vw;
+          object-fit: cover;
+          border-radius: 3px;
         }
       }
       .article-content {
@@ -72,7 +73,6 @@
 }
 
 .nw-freecontent {
-  border-top: 1px solid rgb(34, 18, 9);
   margin: auto;
   text-align: center;
   padding-top: 80px;
@@ -80,12 +80,12 @@
     margin: 0;
   }
   figure {
-    img,
-    div {
-      width: 85%;
-      max-height: 300px;
+    .img-newsletter {
+      width: 70%;
+      max-height: 200px;
       object-fit: cover;
       margin: auto;
+      border-radius: 3px;
     }
   }
   p {
@@ -95,32 +95,39 @@
   button {
     margin: 30px;
   }
+  .freecontent-content h4 {
+    font-size: 20px;
+  }
 }
 
 .freecontent-felx {
   display: flex;
   justify-content: center;
-  align-items: center;
-  border-top: 1px solid rgb(34, 18, 9);
+  align-items: start;
   padding-top: 80px;
   padding-bottom: 5vh;
+  p {
+    width: 70%;
+  }
 }
+
 /* Portátil and tablet */
-/* @media only screen and (width <= 1200px) and (width > 766px) {
-} */
+@media only screen and (width <= 1200px) and (width > 766px) {
+  .main-newsletter .nw-articles .nw-article {
+    figure {
+      margin: 20px;
+      .img-newsletter {
+        width: 40vw;
+      }
+    }
+  }
+}
 
 /* Moviles */
 @media only screen and (width <= 766px) {
   .main-newsletter {
     article {
-      padding: 100px 0;
-    }
-
-    .nw-title {
-      padding: 5vh;
-      h1 {
-        font-size: 40px;
-      }
+      padding: 50px 0;
     }
 
     .nw-articles {
@@ -135,11 +142,9 @@
         display: flex;
         align-items: center;
         flex-direction: column;
-        border: 1px solid rgb(34, 18, 9);
         figure {
-          margin-bottom: 0;
-          img,
-          div {
+          margin: 0;
+          .img-newsletter {
             margin: 20px 50px 20px 50px;
             width: 90vw;
             object-fit: contain;
@@ -172,13 +177,13 @@
         width: 50dvw;
 
         figure {
-          img,
-          div {
+          .img-newsletter {
             height: 10vh;
           }
         }
         button {
           width: 30vw;
+          font-size: 13px;
         }
         p {
           padding: 0 15px;

@@ -1,5 +1,5 @@
 import Prices from "../components/pages-components/main/Prices";
-import PlaceholderBanner from "../components/pages-components/main/PlaceholderBanner";
+import PlaceholderImg from "../components/reusable/PlaceholderImg";
 import { useState } from "react";
 import "../styles/main.css";
 
@@ -8,15 +8,15 @@ const Main = () => {
 
   return (
     <>
-      {!imageLoaded && <PlaceholderBanner />}
+      {!imageLoaded && <PlaceholderImg id="banner" />}
       <img
         id="banner"
         src="/img/banner-xl.webp"
         alt="Banner with inspiring images"
         onError={() => setImageLoaded(false)}
+        onLoad={() => setImageLoaded(true)}
         style={{
           display: imageLoaded ? "block" : "none",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         }}
       />
       <main className="main-index">

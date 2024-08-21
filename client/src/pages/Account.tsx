@@ -3,10 +3,11 @@ import Profile from "../components/header-components/Profile";
 import Edit from "../components/svg-component/Edit";
 import { ConfigUser } from "../../types/types";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import "../styles/main-account.css";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { UserContext } from "../App";
+import { getProvider } from "../scripts/firebase-users";
+import "../styles/main-account.css";
 
 const Account = () => {
   const navigate = useNavigate();
@@ -28,12 +29,15 @@ const Account = () => {
   const firebase_user = useContext(UserContext);
   const manejarClickSVG = (index: number) => {
     if (
+      user &&
       firebase_user?.providerData.some(
         (provider) => provider.providerId !== "password"
       )
     ) {
       toast.error(
-        `The user authenticated with ${firebase_user?.providerData[0].providerId} cannot change the account settings of some options`
+        `The user authenticated with ${getProvider(
+          user
+        )} cannot change the account settings of some options`
       );
       return;
     }

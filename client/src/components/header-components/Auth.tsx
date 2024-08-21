@@ -15,6 +15,7 @@ import "../../styles/modal-auth.css";
 import { UserContext } from "../../App";
 import ButtonClose from "../reusable/ButtonClose";
 import Backdrop from "../reusable/Backdrop";
+import { getProvider, resetPassword } from "../../scripts/firebase-users";
 
 const Auth = () => {
   const [showModal, setShowModal] = useState(false);
@@ -31,6 +32,7 @@ const Auth = () => {
     email: "",
   });
 
+  // Enviar formulario par registrarse o logearse
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isRegister = typeLoginRegisterRef.current?.textContent === "Register";
@@ -84,7 +86,27 @@ const Auth = () => {
   };
 
   const forgotPasword = () => {
-    console.log("En proceso de ser contruido");
+    if (
+      user &&
+      user.providerData.some((provider) => provider.providerId !== "password")
+    ) {
+      toast(
+        `Cannot reset password for accounts authenticated with ${getProvider(
+          user
+        )}.`,
+        {
+          duration: 10000,
+          style: {
+            background: "#333",
+            color: "#fff",
+          },
+          icon: "🔔",
+        }
+      );
+      return;
+    }
+    if (user?.email) resetPassword(user?.email);
+    else toast.error("You must be logged in to reset your password");
   };
 
   function handleSusribeChange() {
@@ -93,7 +115,7 @@ const Auth = () => {
       setTimeout(() => {
         toggleFormType(showModal, setShowModal);
         setClosing(false);
-      }, 500);
+      }, 300);
     } else {
       toggleFormType(showModal, setShowModal);
     }
@@ -117,7 +139,7 @@ const Auth = () => {
             handleSusribeChange={handleSusribeChange}
             closing={closing}
           />
-          <div className="modalAuth">
+          <div className={"modalAuth"}>
             <div className="modalContent">
               <ButtonClose handleSusribeChange={handleSusribeChange} />
               <h1 ref={typeLoginRegisterRef}>
@@ -151,9 +173,7 @@ const Auth = () => {
                 <label>
                   <ShowPassword password={ID.password} setID={setID} />
                 </label>
-                <small onClick={() => forgotPasword}>
-                  Forgot your password?
-                </small>
+                <small onClick={forgotPasword}>Forgot your password?</small>
                 <Button type="submit">Submit</Button>
               </form>
               <div className="providers-log">

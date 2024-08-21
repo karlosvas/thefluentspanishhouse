@@ -1,29 +1,19 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CardPlaceholder from "./PlaceHolder";
-import FormPublication from "./FormPublication";
-import { handleChangeModal } from "../../../scripts/modal";
 import Button from "../../reusable/Buuton";
-import { loadPublications } from "../../../scripts/render-data";
 import { UserContext } from "../../../App";
-import { type PublicationCardType } from "../../../../types/types";
+import { CardsPublicationBlogProps } from "../../../../types/types";
 
-const CardsPublicationBlog = () => {
-  const [showModalPost, setShowModalPost] = useState(false);
-  const [closing, setClosing] = useState(false);
-  const [cardsBlog, setCardsBlog] = useState<PublicationCardType[]>([]);
+const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
+  cardsBlog,
+  handlePublicationChange,
+}) => {
   const uploadRef = useRef<HTMLButtonElement | null>(null);
   const user = useContext(UserContext);
   const [loadedImages, setLoadedImages] = useState<boolean[]>(
     new Array(cardsBlog.length).fill(false)
   );
-  const [newPublication, setNewPublication] = useState<PublicationCardType>({
-    _id: "",
-    title: "",
-    subtitle: "",
-    content: "",
-    base64_img: "",
-  });
 
   const handleImageLoad = (index: number) => {
     setLoadedImages((prevLoadedImages) => {
@@ -33,43 +23,8 @@ const CardsPublicationBlog = () => {
     });
   };
 
-  const handlePublicationChange = () => {
-    handleChangeModal(showModalPost, setClosing, setShowModalPost);
-  };
-
-  const fetchPublications = async (
-    setCardsBlog: (publications: PublicationCardType[]) => void
-  ) => {
-    try {
-      const publications = await loadPublications();
-      if (Array.isArray(publications) && publications.length !== 0) {
-        setCardsBlog(publications as PublicationCardType[]);
-      }
-    } catch (error) {
-      console.error("Error loading publications:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchPublications(setCardsBlog);
-  }, []);
-
-  useEffect(() => {
-    fetchPublications(setCardsBlog);
-  }, [newPublication]);
-
   return (
     <div id="blog">
-      {/* Abre o cierra el modal de publicación */}
-      {showModalPost && (
-        <FormPublication
-          closing={closing}
-          handleChange={handlePublicationChange}
-          newPublication={newPublication}
-          setNewPublication={setNewPublication}
-        />
-      )}
-
       {/* Muestra un mensaje si no hay publicaciones*/}
       {cardsBlog.length === 0 && loadedImages[0] && (
         <h1

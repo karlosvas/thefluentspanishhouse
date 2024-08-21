@@ -11,7 +11,7 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    background-image: url(./img/ej1.webp);
+    background-color: var(--secondary-white);
     background-size: cover;
     background-position: center;
     z-index: 0;
