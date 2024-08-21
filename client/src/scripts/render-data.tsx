@@ -1,7 +1,7 @@
 import { url_api } from "../constants/global";
 import Helper from "./helper";
 import toast from "react-hot-toast";
-import { Dispatch, FormEvent, SetStateAction } from "react";
+import { FormEvent } from "react";
 import {
   type PublicationCardType,
   type SubscriberType,
@@ -132,6 +132,19 @@ export const submitNote = async (newNote: NoteType) => {
       body: JSON.stringify(newNote),
     });
     if (response) toast.success("The email has been sent successfully");
+  } catch (error) {
+    console.error("Error to submit post", error);
+  }
+};
+
+// DELATE
+export const delatePublication = async (id: string) => {
+  try {
+    await app.del(`${url_api}/api/publications/del/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error("Error to submit post", error);
   }

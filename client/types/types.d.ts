@@ -8,7 +8,9 @@ export interface OptionalTranslations {
 
 export interface CardsPublicationBlogProps {
   cardsBlog: PublicationCardType[];
+  setCardsBlog: React.Dispatch<React.SetStateAction<PublicationCardType[]>>;
   handlePublicationChange: Handler;
+  loading: boolean;
 }
 
 export interface ButtonProps {
@@ -81,7 +83,8 @@ export interface PlaceholderProps {
 }
 
 export interface ButtonCloseProps {
-  handleSusribeChange: Handler;
+  handleSusribeChange: Handler | Promise<void>;
+  className?: string;
 }
 export interface BackdropProps {
   handleSusribeChange: Handler;
@@ -93,6 +96,7 @@ export interface FormPublicationProps {
   buttonName?: string;
   newPublication: PublicationCardType;
   setNewPublication: Dispatch<SetStateAction<PublicationCardType>>;
+  cardsBlog: PublicationCardType[];
 }
 export interface FormSuscriberProps {
   closing: boolean;

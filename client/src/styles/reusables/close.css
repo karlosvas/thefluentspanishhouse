@@ -8,6 +8,7 @@
   border-radius: 5px;
   font-size: 20px;
   margin-top: 10px;
+  z-index: 9999;
 }
 
 .closeAuth:hover {
@@ -24,4 +25,9 @@
 .closeAuth:active {
   box-shadow: 0px 2px rgb(155, 20, 61);
   transform: translateY(4px);
+}
+
+.close-card-button {
+  top: -10px;
+  right: 0;
 }

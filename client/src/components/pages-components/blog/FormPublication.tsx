@@ -1,6 +1,9 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { handleSubmitPost } from "../../../scripts/render-data";
+import {
+  delatePublication,
+  handleSubmitPost,
+} from "../../../scripts/render-data";
 import "../../../styles/uploadfiles.css";
 import {
   type PublicationCardType,
@@ -14,6 +17,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
   handleChange,
   newPublication,
   setNewPublication,
+  cardsBlog,
 }) => {
   const [error, setError] = useState("");
   const [imagePreview, setImagePreview] = useState<string>("");
@@ -145,7 +149,16 @@ const FormPublication: React.FC<FormPublicationProps> = ({
         return;
       }
     }
-    await handleSubmitPost(event, newPublication);
+    try {
+      if (cardsBlog.length !== 9) {
+        await handleSubmitPost(event, newPublication);
+      } else {
+        await delatePublication(cardsBlog[0]._id);
+        await handleSubmitPost(event, newPublication);
+      }
+    } catch (error) {
+      console.error("Error al enviar el post:", error);
+    }
   };
 
   return (

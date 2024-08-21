@@ -315,3 +315,20 @@ html.dark {
     background-position-x: 0px;
   }
 }
+
+.card-img-placeholder {
+  position: relative;
+  height: 200px;
+  border-radius: 4px;
+}
+
+.card-img-placeholder::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  animation: glow 3s infinite alternate;
+}

@@ -1,8 +1,20 @@
 import { ButtonCloseProps } from "../../../types/types";
 
-const ButtonClose: React.FC<ButtonCloseProps> = ({ handleSusribeChange }) => {
+const ButtonClose: React.FC<ButtonCloseProps> = ({
+  handleSusribeChange,
+  className,
+}) => {
+  const handleClick = () => {
+    if (typeof handleSusribeChange === "function") {
+      handleSusribeChange();
+    }
+  };
+
   return (
-    <span className="closeAuth" onClick={() => handleSusribeChange()}>
+    <span
+      className={`closeAuth ${className ? className : ""}`}
+      onClick={handleClick}
+    >
       &times;
     </span>
   );

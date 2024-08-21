@@ -17,29 +17,27 @@ const Blog = () => {
     content: "",
     base64_img: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handlePublicationChange = () => {
     handleChangeModal(showModalPost, setClosing, setShowModalPost);
   };
 
-  const fetchPublications = async (
-    setCardsBlog: (publications: PublicationCardType[]) => void
-  ) => {
+  const fetchPublications = async () => {
     try {
       const publications = await loadPublications();
+      publications.reverse();
       if (Array.isArray(publications) && publications.length !== 0)
         setCardsBlog(publications as PublicationCardType[]);
     } catch (error) {
       console.error("Error loading publications:", error);
+    } finally {
+      setLoading(true);
     }
   };
 
   useEffect(() => {
-    fetchPublications(setCardsBlog);
-  }, [newPublication]);
-
-  useEffect(() => {
-    fetchPublications(setCardsBlog);
+    fetchPublications();
   }, []);
 
   return (
@@ -52,11 +50,14 @@ const Blog = () => {
             handleChange={handlePublicationChange}
             newPublication={newPublication}
             setNewPublication={setNewPublication}
+            cardsBlog={cardsBlog}
           />
         )}
         <CardsPublicationBlog
           cardsBlog={cardsBlog}
           handlePublicationChange={handlePublicationChange}
+          setCardsBlog={setCardsBlog}
+          loading={loading}
         />
       </main>
     </>

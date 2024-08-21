@@ -4,10 +4,15 @@ import CardPlaceholder from "./PlaceHolder";
 import Button from "../../reusable/Buuton";
 import { UserContext } from "../../../App";
 import { CardsPublicationBlogProps } from "../../../../types/types";
+import ButtonClose from "../../reusable/ButtonClose";
+import { delatePublication } from "../../../scripts/render-data";
+import toast from "react-hot-toast";
 
 const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
   cardsBlog,
   handlePublicationChange,
+  setCardsBlog,
+  loading,
 }) => {
   const uploadRef = useRef<HTMLButtonElement | null>(null);
   const user = useContext(UserContext);
@@ -23,41 +28,58 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
     });
   };
 
+  const admin =
+    user?.email === "carlosvassan@gmail.com" ||
+    user?.email === "mar411geca@gmail.com";
+
+  const handledelatePublication = async (id: string) => {
+    try {
+      await delatePublication(id);
+      setCardsBlog((prevCardsBlog) =>
+        prevCardsBlog.filter((publication) => publication._id !== id)
+      );
+      toast.success("Post deleted successfully");
+    } catch (error) {
+      console.error("Error al eliminar post:", error);
+    }
+  };
+
   return (
     <div id="blog">
-      {/* Muestra un mensaje si no hay publicaciones*/}
-      {cardsBlog.length === 0 && loadedImages[0] && (
+      {loading && cardsBlog.length === 0 && (
         <h1
           style={{
             position: "absolute",
             top: "35%",
+            right: "0",
             fontSize: "30px",
+            width: "100%",
             textAlign: "center",
           }}
         >
           No posts available...
         </h1>
       )}
-
       {/* Renderiza la lista de publicaciones */}
+      {!loadedImages && <CardPlaceholder />}
       {cardsBlog.map((publication, index) => (
         <div className="cardBlog" key={publication._id}>
-          <Link
-            to={`/publication/${publication._id}`}
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              fontWeight: "normal",
-            }}
-          >
-            {!loadedImages && <CardPlaceholder />}
-            <div className="img-container">
+          {admin && (
+            <ButtonClose
+              handleSusribeChange={() =>
+                handledelatePublication(publication._id)
+              }
+              className="close-card-button"
+            />
+          )}
+          <Link to={`/publication/${publication._id}`}>
+            <figure className="img-container">
               <img
                 src={publication.base64_img}
                 alt="Imagen de la publicación"
                 onLoad={() => handleImageLoad(index)}
               />
-            </div>
+            </figure>
             <h3>{publication.title}</h3>
             <p>{publication.subtitle}</p>
           </Link>
@@ -65,8 +87,7 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
       ))}
 
       {/* Renderiza el botón solo para usuarios específicos */}
-      {(user?.email === "carlosvassan@gmail.com" ||
-        user?.email === "mar411geca@gmail.com") && (
+      {admin && (
         <Button event={handlePublicationChange} id="upload" ref={uploadRef}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
