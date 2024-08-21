@@ -58,23 +58,23 @@ const CommentPublication = () => {
 
   return (
     <div className="comments">
-      <h3>Comentarios de Usuarios</h3>
+      <h3>User Comments</h3>
 
       <form onSubmit={handleSubmit}>
         <textarea
           value={newComment}
           onChange={handleChange}
-          placeholder="Escribe tu comentario..."
+          placeholder="Write your comment..."
           rows={4}
           cols={50}
         />
         <br />
-        <button type="submit">Enviar Comentario</button>
+        <button type="submit">Submit Comment</button>
       </form>
       <div className="oldComments">
-        <h3>Comentarios Anteriores</h3>
+        <h3>Previous Comments</h3>
         {comments.length === 0 ? (
-          <p>No hay comentarios aún.</p>
+          <p>No comments yet.</p>
         ) : (
           <CommentCard comments={comments} />
         )}

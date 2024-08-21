@@ -5,6 +5,15 @@
   flex-direction: column;
   width: 100vw;
   .publication {
+    .img-publication {
+      height: 40vh;
+      min-width: 20vw;
+      max-width: 50vw;
+      width: auto;
+      object-fit: cover;
+      border-radius: 5px;
+      margin: auto;
+    }
     height: fit-content;
     width: 50%;
     padding: 20px;
@@ -26,21 +35,19 @@
       align-self: center;
       text-align: center;
     }
-    img,
-    .card-img-placeholder {
-      height: 40vh;
-      width: 45vw;
-      object-fit: cover;
-      border-radius: 5px;
+    figure {
+      margin: 0;
+      background-color: var(--secondary-white);
+      width: 100vw;
     }
-  }
-  p,
-  .parragraf-ph {
-    width: 95%;
-    align-self: flex-start;
-    margin: 20px;
-    strong {
-      font-size: 20px;
+
+    p,
+    .parragraf-ph {
+      font-family: "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif;
+      width: 100%;
+      align-self: center;
+      margin: 20px;
+      padding: 20px;
     }
   }
 }
@@ -50,13 +57,12 @@
   .publicationMain {
     .publication {
       width: 80vw;
+      .img-publication {
+        width: 70vw;
+      }
       h2,
       .title-ph {
         margin: 50px 0;
-      }
-      img,
-      .card-img-placeholder {
-        width: 70vw;
       }
     }
   }
@@ -68,13 +74,12 @@
     .publication {
       width: 100%;
       h2,
+      .img-publication {
+        width: 70vw;
+      }
       .title-ph {
         margin: 25px 0;
         text-align: center;
-      }
-      img,
-      .card-img-placeholder {
-        width: 100%;
       }
       p,
       .parragraf-ph {

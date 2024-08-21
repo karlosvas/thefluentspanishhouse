@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import UserComments from "../components/pages-components/publications/CommentPublication";
 import { useEffect, useState } from "react";
 import PlaceholderPublications from "../components/pages-components/publications/PlaceholderPublication";
@@ -11,24 +11,50 @@ const Publications = () => {
   const [imageLoading, setImageLoading] = useState<boolean>(false);
 
   const { id } = useParams<RouteParams>();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    loadPublication(setPublication, setImageLoading, id);
+    let publication: PublicationCardType | undefined;
+
+    if (id) {
+      loadPublication(id)
+        .then((result) => {
+          publication = result;
+          if (publication) {
+            setPublication(publication);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          navigate("/404");
+        });
+    } else navigate("/404");
   }, []);
 
   return (
     <main className="publicationMain">
-      {!imageLoading && <PlaceholderPublications />}
-      <div className="publication">
-        <h2>{publication?.title}</h2>
-        <img
-          src={publication?.base64_img}
-          alt="Imagen de la publicación"
-          style={{ display: imageLoading ? "block" : "none" }}
-        />
-        <strong>{publication?.subtitle}</strong>
-        <p>{publication?.content}</p>
-      </div>
+      {publication ? (
+        <div className="publication">
+          <h2>{publication.title}</h2>
+          <figure>
+            <img
+              className="img-publication"
+              src={publication.base64_img}
+              alt="Imagen de la publicación"
+              onLoad={() => setImageLoading(true)}
+              style={{ display: imageLoading ? "block" : "none" }}
+            />
+          </figure>
+          <strong>{publication.subtitle}</strong>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: publication.content || "",
+            }}
+          />
+        </div>
+      ) : (
+        <PlaceholderPublications imgClass="img-publication" />
+      )}
       <UserComments />
     </main>
   );

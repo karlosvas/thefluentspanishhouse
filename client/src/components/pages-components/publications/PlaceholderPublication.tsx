@@ -1,12 +1,20 @@
 import Placeholder from "react-bootstrap/Placeholder";
 
-const PlaceholderPublicaations = () => {
+interface PlaceholderPublicationsProps {
+  imgClass: string;
+}
+
+const PlaceholderPublications = ({
+  imgClass,
+}: PlaceholderPublicationsProps) => {
   return (
     <div className="publication">
       <Placeholder animation="wave" className="title-ph">
         <Placeholder xs={9} size="lg" />
       </Placeholder>
-      <div className="card-img-placeholder"></div>
+      <figure>
+        <div className={`card-img-placeholder ${imgClass}`}></div>
+      </figure>
       <Placeholder as="p" animation="wave" className="parragraf-ph">
         <Placeholder xs={11} />
       </Placeholder>
@@ -19,4 +27,4 @@ const PlaceholderPublicaations = () => {
   );
 };
 
-export default PlaceholderPublicaations;
+export default PlaceholderPublications;

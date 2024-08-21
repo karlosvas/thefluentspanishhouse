@@ -40,11 +40,7 @@ export const getComments = async (id: string | undefined) => {
     throw error;
   }
 };
-export const loadPublication = async (
-  setPublication: Dispatch<SetStateAction<PublicationCardType | undefined>>,
-  setImageLoading: Dispatch<SetStateAction<boolean>>,
-  id: string | undefined
-) => {
+export const loadPublication = async (id: string | undefined) => {
   try {
     const publication = await app.get(`${url_api}/api/publications/${id}`, {
       method: "GET",
@@ -52,8 +48,6 @@ export const loadPublication = async (
         "Content-Type": "application/json",
       },
     });
-    setPublication(publication);
-    setImageLoading(true);
     return publication;
   } catch (error) {
     console.error("Error al obtener datos:", error);

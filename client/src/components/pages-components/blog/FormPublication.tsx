@@ -84,13 +84,15 @@ const FormPublication: React.FC<FormPublicationProps> = ({
   };
 
   const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = event.target;
-    setNewPublication((prev: PublicationCardType) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const { name, value } = e.target;
+    if (name === "content") {
+      const formattedContent = value.replace(/\n/g, "<br>");
+      setNewPublication({ ...newPublication, [name]: formattedContent });
+    } else {
+      setNewPublication({ ...newPublication, [name]: value });
+    }
   };
 
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
@@ -176,7 +178,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
               <br />
               <textarea
                 name="content"
-                value={newPublication.content}
+                value={newPublication.content.replace(/<br>/g, "\n")}
                 onChange={handleInputChange}
                 rows={4}
                 cols={50}
