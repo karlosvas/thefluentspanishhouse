@@ -5,7 +5,6 @@ import Error from "./pages/404";
 import Account from "./pages/Account";
 import Blog from "./pages/Blog";
 import AboutMe from "./pages/AboutMe";
-import Contact from "./pages/Contact";
 import Info from "./pages/Info";
 import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
@@ -14,6 +13,8 @@ import { Toaster } from "react-hot-toast";
 import Newsetler from "./pages/Newsletter";
 import CallbackVerify from "./pages/CallbackVerify";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import SingleTheme from "./components/header-components/SingleTheme";
+import Contact from "./pages/Contact";
 
 export const UserContext = createContext<User | null>(null);
 
@@ -47,7 +48,7 @@ const App = () => {
   if (loading) {
     return (
       <UserContext.Provider value={user}>
-        {!shouldHideHeaderFooter && <Header />}
+        {!shouldHideHeaderFooter ? <Header /> : <SingleTheme />}
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/publication/:id" element={<Publications />} />

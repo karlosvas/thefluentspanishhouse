@@ -6,7 +6,7 @@ function ImgUser() {
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-      className="profileIcon"
+      className="profile-icon"
       height="40px"
       width="40px"
     >

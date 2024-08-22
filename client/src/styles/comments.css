@@ -63,7 +63,7 @@
     color: var(--primary-white);
   }
 
-  .oldComments > h3 {
+  .old-comments > h3 {
     padding-top: 50px;
   }
 }

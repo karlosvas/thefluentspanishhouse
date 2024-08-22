@@ -20,7 +20,7 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 const allowedOrigins = [
   process.env.URL_WEB,
   process.env.URL_WEB_TEST,
-  "http://localhost:8080",
+  "http://localhost:5173",
 ];
 
 app.use(

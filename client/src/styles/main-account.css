@@ -1,4 +1,4 @@
-.mainAccount {
+.main-account {
   height: 100dvh;
   width: 100vw;
   display: flex;
@@ -66,6 +66,9 @@
     h3 {
       margin-left: 20px;
     }
+    h2 {
+      margin-bottom: 20px;
+    }
 
     input {
       color: var(--primary-black);
@@ -84,7 +87,7 @@
     }
 
     #register,
-    #signIn {
+    #sign-in {
       display: none;
     }
 
@@ -95,15 +98,12 @@
     section {
       margin-top: 50px;
     }
-    h3 {
-      margin-left: 20px;
-    }
-
     .help-center {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      padding: 100px 0;
       ul {
         text-align: start;
         li {
@@ -111,12 +111,13 @@
         }
       }
     }
+
     #delate-user {
       display: block;
       background-color: rgb(214, 53, 53);
       color: var(--primary-white);
       align-self: flex-end;
-      margin-right: 20vw;
+      margin-right: 14vw;
     }
 
     #delate-user:hover {
@@ -127,17 +128,20 @@
 
 /* Portátil y tablet */
 @media only screen and (width > 766px) and (width <= 1200px) {
-  .mainAccount .ac-content {
+  .main-account .ac-content {
     width: 80vw;
+    #delate-user {
+      margin-right: 20vw;
+    }
   }
 }
 
 /* Movil */
 @media only screen and (width <= 766px) {
-  .mainAccount {
+  .main-account {
     height: 140dvh;
   }
-  .mainAccount .ac-content {
+  .main-account .ac-content {
     background-color: var(--primary-white);
     ul {
       margin: 0;
@@ -145,8 +149,8 @@
     input {
       width: 210px;
     }
-    .help-center {
-      margin-top: 0;
+    #delate-user {
+      margin-right: 6vw;
     }
   }
 }

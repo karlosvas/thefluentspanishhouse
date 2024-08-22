@@ -17,7 +17,6 @@ body .error {
     font-weight: 900;
   }
   section {
-    width: 80vw;
     display: flex;
     align-items: end;
     padding: 10px;
@@ -35,11 +34,16 @@ body .error {
     strong {
       color: rgb(230, 59, 59);
     }
+    h1 {
+      max-width: 1000px;
+      text-wrap: balance;
+    }
   }
   button {
     border-radius: 0;
     margin-left: 10px;
     padding: 10px;
+    margin-bottom: 50px;
   }
   form {
     display: flex;

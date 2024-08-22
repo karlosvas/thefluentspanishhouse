@@ -94,16 +94,16 @@ header {
         border: 2px solid transparent;
       }
     }
-    .navIcons {
+    .nav-icons {
       z-index: 1000;
       display: flex;
       justify-content: center;
       align-items: center;
     }
-    .divLang {
+    .div-lang {
       position: relative;
       cursor: pointer;
-      #modalLanguajes {
+      #modal-languajes {
         border-radius: 10px;
         position: absolute;
         top: 100%;
@@ -115,12 +115,12 @@ header {
         }
       }
     }
-    .exitPublication {
+    .exit-publication {
       position: absolute;
       right: 20px;
       top: 12px;
     }
-    .exitHeader {
+    .exit-header {
       margin-right: 10px;
       svg {
         padding: 0;
@@ -204,8 +204,8 @@ header #sect {
           padding: 0 5px;
         }
       }
-      .divLang {
-        #modalLanguajes {
+      .div-lang {
+        #modal-languajes {
           top: -90%;
           left: 80px;
         }

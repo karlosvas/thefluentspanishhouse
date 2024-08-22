@@ -1,5 +1,5 @@
 footer {
-  text-align: center;
+  text-align: start;
   background-color: var(--primary-black);
   height: 20dvh;
   width: 100vw;
@@ -32,7 +32,7 @@ footer {
 @media only screen and (width <= 766px) {
   footer {
     section {
-      padding: 10px;
+      padding-left: 12px;
       width: 50vw;
       font-size: 15px;
       .svgIcons {

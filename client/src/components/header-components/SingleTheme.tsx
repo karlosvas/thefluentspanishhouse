@@ -26,7 +26,7 @@ export const SingleTheme = () => {
   }, [theme]);
 
   return (
-    <span className="singleTheme">
+    <span className="single-theme">
       <Theme theme={theme} setTheme={setTheme} />
     </span>
   );

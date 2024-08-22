@@ -71,7 +71,7 @@ const CommentPublication = () => {
         <br />
         <button type="submit">Submit Comment</button>
       </form>
-      <div className="oldComments">
+      <div className="old-comments">
         <h3>Previous Comments</h3>
         {comments.length === 0 ? (
           <p>No comments yet.</p>

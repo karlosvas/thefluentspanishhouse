@@ -7,7 +7,7 @@ const Theme: React.FC<ThemeProps> = ({ theme, setTheme, children }) => {
 
   return (
     <>
-      <div onClick={toggleThemeSVG} className="menuSection">
+      <div onClick={toggleThemeSVG} className="menu-section">
         {children}
         {theme === "light" ? (
           <svg

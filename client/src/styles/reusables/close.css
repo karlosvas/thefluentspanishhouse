@@ -1,4 +1,4 @@
-.closeAuth {
+.close-auth {
   position: absolute;
   right: 20px;
   top: 10px;
@@ -11,23 +11,31 @@
   z-index: 9999;
 }
 
-.closeAuth:hover {
+.close-auth:hover {
   color: var(--primary-white);
 }
 
-.closeAuth {
+.close-auth {
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0px 5px rgb(155, 20, 61);
   transition: all 0.2s ease;
 }
 
-.closeAuth:active {
+.close-auth:active {
   box-shadow: 0px 2px rgb(155, 20, 61);
   transform: translateY(4px);
 }
 
 .close-card-button {
-  top: -10px;
-  right: 0;
+  top: -5px;
+  right: -5px;
+}
+
+@media only screen and (width <= 766px) {
+  .close-card-button {
+    top: -10px;
+    right: 0;
+    border-radius: 3px;
+  }
 }

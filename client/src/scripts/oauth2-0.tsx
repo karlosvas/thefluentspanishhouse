@@ -63,10 +63,6 @@ export async function localSignin(email: string, password: string) {
         "Do you need verify your email. Please check your email for the verification link.",
         {
           duration: 10000,
-          style: {
-            background: "#333",
-            color: "#fff",
-          },
           icon: "🔔",
         }
       );
@@ -106,10 +102,6 @@ export async function localRegister(
     } else {
       toast("Welcome! Please check your email for the verification link.", {
         duration: 10000,
-        style: {
-          background: "#333",
-          color: "#fff",
-        },
         icon: "🔔",
       });
 

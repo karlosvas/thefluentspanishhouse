@@ -11,7 +11,7 @@
   margin: 15px 0;
 }
 
-.menuLeft {
+.menu-left {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   padding-top: 50px;
@@ -26,7 +26,7 @@
   background-color: var(--primary-black);
   height: 105dvh;
   width: 70vw;
-  z-index: 999;
+  z-index: 1001;
   font-size: 1em;
   animation: slideDown 0.3s ease-out;
   .auth {
@@ -65,11 +65,11 @@
   }
 }
 
-.menuLeft.closing {
+.menu-left.closing {
   animation: slideUp 0.3s ease-out forwards;
 }
 
-.menuLeft section {
+.menu-left section {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -79,32 +79,18 @@
   font-weight: 500;
 }
 
-.menuLeft section:hover {
+.menu-left section:hover {
   color: var(--primary-blue);
 }
 
-.modalBackdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  animation: bgDown 0.5s ease-out;
-}
-
-.modalBackdrop.closing {
-  animation: bgUp 0.5s ease-out forwards;
-}
-
-.menuSection {
+.menu-section {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 @media only screen and (width <= 1100px) and (width >= 768px) {
-  .menuLeft {
+  .menu-left {
     width: 40vw;
   }
 }

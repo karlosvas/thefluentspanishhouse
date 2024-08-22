@@ -13,7 +13,7 @@ export const Account: React.FC<ChildrenType> = ({ children }) => {
   }
 
   return (
-    <div className="menuSection" onClick={goToAccount}>
+    <div className="menu-section" onClick={goToAccount}>
       {children}
       <svg
         xmlns="http://www.w3.org/2000/svg"

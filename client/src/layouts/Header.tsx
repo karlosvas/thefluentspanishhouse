@@ -5,8 +5,8 @@ import Auth from "../components/header-components/Auth";
 import Exit from "../components/svg-component/Exit";
 import MainNav from "../components/header-components/MainNav";
 import Theme from "../components/svg-component/Theme";
-import "../styles/header.css";
 import Settings from "../components/svg-component/Settings";
+import "../styles/header.css";
 
 const Header = () => {
   // Estados
@@ -74,11 +74,11 @@ const Header = () => {
           ) : (
             window.innerWidth <= 766 &&
             location.pathname !== "/" && (
-              <Exit optionalClass="exitPublication" />
+              <Exit optionalClass="exit-publication" />
             )
           )}
           {window.innerWidth > 766 && (
-            <div className="navIcons">
+            <div className="nav-icons">
               <Settings />
               <Theme theme={theme} setTheme={setTheme} />
               <Auth />

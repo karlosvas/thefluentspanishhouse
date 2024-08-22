@@ -1,9 +1,9 @@
-.modalAuth {
+.modal-auth {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: aliceblue;
+  background-color: var(--primary-white);
   color: var(--primary-black);
   padding: 20px;
   border-radius: 5px;
@@ -82,7 +82,7 @@
 
 /* Portátil y tablets */
 @media (width <= 1200px) and (width >= 767px) {
-  .modalAuth {
+  .modal-auth {
     .login-form {
       align-items: end;
       width: 430px;
@@ -92,7 +92,7 @@
 
 /* Moviles */
 @media only screen and (width <= 766px) {
-  .modalAuth {
+  .modal-auth {
     height: fit-content;
     width: 90vw;
     padding: 20px;
@@ -114,7 +114,7 @@
       width: 290px;
     }
 
-    .modalContent > h1 {
+    .modal-content > h1 {
       padding-top: 50px;
       font-size: 40px;
     }

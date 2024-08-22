@@ -32,7 +32,7 @@ const Publications = () => {
   }, []);
 
   return (
-    <main className="publicationMain">
+    <main className="publication-main">
       {publication ? (
         <div className="publication">
           <h2>{publication.title}</h2>

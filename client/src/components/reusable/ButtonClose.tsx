@@ -12,7 +12,7 @@ const ButtonClose: React.FC<ButtonCloseProps> = ({
 
   return (
     <span
-      className={`closeAuth ${className ? className : ""}`}
+      className={`close-auth ${className ? className : ""}`}
       onClick={handleClick}
     >
       &times;

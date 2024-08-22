@@ -7,15 +7,14 @@
 }
 
 .main-index {
-  h2,
-  .main-title {
+  h2 {
     animation: reveal linear both;
     animation-timeline: view();
     animation-range: entry 20% cover 30%;
   }
   .main-title {
     padding: 50px 10px;
-    margin-top: 50px;
+    margin: 30px 0;
     text-align: center;
     #title {
       text-shadow: 0 2px 2px var(--primary-blue);
@@ -28,74 +27,75 @@
       text-wrap: pretty;
     }
   }
-}
 
-.div-pracing {
-  animation: reveal linear both;
-  animation-timeline: view();
-  animation-range: entry 20% cover 30%;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  color: var(--primary-black);
-  margin-bottom: 200px;
-  h2 {
-    margin-top: 100px;
+  .div-pracing {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 30%;
     color: var(--primary-black);
-    margin-bottom: 20px;
-  }
-  .flex-cards {
+    width: 100vw;
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    .card-pracing {
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 200px;
+    margin-top: 0;
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .flex-cards {
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       align-items: center;
-      flex-direction: column;
-      background-color: var(--secondary-white);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      padding: 30px 0;
-      margin: 50px 30px 0 30px;
-      width: 350px;
-      height: 60vh;
-      border-radius: 10px;
-      button {
-        margin-top: 20px;
-        padding: 10px 20px;
-        color: var(--primary-white);
-        transition: all 0.2s;
-        &:hover {
-          color: var(--primary-black);
-        }
-      }
-      ul {
+      flex-wrap: wrap;
+      .card-pracing {
+        background-color: var(--secondary-white);
         display: flex;
+        justify-content: space-around;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        align-items: center;
         flex-direction: column;
-        justify-content: center;
-        align-items: self-strat;
-        list-style: none;
-        margin-bottom: 0;
-        li::before {
-          content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2346d246" stroke="white" class=""><path fillRule="evenodd" d="M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08Zm3.094 8.016a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" /></svg>');
-          display: inline-block;
-          width: 1.2em;
-          height: 1.2em;
-          margin-right: 5px;
+        padding: 30px 0;
+        margin: 30px;
+        width: 350px;
+        height: 60vh;
+        border-radius: 10px;
+        button {
+          color: var(--primary-white);
+          margin-top: 20px;
+          padding: 10px 20px;
+          transition: all 0.2s;
+          &:hover {
+            color: var(--primary-black);
+          }
         }
-        .not-privileges::before {
-          content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff3333" class="size-6"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" /></svg>');
+        ul {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          list-style: none;
+          margin-bottom: 0;
+          li::before {
+            content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2346d246" stroke="white" class=""><path fillRule="evenodd" d="M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08Zm3.094 8.016a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" /></svg>');
+            display: inline-block;
+            width: 1.2em;
+            height: 1.2em;
+            margin-right: 5px;
+          }
+          .not-privileges::before {
+            content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff3333" class="size-6"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" /></svg>');
+          }
         }
-      }
-      .price-classes {
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        small {
-          margin-bottom: 35px;
+        .price-classes {
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          small {
+            margin-left: 5px;
+            margin-bottom: 10px;
+          }
         }
       }
     }
@@ -112,37 +112,34 @@
 /* Moviles */
 @media only screen and (width <= 766px) {
   #banner {
-    height: 90%;
+    height: 43vh;
   }
-
   .main-index {
     .main-title {
-      padding: 10px;
       #title {
         font-size: 40px;
       }
       p {
-        padding: 0 30px;
+        padding: 10px 30px;
         font-size: 13px;
       }
     }
-  }
-
-  .div-pracing {
-    margin: 100px 0;
-    margin-bottom: 0;
-    .flex-cards {
-      .card-pracing {
-        width: 100vw;
-        height: fit-content;
-        border-radius: 0;
-        margin: 0;
-        border-top: 1px solid #ddd;
-        box-shadow: none;
+    .div-pracing {
+      margin: 100px 0;
+      margin-bottom: 0;
+      .flex-cards {
+        .card-pracing {
+          width: 100vw;
+          height: fit-content;
+          border-radius: 0;
+          margin: 0;
+          border-top: 1px solid #ddd;
+          box-shadow: none;
+        }
       }
-    }
-    h2 {
-      font-size: 2em;
+      h2 {
+        font-size: 2em;
+      }
     }
   }
 }

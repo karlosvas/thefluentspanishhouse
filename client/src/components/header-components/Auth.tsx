@@ -11,11 +11,11 @@ import {
 import { toggleFormType } from "../../scripts/modal";
 import Button from "../reusable/Buuton";
 import ShowPassword from "../reusable/ShowPassword";
-import "../../styles/modal-auth.css";
 import { UserContext } from "../../App";
 import ButtonClose from "../reusable/ButtonClose";
 import Backdrop from "../reusable/Backdrop";
 import { getProvider, resetPassword } from "../../scripts/firebase-users";
+import "../../styles/modal-auth.css";
 
 const Auth = () => {
   const [showModal, setShowModal] = useState(false);
@@ -96,10 +96,6 @@ const Auth = () => {
         )}.`,
         {
           duration: 10000,
-          style: {
-            background: "#333",
-            color: "#fff",
-          },
           icon: "🔔",
         }
       );
@@ -122,7 +118,7 @@ const Auth = () => {
   }
   return (
     <div className="auth">
-      <Button id="signIn" event={handleLoginOrLogout}>
+      <Button id="sign-in" event={handleLoginOrLogout}>
         {user ? "Logout" : "Sign In"}
       </Button>
       <Button
@@ -139,9 +135,9 @@ const Auth = () => {
             handleSusribeChange={handleSusribeChange}
             closing={closing}
           />
-          <div className={"modalAuth"}>
-            <div className="modalContent">
-              <ButtonClose handleSusribeChange={handleSusribeChange} />
+          <div className={"modal-auth"}>
+            <ButtonClose handleSusribeChange={handleSusribeChange} />
+            <div className="modal-content">
               <h1 ref={typeLoginRegisterRef}>
                 {formType === "login" ? "Sign In" : "Register"}
               </h1>

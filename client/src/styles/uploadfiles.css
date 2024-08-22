@@ -20,7 +20,7 @@
   color: var(--primary-white);
 }
 
-.uploadPublication {
+.upload-publication {
   animation: bgDown 0.3s ease-out;
   position: fixed;
   top: 46%;
@@ -33,15 +33,16 @@
   z-index: 1001;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.5);
+  color: var(--primary-black);
 }
 
-.uploadPublication h3 {
+.upload-publication h3 {
   color: var(--primary-black);
   margin-top: 10px;
   text-align: center;
 }
 
-.uploadPublication form ul {
+.upload-publication form ul {
   margin: 0;
   padding: 0 50px;
   display: flex;
@@ -51,14 +52,14 @@
   list-style: none;
 }
 
-.uploadPublication form ul li {
+.upload-publication form ul li {
   margin: 10px 0;
   width: 100%;
   user-select: none;
   color: var(--primary-black);
 }
 
-.uploadPublication form ul li input {
+.upload-publication form ul li input {
   color: var(--primary-black);
   background-color: transparent;
   border: none;
@@ -69,30 +70,30 @@
   padding-left: 5px;
 }
 
-.uploadPublication form ul li p {
+.upload-publication form ul li p {
   font-weight: 500;
   margin-top: 10px;
   text-align: center;
 }
 
-.uploadPublication form ul li:hover {
+.upload-publication form ul li:hover {
   background-color: transparent;
 }
 
-.uploadPublication form ul li {
+.upload-publication form ul li {
   margin-bottom: 10px;
 }
 
-.uploadPublication form label {
+.upload-publication form label {
   display: block;
   font-size: 14px;
 }
 
-.uploadPublication form label input[type="checkbox"] {
+.upload-publication form label input[type="checkbox"] {
   margin-right: 5px;
 }
 
-.uploadPublication .custom-file-upload {
+.upload-publication .custom-file-upload {
   display: inline-block;
   cursor: pointer;
   color: var(--primary-black);
@@ -102,16 +103,16 @@
   text-align: center;
 }
 
-.uploadPublication .custom-file-upload input[type="file"] {
+.upload-publication .custom-file-upload input[type="file"] {
   display: none;
 }
 
-.uploadPublication .custom-file-upload img {
+.upload-publication .custom-file-upload img {
   max-height: 20vh;
   padding: 10px;
 }
 
-.uploadPublication textarea {
+.upload-publication textarea {
   resize: none;
   background-color: transparent;
   border-color: #ddd;
@@ -121,7 +122,7 @@
   width: 100%;
 }
 
-.uploadPublication #submitPost {
+.upload-publication #submitPost {
   background-color: var(--primary-blue);
   color: var(--primary-white);
   margin-top: 20px;
@@ -129,15 +130,15 @@
   border-radius: 5px;
 }
 
-.uploadPublication #submitPost:hover {
+.upload-publication #submitPost:hover {
   color: var(--primary-black);
 }
 
-.uploadPublication #submitPost:focus {
+.upload-publication #submitPost:focus {
   outline: 5px solid var(--secondary-blue);
 }
 
-.uploadPublication.closing {
+.upload-publication.closing {
   animation: bgUp 0.3s ease-out forwards;
 }
 
@@ -146,7 +147,7 @@
   #upload {
     top: 11dvh;
   }
-  .uploadPublication {
+  .upload-publication {
     width: 50vw;
     form ul {
       padding: 0 20px;
@@ -160,7 +161,7 @@
     top: 2px;
     right: 40vw;
   }
-  .uploadPublication {
+  .upload-publication {
     width: 90vw;
     margin-top: 20px;
     form ul {

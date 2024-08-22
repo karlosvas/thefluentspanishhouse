@@ -163,7 +163,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
 
   return (
     <>
-      <div className={"uploadPublication"}>
+      <div className={"upload-publication"}>
         <ButtonClose handleSusribeChange={handleChange} />
         <h3>New Publication</h3>
         <form onSubmit={onSubmit}>
@@ -214,7 +214,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
               </div>
               {error && <p>{error}</p>}
             </li>
-            <button id="submitPost" type="submit">
+            <button id="submit-post" type="submit">
               Submit
             </button>
           </ul>

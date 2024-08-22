@@ -67,16 +67,16 @@
   }
 }
 @media only screen and (width <= 766px) {
-  #haboutme {
-    margin: 20px 0;
-    text-align: center;
-  }
   .main-aboutme {
     .div-aboutme {
       padding-bottom: 100px;
+      h2 {
+        font-size: 2em;
+      }
       figure .img-aboutme {
-        width: 80vw;
-        height: 30vh;
+        margin-top: 10px;
+        width: 90vw;
+        height: 27vh;
       }
       p,
       figure > figcaption {

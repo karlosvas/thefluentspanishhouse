@@ -9,6 +9,7 @@
   --secondary-white: #ffffff;
   --secondary-white: rgb(228, 239, 255);
   --primary-black: #1f2028;
+  --secondary-black: #161824;
   --primary-yellow: #ffbd59;
 
   color-scheme: light dark;
@@ -35,10 +36,6 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-}
-
-h2 {
-  margin-top: 200px;
 }
 
 button {
@@ -76,17 +73,17 @@ html.light {
     nav > ul > li a {
       color: var(--primary-black);
     }
-    #modalLanguajes {
+    #modal-languajes {
       border: 1px solid #ddd;
       background-color: var(--primary-white);
       a {
         color: var(--primary-black);
       }
     }
-    .menuLeft {
+    .menu-left {
       background-color: var(--primary-white);
       color: var(--primary-black);
-      #modalLanguajes {
+      #modal-languajes {
         border: 1px solid #ddd;
         background-color: var(--primary-white);
         a {
@@ -121,14 +118,7 @@ html.dark {
     nav > ul > li a {
       color: var(--primary-white);
     }
-    #modalLanguajes {
-      border: 1px solid #343434;
-      background-color: var(--primary-black);
-      a {
-        color: var(--primary-white);
-      }
-    }
-    .modalAuth {
+    .modal-auth {
       color: var(--primary-white);
       background-color: var(--primary-black);
     }
@@ -136,7 +126,7 @@ html.dark {
     .facebookAuth {
       border: 2px solid var(--primary-white);
     }
-    .menuLeft {
+    .menu-left {
       background-color: var(--primary-black);
       color: var(--primary-white);
     }
@@ -146,25 +136,37 @@ html.dark {
     color: var(--primary-white);
     main {
       background-color: var(--primary-black);
-      .divPracing > .cardPracing {
-        box-shadow: 5px 5px 5px rgba(255, 255, 255, 0.234);
-      }
-      #mainTitle > #title {
-        text-shadow: 0 2px 2px var(--primary-blue);
+      color: var(--primary-white);
+    }
+    .main-index {
+      .div-pracing {
+        color: var(--primary-white);
+        .flex-cards .card-pracing {
+          background-color: var(--secondary-black);
+        }
       }
     }
-    .publicationMain > .comments {
+    .publication-main > .comments {
       background-color: var(--primary-black);
     }
-    .publicationMain > .comments > .oldComments > ul > li:hover {
+    .publication-main > .comments > .old-comments > ul > li:hover {
       color: var(--primary-white);
     }
-    .mainBlog #blog .cardBlog {
-      background-color: var(--primary-black);
+    .main-blog #blog .card-blog {
+      background-color: var(--secondary-black);
       color: var(--primary-white);
     }
-    .mainAccount input {
+    .main-account {
       color: var(--primary-white);
+      .ac-content {
+        background: var(--secondary-black);
+      }
+      .ac-backdrop-img {
+        background-color: var(--primary-black);
+      }
+      input {
+        color: var(--primary-white);
+      }
     }
     .container {
       background-color: var(--primary-black);
@@ -179,14 +181,8 @@ html.dark {
     .big-circle:after {
       background-color: var(--primary-black);
     }
-    .uploadPublication {
+    .upload-publication {
       color: var(--primary-black);
-    }
-    .mainAccount {
-      .ac-content {
-        background: var(--primary-black);
-        color: var(--primary-white);
-      }
     }
   }
   footer {
@@ -198,6 +194,9 @@ html.dark {
   html.dark body {
     .container > .form {
       border: none;
+    }
+    .main-blog #blog {
+      background-color: var(--secondary-black);
     }
   }
 }

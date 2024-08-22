@@ -15,7 +15,7 @@ const Exit: React.FC<ChildrenType & OptionalClass> = ({
 
   return (
     <Link to="#" id="exit" onClick={goBack}>
-      <div className={`menuSection ${optionalClass}`}>
+      <div className={`menu-section ${optionalClass}`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

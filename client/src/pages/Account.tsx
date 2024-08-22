@@ -7,8 +7,8 @@ import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { UserContext } from "../App";
 import { getProvider } from "../scripts/firebase-users";
-import "../styles/main-account.css";
 import Button from "../components/reusable/Buuton";
+import "../styles/main-account.css";
 
 const Account = () => {
   const navigate = useNavigate();
@@ -82,7 +82,7 @@ const Account = () => {
   };
 
   return (
-    <main className="mainAccount">
+    <main className="main-account">
       <div className="ac-backdrop-img"></div>
       <div className="ac-content">
         <Profile />

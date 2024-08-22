@@ -46,7 +46,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
 
   return (
     <>
-      <div className={`uploadPublication`}>
+      <div className={`upload-publication`}>
         <ButtonClose handleSusribeChange={handleSusribeChange} />
         <h3>{buttonName}</h3>
         <form onSubmit={onSubmit}>
@@ -98,7 +98,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
                 privacity policity.
               </Link>
             </label>
-            <Buuton id="submitPost" type="submit">
+            <Buuton id="submit-post" type="submit">
               To subscribe
             </Buuton>
           </ul>

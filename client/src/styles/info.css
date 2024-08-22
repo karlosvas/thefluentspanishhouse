@@ -28,3 +28,11 @@
     }
   }
 }
+
+@media only screen and (width <= 766px) {
+  .main-terminos {
+    p {
+      width: 80vw;
+    }
+  }
+}

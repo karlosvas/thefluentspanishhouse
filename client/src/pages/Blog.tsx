@@ -42,7 +42,7 @@ const Blog = () => {
 
   return (
     <>
-      <main className="mainBlog">
+      <main className="main-blog">
         {/* Abre o cierra el modal de publicación */}
         {showModalPost && (
           <FormPublication

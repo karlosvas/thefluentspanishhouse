@@ -16,10 +16,10 @@ export const Settings = () => {
       <a
         href="/account"
         id="exit"
-        className="menuSection"
+        className="menu-section"
         onClick={goToAccount}
       >
-        <div className="menuSection">
+        <div className="menu-section">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

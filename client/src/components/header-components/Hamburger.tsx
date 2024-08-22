@@ -5,6 +5,7 @@ import { handleScroll } from "../../scripts/modal";
 import { type ThemeProps } from "../../../types/types";
 import { useLocation } from "react-router-dom";
 import "../../styles/hamburger.css";
+import Backdrop from "../reusable/Backdrop";
 
 const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
   const [showModal, setShowModal] = useState(false);
@@ -55,16 +56,13 @@ const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
         </svg>
         {(showModal || closing) && (
           <>
-            <div className={`menuLeft ${closing ? "closing" : ""}`}>
+            <div className={`menu-left ${closing ? "closing" : ""}`}>
               <Profile />
               <div className="config">
                 <MainNav theme={theme} setTheme={setTheme} />
               </div>
             </div>
-            <div
-              className={`modalBackdrop ${closing ? "closing" : ""}`}
-              onClick={handleClick}
-            ></div>
+            <Backdrop handleSusribeChange={handleClick} closing={closing} />
           </>
         )}
       </div>

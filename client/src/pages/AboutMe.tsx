@@ -9,7 +9,7 @@ const AboutMe = () => {
     <>
       <main className="main-aboutme">
         <div className="div-aboutme">
-          <h2 id="haboutme">About me</h2>
+          <h2>About me</h2>
           <article>
             <figure>
               {!imageLoaded && <PlaceholderImg className={"img-aboutme"} />}
