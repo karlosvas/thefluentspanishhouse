@@ -153,11 +153,8 @@ const Newsletter = () => {
                 Are you eager to improve your Spanish skills? Download our free
                 resources packed with essential vocabulary, grammar tips, and
                 practice exercises. Perfect for beginners and advanced learners
-                alike!
-              </p>
-              <p>
-                Click the button below to get your free Spanish lessons and
-                start your journey to fluency today!
+                alike! Click the button below to get your free Spanish lessons
+                and start your journey to fluency today!
               </p>
             </div>
             <Button>INSTANT DOWNLOAD</Button>
@@ -181,8 +178,6 @@ const Newsletter = () => {
                 Enhance your Spanish learning with our free guide! This resource
                 includes practical exercises, key phrases, and tips to boost
                 your confidence in speaking Spanish. Ideal for all levels.
-              </p>
-              <p>
                 Download now and take the next step in mastering the language!
               </p>
             </div>

@@ -17,7 +17,7 @@
   grid-template-columns: repeat(3, 1fr);
   height: auto;
   width: 50%;
-  .cardBlog {
+  .card-blog {
     animation: reveal 0.5s ease-in-out both;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     background-color: var(--secondary-white);
@@ -34,7 +34,9 @@
     position: relative;
     a {
       display: block;
-      width: 100%;
+      width: 300px;
+      margin: 0 !important;
+      padding: 0 !important;
       height: 100%;
       text-decoration: none;
       color: inherit;
@@ -42,14 +44,15 @@
       .img-container {
         height: 200px;
         width: 100%;
-        margin: 10px;
+        padding-left: 13%;
+        margin-top: 15px;
         overflow: hidden;
         position: relative;
         img {
+          border-radius: 3px;
           height: 200px;
           width: 100%;
           object-fit: cover;
-          width: 100%;
           transition: transform 0.25s ease-in-out;
         }
       }
@@ -68,8 +71,8 @@
         text-wrap: pretty;
       }
       h3 {
-        width: 100%;
         text-align: center;
+        width: 100%;
         padding: 20px;
         padding-top: 0;
         overflow: hidden;
@@ -86,7 +89,8 @@
     }
   }
 
-  .cardBlog a:hover .img-container > img {
+  .card-blog a:hover .img-container > img {
+    transform-origin: center;
     transform: scale(1.1);
   }
 }
@@ -101,27 +105,28 @@
 
     #blog {
       display: flex;
-      justify-content: start;
+      justify-content: flex-start;
       align-items: center;
       flex-direction: column;
       width: 100vw;
       gap: 0;
       margin: 0;
       padding: 20px 0;
-
-      .cardBlog {
-        border: none;
-        box-shadow: none;
+      .card-blog {
         background-color: var(--primary-white);
         color: var(--primary-black);
-        height: auto;
         width: 100vw;
-        padding-top: 20px;
-
-        h3 {
-          padding-top: 10px;
-          padding-left: 10px;
-          font-size: 20px;
+        border: none;
+        border-radius: 0%;
+        box-shadow: none;
+        height: auto;
+        margin-top: 20px;
+        a {
+          width: 100vw;
+          .img-container {
+            margin: 0;
+            padding-left: 0;
+          }
         }
       }
     }

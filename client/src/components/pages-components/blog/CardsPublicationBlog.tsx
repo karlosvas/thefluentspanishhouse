@@ -63,7 +63,7 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
       {/* Renderiza la lista de publicaciones */}
       {!loadedImages && <CardPlaceholder />}
       {cardsBlog.map((publication, index) => (
-        <div className="cardBlog" key={publication._id}>
+        <div className="card-blog" key={publication._id}>
           {admin && (
             <ButtonClose
               handleSusribeChange={() =>
@@ -76,7 +76,7 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
             <figure className="img-container">
               <img
                 src={publication.base64_img}
-                alt="Imagen de la publicación"
+                alt={`Blog post ${publication.title}`}
                 onLoad={() => handleImageLoad(index)}
               />
             </figure>

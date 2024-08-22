@@ -11,8 +11,8 @@ const Main = () => {
       {!imageLoaded && <PlaceholderImg id="banner" />}
       <img
         id="banner"
-        src="/img/banner-xl.webp"
-        alt="Banner with inspiring images"
+        src="/img/banner.webp"
+        alt="Banner with inspiring images, sevillana dance"
         onError={() => setImageLoaded(false)}
         onLoad={() => setImageLoaded(true)}
         style={{
@@ -20,7 +20,7 @@ const Main = () => {
         }}
       />
       <main className="main-index">
-        <div id="mainTitle">
+        <div className="main-title">
           <h1 id="title">The Fluent Spanish House</h1>
           <p>
             <strong>

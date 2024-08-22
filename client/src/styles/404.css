@@ -4,7 +4,7 @@ body .error {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 91vh;
+  height: 90vh;
   width: 100vw;
   flex-direction: column;
   overflow: hidden;

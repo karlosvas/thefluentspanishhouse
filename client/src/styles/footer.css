@@ -12,12 +12,12 @@ footer {
     transition: color 0.2s;
     color: var(--primary-white);
     text-decoration: none;
-  }
-  a:hover {
-    color: var(--primary-blue);
+    &:hover {
+      color: var(--primary-blue);
+    }
   }
   .svgIcons {
-   margin-right: 10px;
+    margin-right: 10px;
     height: 25px;
     width: 25px;
   }
@@ -31,16 +31,14 @@ footer {
 
 @media only screen and (width <= 766px) {
   footer {
-    text-align: start;
     section {
       padding: 10px;
-      width: 40vw;
+      width: 50vw;
+      font-size: 15px;
       .svgIcons {
-        margin-left: 10px;
+        width: 20px;
+        height: 20px;
       }
-    }
-    section:first-of-type {
-      width: 65vw;
     }
   }
 }

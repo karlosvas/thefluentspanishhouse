@@ -22,12 +22,12 @@ const Prices = () => {
           buttonName={buttonName}
         />
       )}
-      <div className="divPracing">
+      <div className="div-pracing">
         <h2>What do our classes offer?</h2>
-        <div className="flex-card">
-          <div className="cardPracing">
+        <div className="flex-cards">
+          <div className="card-pracing">
             <h3>Free class for beginners</h3>
-            <div className="price">
+            <div className="price-classes ">
               <h1>0€</h1>
               <small> /one hour</small>
             </div>
@@ -35,14 +35,14 @@ const Prices = () => {
               <li>Access to online resources</li>
               <li>Group classes</li>
               <li>Written assessment report at the end of the class</li>
-              <li className="notPrivileges">
+              <li className="not-privileges">
                 Access to exclusive content and homework assignments
               </li>
-              <li className="notPrivileges">
+              <li className="not-privileges">
                 Tailor-made materials to work in and out of class
               </li>
-              <li className="notPrivileges">Access to exclusive content</li>
-              <li className="notPrivileges">
+              <li className="not-privileges">Access to exclusive content</li>
+              <li className="not-privileges">
                 Out-of-class communication with the teacher via WhatsApp,
                 Messenger, or email to solve questions whenever necessary
               </li>
@@ -51,9 +51,9 @@ const Prices = () => {
               GET FREE INITIAL COURSE 🍃
             </Button>
           </div>
-          <div className="cardPracing">
+          <div className="card-pracing">
             <h3>Group classes</h3>
-            <div className="price">
+            <div className="price-classes">
               <h1>15€</h1>
               <small>/ hour</small>
             </div>
@@ -65,8 +65,8 @@ const Prices = () => {
               </li>
               <li>Tailor-made materials to work in and out of class</li>
               <li>Personalized classes according to your level</li>
-              <li className="notPrivileges">Access to exclusive content</li>
-              <li className="notPrivileges">
+              <li className="not-privileges">Access to exclusive content</li>
+              <li className="not-privileges">
                 Out-of-class communication with the teacher via WhatsApp,
                 Messenger, or email to solve questions whenever necessary.
               </li>
@@ -75,9 +75,9 @@ const Prices = () => {
               GET GROUP CLASSES 🥘
             </Button>
           </div>
-          <div className="cardPracing">
+          <div className="card-pracing">
             <h3>Private classes</h3>
-            <div className="price">
+            <div className="price-classes ">
               <h1>21€</h1>
               <small>/ hour</small>
             </div>

@@ -18,8 +18,6 @@
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
   box-sizing: border-box;
-
-  /* scrollbar-width: none; */
 }
 
 * {
@@ -68,17 +66,6 @@ svg {
   transition: color 0.25s;
 }
 
-@keyframes reveal {
-  from {
-    opacity: 0;
-    translate: 0 50px;
-  }
-  to {
-    opacity: 1;
-    translate: 0 0;
-  }
-}
-
 /* Estilos para tema claro */
 html.light {
   background-color: var(--primary-white);
@@ -122,16 +109,6 @@ html.light {
       }
     }
   }
-}
-
-#recaptcha-container {
-  width: 300px;
-  margin: 20px auto;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  background-color: #f0f0f0;
-  z-index: 9999;
 }
 
 /* Estilos para tema oscuro */
@@ -287,6 +264,17 @@ html.dark {
   }
   100% {
     background-position-x: 0px;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    translate: 0 50px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
   }
 }
 

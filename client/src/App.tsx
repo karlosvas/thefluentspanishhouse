@@ -18,52 +18,53 @@ import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 export const UserContext = createContext<User | null>(null);
 
 const App = () => {
+  // Usuario actual
+  const [user, setUser] = useState<User | null>(null);
+  // Index cargado o no
+  const [loading, setLoading] = useState(false);
+
+  const auth = getAuth();
   const location = useLocation();
-  const exclude = ["/info", "/404", "/verify"];
+  const exclude_header = ["/info", "/404", "/verify"];
 
   // Determina si el Header y el Footer deben ser ocultados
-  const shouldHideHeaderFooter = exclude.includes(location.pathname);
+  const shouldHideHeaderFooter = exclude_header.includes(location.pathname);
 
+  // Scroll hacia arriba cuando se cambia de ruta
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
 
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const auth = getAuth();
-
+  // Listener que verifica si el usuario está autenticado
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      setLoading(false);
+      setLoading(true);
     });
-
     return () => unsubscribe();
   }, [auth]);
 
-  if (!loading) {
+  if (loading) {
     return (
-      <>
-        <UserContext.Provider value={user}>
-          {!shouldHideHeaderFooter && <Header />}
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/publication/:id" element={<Publications />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/aboutme" element={<AboutMe />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/info" element={<Info />} />
-            <Route path="/newsetler" element={<Newsetler />} />
-            <Route path="/404" element={<Error />} />
-            <Route path="/verify" element={<CallbackVerify />} />
-            {/* Maneja rutas no encontradas */}
-            <Route path="*" element={<Navigate to="/404" />} />
-          </Routes>
-          {!shouldHideHeaderFooter && <Footer />}
-          <Toaster position="bottom-right" />
-        </UserContext.Provider>
-      </>
+      <UserContext.Provider value={user}>
+        {!shouldHideHeaderFooter && <Header />}
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/publication/:id" element={<Publications />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/aboutme" element={<AboutMe />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/info" element={<Info />} />
+          <Route path="/newsetler" element={<Newsetler />} />
+          <Route path="/404" element={<Error />} />
+          <Route path="/verify" element={<CallbackVerify />} />
+          {/* Maneja rutas no encontradas */}
+          <Route path="*" element={<Navigate to="/404" />} />
+        </Routes>
+        {!shouldHideHeaderFooter && <Footer />}
+        <Toaster position="bottom-right" />
+      </UserContext.Provider>
     );
   }
 };
