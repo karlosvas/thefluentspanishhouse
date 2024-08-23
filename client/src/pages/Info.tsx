@@ -1,12 +1,10 @@
 import Footer from "@/layouts/Footer";
-import SingleTheme from "@/components/header-components/SingleTheme";
 import "@/styles/info.css";
 
 const Info = () => {
   return (
     <>
       <main className="main-terminos">
-        <SingleTheme />
         <section>
           <h2 id="terminos">Terms and Conditions</h2>
           <p>

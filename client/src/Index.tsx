@@ -9,7 +9,6 @@ import "@/styles/reusables/close.css";
 
 const initializeApp = async () => {
   try {
-    // const publications: PublicationCardType[] = await loadPublications();
     await setupAuthPersistence();
 
     // Renderiza la aplicación después de que ambas promesas se hayan completado
