@@ -1,15 +1,12 @@
 import { useContext, useState } from "react";
-import Auth from "./Auth";
+import Auth from "@/components/header-components/Auth";
 import ImgUser from "@/components/svg-component/ImgUser";
-import "@/styles/profileicon.css";
 import { UserContext } from "@/App";
+import "@/styles/profileicon.css";
 
 const Profile = () => {
-  const [imgLoad, setImgLoad] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const infoUser = useContext(UserContext);
-  const img = infoUser?.photoURL;
-  const email = infoUser?.email;
-  const name = infoUser?.displayName;
 
   return (
     <>
@@ -18,20 +15,22 @@ const Profile = () => {
           (window.innerWidth <= 766 ||
             window.location.pathname === "/account") && (
             <>
-              {img !== null ? (
+              {infoUser.photoURL && !imgError ? (
                 <img
-                  src={img}
+                  src={infoUser?.photoURL}
                   alt="Photo profile user"
-                  onLoad={() => setImgLoad(true)}
-                  onError={() => setImgLoad(false)}
-                  style={{ display: imgLoad ? "block" : "none" }}
+                  onError={() => setImgError(true)}
                 />
               ) : (
                 <ImgUser />
               )}
               <div className="username">
-                <strong>{name}</strong>
-                <small>{email}</small>
+                {infoUser?.displayName ? (
+                  <strong>{infoUser?.displayName}</strong>
+                ) : (
+                  <strong>Loading...</strong>
+                )}
+                <small>{infoUser?.email}</small>
               </div>
             </>
           )}

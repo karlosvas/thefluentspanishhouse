@@ -108,10 +108,15 @@
           margin-right: 20px;
         }
       }
+      button[type="submit"] {
+        width: 290px;
+        margin: 50px auto 10px auto;
+      }
     }
 
     .providers-log {
       width: 290px;
+      margin: auto;
     }
 
     .modal-content > h1 {

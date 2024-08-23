@@ -6,12 +6,10 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   sendEmailVerification,
-  type User,
   FacebookAuthProvider,
 } from "firebase/auth";
 import { toast } from "react-hot-toast";
-import { auth } from "./firebase-config";
-import { FirebaseError } from "firebase/app";
+import { auth, showMessageErrorFirebase } from "./firebase-config";
 
 // Verificar si actualmente está logeado
 export const isLogged = () => {
@@ -22,35 +20,28 @@ export const isLogged = () => {
 const providerGoogle = new GoogleAuthProvider();
 
 // Iniciar sesión con Google
-export async function signInWithGoogle(): Promise<User | null> {
-  try {
-    const result = await signInWithPopup(auth, providerGoogle);
-    // Este callback se ejecuta cuando el usuario se autentica correctamente
-    const user = result.user.displayName;
-    toast.success(
-      <span>
-        Welcome back <b>{user}</b>!
-      </span>
-    );
-    return auth.currentUser;
-  } catch (error) {
-    toast.error(`Authentication failed`);
-    console.error(error);
-  }
-  return null;
+export async function signInWithGoogle() {
+  // Nos logeamos con el proveedor de Google, y devolbemos el usuario actual
+  signInWithPopup(auth, providerGoogle)
+    .then((result) => {
+      const currenUser = result.user.displayName;
+      toast.success(
+        <span>
+          Welcome back <b>{currenUser}</b>!
+        </span>
+      );
+    })
+    .catch((error) => {
+      // Mostramos un mensaje de bienvenida con su nombre
+      showMessageErrorFirebase(error);
+    });
 }
 
 // Iniciar sesión en local
 export async function localSignin(email: string, password: string) {
   try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    // Usuario autenticado correctamente
-    const user = userCredential.user;
-
+    // Logearse con email y contraseña
+    const { user } = await signInWithEmailAndPassword(auth, email, password);
     // Si no esta verificado se le avisa enviando un correo
     if (user.emailVerified) {
       toast.success(
@@ -60,17 +51,16 @@ export async function localSignin(email: string, password: string) {
       );
     } else {
       toast(
-        "Do you need verify your email. Please check your email for the verification link.",
+        `Welcome ${user.displayName}, Do you need verify your email. Please check your email for the verification link.`,
         {
           duration: 10000,
           icon: "🔔",
         }
       );
+      await sendEmailVerification(user);
     }
   } catch (error) {
-    // Ocurrió un error durante la autenticación
-    toast.error(`Authentication failed`);
-    console.error(error);
+    showMessageErrorFirebase(error);
   }
 }
 
@@ -81,22 +71,23 @@ export async function localRegister(
   username: string
 ) {
   try {
+    // Si esta logeado no se puede registrar
     if (isLogged()) {
       toast.error("You are already logged in");
       return;
     }
-    const userCredential = await createUserWithEmailAndPassword(
+    const { user } = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
-    const user = userCredential.user;
+    // Actualizamos el perfil con el nombre de usuario
     await updateProfile(user, { displayName: username });
-
+    // Si no esta verificado se le avisa enviando un correo
     if (user.emailVerified) {
       toast.success(
         <span>
-          Welcome again <b>{user.displayName}</b>!
+          Welcome to The Fluent Spanish House <b>{user.displayName}</b>!
         </span>
       );
     } else {
@@ -104,36 +95,10 @@ export async function localRegister(
         duration: 10000,
         icon: "🔔",
       });
-
-      sendEmailVerification(user);
+      await sendEmailVerification(user);
     }
-  } catch (error: unknown) {
-    if (error instanceof FirebaseError) {
-      switch (error.code) {
-        case "auth/email-already-in-use":
-          toast.error(
-            "The email address is already in use. Please try logging in. ❌"
-          );
-          break;
-        case "auth/invalid-email":
-          toast.error("The email address is not valid.");
-          break;
-        case "auth/weak-password":
-          toast.error(
-            "The password is too weak. Please choose a stronger password."
-          );
-          break;
-        case "auth/network-request-failed":
-          toast.error(
-            "Network error. Please check your connection and try again."
-          );
-          break;
-        default:
-          toast.error(`Error during registration: ${error.message}`);
-      }
-    } else {
-      toast.error("An unexpected error occurred.");
-    }
+  } catch (error) {
+    showMessageErrorFirebase(error);
   }
 }
 
@@ -142,27 +107,29 @@ export async function signOutUser() {
   return new Promise<void>((resolve, reject) => {
     signOut(auth)
       .then(() => {
+        // Resuelve la promesa cuando se completa el signOut
+        resolve();
         // El usuario se ha desconectado exitosamente
         toast.success("User successfully disconnected");
-        resolve(); // Resuelve la promesa cuando se completa el signOut
       })
       .catch((error) => {
-        // Manejar errores de desconexión
-        toast.error("Error disconnecting user");
-        console.error(error);
+        showMessageErrorFirebase(error);
         reject(error); // Rechaza la promesa si hay un error
       });
   });
 }
 
+// Proveedor de Facebook
 const providerFacebook = new FacebookAuthProvider();
 
-export async function signInWithFacebook(): Promise<User | null> {
-  // Si te logeas te inpide registrarte
+// Iniciar sesión con Facebook
+export async function signInWithFacebook() {
+  // Si esta logeado no se puede registrar
   if (isLogged()) {
     toast.error("You are already logged in");
-    return null;
+    return;
   }
+  // Nos logeamos con el proveedor de Facebook
   signInWithPopup(auth, providerFacebook)
     .then((result) => {
       toast.success(
@@ -170,12 +137,8 @@ export async function signInWithFacebook(): Promise<User | null> {
           Welcome <b>{result.user.displayName}</b>!
         </span>
       );
-      return result.user;
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error(errorCode, errorMessage);
+      showMessageErrorFirebase(error);
     });
-  return null;
 }

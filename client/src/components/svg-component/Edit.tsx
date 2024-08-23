@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { changeOptionsUser } from "@/scripts/firebase-users";
+import { changeOptionsUser } from "@/scripts/firebase-options-users";
 import { useContext } from "react";
 import { UserContext } from "@/App";
 import { type EditType } from "types/types";

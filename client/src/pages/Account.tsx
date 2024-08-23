@@ -6,17 +6,15 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { UserContext } from "@/App";
-import { getProvider } from "@/scripts/firebase-users";
 import Button from "@/components/reusable/Buuton";
+import { getProvider } from "@/scripts/firebase-config";
 import "@/styles/main-account.css";
 
 const Account = () => {
   const navigate = useNavigate();
   const user = useContext(UserContext);
 
-  if (!user && location.pathname === "/account") {
-    navigate("/");
-  }
+  if (!user && location.pathname === "/account") navigate("/");
 
   const [configUser, setConfigUser] = useState<ConfigUser>({
     user: "",
@@ -27,13 +25,10 @@ const Account = () => {
   });
   const [inputsState, setInputsState] = useState([false, false, false]);
 
-  const firebase_user = useContext(UserContext);
   const manejarClickSVG = (index: number) => {
     if (
       user &&
-      firebase_user?.providerData.some(
-        (provider) => provider.providerId !== "password"
-      )
+      user?.providerData.some((provider) => provider.providerId !== "password")
     ) {
       toast.error(
         `The user authenticated with ${getProvider(
@@ -131,7 +126,7 @@ const Account = () => {
                 state={inputsState[1]}
               />
             </li>
-            <li>
+            {/* <li>
               Phone
               <input
                 type="text"
@@ -151,7 +146,7 @@ const Account = () => {
                 index={2}
                 state={inputsState[2]}
               />
-            </li>
+            </li> */}
           </ul>
           {user?.email && (
             <Button id="delate-user" event={handleDelateUser}>

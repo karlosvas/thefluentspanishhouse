@@ -14,8 +14,9 @@ import ShowPassword from "@/components/reusable/ShowPassword";
 import { UserContext } from "@/App";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
-import { getProvider, resetPassword } from "@/scripts/firebase-users";
+import { resetPassword } from "@/scripts/firebase-options-users";
 import "@/styles/modal-auth.css";
+import { getProvider } from "@/scripts/firebase-config";
 
 const Auth = () => {
   const [showModal, setShowModal] = useState(false);
@@ -36,48 +37,25 @@ const Auth = () => {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isRegister = typeLoginRegisterRef.current?.textContent === "Register";
-    try {
-      if (isRegister) await localRegister(ID.email, ID.password, ID.username);
-      else await localSignin(ID.email, ID.password);
-      toggleFormType(showModal, setShowModal);
-    } catch (error) {
-      const firebaseError = error as { code?: string };
-      const errorMessage =
-        isRegister && firebaseError.code === "auth/email-already-in-use"
-          ? "The email address is already in use. Please try logging in. ❌"
-          : !isRegister && firebaseError.code === "auth/invalid-credential"
-          ? "You are not registered"
-          : "An error occurred";
-      toast.error(errorMessage);
-    }
+    if (isRegister) await localRegister(ID.email, ID.password, ID.username);
+    else await localSignin(ID.email, ID.password);
+    toggleFormType(showModal, setShowModal);
     setID({ username: "", password: "", email: "" });
   };
 
   const handleGoogleAuth = async () => {
-    try {
-      await signInWithGoogle();
-      toggleFormType(showModal, setShowModal);
-    } catch (error) {
-      toast.error("An error occurred with Google authentication");
-    }
+    await signInWithGoogle();
+    toggleFormType(showModal, setShowModal);
   };
 
   const handleFacebookAuth = async () => {
-    try {
-      await signInWithFacebook();
-      toggleFormType(showModal, setShowModal);
-    } catch (error) {
-      toast.error("An error occurred with Google authentication");
-    }
+    await signInWithFacebook();
+    toggleFormType(showModal, setShowModal);
   };
 
   const handleLoginOrLogout = async () => {
-    try {
-      if (isLogged()) await signOutUser();
-      else toggleFormType(showModal, setShowModal, "login", setFormType);
-    } catch (error) {
-      toast.error("An error occurred with authentication");
-    }
+    if (isLogged()) await signOutUser();
+    else toggleFormType(showModal, setShowModal, "login", setFormType);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -88,6 +66,7 @@ const Auth = () => {
   const forgotPasword = () => {
     if (
       user &&
+      user.email &&
       user.providerData.some((provider) => provider.providerId !== "password")
     ) {
       toast(
@@ -99,10 +78,10 @@ const Auth = () => {
           icon: "🔔",
         }
       );
-      return;
+      resetPassword(user.email);
+    } else {
+      toast.error("You must be logged in to reset your password");
     }
-    if (user?.email) resetPassword(user?.email);
-    else toast.error("You must be logged in to reset your password");
   };
 
   function handleSusribeChange() {
@@ -116,6 +95,7 @@ const Auth = () => {
       toggleFormType(showModal, setShowModal);
     }
   }
+
   return (
     <div className="auth">
       <Button id="sign-in" event={handleLoginOrLogout}>

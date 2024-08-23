@@ -85,13 +85,10 @@ header {
       button:hover {
         color: var(--primary-black);
       }
-      #register {
+      #register,
+      #sign-in {
         border: 2px solid transparent;
         transition: all 0.3s;
-      }
-      #signIn {
-        transition: all 0.3s;
-        border: 2px solid transparent;
       }
     }
     .nav-icons {

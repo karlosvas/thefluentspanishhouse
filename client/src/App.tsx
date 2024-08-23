@@ -9,12 +9,12 @@ import Info from "@/pages/Info";
 import Header from "@/layouts/Header";
 import Footer from "@/layouts/Footer";
 import { createContext, useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
 import Newsetler from "@/pages/Newsletter";
 import CallbackVerify from "@/pages/CallbackVerify";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import SingleTheme from "@/components/header-components/SingleTheme";
 import Contact from "@/pages/Contact";
+import { Toaster } from "react-hot-toast";
 
 export const UserContext = createContext<User | null>(null);
 
@@ -38,7 +38,7 @@ const App = () => {
 
   // Listener que verifica si el usuario está autenticado
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
       setLoading(true);
     });

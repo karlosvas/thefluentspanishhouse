@@ -15,7 +15,6 @@ export const toggleFormType = (
 ) => {
   if (type && setFormType) setFormType(type);
   toggleModal(showModal, setShowModal);
-  handleScroll(!showModal);
 };
 
 export const handleScroll = (showModal: boolean) => {

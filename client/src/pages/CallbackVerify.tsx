@@ -6,42 +6,43 @@ import {
 } from "react-router-dom";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import {
-  changeOptionsEmail,
+  changeOptionsUserEmail,
   delateUserFirebase,
-} from "@/scripts/firebase-users";
+} from "@/scripts/firebase-options-users";
 import toast from "react-hot-toast";
 import ShowPassword from "@/components/reusable/ShowPassword";
 import { UserContext } from "@/App";
+import { showMessageErrorFirebase } from "@/scripts/firebase-config";
 
 export const CallbackVerify = () => {
+  // Repuesta del usuario
   const [response, setResponse] = useState("");
-
+  // Datos del formulario
   const [ID, setID] = useState({
     username: "",
     password: "",
     email: "",
   });
 
+  // Navegar entre rutas
   const navigate: NavigateFunction = useNavigate();
-
   const location = useLocation();
   const { email, del } = location.state || {};
   const newEmail = email;
 
+  // Usuario actual
   const user = useContext(UserContext);
 
+  // Enviar datos para verificar email
   async function submitDataVerifyEmail(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (newEmail) {
-      try {
-        await changeOptionsEmail(ID.password, navigate, newEmail, user);
-      } catch (error) {
-        toast.error(
-          "An unexpected error occurred, make sure you wrote the password correctly"
-        );
-      }
-    } else {
-      navigate("/404");
+    try {
+      // Si el usuario y el nuevo email existen se cambia el email
+      if (user && newEmail)
+        await changeOptionsUserEmail(ID.password, navigate, newEmail, user);
+      else throw new Error();
+    } catch (error) {
+      showMessageErrorFirebase(error);
     }
   }
 
@@ -52,17 +53,17 @@ export const CallbackVerify = () => {
   async function submitDelateUser() {
     if (response !== "DELETE ACCOUNT")
       return toast.error("You must type DELETE ACCOUNT to proceed");
-
     try {
-      await delateUserFirebase(user, ID.password);
+      // Si el usuario existe se elimina
+      if (user) await delateUserFirebase(user, ID.password);
+      else throw new Error();
     } catch (error) {
-      console.error(error);
-      toast.error(
-        "An unexpected error occurred, make sure you wrote the password correctly"
-      );
+      showMessageErrorFirebase(error);
     }
+    // Reiniciamos el formulario
     setResponse("");
     setID({ ...ID, password: "" });
+    // Redirigimos al usuario a la página principal después de 10 segundos
     setTimeout(() => {
       navigate("/");
     }, 10000);

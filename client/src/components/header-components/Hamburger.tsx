@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Profile from "./Profile";
 import MainNav from "./MainNav";
 import { handleScroll } from "@/scripts/modal";
@@ -6,11 +6,13 @@ import { useLocation } from "react-router-dom";
 import Backdrop from "@/components/reusable/Backdrop";
 import { type ThemeProps } from "types/types";
 import "@/styles/hamburger.css";
+import { UserContext } from "@/App";
 
 const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
   const [showModal, setShowModal] = useState(false);
   const [closing, setClosing] = useState(false);
   const location = useLocation();
+  const user = useContext(UserContext);
 
   const handleClick = () => {
     if (showModal) {
@@ -35,6 +37,16 @@ const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
     }
     handleScroll(false);
   }, [location]);
+
+  useEffect(() => {
+    if (user) {
+      if (!user.displayName) {
+        setTimeout(() => {
+          handleClick();
+        }, 800);
+      }
+    }
+  }, [user]);
 
   return (
     <>
