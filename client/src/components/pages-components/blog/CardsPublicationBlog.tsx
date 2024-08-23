@@ -1,11 +1,11 @@
 import { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import CardPlaceholder from "./PlaceHolder";
-import Button from "../../reusable/Buuton";
-import { UserContext } from "../../../App";
-import { CardsPublicationBlogProps } from "../../../../types/types";
-import ButtonClose from "../../reusable/ButtonClose";
-import { delatePublication } from "../../../scripts/render-data";
+import CardPlaceholder from "./CardPlaceholder";
+import Button from "@/components/reusable/Buuton";
+import { UserContext } from "@/App";
+import { CardsPublicationBlogProps } from "types/types";
+import ButtonClose from "@/components/reusable/ButtonClose";
+import { delatePublication } from "@/scripts/render-data";
 import toast from "react-hot-toast";
 
 const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({

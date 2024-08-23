@@ -1,4 +1,4 @@
-import { url_api } from "../constants/global";
+import { url_api } from "@/constants/global";
 import Helper from "./helper";
 import toast from "react-hot-toast";
 import { FormEvent } from "react";
@@ -7,7 +7,7 @@ import {
   type SubscriberType,
   type Comment,
   type NoteType,
-} from "../../types/types";
+} from "types/types";
 
 const app = Helper();
 

@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Buuton from "../../reusable/Buuton";
-import { handleSubmitSubscription } from "../../../scripts/render-data";
+import Buuton from "@/components/reusable/Buuton";
+import { handleSubmitSubscription } from "@/scripts/render-data";
 import toast from "react-hot-toast";
-import ButtonClose from "../../reusable/ButtonClose";
-import Backdrop from "../../reusable/Backdrop";
-import {
-  type FormSuscriberProps,
-  type SubscriberType,
-} from "../../../../types/types";
+import ButtonClose from "@/components/reusable/ButtonClose";
+import Backdrop from "@/components/reusable/Backdrop";
+import { type FormSuscriberProps, type SubscriberType } from "types/types";
 
 const FormSuscribe: React.FC<FormSuscriberProps> = ({
   closing,

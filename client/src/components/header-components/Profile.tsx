@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import Auth from "./Auth";
-import ImgUser from "../svg-component/ImgUser";
-import "../../styles/profileicon.css";
-import { UserContext } from "../../App";
+import ImgUser from "@/components/svg-component/ImgUser";
+import "@/styles/profileicon.css";
+import { UserContext } from "@/App";
 
 const Profile = () => {
   const [imgLoad, setImgLoad] = useState(false);

@@ -1,6 +1,6 @@
-import Footer from "../layouts/Footer";
-import SingleTheme from "../components/header-components/SingleTheme";
-import "../styles/info.css";
+import Footer from "@/layouts/Footer";
+import SingleTheme from "@/components/header-components/SingleTheme";
+import "@/styles/info.css";
 
 const Info = () => {
   return (

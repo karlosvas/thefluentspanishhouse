@@ -7,15 +7,15 @@ import {
   localRegister,
   localSignin,
   signInWithFacebook,
-} from "../../scripts/oauth2-0";
-import { toggleFormType } from "../../scripts/modal";
-import Button from "../reusable/Buuton";
-import ShowPassword from "../reusable/ShowPassword";
-import { UserContext } from "../../App";
-import ButtonClose from "../reusable/ButtonClose";
-import Backdrop from "../reusable/Backdrop";
-import { getProvider, resetPassword } from "../../scripts/firebase-users";
-import "../../styles/modal-auth.css";
+} from "@/scripts/oauth2-0";
+import { toggleFormType } from "@/scripts/modal";
+import Button from "@/components/reusable/Buuton";
+import ShowPassword from "@/components/reusable/ShowPassword";
+import { UserContext } from "@/App";
+import ButtonClose from "@/components/reusable/ButtonClose";
+import Backdrop from "@/components/reusable/Backdrop";
+import { getProvider, resetPassword } from "@/scripts/firebase-users";
+import "@/styles/modal-auth.css";
 
 const Auth = () => {
   const [showModal, setShowModal] = useState(false);

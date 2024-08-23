@@ -1,6 +1,6 @@
-import ImgUser from "../../svg-component/ImgUser";
+import ImgUser from "@/components/svg-component/ImgUser";
 import { useState } from "react";
-import { type Comment } from "../../../../types/types";
+import { type Comment } from "types/types";
 
 const CommentCard = ({ comments }: { comments: Comment[] }) => {
   const [imgError, setImgError] = useState(false);

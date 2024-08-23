@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import Hamburger from "../components/header-components/Hamburger";
-import Auth from "../components/header-components/Auth";
-import Exit from "../components/svg-component/Exit";
-import MainNav from "../components/header-components/MainNav";
-import Theme from "../components/svg-component/Theme";
-import Settings from "../components/svg-component/Settings";
-import "../styles/header.css";
+import Hamburger from "@/components/header-components/Hamburger";
+import Auth from "@/components/header-components/Auth";
+import Exit from "@/components/svg-component/Exit";
+import MainNav from "@/components/header-components/MainNav";
+import Theme from "@/components/svg-component/Theme";
+import Settings from "@/components/svg-component/Settings";
+import "@/styles/header.css";
 
 const Header = () => {
   // Estados

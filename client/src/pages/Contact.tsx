@@ -1,11 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import Button from "../components/reusable/Buuton";
-import { submitNote } from "../scripts/render-data";
-import { type NoteType } from "../../types/types";
-import { isLogged } from "../scripts/oauth2-0";
+import Button from "@/components/reusable/Buuton";
+import { submitNote } from "@/scripts/render-data";
+import { isLogged } from "@/scripts/oauth2-0";
 import toast from "react-hot-toast";
-import { UserContext } from "../App";
-import "../styles/main-contact.css";
+import { UserContext } from "@/App";
+import { type NoteType } from "types/types";
+import "@/styles/main-contact.css";
 
 const ContactForm = () => {
   const user = useContext(UserContext);

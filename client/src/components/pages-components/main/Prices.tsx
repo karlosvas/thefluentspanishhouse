@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Button from "../../reusable/Buuton";
-import FormSuscribe from "../../pages-components/main/FormSuscribe";
-import { handleChangeModal } from "../../../scripts/modal";
+import Button from "@/components/reusable/Buuton";
+import FormSuscribe from "@/components/pages-components/main/FormSuscribe";
+import { handleChangeModal } from "@/scripts/modal";
 
 const Prices = () => {
   const [showModalSuscribe, setShowModalSuscribe] = useState(false);

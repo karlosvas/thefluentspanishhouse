@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import Profile from "./Profile";
 import MainNav from "./MainNav";
-import { handleScroll } from "../../scripts/modal";
-import { type ThemeProps } from "../../../types/types";
+import { handleScroll } from "@/scripts/modal";
 import { useLocation } from "react-router-dom";
-import "../../styles/hamburger.css";
-import Backdrop from "../reusable/Backdrop";
+import Backdrop from "@/components/reusable/Backdrop";
+import { type ThemeProps } from "types/types";
+import "@/styles/hamburger.css";
 
 const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
   const [showModal, setShowModal] = useState(false);

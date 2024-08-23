@@ -13,6 +13,21 @@ export interface CardsPublicationBlogProps {
   loading: boolean;
 }
 
+export interface PlaceholderPublicationsProps {
+  imgClass: string;
+}
+
+export interface ShowPasswordProps {
+  password: string;
+  setID: Dispatch<
+    SetStateAction<{
+      username: string;
+      password: string;
+      email: string;
+    }>
+  >;
+}
+
 export interface ButtonProps {
   id?: string;
   type?: "submit";

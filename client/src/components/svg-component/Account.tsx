@@ -1,7 +1,7 @@
-import { isLogged } from "../../scripts/oauth2-0";
+import { isLogged } from "@/scripts/oauth2-0";
 import toast from "react-hot-toast";
-import { type ChildrenType } from "../../../types/types";
 import { useNavigate } from "react-router-dom";
+import { type ChildrenType } from "types/types";
 
 export const Account: React.FC<ChildrenType> = ({ children }) => {
   const navigate = useNavigate();

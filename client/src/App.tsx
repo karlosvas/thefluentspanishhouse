@@ -1,20 +1,20 @@
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
-import Main from "./pages/Main";
-import Publications from "./pages/Publications";
-import Error from "./pages/404";
-import Account from "./pages/Account";
-import Blog from "./pages/Blog";
-import AboutMe from "./pages/AboutMe";
-import Info from "./pages/Info";
-import Header from "./layouts/Header";
-import Footer from "./layouts/Footer";
+import Main from "@/pages/Main";
+import Publications from "@/pages/Publications";
+import Error from "@/pages/404";
+import Account from "@/pages/Account";
+import Blog from "@/pages/Blog";
+import AboutMe from "@/pages/AboutMe";
+import Info from "@/pages/Info";
+import Header from "@/layouts/Header";
+import Footer from "@/layouts/Footer";
 import { createContext, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
-import Newsetler from "./pages/Newsletter";
-import CallbackVerify from "./pages/CallbackVerify";
+import Newsetler from "@/pages/Newsletter";
+import CallbackVerify from "@/pages/CallbackVerify";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-import SingleTheme from "./components/header-components/SingleTheme";
-import Contact from "./pages/Contact";
+import SingleTheme from "@/components/header-components/SingleTheme";
+import Contact from "@/pages/Contact";
 
 export const UserContext = createContext<User | null>(null);
 
@@ -68,6 +68,7 @@ const App = () => {
       </UserContext.Provider>
     );
   }
+  return null;
 };
 
 export default App;

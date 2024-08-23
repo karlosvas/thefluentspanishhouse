@@ -1,4 +1,4 @@
-import { type ThemeProps } from "../../../types/types";
+import { type ThemeProps } from "types/types";
 
 const Theme: React.FC<ThemeProps> = ({ theme, setTheme, children }) => {
   const toggleThemeSVG = () => {

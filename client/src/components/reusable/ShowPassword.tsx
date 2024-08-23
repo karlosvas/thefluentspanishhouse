@@ -1,16 +1,6 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
+import { type ShowPasswordProps } from "types/types";
 import "../../styles/show-password.css";
-
-interface ShowPasswordProps {
-  password: string;
-  setID: Dispatch<
-    SetStateAction<{
-      username: string;
-      password: string;
-      email: string;
-    }>
-  >;
-}
 
 const ShowPassword: React.FC<ShowPasswordProps> = ({ password, setID }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
@@ -22,7 +12,7 @@ const ShowPassword: React.FC<ShowPasswordProps> = ({ password, setID }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const { value } = event.target;
-    setID((prevID) => ({ ...prevID, password: value }));
+    setID((prevID: ShowPasswordProps) => ({ ...prevID, password: value }));
   };
 
   return (

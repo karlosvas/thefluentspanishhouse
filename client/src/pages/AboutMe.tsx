@@ -1,6 +1,6 @@
 import { useState } from "react";
-import PlaceholderImg from "../components/reusable/PlaceholderImg";
-import "../styles/main-aboutme.css";
+import PlaceholderImg from "@/components/reusable/PlaceholderImg";
+import "@/styles/main-aboutme.css";
 
 const AboutMe = () => {
   const [imageLoaded, setImageLoaded] = useState(false);

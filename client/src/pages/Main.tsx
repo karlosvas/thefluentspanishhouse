@@ -1,7 +1,7 @@
-import Prices from "../components/pages-components/main/Prices";
-import PlaceholderImg from "../components/reusable/PlaceholderImg";
+import Prices from "@/components/pages-components/main/Prices";
+import PlaceholderImg from "@/components/reusable/PlaceholderImg";
 import { useState } from "react";
-import "../styles/main.css";
+import "@/styles/main.css";
 
 const Main = () => {
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);

@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Theme from "../svg-component/Theme";
-import Account from "../svg-component/Account";
-import { type ThemeProps } from "../../../types/types";
+import Theme from "@/components/svg-component/Theme";
+import Account from "@/components/svg-component/Account";
+import { type ThemeProps } from "types/types";
 
 const MainNav: React.FC<ThemeProps> = ({ theme, setTheme }) => {
   const location = useLocation();

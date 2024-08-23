@@ -1,4 +1,4 @@
-import { ButtonCloseProps } from "../../../types/types";
+import { ButtonCloseProps } from "types/types";
 
 const ButtonClose: React.FC<ButtonCloseProps> = ({
   handleSusribeChange,

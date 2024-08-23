@@ -1,8 +1,5 @@
 import Placeholder from "react-bootstrap/Placeholder";
-
-interface PlaceholderPublicationsProps {
-  imgClass: string;
-}
+import { PlaceholderPublicationsProps } from "types/types";
 
 const PlaceholderPublications = ({
   imgClass,

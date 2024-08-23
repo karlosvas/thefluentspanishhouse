@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Theme from "../svg-component/Theme";
-import "../../styles/reusables/singletheme.css";
+import Theme from "@/components/svg-component/Theme";
+import "@/styles/reusables/singletheme.css";
 
 export const SingleTheme = () => {
   // Estados

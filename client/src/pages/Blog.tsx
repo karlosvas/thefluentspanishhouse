@@ -1,10 +1,10 @@
-import CardsPublicationBlog from "../components/pages-components/blog/CardsPublicationBlog";
-import FormPublication from "../components/pages-components/blog/FormPublication";
-import { handleChangeModal } from "../scripts/modal";
+import CardsPublicationBlog from "@/components/pages-components/blog/CardsPublicationBlog";
+import FormPublication from "@/components/pages-components/blog/FormPublication";
+import { handleChangeModal } from "@/scripts/modal";
 import { useEffect, useState } from "react";
-import { loadPublications } from "../scripts/render-data";
-import { type PublicationCardType } from "../../types/types";
-import "../styles/main-blog.css";
+import { loadPublications } from "@/scripts/render-data";
+import { type PublicationCardType } from "types/types";
+import "@/styles/main-blog.css";
 
 const Blog = () => {
   const [showModalPost, setShowModalPost] = useState(false);

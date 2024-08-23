@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Button from "../components/reusable/Buuton";
-import PlaceholderImg from "../components/reusable/PlaceholderImg";
-import "../styles/main-newsettler.css";
+import Button from "@/components/reusable/Buuton";
+import PlaceholderImg from "@/components/reusable/PlaceholderImg";
+import "@/styles/main-newsettler.css";
 
 const Newsletter = () => {
   const [imagesLoaded, setImagesLoaded] = useState({

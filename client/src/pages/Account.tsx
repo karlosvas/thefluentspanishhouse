@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import Profile from "../components/header-components/Profile";
-import Edit from "../components/svg-component/Edit";
-import { ConfigUser } from "../../types/types";
+import Profile from "@/components/header-components/Profile";
+import Edit from "@/components/svg-component/Edit";
+import { ConfigUser } from "types/types";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import { UserContext } from "../App";
-import { getProvider } from "../scripts/firebase-users";
-import Button from "../components/reusable/Buuton";
-import "../styles/main-account.css";
+import { UserContext } from "@/App";
+import { getProvider } from "@/scripts/firebase-users";
+import Button from "@/components/reusable/Buuton";
+import "@/styles/main-account.css";
 
 const Account = () => {
   const navigate = useNavigate();

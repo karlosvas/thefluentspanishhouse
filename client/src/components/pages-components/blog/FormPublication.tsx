@@ -1,16 +1,13 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import {
-  delatePublication,
-  handleSubmitPost,
-} from "../../../scripts/render-data";
-import "../../../styles/uploadfiles.css";
+import { delatePublication, handleSubmitPost } from "@/scripts/render-data";
+import ButtonClose from "@/components/reusable/ButtonClose";
+import Backdrop from "@/components/reusable/Backdrop";
 import {
   type PublicationCardType,
   type FormPublicationProps,
-} from "../../../../types/types";
-import ButtonClose from "../../reusable/ButtonClose";
-import Backdrop from "../../reusable/Backdrop";
+} from "types/types";
+import "@/styles/uploadfiles.css";
 
 const FormPublication: React.FC<FormPublicationProps> = ({
   closing,

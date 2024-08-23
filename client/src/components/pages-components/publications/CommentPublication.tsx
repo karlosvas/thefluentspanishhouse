@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { v4 as uuidv4 } from "uuid";
-import CommentCard from "../blog/CommentCard";
-import { type Comment } from "../../../../types/types";
-import { getComments, postComment } from "../../../scripts/render-data";
-import "../../../styles/comments.css";
-import { UserContext } from "../../../App";
+import CommentCard from "@/components/pages-components/blog/CommentCard";
+import { getComments, postComment } from "@/scripts/render-data";
+import { UserContext } from "@/App";
+import { type Comment } from "types/types";
+import "@/styles/comments.css";
 
 const CommentPublication = () => {
   // Estado de los comentarios actuales, y del Text Area

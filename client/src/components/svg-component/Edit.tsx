@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
-import { type EditType } from "../../../types/types";
-import { changeOptionsUser } from "../../scripts/firebase-users";
+import { changeOptionsUser } from "@/scripts/firebase-users";
 import { useContext } from "react";
-import { UserContext } from "../../App";
+import { UserContext } from "@/App";
+import { type EditType } from "types/types";
 
 const Edit: React.FC<EditType> = ({ commentText, event, index, state }) => {
   const navigate = useNavigate();

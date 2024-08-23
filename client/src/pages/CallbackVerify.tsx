@@ -8,10 +8,10 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import {
   changeOptionsEmail,
   delateUserFirebase,
-} from "../scripts/firebase-users";
+} from "@/scripts/firebase-users";
 import toast from "react-hot-toast";
-import ShowPassword from "../components/reusable/ShowPassword";
-import { UserContext } from "../App";
+import ShowPassword from "@/components/reusable/ShowPassword";
+import { UserContext } from "@/App";
 
 export const CallbackVerify = () => {
   const [response, setResponse] = useState("");

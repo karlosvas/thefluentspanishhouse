@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { isLogged } from "../../scripts/oauth2-0";
+import { isLogged } from "@/scripts/oauth2-0";
 import toast from "react-hot-toast";
 
 export const Settings = () => {
