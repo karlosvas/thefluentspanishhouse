@@ -146,11 +146,16 @@ html.dark {
         }
       }
     }
-    .publication-main > .comments {
-      background-color: var(--primary-black);
-    }
-    .publication-main > .comments > .old-comments > ul > li:hover {
-      color: var(--primary-white);
+    .publication-main {
+      .publication figure {
+        background-color: var(--secondary-black);
+      }
+      .comments {
+        background-color: var(--primary-black);
+        .old-comments > ul > li:hover {
+          color: var(--primary-white);
+        }
+      }
     }
     .main-blog #blog .card-blog {
       background-color: var(--secondary-black);

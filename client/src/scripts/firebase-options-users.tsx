@@ -15,17 +15,16 @@ import { auth, showMessageErrorFirebase } from "./firebase-config";
 export const changeOptionsUser = async (
   commentText: string,
   navigate: NavigateFunction,
-  user: User | null
+  user: User
 ) => {
   // Verificar si el usuario tiene el email verificado
-  if (user && !user.emailVerified) {
+  if (!user.emailVerified) {
     toast.error("Do you need verify your email after change options");
     return;
   }
 
   // Si el usuario tiene un proveedor de autenticación de email y contraseña
   if (
-    user &&
     user.providerData.some((provider) => provider.providerId === "password")
   ) {
     toast.loading("Updating user...");
@@ -34,6 +33,7 @@ export const changeOptionsUser = async (
     // Verificar si el comentario es un email
     if (RAGEXEMAIL.test(commentText)) {
       const newEmail: string = commentText;
+      // Pasamos al usuario a la página de verificación
       navigate("/verify", { state: { email: newEmail } });
     } else {
       // Si el comentario no es un email, se actualiza el nombre de usuario
@@ -41,6 +41,7 @@ export const changeOptionsUser = async (
       toast.dismiss();
       try {
         await updateProfile(user, { displayName: newUserName });
+        navigate("/account");
         toast.success("User updated successfully");
       } catch (error) {
         showMessageErrorFirebase(error);
@@ -60,6 +61,7 @@ async function reutenticateFirebase(user: User, password: string) {
   }
 }
 
+// Cambiar opciones de usuario de email
 export const changeOptionsUserEmail = async (
   password: string,
   navigate: NavigateFunction,
@@ -83,13 +85,13 @@ export const changeOptionsUserEmail = async (
       icon: "🔔",
     }
   );
-  // Debolbemos a el usuario a la página de inicio
+  // Devolbemos a el usuario a la página de inicio
   setTimeout(() => {
     navigate("/");
   }, 10000);
 };
 
-export function resetPassword(email: string) {
+export function resetPassword(email: string, navigate: NavigateFunction) {
   toast.loading("Sending...");
   sendPasswordResetEmail(auth, email)
     .then(() => {
@@ -98,13 +100,21 @@ export function resetPassword(email: string) {
         duration: 10000,
         icon: "🔔",
       });
+      // Devolbemos a el usuario a la página de inicio
+      setTimeout(() => {
+        navigate("/");
+      }, 10000);
     })
     .catch((error) => {
       showMessageErrorFirebase(error);
     });
 }
 
-export async function delateUserFirebase(user: User, password: string) {
+export async function delateUserFirebase(
+  user: User,
+  password: string,
+  navigate: NavigateFunction
+) {
   try {
     // Reautenticar usuario para eliminarlo porque firebase lo requiere
     await reutenticateFirebase(user, password);
@@ -114,6 +124,10 @@ export async function delateUserFirebase(user: User, password: string) {
       duration: 10000,
       icon: "❤️‍🩹",
     });
+    // Devolbemos a el usuario a la página de inicio
+    setTimeout(() => {
+      navigate("/");
+    }, 10000);
   } catch (error) {
     showMessageErrorFirebase(error);
   }

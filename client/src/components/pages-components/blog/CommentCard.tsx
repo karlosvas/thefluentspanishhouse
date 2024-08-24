@@ -26,6 +26,7 @@ const CommentCard = ({ comments }: { comments: Comment[] }) => {
               </small>
             </section>
             <p>{comment.data}</p>
+            <p>Likes: {comment.likes}</p>
           </div>
         </li>
       ))}

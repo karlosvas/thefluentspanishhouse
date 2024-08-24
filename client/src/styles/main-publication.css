@@ -1,10 +1,23 @@
-.publicationMain {
+.publication-main {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100vw;
   .publication {
+    height: fit-content;
+    width: 50%;
+    padding: 20px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    figure {
+      margin: 0;
+      background-color: var(--secondary-white);
+      width: 100vw;
+    }
     .img-publication {
       height: 40vh;
       min-width: 20vw;
@@ -14,14 +27,6 @@
       border-radius: 5px;
       margin: auto;
     }
-    height: fit-content;
-    width: 50%;
-    padding: 20px;
-    margin-bottom: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     h2,
     .title-ph {
       width: 90%;
@@ -35,12 +40,6 @@
       align-self: center;
       text-align: center;
     }
-    figure {
-      margin: 0;
-      background-color: var(--secondary-white);
-      width: 100vw;
-    }
-
     p,
     .parragraf-ph {
       font-family: "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif;
@@ -70,12 +69,12 @@
 
 /* Moviles */
 @media only screen and (width <= 766px) {
-  .publicationMain {
+  .publication-main {
     .publication {
       width: 100%;
       h2,
       .img-publication {
-        width: 70vw;
+        width: 100vw;
       }
       .title-ph {
         margin: 25px 0;

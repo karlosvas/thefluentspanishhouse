@@ -81,6 +81,7 @@ export interface Comment {
   email: string;
   img: string | null;
   data: string;
+  likes: number;
 }
 
 export interface AuthProps {

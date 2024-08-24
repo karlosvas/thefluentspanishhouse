@@ -34,6 +34,7 @@ const CommentPublication = () => {
         email: user?.email || "Anonyme@gmail.com",
         img: user?.photoURL || "",
         data: newComment,
+        likes: 0,
       };
 
       const updatedComments = [...comments, newCommentData];

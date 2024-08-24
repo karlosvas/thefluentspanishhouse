@@ -10,7 +10,7 @@ const Edit: React.FC<EditType> = ({ commentText, event, index, state }) => {
 
   return (
     <>
-      {state ? (
+      {state && user ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

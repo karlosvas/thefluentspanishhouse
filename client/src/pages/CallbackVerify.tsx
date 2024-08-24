@@ -46,28 +46,21 @@ export const CallbackVerify = () => {
     }
   }
 
-  useEffect(() => {
-    if (!email) navigate("/404");
-  }, []);
-
   async function submitDelateUser() {
     if (response !== "DELETE ACCOUNT")
       return toast.error("You must type DELETE ACCOUNT to proceed");
     try {
       // Si el usuario existe se elimina
-      if (user) await delateUserFirebase(user, ID.password);
+      if (user) await delateUserFirebase(user, ID.password, navigate);
       else throw new Error();
     } catch (error) {
       showMessageErrorFirebase(error);
     }
-    // Reiniciamos el formulario
-    setResponse("");
-    setID({ ...ID, password: "" });
-    // Redirigimos al usuario a la página principal después de 10 segundos
-    setTimeout(() => {
-      navigate("/");
-    }, 10000);
   }
+
+  useEffect(() => {
+    if (!email) navigate("/404");
+  }, [email, navigate]);
 
   return (
     <div className="error">

@@ -1,28 +1,28 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Profile from "@/components/header-components/Profile";
 import Edit from "@/components/svg-component/Edit";
-import { ConfigUser } from "types/types";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { UserContext } from "@/App";
 import Button from "@/components/reusable/Buuton";
 import { getProvider } from "@/scripts/firebase-config";
+import { type ConfigUser } from "types/types";
 import "@/styles/main-account.css";
 
 const Account = () => {
   const navigate = useNavigate();
   const user = useContext(UserContext);
 
+  const [configUser, setConfigUser] = useState<ConfigUser>({
+    user: user?.uid || "",
+    displayName: user?.displayName || "",
+    email: user?.email || "",
+    password: "",
+    phone: user?.phoneNumber || "",
+  });
+
   if (!user && location.pathname === "/account") navigate("/");
 
-  const [configUser, setConfigUser] = useState<ConfigUser>({
-    user: "",
-    displayName: "",
-    email: "",
-    password: "",
-    phone: "",
-  });
   const [inputsState, setInputsState] = useState([false, false, false]);
 
   const manejarClickSVG = (index: number) => {
@@ -54,21 +54,6 @@ const Account = () => {
       [name]: value,
     }));
   };
-
-  useEffect(() => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setConfigUser({
-          user: user.uid,
-          displayName: user.displayName || "",
-          email: user.email || "",
-          password: "",
-          phone: user.phoneNumber || "",
-        });
-      }
-    });
-  }, []);
 
   const handleDelateUser = () => {
     const email = user?.email;

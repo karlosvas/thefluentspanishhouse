@@ -8,6 +8,7 @@ const commentSchema = new Schema({
   email: { type: String, required: true },
   img: { type: String, required: false },
   data: { type: String, required: true },
+  likes: { type: Number, required: true },
 });
 export const modelComment = model("Comment", commentSchema, "comments");
 

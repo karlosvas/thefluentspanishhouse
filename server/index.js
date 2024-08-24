@@ -20,7 +20,7 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 const allowedOrigins = [
   process.env.URL_WEB,
   process.env.URL_WEB_TEST,
-  "http://localhost:5173",
+  "http://localhost:5174",
 ];
 
 app.use(
@@ -98,8 +98,9 @@ app.get("/api/publications/:id", async (req, res) => {
 // <--------------- POST --------------->
 // Agregar comentarios
 app.post("/api/comments", async (req, res) => {
-  const { id_comment, id_publication, id_user, email, img, data } = req.body;
-  if (!id_comment || !id_user || !email || !data)
+  const { id_comment, id_publication, id_user, email, img, data, likes } =
+    req.body;
+  if (!id_comment || id_publication || !id_user || !email || !data || !likes)
     return res.status(400).json({ error: "Todos los campos son requeridos" });
   try {
     const newComment = new modelComment({
@@ -110,6 +111,7 @@ app.post("/api/comments", async (req, res) => {
       email,
       img,
       data,
+      likes,
     });
     await newComment.save();
     res.status(201).json(newComment);
