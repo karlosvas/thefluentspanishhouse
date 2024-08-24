@@ -46,7 +46,7 @@ await connectDB();
 app.get("/api/comments/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const comments = await modelComment.find({ id_publication: id });
+    const comments = await modelComment.find({ id_comment: id });
     res.json(comments);
   } catch (error) {
     res.status(500).json({ error: "Error al obtener los comentarios" });
@@ -98,15 +98,13 @@ app.get("/api/publications/:id", async (req, res) => {
 // <--------------- POST --------------->
 // Agregar comentarios
 app.post("/api/comments", async (req, res) => {
-  const { id_comment, id_publication, id_user, email, img, data, likes } =
-    req.body;
-  if (!id_comment || id_publication || !id_user || !email || !data || !likes)
+  const { id_comment, id_user, email, img, data, likes } = req.body;
+  if (!id_comment || !id_user || !email || !data)
     return res.status(400).json({ error: "Todos los campos son requeridos" });
   try {
     const newComment = new modelComment({
       _id: new Types.ObjectId(),
       id_comment,
-      id_publication,
       id_user,
       email,
       img,

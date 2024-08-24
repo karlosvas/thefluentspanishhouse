@@ -1,4 +1,5 @@
 import ImgUser from "@/components/svg-component/ImgUser";
+import Likes from "@/components/svg-component/Likes";
 import { useState } from "react";
 import { type Comment } from "types/types";
 
@@ -25,8 +26,10 @@ const CommentCard = ({ comments }: { comments: Comment[] }) => {
                 {comment.email.slice(0, comment.email.indexOf("@"))}
               </small>
             </section>
-            <p>{comment.data}</p>
-            <p>Likes: {comment.likes}</p>
+            <div className="comments-content">
+              <p>{comment.data}</p>
+              <Likes likes={comment.likes} />
+            </div>
           </div>
         </li>
       ))}

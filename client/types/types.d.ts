@@ -74,9 +74,12 @@ interface OptionalClass {
   optionalClass?: string;
 }
 
+export interface LikesProps {
+  likes: number;
+}
+
 export interface Comment {
   id_comment: string;
-  id_publication: string;
   id_user: string;
   email: string;
   img: string | null;

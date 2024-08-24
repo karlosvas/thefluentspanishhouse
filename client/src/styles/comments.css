@@ -3,7 +3,8 @@
   padding: 20px 0;
   padding-left: 25%;
   background-color: var(--secondary-white);
-  h3 {
+
+  u h3 {
     padding-left: 10px;
   }
   textarea {
@@ -27,9 +28,30 @@
       list-style: none;
       border-top: 1px solid #ddd;
       width: 80%;
-      p {
-        max-width: 70%;
-        text-wrap: pretty;
+      .comments-content {
+        position: relative;
+        width: 100%;
+        p {
+          width: 95%;
+          overflow-wrap: break-word;
+          word-break: break-all;
+          hyphens: auto;
+          overflow: hidden;
+        }
+        #likes {
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          bottom: 0;
+          right: 0;
+          margin-top: 30px;
+          width: 50px;
+          height: 30px;
+          svg {
+            margin-right: 10px;
+          }
+        }
       }
     }
     li:hover {
@@ -58,31 +80,37 @@
       }
     }
   }
-
   button {
     color: var(--primary-white);
   }
-
   .old-comments > h3 {
     padding-top: 50px;
   }
 }
 
+/* Portátiles y tablets */
+@media only screen and (width <= 1200px) and (width >= 768px) {
+  .comments {
+    ul li .comments-content {
+      p {
+        width: 85%;
+      }
+    }
+  }
+}
 /* Moviles */
 @media only screen and (width <= 767px) {
   .comments {
     padding-left: 10px;
-    ul > li {
-      width: 100%;
-      div {
-        section {
-          padding-right: 0;
-        }
-        p {
-          word-break: break-word;
-          overflow-wrap: break-word;
-          padding-right: 20px;
-        }
+    ul li .comments-content {
+      p {
+        margin-bottom: 35px;
+      }
+    }
+    ul {
+      width: 90vw;
+      li {
+        width: 100%;
       }
     }
   }

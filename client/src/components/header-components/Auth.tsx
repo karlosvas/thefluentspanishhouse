@@ -17,6 +17,7 @@ import Backdrop from "@/components/reusable/Backdrop";
 import { resetPassword } from "@/scripts/firebase-options-users";
 import "@/styles/modal-auth.css";
 import { getProvider } from "@/scripts/firebase-config";
+import { NavigateFunction, useNavigate } from "react-router";
 
 const Auth = () => {
   const [showModal, setShowModal] = useState(false);
@@ -32,6 +33,8 @@ const Auth = () => {
     password: "",
     email: "",
   });
+
+  const navigate: NavigateFunction = useNavigate();
 
   // Enviar formulario par registrarse o logearse
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -78,7 +81,7 @@ const Auth = () => {
           icon: "🔔",
         }
       );
-      resetPassword(user.email);
+      resetPassword(user.email, navigate);
     } else {
       toast.error("You must be logged in to reset your password");
     }

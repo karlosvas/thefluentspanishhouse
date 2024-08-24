@@ -3,7 +3,6 @@ import { Schema, model } from "mongoose";
 const commentSchema = new Schema({
   _id: { type: Schema.Types.ObjectId, required: true },
   id_comment: { type: String, required: true },
-  id_publication: { type: String, required: true },
   id_user: { type: String, required: true },
   email: { type: String, required: true },
   img: { type: String, required: false },

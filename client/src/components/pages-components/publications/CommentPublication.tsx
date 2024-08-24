@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { v4 as uuidv4 } from "uuid";
 import CommentCard from "@/components/pages-components/blog/CommentCard";
 import { getComments, postComment } from "@/scripts/render-data";
 import { UserContext } from "@/App";
@@ -26,10 +25,9 @@ const CommentPublication = () => {
   // Cada vez que se envia el formulario
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (newComment.trim() !== "") {
+    if (newComment.trim() !== "" && id) {
       const newCommentData: Comment = {
-        id_comment: uuidv4().toString(),
-        id_publication: id || "",
+        id_comment: id,
         id_user: user?.displayName || "Anonyme",
         email: user?.email || "Anonyme@gmail.com",
         img: user?.photoURL || "",

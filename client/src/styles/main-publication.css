@@ -53,7 +53,7 @@
 
 /* Portátil and tablet */
 @media only screen and (width <= 1200px) and (width > 766px) {
-  .publicationMain {
+  .publication-main {
     .publication {
       width: 80vw;
       .img-publication {
@@ -88,7 +88,7 @@
         }
       }
     }
-    .oldComments {
+    .old-comments {
       svg,
       img {
         min-width: 30px;

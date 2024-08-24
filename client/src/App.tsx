@@ -1,5 +1,4 @@
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
-import Main from "@/pages/Main";
 import Publications from "@/pages/Publications";
 import Error from "@/pages/404";
 import Account from "@/pages/Account";
@@ -15,6 +14,7 @@ import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import SingleTheme from "@/components/header-components/SingleTheme";
 import Contact from "@/pages/Contact";
 import { Toaster } from "react-hot-toast";
+import Main from "./pages/Main";
 
 export const UserContext = createContext<User | null>(null);
 
