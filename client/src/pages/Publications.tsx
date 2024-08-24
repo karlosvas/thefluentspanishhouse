@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
-import UserComments from "@/components/pages-components/publications/CommentPublication";
 import { useEffect, useState } from "react";
 import PlaceholderPublications from "@/components/pages-components/publications/PlaceholderPublication";
 import { loadPublication } from "@/scripts/render-data";
 import { type PublicationCardType, type RouteParams } from "types/types";
 import "@/styles/main-publication.css";
+import CommentsPublication from "@/components/pages-components/publications/CommenstPublication";
 
 const Publications = () => {
   const [publication, setPublication] = useState<PublicationCardType>();
@@ -55,7 +55,7 @@ const Publications = () => {
       ) : (
         <PlaceholderPublications imgClass="img-publication" />
       )}
-      <UserComments />
+      <CommentsPublication />
     </main>
   );
 };

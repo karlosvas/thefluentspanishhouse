@@ -28,6 +28,9 @@
       list-style: none;
       border-top: 1px solid #ddd;
       width: 80%;
+      section {
+        width: 170px;
+      }
       .comments-content {
         position: relative;
         width: 100%;
@@ -43,14 +46,33 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          bottom: 0;
+          top: 45px;
           right: 0;
-          margin-top: 30px;
           width: 50px;
           height: 30px;
-          svg {
-            margin-right: 10px;
-          }
+          transition: all 0.5s ease;
+        }
+        #svg-response {
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          top: 47px;
+          right: 40px;
+          width: 50px;
+          height: 30px;
+          transition: all 0.5s ease;
+        }
+        #trash {
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          top: -25px;
+          right: -25px;
+          width: 50px;
+          height: 30px;
+          transition: all 0.5s ease;
         }
       }
     }
@@ -66,6 +88,9 @@
         height: 30px;
         width: 30px;
         border-radius: 100%;
+      }
+      svg,
+      img {
         margin-right: 10px;
       }
       section {

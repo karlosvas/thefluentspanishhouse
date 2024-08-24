@@ -3,11 +3,15 @@ import { Schema, model } from "mongoose";
 const commentSchema = new Schema({
   _id: { type: Schema.Types.ObjectId, required: true },
   id_comment: { type: String, required: true },
-  id_user: { type: String, required: true },
-  email: { type: String, required: true },
-  img: { type: String, required: false },
+  owner: {
+    uid: { type: String, required: true },
+    email: { type: String, required: true },
+    displayName: { type: String, required: true },
+    photoURL: { type: String, required: false },
+  },
   data: { type: String, required: true },
   likes: { type: Number, required: true },
+  likedBy: { type: [String], required: true },
 });
 export const modelComment = model("Comment", commentSchema, "comments");
 

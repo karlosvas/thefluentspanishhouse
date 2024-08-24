@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import CommentCard from "@/components/pages-components/blog/CommentCard";
+import CommentCard from "@/components/pages-components/publications/CommentCard";
 import { getComments, postComment } from "@/scripts/render-data";
 import { UserContext } from "@/App";
 import { type Comment } from "types/types";
 import "@/styles/comments.css";
 
-const CommentPublication = () => {
+const CommentsPublication = () => {
   // Estado de los comentarios actuales, y del Text Area
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
@@ -25,14 +25,20 @@ const CommentPublication = () => {
   // Cada vez que se envia el formulario
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (newComment.trim() !== "" && id) {
+
+    if (newComment.trim() !== "") {
       const newCommentData: Comment = {
-        id_comment: id,
-        id_user: user?.displayName || "Anonyme",
-        email: user?.email || "Anonyme@gmail.com",
-        img: user?.photoURL || "",
+        _id: "",
+        id_comment: id || "",
+        owner: {
+          uid: user?.uid || "",
+          displayName: user?.displayName || "Anonyme",
+          email: user?.email || "anonyme@gmail.com",
+          photoURL: user?.photoURL || "",
+        },
         data: newComment,
         likes: 0,
+        likedBy: [],
       };
 
       const updatedComments = [...comments, newCommentData];
@@ -53,7 +59,7 @@ const CommentPublication = () => {
     getComments(id).then((data) => {
       setComments(data);
     });
-  }, []);
+  }, [comments]);
 
   return (
     <div className="comments">
@@ -75,11 +81,21 @@ const CommentPublication = () => {
         {comments.length === 0 ? (
           <p>No comments yet.</p>
         ) : (
-          <CommentCard comments={comments} />
+          <>
+            {comments.map((comment) => (
+              <ul>
+                <CommentCard
+                  comment={comment}
+                  comments={comments}
+                  setComments={setComments}
+                />
+              </ul>
+            ))}
+          </>
         )}
       </div>
     </div>
   );
 };
 
-export default CommentPublication;
+export default CommentsPublication;

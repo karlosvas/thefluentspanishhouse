@@ -137,10 +137,40 @@ export const submitNote = async (newNote: NoteType) => {
   }
 };
 
-// DELATE
+///////////////////////////// PUT /////////////////////////////
+export const updateLikes = async (
+  uid_user_firebase: string,
+  _id: string,
+  likes: number
+) => {
+  try {
+    await app.put(`${url_api}/api/comments/likes`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ uid_user_firebase, _id, likes }),
+    });
+  } catch (error) {
+    console.error("Error to submit post", error);
+  }
+};
+
+///////////////////////////// DELETE /////////////////////////////
 export const delatePublication = async (id: string) => {
   try {
     await app.del(`${url_api}/api/publications/del/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.error("Error to submit post", error);
+  }
+};
+
+export const delateComment = async (id: string) => {
+  try {
+    await app.del(`${url_api}/api/comments/del/${id}`, {
       headers: {
         "Content-Type": "application/json",
       },

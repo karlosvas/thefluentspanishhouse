@@ -20,7 +20,7 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 const allowedOrigins = [
   process.env.URL_WEB,
   process.env.URL_WEB_TEST,
-  "http://localhost:5174",
+  "http://localhost:5173",
 ];
 
 app.use(
@@ -98,18 +98,29 @@ app.get("/api/publications/:id", async (req, res) => {
 // <--------------- POST --------------->
 // Agregar comentarios
 app.post("/api/comments", async (req, res) => {
-  const { id_comment, id_user, email, img, data, likes } = req.body;
-  if (!id_comment || !id_user || !email || !data)
+  const { id_comment, owner, data, likes, likedBy } = req.body;
+
+  console.log(owner);
+  if (
+    !id_comment ||
+    !owner ||
+    !owner.uid ||
+    !owner.email ||
+    !owner.displayName || // Asegúrate de que displayName está presente
+    !data ||
+    likes === undefined ||
+    likedBy === undefined
+  )
     return res.status(400).json({ error: "Todos los campos son requeridos" });
+
   try {
     const newComment = new modelComment({
       _id: new Types.ObjectId(),
       id_comment,
-      id_user,
-      email,
-      img,
+      owner,
       data,
       likes,
+      likedBy,
     });
     await newComment.save();
     res.status(201).json(newComment);
@@ -187,6 +198,38 @@ app.post("/api/note", async (req, res) => {
   }
 });
 
+// <--------------- PUT --------------->
+// Actualizar likes de comentarios
+app.put("/api/comments/likes", async (req, res) => {
+  const { uid_user_firebase, _id, likes } = req.body;
+  if (likes === undefined || likes === null || !uid_user_firebase || !_id)
+    return res.status(400).json({ error: "Los campos son requeridos" });
+
+  try {
+    const comment = await modelComment.findById(_id);
+
+    if (!comment)
+      return res.status(404).json({ error: "Comentario no encontrado" });
+
+    if (comment.likedBy.includes(uid_user_firebase)) {
+      const index = comment.likedBy.indexOf(uid_user_firebase);
+      comment.likedBy.splice(index, 1);
+      comment.likes -= 1;
+    } else {
+      comment.likedBy.push(uid_user_firebase);
+      comment.likes += 1;
+    }
+
+    const updatedComment = await comment.save();
+    res.status(200).json(updatedComment);
+  } catch (error) {
+    console.error("Error al actualizar los likes del comentario:", error);
+    res
+      .status(500)
+      .json({ error: "Error al actualizar los likes del comentario" });
+  }
+});
+
 // <--------------- DELETE --------------->
 // Eliminar publicaciones
 app.delete("/api/publications/del/:id", async (req, res) => {
@@ -197,6 +240,23 @@ app.delete("/api/publications/del/:id", async (req, res) => {
     const result = await modelPublication.findByIdAndDelete(id);
     if (!result)
       return res.status(404).json({ message: "Publication not found" });
+    res.status(200).json({ message: "Publication deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting publication:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+app.delete("/api/comments/del/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!Types.ObjectId.isValid(id))
+    return res.status(400).json({ message: "Invalid publication ID" });
+  try {
+    const result = await modelComment.findByIdAndDelete(id);
+    console.log("Buscando", id);
+    if (!result)
+      return res.status(404).json({ message: "Publication not found" });
+    console.log("Eliminado");
     res.status(200).json({ message: "Publication deleted successfully" });
   } catch (error) {
     console.error("Error deleting publication:", error);

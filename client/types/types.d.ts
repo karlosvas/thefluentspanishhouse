@@ -1,4 +1,4 @@
-import { User } from "firebase/auth";
+import { type User } from "firebase/auth";
 
 export type TFunction = (key: string, options?: object) => string;
 
@@ -75,16 +75,29 @@ interface OptionalClass {
 }
 
 export interface LikesProps {
-  likes: number;
+  initialLikes: number;
+  commentId: ObjectId;
+  userId: string;
 }
 
 export interface Comment {
+  _id: ObjectId;
   id_comment: string;
-  id_user: string;
-  email: string;
-  img: string | null;
+  owner: {
+    uid: string;
+    displayName: string;
+    email: string;
+    photoURL: string;
+  };
   data: string;
   likes: number;
+  likedBy: string[];
+}
+
+export interface CommentCardProps {
+  comment: Comment;
+  comments: Comment[];
+  setComments: Dispatch<SetStateAction<Comment[]>>;
 }
 
 export interface AuthProps {
