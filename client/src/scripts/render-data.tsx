@@ -28,7 +28,8 @@ export const getUrlTest = async () => {
     throw error;
   }
 };
-export const getComments = async (id: string | undefined) => {
+
+export const getCommentsById = async (id: string) => {
   try {
     return await app.get(`${url_api}/api/comments/${id}`, {
       headers: {
@@ -40,7 +41,22 @@ export const getComments = async (id: string | undefined) => {
     throw error;
   }
 };
-export const loadPublication = async (id: string | undefined) => {
+
+export const getChildsComment = async (id: string) => {
+  try {
+    const data = await app.get(`${url_api}/api/comments/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error al obtener datos:", error);
+    throw error;
+  }
+};
+
+export const loadPublication = async (id: string) => {
   try {
     const publication = await app.get(`${url_api}/api/publications/${id}`, {
       method: "GET",
@@ -53,6 +69,7 @@ export const loadPublication = async (id: string | undefined) => {
     console.error("Error al obtener datos:", error);
   }
 };
+
 export const loadPublications = async () => {
   try {
     return await app.get(`${url_api}/api/publications`, {
@@ -69,6 +86,22 @@ export const loadPublications = async () => {
 export const postComment = async (newCommentData: Comment) => {
   try {
     await app.post(`${url_api}/api/comments/`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newCommentData),
+    });
+  } catch (error) {
+    console.error("Error al enviar el comentario:", error);
+  }
+};
+
+export const updateChildrenComment = async (
+  newCommentData: Comment,
+  id: string
+) => {
+  try {
+    await app.post(`${url_api}/api/comments/children/${id}`, {
       headers: {
         "Content-Type": "application/json",
       },

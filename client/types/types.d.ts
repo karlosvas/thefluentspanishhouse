@@ -82,7 +82,7 @@ export interface LikesProps {
 
 export interface Comment {
   _id: ObjectId;
-  id_comment: string;
+  pattern_id: string;
   owner: {
     uid: string;
     displayName: string;
@@ -92,12 +92,16 @@ export interface Comment {
   data: string;
   likes: number;
   likedBy: string[];
+  answers: Comment[];
+}
+
+export interface CommentOptionsProps {
+  isResponse: boolean;
+  setIsResponse: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface CommentCardProps {
   comment: Comment;
-  comments: Comment[];
-  setComments: Dispatch<SetStateAction<Comment[]>>;
 }
 
 export interface AuthProps {

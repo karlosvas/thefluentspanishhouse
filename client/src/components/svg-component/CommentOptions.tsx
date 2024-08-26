@@ -1,11 +1,8 @@
-interface CommentOptionsProps {
-  responseComment: boolean;
-  setResponseComment: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { type CommentOptionsProps } from "types/types";
 
 const CommentOptions: React.FC<CommentOptionsProps> = ({
-  responseComment,
-  setResponseComment,
+  isResponse,
+  setIsResponse,
 }) => {
   return (
     <>
@@ -13,7 +10,7 @@ const CommentOptions: React.FC<CommentOptionsProps> = ({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
-          onClick={() => setResponseComment(!responseComment)}
+          onClick={() => setIsResponse(!isResponse)}
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"

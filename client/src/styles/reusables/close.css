@@ -28,8 +28,8 @@
 }
 
 .close-card-button {
-  top: -5px;
-  right: -5px;
+  top: -10px;
+  right: 0px;
 }
 
 @media only screen and (width <= 766px) {

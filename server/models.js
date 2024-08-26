@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const commentSchema = new Schema({
   _id: { type: Schema.Types.ObjectId, required: true },
-  id_comment: { type: String, required: true },
+  pattern_id: { type: String, required: true },
   owner: {
     uid: { type: String, required: true },
     email: { type: String, required: true },
@@ -12,7 +12,12 @@ const commentSchema = new Schema({
   data: { type: String, required: true },
   likes: { type: Number, required: true },
   likedBy: { type: [String], required: true },
+  answers: {
+    type: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+    required: true,
+  },
 });
+
 export const modelComment = model("Comment", commentSchema, "comments");
 
 const publicationBlogSchema = new Schema({

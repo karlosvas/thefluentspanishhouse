@@ -1,66 +1,76 @@
 import ImgUser from "@/components/svg-component/ImgUser";
 import Likes from "@/components/svg-component/Likes";
 import { useContext, useEffect, useState } from "react";
-import { type CommentCardProps, type Comment } from "types/types";
 import CommentOptions from "@/components/svg-component/CommentOptions";
 import { UserContext } from "@/App";
-import { postComment } from "@/scripts/render-data";
+import { getChildsComment, updateChildrenComment } from "@/scripts/render-data";
 import TrashComment from "@/components/svg-component/TrashComment";
+import toast from "react-hot-toast";
+import { type CommentCardProps, type Comment } from "types/types";
+import { useNavigate } from "react-router";
 
-const CommentCard: React.FC<CommentCardProps> = ({
-  comment,
-  comments,
-  setComments,
-}) => {
+// Se renderiza cada comentario individualmente
+const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
   const [imgError, setImgError] = useState(false);
-  const [responseComment, setResponseComment] = useState(false);
-  const [contentResponse, setContentResponse] = useState("");
+  const [isResponse, setIsResponse] = useState(false);
+  const [responseComment, setResponseComment] = useState("");
+  const [childs, setChilds] = useState<Comment[]>([]);
 
   const user = useContext(UserContext);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitChildren = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
-
-    if (contentResponse.trim() !== "") {
+    // Creamos un nuevo comentario
+    if (
+      responseComment.trim() !== "" &&
+      user &&
+      user.uid &&
+      user.displayName &&
+      user.email
+    ) {
       const newCommentData: Comment = {
         _id: "",
-        id_comment: comment._id,
+        pattern_id: comment._id,
         owner: {
-          uid: user?.uid || "",
-          displayName: user?.displayName || "Anonyme",
-          email: user?.email || "",
-          photoURL: user?.photoURL || "",
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL || "",
         },
-        data: contentResponse,
+        data: responseComment,
         likes: 0,
         likedBy: [],
+        answers: [],
       };
-
-      console.log(comment._id === newCommentData.id_comment);
-      const updatedComments = [...comments, newCommentData];
-      setComments(updatedComments);
-      // setNewComment("");
-
+      // Limpiamos el input y lo cerramos
+      setResponseComment("");
+      setIsResponse(false);
       try {
-        await postComment(newCommentData);
-        console.log("Comment posted successfully");
+        await updateChildrenComment(newCommentData, comment._id);
       } catch (error) {
         console.error("Error:", error);
       }
-    }
+    } else toast.error("Do you need login to comment");
   };
 
-  const [childs, setChild] = useState<Comment[]>([]);
+  // Hook para navegar
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Aun falta filtrar los comentarios hijos
-    const childs = comments.filter((child) => child.id_comment === null);
-    setChild(childs);
-  }, [comments, comment._id]);
+    // Obtenemos los comentarios hijos
+    const id = comment._id;
+    if (id) {
+      getChildsComment(id).then((result) => {
+        setChilds(result);
+      });
+    } else navigate("/404");
+  }, [comment._id, navigate, responseComment]);
 
   return (
     <>
-      <li key={comment._id}>
+      <li>
         <div>
           {comment.owner && !imgError ? (
             <img
@@ -86,35 +96,26 @@ const CommentCard: React.FC<CommentCardProps> = ({
             )}
             <Likes comment={comment} />
             <CommentOptions
-              responseComment={responseComment}
-              setResponseComment={setResponseComment}
+              isResponse={isResponse}
+              setIsResponse={setIsResponse}
             />
           </div>
         </div>
       </li>
-      {responseComment && (
+      {isResponse && (
         <div className="response-comment">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmitChildren}>
             <input
               type="text"
-              value={contentResponse}
-              onChange={(e) => setContentResponse(e.target.value)}
+              value={responseComment}
+              onChange={(e) => setResponseComment(e.target.value)}
             />
             <button type="submit">Enviar</button>
           </form>
         </div>
       )}
-      {Array.isArray(childs) && childs.length > 0 && (
-        <ul>
-          {childs.map((child) => (
-            <CommentCard
-              comment={child}
-              comments={comments}
-              setComments={setComments}
-            />
-          ))}
-        </ul>
-      )}
+      {childs.length > 0 &&
+        childs.map((child) => <CommentCard comment={child} />)}{" "}
     </>
   );
 };

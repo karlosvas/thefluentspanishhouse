@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import CommentCard from "@/components/pages-components/publications/CommentCard";
-import { getComments, postComment } from "@/scripts/render-data";
+import { getCommentsById, postComment } from "@/scripts/render-data";
 import { UserContext } from "@/App";
 import { type Comment } from "types/types";
 import "@/styles/comments.css";
+import toast from "react-hot-toast";
 
 const CommentsPublication = () => {
   // Estado de los comentarios actuales, y del Text Area
@@ -25,41 +26,47 @@ const CommentsPublication = () => {
   // Cada vez que se envia el formulario
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (newComment.trim() !== "") {
+    if (
+      newComment.trim() !== "" &&
+      id &&
+      user &&
+      user.uid &&
+      user.displayName &&
+      user.email
+    ) {
+      // Crear el nuevo comentario
       const newCommentData: Comment = {
         _id: "",
-        id_comment: id || "",
+        pattern_id: id,
         owner: {
-          uid: user?.uid || "",
-          displayName: user?.displayName || "Anonyme",
-          email: user?.email || "anonyme@gmail.com",
-          photoURL: user?.photoURL || "",
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL || "",
         },
         data: newComment,
         likes: 0,
         likedBy: [],
+        answers: [],
       };
-
-      const updatedComments = [...comments, newCommentData];
-      setComments(updatedComments);
+      // Limpiar el text area
       setNewComment("");
-
-      try {
-        const data = await postComment(newCommentData);
-        Array.isArray(data) && data.length !== 0 && setComments(data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    }
+      // Enviar el comentario
+      await postComment(newCommentData);
+      // Si se ha enviado correctamente, añadirlo a la lista de comentarios
+    } else toast.error("Do you need login to comment");
   };
+
+  const navigate = useNavigate();
 
   // Obtener comentarios cuando el componente se monta o cuando cambia el id
   useEffect(() => {
-    getComments(id).then((data) => {
-      setComments(data);
-    });
-  }, [comments]);
+    if (id)
+      getCommentsById(id).then((result) => {
+        setComments(result);
+      });
+    else navigate("/404");
+  }, [comments, id, navigate]);
 
   return (
     <div className="comments">
@@ -83,12 +90,8 @@ const CommentsPublication = () => {
         ) : (
           <>
             {comments.map((comment) => (
-              <ul>
-                <CommentCard
-                  comment={comment}
-                  comments={comments}
-                  setComments={setComments}
-                />
+              <ul key={comment._id}>
+                <CommentCard comment={comment} />
               </ul>
             ))}
           </>

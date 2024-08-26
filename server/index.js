@@ -42,12 +42,28 @@ app.use(
 await connectDB();
 
 // <--------------- GET --------------->
+// Obtener los hijos de un comentario
+app.get("/api/comments/children/:id", async (req, res) => {
+  console.log("obteneindo children");
+  // El id es el id del comentario padre (parent_id)
+  const parentId = req.params.id;
+  try {
+    // Buscar el comentario padre y obtener sus hijos
+    const comments = await modelComment.findById(parentId).populate("answers");
+    if (!comments) throw new Error("Comments not found");
+    console.log("comments.answers", comments.answers);
+    res.json(comments.answers);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener los comentarios" });
+  }
+});
+
 // Carga de comentarios al entrar en una publicación
 app.get("/api/comments/:id", async (req, res) => {
-  const { id } = req.params;
+  const id = req.params.id;
   try {
-    const comments = await modelComment.find({ id_comment: id });
-    res.json(comments);
+    const parentComments = await modelComment.find({ pattern_id: id });
+    res.json(parentComments);
   } catch (error) {
     res.status(500).json({ error: "Error al obtener los comentarios" });
   }
@@ -98,31 +114,13 @@ app.get("/api/publications/:id", async (req, res) => {
 // <--------------- POST --------------->
 // Agregar comentarios
 app.post("/api/comments", async (req, res) => {
-  const { id_comment, owner, data, likes, likedBy } = req.body;
-
-  console.log(owner);
-  if (
-    !id_comment ||
-    !owner ||
-    !owner.uid ||
-    !owner.email ||
-    !owner.displayName || // Asegúrate de que displayName está presente
-    !data ||
-    likes === undefined ||
-    likedBy === undefined
-  )
-    return res.status(400).json({ error: "Todos los campos son requeridos" });
-
+  let newCommentData = req.body;
   try {
-    const newComment = new modelComment({
-      _id: new Types.ObjectId(),
-      id_comment,
-      owner,
-      data,
-      likes,
-      likedBy,
-    });
-    await newComment.save();
+    // Crear un nuevo ObjectId para el nuevo comentario
+    newCommentData._id = new Types.ObjectId();
+    // Crear un nuevo comentario hijo
+    const newComment = new modelComment(newCommentData);
+    newComment.save();
     res.status(201).json(newComment);
   } catch (error) {
     console.error("Error al añadir el comentario:", error);
@@ -185,12 +183,10 @@ app.post("/api/mailchamp", async (req, res) => {
 app.post("/api/note", async (req, res) => {
   const { email_user, username, subject, note } = req.body;
   if (!email_user || !username || !subject || !note) {
-    console.log("heeel no hay datos");
     return res.status(400).send({ message: "Missing required fields" });
   }
 
   try {
-    console.log(email_user);
     await submitNote(email_user, username, subject, note);
     res.status(200).send({ message: "Email sent successfully" });
   } catch (error) {
@@ -230,6 +226,29 @@ app.put("/api/comments/likes", async (req, res) => {
   }
 });
 
+app.post("/api/comments/children/:id", async (req, res) => {
+  const parentCommentId = req.params.id;
+  let newCommentData = req.body;
+
+  try {
+    // Crear un nuevo ObjectId para el nuevo comentario
+    newCommentData._id = new Types.ObjectId();
+    // Crear un nuevo comentario hijo
+    const newComment = new modelComment(newCommentData);
+    newComment.save();
+
+    // Agregar el nuevo comentario al array de comentarios del comentario padre
+    const parentComment = await modelComment.findById(parentCommentId);
+    parentComment.answers.push(newComment._id);
+    await parentComment.save();
+
+    res.status(201).send(newComment);
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    res.status(500).send("Error adding comment: " + error.message);
+  }
+});
+
 // <--------------- DELETE --------------->
 // Eliminar publicaciones
 app.delete("/api/publications/del/:id", async (req, res) => {
@@ -253,10 +272,8 @@ app.delete("/api/comments/del/:id", async (req, res) => {
     return res.status(400).json({ message: "Invalid publication ID" });
   try {
     const result = await modelComment.findByIdAndDelete(id);
-    console.log("Buscando", id);
     if (!result)
       return res.status(404).json({ message: "Publication not found" });
-    console.log("Eliminado");
     res.status(200).json({ message: "Publication deleted successfully" });
   } catch (error) {
     console.error("Error deleting publication:", error);

@@ -29,7 +29,7 @@ const Publications = () => {
           navigate("/404");
         });
     } else navigate("/404");
-  }, []);
+  }, [navigate, id]);
 
   return (
     <main className="publication-main">
