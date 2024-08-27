@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { loadPublications } from "@/scripts/render-data";
 import { type PublicationCardType } from "types/types";
 import "@/styles/main-blog.css";
+import { Helmet } from "react-helmet-async";
 
 const Blog = () => {
   const [showModalPost, setShowModalPost] = useState(false);
@@ -42,6 +43,13 @@ const Blog = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Blog</title>
+        <meta
+          name="description"
+          content="Blog of The Fluent Spanish House. Here you can find all the publications made by the teacher, Marta Gutiérrez Fonseca."
+        />
+      </Helmet>
       <main className="main-blog">
         {/* Abre o cierra el modal de publicación */}
         {showModalPost && (

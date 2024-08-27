@@ -1,9 +1,17 @@
 import Footer from "@/layouts/Footer";
 import "@/styles/info.css";
+import { Helmet } from "react-helmet-async";
 
 const Info = () => {
   return (
     <>
+      <Helmet>
+        <title>Info</title>
+        <meta
+          name="description"
+          content="Terms and Conditions, Privacy Policy, and License of The Fluent Spanish House."
+        />
+      </Helmet>
       <main className="main-terminos">
         <section>
           <h2 id="terminos">Terms and Conditions</h2>

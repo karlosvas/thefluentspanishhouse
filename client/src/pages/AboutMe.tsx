@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PlaceholderImg from "@/components/reusable/PlaceholderImg";
+import { Helmet } from "react-helmet-async";
 import "@/styles/main-aboutme.css";
 
 const AboutMe = () => {
@@ -7,6 +8,13 @@ const AboutMe = () => {
 
   return (
     <>
+      <Helmet>
+        <title>About Me</title>
+        <meta
+          name="description"
+          content="Marta Gutiérrez Fonseca, a Spanish teacher with years of experience helping students from all over the world master this beautiful language."
+        />
+      </Helmet>
       <main className="main-aboutme">
         <div className="div-aboutme">
           <h2>About me</h2>

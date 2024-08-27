@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
+import { HelmetProvider } from "react-helmet-async";
 import { setupAuthPersistence } from "@/scripts/firebase-config.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@/styles/index.css";
@@ -14,9 +15,11 @@ const initializeApp = async () => {
     // Renderiza la aplicación después de que ambas promesas se hayan completado
     ReactDOM.createRoot(document.getElementById("root")!).render(
       <React.StrictMode>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <HelmetProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </HelmetProvider>
       </React.StrictMode>
     );
   } catch (error) {

@@ -1,3 +1,7 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "rewrites": [
+    { "source": "/robots.txt", "destination": "/public/robots.txt" },
+    { "source": "/sitemap.xml", "destination": "/public/sitemap.xml" },
+    { "source": "/(.*)", "destination": "/" }
+  ]
 }

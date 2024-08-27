@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import ShowPassword from "@/components/reusable/ShowPassword";
 import { UserContext } from "@/App";
 import { showMessageErrorFirebase } from "@/scripts/firebase-config";
+import { Helmet } from "react-helmet-async";
 
 export const CallbackVerify = () => {
   // Repuesta del usuario
@@ -63,55 +64,65 @@ export const CallbackVerify = () => {
   }, [email, navigate]);
 
   return (
-    <div className="error">
-      {del ? (
-        <>
-          <section className="err-flex">
-            <h1>
-              Are you sure you want to delete your user from The Fluent Spanish
-              House?
-            </h1>
-            <small>
-              Please type <strong>DELETE ACCOUNT</strong> if you want to proceed
-            </small>
-            <small>And type ypur password acount</small>
-            <Link to="/">Go Home</Link>
-          </section>
-          <section>
-            <form>
-              <label htmlFor="username">
-                Write here
-                <input
-                  type="text"
-                  value={response}
-                  onChange={(e) => setResponse(e.target.value)}
-                />
-              </label>
-              <label htmlFor="password">
+    <>
+      <Helmet>
+        <title>Verify</title>
+        <meta
+          name="description"
+          content="Verify your email or delete your user from The Fluent Spanish House."
+        />
+      </Helmet>
+      <div className="error">
+        {del ? (
+          <>
+            <section className="err-flex">
+              <h1>
+                Are you sure you want to delete your user from The Fluent
+                Spanish House?
+              </h1>
+              <small>
+                Please type <strong>DELETE ACCOUNT</strong> if you want to
+                proceed
+              </small>
+              <small>And type ypur password acount</small>
+              <Link to="/">Go Home</Link>
+            </section>
+            <section>
+              <form>
+                <label htmlFor="username">
+                  Write here
+                  <input
+                    type="text"
+                    value={response}
+                    onChange={(e) => setResponse(e.target.value)}
+                  />
+                </label>
+                <label htmlFor="password">
+                  <ShowPassword password={ID.password} setID={setID} />
+                </label>
+              </form>
+            </section>
+            <button type="submit" onClick={submitDelateUser}>
+              I CONFIRM THAT I WANT TO DELETE THE USER
+            </button>
+          </>
+        ) : (
+          <>
+            <section className="err-flex">
+              <h1>Please enter your password to change to your email</h1>
+              <Link to="/">Go Home</Link>
+            </section>
+
+            <form onSubmit={submitDataVerifyEmail}>
+              <label>
                 <ShowPassword password={ID.password} setID={setID} />
               </label>
+              <button type="submit">Send</button>
             </form>
-          </section>
-          <button type="submit" onClick={submitDelateUser}>
-            I CONFIRM THAT I WANT TO DELETE THE USER
-          </button>
-        </>
-      ) : (
-        <>
-          <section className="err-flex">
-            <h1>Please enter your password to change to your email</h1>
-            <Link to="/">Go Home</Link>
-          </section>
-
-          <form onSubmit={submitDataVerifyEmail}>
-            <label>
-              <ShowPassword password={ID.password} setID={setID} />
-            </label>
-            <button type="submit">Send</button>
-          </form>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

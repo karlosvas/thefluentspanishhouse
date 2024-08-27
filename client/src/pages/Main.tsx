@@ -2,12 +2,20 @@ import Prices from "@/components/pages-components/main/Prices";
 import PlaceholderImg from "@/components/reusable/PlaceholderImg";
 import { useState } from "react";
 import "@/styles/main.css";
+import { Helmet } from "react-helmet-async";
 
 const Main = () => {
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
   return (
     <>
+      <Helmet>
+        <title>The Fluent Spanish House</title>
+        <meta
+          name="description"
+          content="Private teacher, The Fluent Spanish House. Discover Spanish with fluency and precision alongside Marta Gutiérrez Fonseca. Our goal is to help you consolidate essential grammatical structures, ensuring you speak with confidence and impeccable pronunciation. From beginner to advanced levels, each class is designed to help you master the language dynamically and effectively"
+        ></meta>
+      </Helmet>
       {!imageLoaded && <PlaceholderImg id="banner" />}
       <img
         id="banner"

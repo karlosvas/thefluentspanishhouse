@@ -1,5 +1,5 @@
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
-import Publications from "@/pages/Publications";
+import Publication from "@/pages/Publication";
 import Error from "@/pages/404";
 import Account from "@/pages/Account";
 import Blog from "@/pages/Blog";
@@ -15,6 +15,7 @@ import SingleTheme from "@/components/header-components/SingleTheme";
 import Contact from "@/pages/Contact";
 import { Toaster } from "react-hot-toast";
 import Main from "./pages/Main";
+import { HelmetProvider } from "react-helmet-async";
 
 export const UserContext = createContext<User | null>(null);
 
@@ -48,23 +49,25 @@ const App = () => {
   if (loading) {
     return (
       <UserContext.Provider value={user}>
-        {!shouldHideHeaderFooter ? <Header /> : <SingleTheme />}
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/publication/:id" element={<Publications />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/aboutme" element={<AboutMe />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/info" element={<Info />} />
-          <Route path="/newsetler" element={<Newsetler />} />
-          <Route path="/404" element={<Error />} />
-          <Route path="/verify" element={<CallbackVerify />} />
-          {/* Maneja rutas no encontradas */}
-          <Route path="*" element={<Navigate to="/404" />} />
-        </Routes>
-        {!shouldHideHeaderFooter && <Footer />}
-        <Toaster position="bottom-right" />
+        <HelmetProvider>
+          {!shouldHideHeaderFooter ? <Header /> : <SingleTheme />}
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/publication/:id" element={<Publication />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/aboutme" element={<AboutMe />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/info" element={<Info />} />
+            <Route path="/newsetler" element={<Newsetler />} />
+            <Route path="/404" element={<Error />} />
+            <Route path="/verify" element={<CallbackVerify />} />
+            {/* Maneja rutas no encontradas */}
+            <Route path="*" element={<Navigate to="/404" />} />
+          </Routes>
+          {!shouldHideHeaderFooter && <Footer />}
+          <Toaster position="bottom-right" />
+        </HelmetProvider>
       </UserContext.Provider>
     );
   }
