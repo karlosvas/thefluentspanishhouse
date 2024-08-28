@@ -11,6 +11,7 @@ const CommentsPublication = () => {
   // Estado de los comentarios actuales, y del Text Area
   const [comments, setComments] = useState<Comment[]>([]);
   const newCommentRef = useRef<HTMLTextAreaElement>(null);
+  const [openTread, setOpenTread] = useState(false);
 
   // Id de la publicación
   const { id } = useParams<{ id: string }>();
@@ -67,9 +68,6 @@ const CommentsPublication = () => {
       });
     else navigate("/404");
   }, [id, navigate]);
-
-  console.log("uni");
-  const [openTread, setOpenTread] = useState(false);
 
   return (
     <div className="comments">

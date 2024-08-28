@@ -244,6 +244,26 @@ app.put("/api/comments/edit/:id", async (req, res) => {
   }
 });
 
+app.put("/api/publications/edit", async (req, res) => {
+  const updatedFields = req.body;
+
+  try {
+    const publication = await modelPublication.findById(updatedFields._id);
+    if (!publication)
+      return res.status(404).json({ message: "Publication not found" });
+
+    publication.title = updatedFields.title;
+    publication.subtitle = updatedFields.subtitle;
+    publication.content = updatedFields.content;
+    await publication.save();
+
+    res.status(200).json(publication);
+  } catch (error) {
+    console.error("Error updating publication:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
 app.post("/api/comments/children/:id", async (req, res) => {
   const parentCommentId = req.params.id;
   let newCommentData = req.body;

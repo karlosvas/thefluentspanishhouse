@@ -89,7 +89,6 @@ const CommentCard: React.FC<CommentCardProps> = ({
     }
   }, [comment, navigate]);
 
-  console.log("hola");
   return (
     <>
       <li className={`depth-${depth}`}>

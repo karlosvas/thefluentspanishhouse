@@ -36,6 +36,7 @@ export interface ButtonProps {
   ref?: React.Ref<HTMLButtonElement>;
   children: ReactNode;
   suscribe?: boolean;
+  className?: string;
 }
 
 export interface PublicationCardType {

@@ -188,6 +188,21 @@ export const updateLikes = async (
   }
 };
 
+export const putCommentPublication = async (
+  editPublication: PublicationCardType
+) => {
+  try {
+    await app.put(`${url_api}/api/publications/edit`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editPublication),
+    });
+  } catch (error) {
+    console.error("Error to submit post", error);
+  }
+};
+
 ///////////////////////////// DELETE /////////////////////////////
 export const delatePublication = async (id: string) => {
   try {

@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import { type ButtonProps } from "types/types";
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { children, event, id, type, suscribe },
+  { children, event, id, type, suscribe, className },
   ref
 ) {
   let buttonStyle: React.CSSProperties = {
@@ -23,6 +23,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
       id={id}
       ref={ref}
       {...(suscribe !== undefined && { disabled: suscribe })}
+      {...(className !== undefined && { className })}
     >
       {children}
     </button>

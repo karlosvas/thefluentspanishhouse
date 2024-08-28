@@ -1,0 +1,65 @@
+.edited {
+  position: absolute;
+  right: 40px;
+  top: -10px;
+  transition: color 0.3s;
+  background-color: rgb(67, 221, 144);
+  padding: 3px 13px;
+  border-radius: 5px;
+  font-size: 20px;
+  margin-top: 10px;
+  z-index: 9999;
+}
+
+.edited:hover {
+  color: var(--primary-white);
+}
+
+.edited {
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0px 5px rgb(20, 155, 81);
+  transition: all 0.2s ease;
+}
+
+.edited:active {
+  box-shadow: 0px 2px rgb(20, 155, 81);
+  transform: translateY(4px);
+}
+
+.modal-edit {
+  min-width: 600px;
+  input {
+    margin: 20px 0;
+  }
+  textarea {
+    margin: 20px 0;
+    all: unset;
+    white-space: pre-wrap;
+    border: 1px solid #ddd;
+  }
+}
+
+.modal-edit {
+  min-width: 600px;
+  input {
+    margin: 20px 0;
+  }
+  textarea {
+    margin: 20px 0;
+    all: unset;
+    white-space: pre-wrap;
+    border: 1px solid #ddd;
+  }
+}
+
+@media only screen and (width <= 766px) {
+  .modal-edit {
+    min-width: 10vw;
+  }
+  .edited {
+    top: -10px;
+    right: 40px;
+    border-radius: 3px;
+  }
+}
