@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "@/components/reusable/Buuton";
+import Button from "@/components/reusable/Button";
 import FormSuscribe from "@/components/pages-components/main/FormSuscribe";
 import { handleChangeModal } from "@/scripts/modal";
 

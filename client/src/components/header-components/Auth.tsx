@@ -9,7 +9,7 @@ import {
   signInWithFacebook,
 } from "@/scripts/oauth2-0";
 import { toggleFormType } from "@/scripts/modal";
-import Button from "@/components/reusable/Buuton";
+import Button from "@/components/reusable/Button";
 import ShowPassword from "@/components/reusable/ShowPassword";
 import { UserContext } from "@/App";
 import ButtonClose from "@/components/reusable/ButtonClose";
@@ -33,17 +33,20 @@ const Auth = () => {
     password: "",
     email: "",
   });
+  const [suscribe, setSuscribe] = useState(false);
 
   const navigate: NavigateFunction = useNavigate();
 
   // Enviar formulario par registrarse o logearse
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSuscribe(true);
     const isRegister = typeLoginRegisterRef.current?.textContent === "Register";
     if (isRegister) await localRegister(ID.email, ID.password, ID.username);
     else await localSignin(ID.email, ID.password);
     toggleFormType(showModal, setShowModal);
     setID({ username: "", password: "", email: "" });
+    setSuscribe(false);
   };
 
   const handleGoogleAuth = async () => {
@@ -153,7 +156,9 @@ const Auth = () => {
                   <ShowPassword password={ID.password} setID={setID} />
                 </label>
                 <small onClick={forgotPasword}>Forgot your password?</small>
-                <Button type="submit">Submit</Button>
+                <Button type="submit" suscribe={suscribe}>
+                  Submit
+                </Button>
               </form>
               <div className="providers-log">
                 <div className="googleAuth" onClick={handleGoogleAuth}>

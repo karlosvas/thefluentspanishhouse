@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CardPlaceholder from "./CardPlaceholder";
-import Button from "@/components/reusable/Buuton";
+import Button from "@/components/reusable/Button";
 import { UserContext } from "@/App";
 import { CardsPublicationBlogProps, PublicationCardType } from "types/types";
 import ButtonClose from "@/components/reusable/ButtonClose";

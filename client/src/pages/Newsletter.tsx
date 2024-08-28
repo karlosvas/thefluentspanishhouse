@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "@/components/reusable/Buuton";
+import Button from "@/components/reusable/Button";
 import PlaceholderImg from "@/components/reusable/PlaceholderImg";
 import "@/styles/main-newsettler.css";
 import { Helmet } from "react-helmet-async";

@@ -9,10 +9,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
     borderRadius: "5px",
   };
 
-  if (type === "submit" && suscribe !== undefined) {
+  if (type == "submit" && suscribe !== undefined) {
     buttonStyle = {
       ...buttonStyle,
-      backgroundColor: suscribe ? "#000080" : "transparent",
+      backgroundColor: suscribe ? "#000080" : "var(--primary-blue)",
     };
   }
   return (

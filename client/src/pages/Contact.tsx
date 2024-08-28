@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import Button from "@/components/reusable/Buuton";
+import Button from "@/components/reusable/Button";
 import { submitNote } from "@/scripts/render-data";
-import { isLogged } from "@/scripts/oauth2-0";
 import toast from "react-hot-toast";
 import { UserContext } from "@/App";
 import { type NoteType } from "types/types";
@@ -11,7 +10,6 @@ import { Helmet } from "react-helmet-async";
 const ContactForm = () => {
   const [suscribe, setSuscribe] = useState<boolean>(false);
   const user = useContext(UserContext);
-  const loggin = isLogged();
 
   const [newNote, setNewNote] = useState<NoteType>({
     email_user: user?.email,
@@ -36,14 +34,11 @@ const ContactForm = () => {
 
   const onSubmitNote = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSuscribe(true);
-    if (!loggin) {
+    if (!user) {
       toast.error("You must log in");
       return;
-    } else if (!user) {
-      toast.error("An unexpected error occurred, please wait and try again.");
-      return;
     }
+    setSuscribe(true);
     try {
       await submitNote(newNote);
       setNewNote({

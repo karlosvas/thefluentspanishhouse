@@ -4,7 +4,7 @@ import Edit from "@/components/svg-component/Edit";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { UserContext } from "@/App";
-import Button from "@/components/reusable/Buuton";
+import Button from "@/components/reusable/Button";
 import { getProvider } from "@/scripts/firebase-config";
 import { type ConfigUser } from "types/types";
 import "@/styles/main-account.css";

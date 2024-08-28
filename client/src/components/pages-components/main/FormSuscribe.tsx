@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Buuton from "@/components/reusable/Buuton";
+import Buuton from "@/components/reusable/Button";
 import { handleSubmitSubscription } from "@/scripts/render-data";
 import toast from "react-hot-toast";
 import ButtonClose from "@/components/reusable/ButtonClose";
@@ -17,6 +17,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
     lastname: "",
     email: "",
   });
+  const [suscribe, setSuscribe] = useState(false);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -29,6 +30,8 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
   };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSuscribe(true);
     try {
       await handleSubmitSubscription(
         event,
@@ -39,6 +42,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
     } catch (error) {
       toast.error("The information sent is not valid");
     }
+    setSuscribe(false);
   };
 
   return (
@@ -95,7 +99,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
                 privacity policity.
               </Link>
             </label>
-            <Buuton id="submit-post" type="submit">
+            <Buuton id="submit-post" type="submit" suscribe={suscribe}>
               To subscribe
             </Buuton>
           </ul>
