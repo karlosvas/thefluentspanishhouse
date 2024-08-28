@@ -147,7 +147,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
       }
     }
     try {
-      if (cardsBlog.length !== 9) {
+      if (cardsBlog.length !== 6) {
         await handleSubmitPost(event, newPublication);
       } else {
         await delatePublication(cardsBlog[0]._id);

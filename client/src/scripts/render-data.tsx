@@ -201,7 +201,7 @@ export const delatePublication = async (id: string) => {
   }
 };
 
-export const delateComment = async (id: string) => {
+export const deleteComment = async (id: string) => {
   try {
     await app.del(`${url_api}/api/comments/del/${id}`, {
       headers: {

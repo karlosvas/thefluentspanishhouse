@@ -1,22 +1,29 @@
+import toast from "react-hot-toast";
 import { type CommentOptionsProps } from "types/types";
 
-const CommentOptions: React.FC<CommentOptionsProps> = ({
+const ReplyToComment: React.FC<CommentOptionsProps> = ({
+  user,
   isResponse,
   setIsResponse,
 }) => {
+  const handleResponse = () => {
+    if (user) setIsResponse(!isResponse);
+    else toast.error("Do you need login to comment");
+  };
+
   return (
     <>
-      <div id="svg-response">
+      <div id="response">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
-          onClick={() => setIsResponse(!isResponse)}
+          onClick={handleResponse}
           viewBox="0 0 24 24"
-          strokeWidth="1.5"
+          strokeWidth="1.3"
           stroke="currentColor"
           className="svgIcons"
-          width={20}
-          height={20}
+          width="20"
+          height="20"
         >
           <path
             strokeLinecap="round"
@@ -29,4 +36,4 @@ const CommentOptions: React.FC<CommentOptionsProps> = ({
   );
 };
 
-export default CommentOptions;
+export default ReplyToComment;

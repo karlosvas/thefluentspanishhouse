@@ -96,12 +96,17 @@ export interface Comment {
 }
 
 export interface CommentOptionsProps {
+  user: User | null;
   isResponse: boolean;
   setIsResponse: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface CommentCardProps {
   comment: Comment;
+  user: User | null;
+  openTread: boolean;
+  setOpenTread: React.Dispatch<React.SetStateAction<boolean>>;
+  depth: number;
 }
 
 export interface AuthProps {

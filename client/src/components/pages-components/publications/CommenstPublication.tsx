@@ -63,10 +63,13 @@ const CommentsPublication = () => {
   useEffect(() => {
     if (id)
       getCommentsById(id).then((result) => {
+        result.reverse();
         setComments(result);
       });
     else navigate("/404");
   }, [comments, id, navigate]);
+
+  const [openTread, setOpenTread] = useState(false);
 
   return (
     <div className="comments">
@@ -91,7 +94,13 @@ const CommentsPublication = () => {
           <>
             {comments.map((comment) => (
               <ul key={comment._id}>
-                <CommentCard comment={comment} />
+                <CommentCard
+                  comment={comment}
+                  user={user}
+                  openTread={openTread}
+                  setOpenTread={setOpenTread}
+                  depth={0}
+                />
               </ul>
             ))}
           </>

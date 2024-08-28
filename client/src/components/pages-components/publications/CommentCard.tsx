@@ -1,22 +1,24 @@
+import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { getChildsComment, updateChildrenComment } from "@/scripts/render-data";
 import ImgUser from "@/components/svg-component/ImgUser";
 import Likes from "@/components/svg-component/Likes";
-import { useContext, useEffect, useState } from "react";
-import CommentOptions from "@/components/svg-component/CommentOptions";
-import { UserContext } from "@/App";
-import { getChildsComment, updateChildrenComment } from "@/scripts/render-data";
-import TrashComment from "@/components/svg-component/TrashComment";
-import toast from "react-hot-toast";
+import OptionsComment from "@/components/svg-component/OptionsComment";
+import ReplyToComment from "@/components/svg-component/ReplyToComment";
 import { type CommentCardProps, type Comment } from "types/types";
-import { useNavigate } from "react-router";
 
 // Se renderiza cada comentario individualmente
-const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
-  const [imgError, setImgError] = useState(false);
+const CommentCard: React.FC<CommentCardProps> = ({
+  comment,
+  user,
+  openTread,
+  setOpenTread,
+  depth,
+}) => {
   const [isResponse, setIsResponse] = useState(false);
   const [responseComment, setResponseComment] = useState("");
   const [childs, setChilds] = useState<Comment[]>([]);
-
-  const user = useContext(UserContext);
 
   const handleSubmitChildren = async (
     event: React.FormEvent<HTMLFormElement>
@@ -66,21 +68,13 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
         setChilds(result);
       });
     } else navigate("/404");
-  }, [comment._id, navigate, responseComment]);
+  }, [comment._id, navigate, isResponse]);
 
   return (
     <>
-      <li>
-        <div>
-          {comment.owner && !imgError ? (
-            <img
-              src={comment.owner.photoURL || ""}
-              alt="User profile image"
-              onError={() => setImgError(true)}
-            />
-          ) : (
-            <ImgUser />
-          )}
+      <li className={`depth-${depth}`}>
+        <div className="comment">
+          <ImgUser photoURL={comment.owner.photoURL} />
           <section>
             <strong>{comment.owner.displayName}</strong>
             {comment.owner.email && (
@@ -91,31 +85,54 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
           </section>
           <div className="comments-content">
             <p>{comment.data}</p>
-            {user?.uid === comment.owner.uid && (
-              <TrashComment id={comment._id} />
-            )}
-            <Likes comment={comment} />
-            <CommentOptions
-              isResponse={isResponse}
-              setIsResponse={setIsResponse}
-            />
+            <OptionsComment id={comment._id} comment={comment} />
           </div>
+          <ReplyToComment
+            user={user}
+            isResponse={isResponse}
+            setIsResponse={setIsResponse}
+          />
+          <Likes comment={comment} />
         </div>
       </li>
-      {isResponse && (
+      {isResponse && user && (
         <div className="response-comment">
+          <ImgUser photoURL={user?.photoURL} />
           <form onSubmit={handleSubmitChildren}>
             <input
               type="text"
               value={responseComment}
               onChange={(e) => setResponseComment(e.target.value)}
+              placeholder="Text here..."
             />
             <button type="submit">Enviar</button>
           </form>
         </div>
       )}
       {childs.length > 0 &&
-        childs.map((child) => <CommentCard comment={child} />)}{" "}
+        (depth < 3 || openTread ? (
+          <>
+            {childs.map((child) => (
+              <CommentCard
+                key={child._id}
+                comment={child}
+                user={user}
+                openTread={openTread}
+                setOpenTread={setOpenTread}
+                depth={depth + 1}
+              />
+            ))}
+            {depth > 3 && (
+              <p className="state-thread" onClick={() => setOpenTread(false)}>
+                Close Tread...
+              </p>
+            )}
+          </>
+        ) : (
+          <p className="state-thread" onClick={() => setOpenTread(true)}>
+            Open thread...
+          </p>
+        ))}
     </>
   );
 };
