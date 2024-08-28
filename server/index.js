@@ -226,6 +226,24 @@ app.put("/api/comments/likes", async (req, res) => {
   }
 });
 
+app.put("/api/comments/edit/:id", async (req, res) => {
+  const { id } = req.params;
+  const { textEdit } = req.body;
+  if (!textEdit) return res.status(400).json({ message: "Missing content" });
+
+  try {
+    const comment = await modelComment.findById(id);
+    if (!comment) return res.status(404).json({ message: "Comment not found" });
+
+    comment.data = textEdit;
+    await comment.save();
+    res.status(200).json(comment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
 app.post("/api/comments/children/:id", async (req, res) => {
   const parentCommentId = req.params.id;
   let newCommentData = req.body;

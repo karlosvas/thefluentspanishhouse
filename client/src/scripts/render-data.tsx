@@ -101,7 +101,7 @@ export const updateChildrenComment = async (
   id: string
 ) => {
   try {
-    await app.post(`${url_api}/api/comments/children/${id}`, {
+    return await app.post(`${url_api}/api/comments/children/${id}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -207,6 +207,19 @@ export const deleteComment = async (id: string) => {
       headers: {
         "Content-Type": "application/json",
       },
+    });
+  } catch (error) {
+    console.error("Error to submit post", error);
+  }
+};
+
+export const editComment = async (id: string, textEdit: string) => {
+  try {
+    return await app.put(`${url_api}/api/comments/edit/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ textEdit }),
     });
   } catch (error) {
     console.error("Error to submit post", error);

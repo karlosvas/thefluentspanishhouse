@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import CommentCard from "@/components/pages-components/publications/CommentCard";
 import { getCommentsById, postComment } from "@/scripts/render-data";
@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 const CommentsPublication = () => {
   // Estado de los comentarios actuales, y del Text Area
   const [comments, setComments] = useState<Comment[]>([]);
-  const [newComment, setNewComment] = useState("");
+  const newCommentRef = useRef<HTMLTextAreaElement>(null);
 
   // Id de la publicación
   const { id } = useParams<{ id: string }>();
@@ -18,16 +18,12 @@ const CommentsPublication = () => {
   //Usuario actual
   const user = useContext(UserContext);
 
-  // Cada vez que se pulsa una tecla
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewComment(event.target.value);
-  };
-
   // Cada vez que se envia el formulario
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (
-      newComment.trim() !== "" &&
+      newCommentRef.current &&
+      newCommentRef.current.value.trim() !== "" &&
       id &&
       user &&
       user.uid &&
@@ -44,16 +40,19 @@ const CommentsPublication = () => {
           email: user.email,
           photoURL: user.photoURL || "",
         },
-        data: newComment,
+        data: newCommentRef.current.value,
         likes: 0,
         likedBy: [],
         answers: [],
       };
       // Limpiar el text area
-      setNewComment("");
+      newCommentRef.current.value = "";
       // Enviar el comentario
       await postComment(newCommentData);
       // Si se ha enviado correctamente, añadirlo a la lista de comentarios
+      const updatedComments = await getCommentsById(id);
+      updatedComments.reverse();
+      setComments(updatedComments);
     } else toast.error("Do you need login to comment");
   };
 
@@ -67,8 +66,9 @@ const CommentsPublication = () => {
         setComments(result);
       });
     else navigate("/404");
-  }, [comments, id, navigate]);
+  }, [id, navigate]);
 
+  console.log("uni");
   const [openTread, setOpenTread] = useState(false);
 
   return (
@@ -77,8 +77,7 @@ const CommentsPublication = () => {
 
       <form onSubmit={handleSubmit}>
         <textarea
-          value={newComment}
-          onChange={handleChange}
+          ref={newCommentRef}
           placeholder="Write your comment..."
           rows={4}
           cols={50}
@@ -99,6 +98,8 @@ const CommentsPublication = () => {
                   user={user}
                   openTread={openTread}
                   setOpenTread={setOpenTread}
+                  setComments={setComments}
+                  comments={comments}
                   depth={0}
                 />
               </ul>

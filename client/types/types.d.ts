@@ -35,6 +35,7 @@ export interface ButtonProps {
   event?: () => void;
   ref?: React.Ref<HTMLButtonElement>;
   children: ReactNode;
+  suscribe?: boolean;
 }
 
 export interface PublicationCardType {
@@ -106,6 +107,8 @@ export interface CommentCardProps {
   user: User | null;
   openTread: boolean;
   setOpenTread: React.Dispatch<React.SetStateAction<boolean>>;
+  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
+  comments: Comment[];
   depth: number;
 }
 

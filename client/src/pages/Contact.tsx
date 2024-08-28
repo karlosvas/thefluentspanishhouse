@@ -9,6 +9,7 @@ import "@/styles/main-contact.css";
 import { Helmet } from "react-helmet-async";
 
 const ContactForm = () => {
+  const [suscribe, setSuscribe] = useState<boolean>(false);
   const user = useContext(UserContext);
   const loggin = isLogged();
 
@@ -35,6 +36,7 @@ const ContactForm = () => {
 
   const onSubmitNote = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSuscribe(true);
     if (!loggin) {
       toast.error("You must log in");
       return;
@@ -43,7 +45,6 @@ const ContactForm = () => {
       return;
     }
     try {
-      console.log("Contect", user.email);
       await submitNote(newNote);
       setNewNote({
         email_user: user.email,
@@ -54,6 +55,7 @@ const ContactForm = () => {
     } catch (error) {
       toast.error("An error occurred while sending the data");
     }
+    setSuscribe(false);
   };
 
   useEffect(() => {
@@ -189,7 +191,7 @@ const ContactForm = () => {
                   <label htmlFor="note">Message</label>
                   <span>Message</span>
                 </div>
-                <Button type="submit" id="btn">
+                <Button type="submit" id="btn" suscribe={suscribe}>
                   Submit
                 </Button>
               </form>
