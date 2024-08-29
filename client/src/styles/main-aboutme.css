@@ -11,6 +11,10 @@
   align-items: center;
   flex-direction: column;
   background-color: var(--primary-white);
+
+  h2 {
+    margin-top: 50px;
+  }
   .div-aboutme {
     display: flex;
     justify-content: center;
@@ -18,7 +22,7 @@
     flex-direction: column;
     width: 80%;
     text-align: center;
-    padding-bottom: 200px;
+    padding-bottom: 100px;
     figure {
       .img-aboutme {
         animation: reveal linear both;
@@ -69,7 +73,6 @@
 @media only screen and (width <= 766px) {
   .main-aboutme {
     .div-aboutme {
-      padding-bottom: 100px;
       h2 {
         font-size: 2em;
       }

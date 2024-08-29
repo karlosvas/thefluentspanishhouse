@@ -1,42 +1,46 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Theme from "@/components/svg-component/Theme";
 import Account from "@/components/svg-component/Account";
 import { type ThemeProps } from "types/types";
+import { handleClickNavigate } from "@/scripts/navigate";
 
 const MainNav: React.FC<ThemeProps> = ({ theme, setTheme }) => {
-  const location = useLocation();
   const navigate = useNavigate();
-
-  const handleClick =
-    (path: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
-      location.pathname === path ? event.preventDefault() : navigate(path);
-    };
 
   return (
     <nav>
       <ul>
         <li>
-          <Link to="/" onClick={handleClick("/")}>
+          <Link to="/" onClick={handleClickNavigate("/", navigate)}>
             Home
           </Link>
         </li>
         <li>
-          <Link to="/blog" onClick={handleClick("/blog")}>
+          <Link to="/blog" onClick={handleClickNavigate("/blog", navigate)}>
             Blog
           </Link>
         </li>
         <li>
-          <Link to="/aboutme" onClick={handleClick("/aboutme")}>
+          <Link
+            to="/aboutme"
+            onClick={handleClickNavigate("/aboutme", navigate)}
+          >
             About me
           </Link>
         </li>
         <li>
-          <Link to="/newsetler" onClick={handleClick("/newsetler")}>
+          <Link
+            to="/newsetler"
+            onClick={handleClickNavigate("/newsetler", navigate)}
+          >
             Newsetler
           </Link>
         </li>
         <li>
-          <Link to="/contact" onClick={handleClick("/contact")}>
+          <Link
+            to="/contact"
+            onClick={handleClickNavigate("/contact", navigate)}
+          >
             Contact
           </Link>
         </li>

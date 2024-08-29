@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import Hamburger from "@/components/header-components/Hamburger";
 import Auth from "@/components/header-components/Auth";
 import Exit from "@/components/svg-component/Exit";
@@ -7,6 +7,8 @@ import MainNav from "@/components/header-components/MainNav";
 import Theme from "@/components/svg-component/Theme";
 import Settings from "@/components/svg-component/Settings";
 import "@/styles/header.css";
+import { Link } from "react-router-dom";
+import { handleClickNavigate } from "@/scripts/navigate";
 
 const Header = () => {
   // Estados
@@ -33,6 +35,8 @@ const Header = () => {
 
   // Uri actual
   const location = useLocation();
+  // Navegación
+  const navigate = useNavigate();
 
   return (
     <>
@@ -47,23 +51,13 @@ const Header = () => {
         </section>
         <div className="header">
           {window.innerWidth >= 766 ? (
-            location.pathname === "/" ? (
-              <a href="#">
-                <img
-                  src="/logos/logo.ico"
-                  alt="fluent spanish house logo"
-                  id="logo"
-                />
-              </a>
-            ) : (
-              <a href="/">
-                <img
-                  src="/logos/logo.ico"
-                  alt="fluent spanish house logo"
-                  id="logo"
-                />
-              </a>
-            )
+            <Link to="/" onClick={handleClickNavigate("/", navigate)}>
+              <img
+                src="/logos/logo.ico"
+                alt="fluent spanish house logo"
+                id="logo"
+              />
+            </Link>
           ) : (
             <>
               <Hamburger theme={theme} setTheme={setTheme} />
