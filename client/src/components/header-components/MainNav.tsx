@@ -33,7 +33,7 @@ const MainNav: React.FC<ThemeProps> = ({ theme, setTheme }) => {
             to="/newsetler"
             onClick={handleClickNavigate("/newsetler", navigate)}
           >
-            Newsetler
+            Newsletter
           </Link>
         </li>
         <li>

@@ -25,7 +25,7 @@ const Prices = () => {
       <div className="div-pracing">
         <h2>What do our classes offer?</h2>
         <div className="flex-cards">
-          <div className="card-pracing">
+          {/* <div className="card-pracing">
             <h3>Free class for beginners</h3>
             <div className="price-classes ">
               <h1>0€</h1>
@@ -50,7 +50,7 @@ const Prices = () => {
             <Button event={() => handleSusribeChange("FreeClass")}>
               GET FREE INITIAL COURSE 🍃
             </Button>
-          </div>
+          </div> */}
           <div className="card-pracing">
             <h3>Group classes</h3>
             <div className="price-classes">
@@ -58,42 +58,34 @@ const Prices = () => {
               <small>/ hour</small>
             </div>
             <ul>
-              <li>Access to online resources</li>
+              <li>A sample free 1-hour class for new students</li>
               <li>
-                Personalized classes according to the level of the group to
-                which you belong
+                Participative and dynamic classes according to the level group
               </li>
-              <li>Tailor-made materials to work in and out of class</li>
-              <li>Personalized classes according to your level</li>
-              <li className="not-privileges">Access to exclusive content</li>
-              <li className="not-privileges">
-                Out-of-class communication with the teacher via WhatsApp,
-                Messenger, or email to solve questions whenever necessary.
-              </li>
+              <li>Small groups of 2 to 4 students</li>
+              <li>Access to exclusive online content</li>
+              <li>Access to exclusive content</li>
+              <li>And out-of-class communication with the teacher.</li>
             </ul>
             <Button event={() => handleSusribeChange("GroupClass")}>
-              GET GROUP CLASSES 🥘
+              GET A SAMPLE FREE 1-HOUR CLASS CLASS
             </Button>
           </div>
           <div className="card-pracing">
-            <h3>Private classes</h3>
+            <h3>One-to-one classes</h3>
             <div className="price-classes ">
-              <h1>21€</h1>
+              <h1>22€</h1>
               <small>/ hour</small>
             </div>
             <ul>
-              <li>Access to exclusive content</li>
-              <li>Personalized classes according to your level</li>
-              <li>Tailor-made materials to work in and out of class</li>
-              <li>Email and chat support</li>
+              <li>A sample free 1-hour class for new students</li>
+              <li> Personalized lessons according to the student’s level</li>
+              <li>Access to exclusive online content,</li>
               <li>Access to exclusive content and homework assignments</li>
-              <li>
-                Out-of-class communication with the teacher via WhatsApp,
-                Messenger, or email to solve questions whenever necessary.
-              </li>
+              <li>And out-of-class communication with the teacher.</li>
             </ul>
             <Button event={() => handleSusribeChange("PrivatedClass")}>
-              GET PRIVATE CLASSES 💯‼️
+              GET A SAMPLE FREE 1-HOUR CLASS CLASS
             </Button>
           </div>
         </div>

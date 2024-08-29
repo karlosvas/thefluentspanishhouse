@@ -29,61 +29,35 @@ const AboutMe = () => {
                 style={{ display: imageLoaded ? "block" : "none" }}
               />
               <figcaption>
-                "I have firsthand knowledge of the difficulties Spanish learners
-                face in mastering my language. <br />
-                Memorizing rules and vocabulary are not the keys to fluency.
-                <br /> You need to build a solid grammatical foundation. My
-                courses provide guidance and solutions, take the next step!"
+                "I was born and raised in Valladolid, two hundred kilometers
+                from Madrid. I love meeting people from around the world and
+                learning about different cultures. My hobbies are going for a
+                run, doing Pilates, cooking, and sharing a delicious meal with
+                friends and family."
               </figcaption>
             </figure>
           </article>
           <article>
-            <h2>Who am I?</h2>
+            <h2>MY BACKGROUND</h2>
             <p>
-              Hello, I am Marta Gutiérrez Fonseca, a Spanish teacher with years
-              of experience helping students from all over the world master this
-              beautiful language.
-              <br />
-              My passion is teaching, and my goal is for my students not only to
-              learn to speak Spanish fluently but also to fall in love with the
-              culture surrounding it.
-              <br />
+              I studied for a Bachelor’s in Spanish Language and Literature and
+              culture at my town university. After completing my studies, I
+              decided to switch things up and pursue a master&#39;s degree in
+              International Assistant Management. However, after gaining
+              expertise as a manager assistant for quite a few years, I became a
+              Spanish teacher for foreign workers in a language school.
+              Recently, I obtained a Master&#39;s degree in Cognitive Grammar
+              recognized by El Instituto Cervantes. Currently, 3 I’m doing a
+              master&#39;s in teaching Spanish as a foreign language at the
+              well-known University of Salamanca.
             </p>
           </article>
           <article>
-            <h2>What do I offer?</h2>
+            <h2>TEACHING EXPERIENCE</h2>
             <p>
-              My classes are designed to be dynamic, challenging, and
-              stimulating, adapting to the individual needs of each student. I
-              firmly believe that mastering fundamental grammatical structures
-              is crucial for achieving effective and confident communication.
-              <br />
-              With a personalized approach and custom-made materials, my lessons
-              focus not only on theory but also on constant practice, with an
-              emphasis on oral reproduction of the language.
-              <br /> I speak with a neutral accent and clearly, and I always
-              encourage my students to ask questions and clarify their doubts.
-              <br />
-            </p>
-          </article>
-          <article>
-            <h2>How will our classes be?</h2>
-            <p>
-              I offer private lessons for all levels, from A1 to C1, using video
-              conferencing platforms such as Zoom, Skype, and Google Meet.
-              <br /> Additionally, I provide all the necessary learning
-              materials, as well as assignments and constant communication
-              outside of class to resolve any doubts.
-              <br />
-            </p>
-          </article>
-          <article>
-            <h2>How to start?</h2>
-            <p>
-              I am here to help you achieve your language goals and make your
-              Spanish learning journey as enjoyable and effective as possible.
-              <br /> I invite you to take a free 45-minute trial class and start
-              this adventure together!
+              Since November 2018, I have been teaching one-to-one and group
+              classes for English speakers online on Zoom. I prepare original
+              materials for my students to use in and out of class.
             </p>
           </article>
         </div>

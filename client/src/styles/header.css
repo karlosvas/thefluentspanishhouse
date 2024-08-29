@@ -17,8 +17,8 @@ header {
 
     #logo {
       z-index: 120;
-      height: 45px;
-      width: auto;
+      height: 70px;
+      width: 60px;
       border-radius: 3px;
       margin-left: 5vw;
       filter: drop-shadow(0 0 0.5rem var(--primary-blue));

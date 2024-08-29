@@ -53,7 +53,7 @@ const Header = () => {
           {window.innerWidth >= 766 ? (
             <Link to="/" onClick={handleClickNavigate("/", navigate)}>
               <img
-                src="/logos/logo.ico"
+                src="/logos/logo.png"
                 alt="fluent spanish house logo"
                 id="logo"
               />
