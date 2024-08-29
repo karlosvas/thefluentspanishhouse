@@ -150,15 +150,11 @@
     }
 
     .nw-articles {
-      p {
-        padding: 10px;
-      }
       .nw-article {
         display: flex;
         align-items: center;
         flex-direction: column;
         figure {
-          margin: 0;
           .img-newsletter {
             margin: 20px 0;
             width: 100vw;
@@ -196,7 +192,7 @@
             }
           }
           button {
-            width: 30vw;
+            width: 36vw;
             font-size: 13px;
           }
           h3 {

@@ -138,11 +138,11 @@
 
 /* Movil */
 @media only screen and (width <= 766px) {
-  .main-account {
-    height: 140dvh;
-  }
   .main-account .ac-content {
     background-color: var(--primary-white);
+    .profile {
+      padding-top: 30px;
+    }
     ul {
       margin: 0;
     }

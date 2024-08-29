@@ -200,8 +200,11 @@ html.dark {
     .container > .form {
       border: none;
     }
-    .main-blog #blog {
+    .main-blog {
       background-color: var(--secondary-black);
+      #blog {
+        background-color: var(--secondary-black);
+      }
     }
   }
 }

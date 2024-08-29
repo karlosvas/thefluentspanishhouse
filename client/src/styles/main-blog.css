@@ -6,7 +6,7 @@
   min-height: 80dvh;
 
   #blog {
-    min-height: 50dvh;
+    min-height: 100dvh;
     margin: auto;
     margin-top: 100px;
     display: flex;

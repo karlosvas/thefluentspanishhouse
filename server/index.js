@@ -44,14 +44,12 @@ await connectDB();
 // <--------------- GET --------------->
 // Obtener los hijos de un comentario
 app.get("/api/comments/children/:id", async (req, res) => {
-  console.log("obteneindo children");
   // El id es el id del comentario padre (parent_id)
   const parentId = req.params.id;
   try {
     // Buscar el comentario padre y obtener sus hijos
     const comments = await modelComment.findById(parentId).populate("answers");
     if (!comments) throw new Error("Comments not found");
-    console.log("comments.answers", comments.answers);
     res.json(comments.answers);
   } catch (error) {
     res.status(500).json({ error: "Error al obtener los comentarios" });
