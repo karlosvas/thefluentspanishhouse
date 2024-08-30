@@ -36,19 +36,13 @@ function ControlledCarousel() {
       data-bs-theme={!darkMode ? "dark" : "light"}
     >
       <Carousel.Item interval={5000}>
-        <img className="d-block w-100" src="/img/star.png" alt="First slide" />
-        <Carousel.Caption>
-          <h3>John Doe</h3>
-          <p>
-            The Spanish classes taught by Marta are exceptional. I have improved
-            my fluency and comprehension in a very short time. Highly
-            recommended!
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item interval={5000}>
-        <img className="d-block w-100" src="/img/star.png" alt="Second slide" />
-        <Carousel.Caption>
+        <div className="backdrop-caption"></div>
+        <img
+          className="d-block w-100"
+          src="/img/star2.png"
+          alt="Second slide"
+        />
+        <Carousel.Caption className="caption">
           <h3>Joan Penn</h3>
           <p>
             Marta is a wonderful and patient teacher. She is passionate about
@@ -59,8 +53,9 @@ function ControlledCarousel() {
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item interval={5000}>
-        <img className="d-block w-100" src="/img/star.png" alt="Third slide" />
-        <Carousel.Caption>
+        <div className="backdrop-caption"></div>
+        <img className="d-block w-100" src="/img/star3.png" alt="Third slide" />
+        <Carousel.Caption className="caption">
           <h3>Red Salas</h3>
           <p>
             Marta's Spanish classes are fantastic. She has a unique way of

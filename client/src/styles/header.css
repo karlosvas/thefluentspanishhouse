@@ -8,6 +8,7 @@ header {
   box-sizing: border-box;
 
   .header {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     height: 10vh;
     width: 100%;
     display: flex;

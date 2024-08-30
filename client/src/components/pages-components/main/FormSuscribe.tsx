@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Buuton from "@/components/reusable/Button";
 import {
-  handleSubmitSubscription,
+  submitSubscriptionMailchamp,
   setNewSubscriberEmail,
 } from "@/scripts/render-data";
 import toast from "react-hot-toast";
@@ -38,7 +38,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
     if (buttonName === undefined) return;
     setSuscribe(true);
     try {
-      await handleSubmitSubscription(
+      await submitSubscriptionMailchamp(
         event,
         handleSusribeChange,
         newSubscriber,

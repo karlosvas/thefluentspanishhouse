@@ -42,7 +42,7 @@ const Prices = () => {
               <li>And out-of-class communication with the teacher.</li>
             </ul>
             <Button event={() => handleSusribeChange("Group classes")}>
-              GET A SAMPLE FREE 1-HOUR CLASS CLASS
+              GET A SAMPLE FREE 1-HOUR CLASS
             </Button>
           </div>
           <div className="card-pracing">
@@ -59,7 +59,7 @@ const Prices = () => {
               <li>And out-of-class communication with the teacher.</li>
             </ul>
             <Button event={() => handleSusribeChange("One-to-one classes")}>
-              GET A SAMPLE FREE 1-HOUR CLASS CLASS
+              GET A SAMPLE FREE 1-HOUR CLASS
             </Button>
           </div>
         </div>

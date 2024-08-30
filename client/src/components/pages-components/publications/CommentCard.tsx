@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import { getChildsComment, updateChildrenComment } from "@/scripts/render-data";
+import { getChildsComment, postChildrenComment } from "@/scripts/render-data";
 import ImgUser from "@/components/svg-component/ImgUser";
 import Likes from "@/components/svg-component/Likes";
 import OptionsComment from "@/components/svg-component/OptionsComment";
@@ -54,7 +54,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
       responseComment.current.value = "";
       setIsResponse(false);
       try {
-        const newComment = await updateChildrenComment(
+        const newComment = await postChildrenComment(
           newCommentData,
           comment._id
         );

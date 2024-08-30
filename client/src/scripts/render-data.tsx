@@ -29,7 +29,7 @@ export const getUrlTest = async () => {
   }
 };
 
-export const getCommentsById = async (id: string) => {
+export const getCommentsByID = async (id: string) => {
   try {
     return await app.get(`${url_api}/api/comments/${id}`, {
       headers: {
@@ -56,7 +56,7 @@ export const getChildsComment = async (id: string) => {
   }
 };
 
-export const loadPublication = async (id: string) => {
+export const getPublicationByID = async (id: string) => {
   try {
     const publication = await app.get(`${url_api}/api/publications/${id}`, {
       method: "GET",
@@ -70,7 +70,7 @@ export const loadPublication = async (id: string) => {
   }
 };
 
-export const loadPublications = async () => {
+export const getPublications = async () => {
   try {
     return await app.get(`${url_api}/api/publications`, {
       headers: {
@@ -85,18 +85,23 @@ export const loadPublications = async () => {
 ///////////////////////////// POST /////////////////////////////
 export const postComment = async (newCommentData: Comment) => {
   try {
+    const originUrl = window.location.href;
+    const dataToSend = {
+      ...newCommentData,
+      originUrl,
+    };
     await app.post(`${url_api}/api/comments/`, {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newCommentData),
+      body: JSON.stringify(dataToSend),
     });
   } catch (error) {
     console.error("Error al enviar el comentario:", error);
   }
 };
 
-export const updateChildrenComment = async (
+export const postChildrenComment = async (
   newCommentData: Comment,
   id: string
 ) => {
@@ -112,7 +117,7 @@ export const updateChildrenComment = async (
   }
 };
 
-export const handleSubmitSubscription = async (
+export const submitSubscriptionMailchamp = async (
   event: React.FormEvent<HTMLFormElement>,
   handleChange: () => void,
   newSubscriber: SubscriberType,
@@ -139,7 +144,7 @@ export const handleSubmitSubscription = async (
   }
 };
 
-export const handleSubmitPost = async (
+export const postPublication = async (
   event: FormEvent<HTMLFormElement>,
   newPublication: PublicationCardType
 ) => {

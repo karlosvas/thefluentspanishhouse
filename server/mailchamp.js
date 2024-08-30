@@ -1,6 +1,6 @@
 import https from "https";
 
-export function newMailChampSuscriber(newUserChamp, res) {
+export async function newMailChampSuscriber(newUserChamp, res) {
   const jsonChamp = JSON.stringify(newUserChamp);
 
   const apiKey = process.env.MAILCHIMP_API;

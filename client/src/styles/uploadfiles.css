@@ -122,19 +122,19 @@
   width: 100%;
 }
 
-.upload-publication #submitPost {
+.upload-publication #submit-post {
   background-color: var(--primary-blue);
   color: var(--primary-white);
-  margin-top: 20px;
+  margin-top: 40px;
   align-self: flex-end;
   border-radius: 5px;
 }
 
-.upload-publication #submitPost:hover {
+.upload-publication #submit-post:hover {
   color: var(--primary-black);
 }
 
-.upload-publication #submitPost:focus {
+.upload-publication #submit-post:focus {
   outline: 5px solid var(--secondary-blue);
 }
 

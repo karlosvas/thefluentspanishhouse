@@ -2,7 +2,7 @@ import CardsPublicationBlog from "@/components/pages-components/blog/CardsPublic
 import FormPublication from "@/components/pages-components/blog/FormPublication";
 import { handleChangeModal } from "@/scripts/modal";
 import { useEffect, useState } from "react";
-import { loadPublications } from "@/scripts/render-data";
+import { getPublications } from "@/scripts/render-data";
 import { type PublicationCardType } from "types/types";
 import "@/styles/main-blog.css";
 import { Helmet } from "react-helmet-async";
@@ -26,7 +26,7 @@ const Blog = () => {
 
   const fetchPublications = async () => {
     try {
-      const publications = await loadPublications();
+      const publications = await getPublications();
       publications.reverse();
       if (Array.isArray(publications) && publications.length !== 0)
         setCardsBlog(publications as PublicationCardType[]);

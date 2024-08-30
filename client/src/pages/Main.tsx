@@ -34,13 +34,17 @@ const Main = () => {
             />
             <figcaption>
               Hi, my name is Marta. I’m a <strong>Spanish teacher</strong> from
-              Spain who helps English speakers to get fluent in Spanish. <br />
+              Spain who helps <strong>English speakers</strong> to get{" "}
+              <strong>fluent in Spanish</strong>. <br />
               <br />
-              Learning a language is an exciting journey, but you need
-              perseverance to get positive results. I was about to quit many
-              times until I found out what was holding me back. I’d been
-              prioritizing incorrectly for many years. <br />
-              That breakthrough was a real turning point for me!
+              Learning a language is an <strong>exciting journey</strong>, but
+              you need
+              <strong>perseverance</strong> to get positive results. I was about
+              to quit many times until I found out what was holding me back. I’d
+              been
+              <strong> prioritizing incorrectly</strong> for many years. <br />
+              That breakthrough was a <strong>real turning point</strong> for
+              me!
             </figcaption>
           </figure>
         </article>
@@ -48,7 +52,7 @@ const Main = () => {
           <h2>What you can achive with mi assitence?</h2>
           <ul>
             <li>
-              <h4>● An effective focus on the number one priorities:</h4>
+              <h4>An effective focus on the number one priorities:</h4>
               <p>
                 Listening, comprehension and speaking. You’ll practice and
                 improve your listening comprehension and speaking through
@@ -58,7 +62,7 @@ const Main = () => {
               </p>
             </li>
             <li>
-              <h4>● Guidance to correct grammar and pronunciation.</h4>
+              <h4>Guidance to correct grammar and pronunciation.</h4>
               <p>
                 You’ll learn how to connect words to gain fluency and receive
                 the necessary corrections to avoid permanently ungrained
@@ -66,7 +70,7 @@ const Main = () => {
               </p>
             </li>
             <li>
-              <h4>● A high dose of motivation that boosts your confidence.</h4>
+              <h4>A high dose of motivation that boosts your confidence.</h4>
               <p>
                 I’ll get ongoing feedback on the learning process. Besides,
                 you’ll learn interesting facts about the language and the

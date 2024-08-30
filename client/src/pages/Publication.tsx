@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PlaceholderPublications from "@/components/pages-components/publications/PlaceholderPublication";
-import { loadPublication } from "@/scripts/render-data";
+import { getPublicationByID } from "@/scripts/render-data";
 import { type PublicationCardType, type RouteParams } from "types/types";
 import "@/styles/main-publication.css";
 import CommentsPublication from "@/components/pages-components/publications/CommenstPublication";
@@ -18,7 +18,7 @@ const Publication = () => {
     let publication: PublicationCardType | undefined;
 
     if (id) {
-      loadPublication(id)
+      getPublicationByID(id)
         .then((result) => {
           publication = result;
           if (publication) {

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import CommentCard from "@/components/pages-components/publications/CommentCard";
-import { getCommentsById, postComment } from "@/scripts/render-data";
+import { getCommentsByID, postComment } from "@/scripts/render-data";
 import { UserContext } from "@/App";
 import { type Comment } from "types/types";
 import "@/styles/comments.css";
@@ -51,7 +51,7 @@ const CommentsPublication = () => {
       // Enviar el comentario
       await postComment(newCommentData);
       // Si se ha enviado correctamente, añadirlo a la lista de comentarios
-      const updatedComments = await getCommentsById(id);
+      const updatedComments = await getCommentsByID(id);
       updatedComments.reverse();
       setComments(updatedComments);
     } else toast.error("Do you need login to comment");
@@ -62,7 +62,7 @@ const CommentsPublication = () => {
   // Obtener comentarios cuando el componente se monta o cuando cambia el id
   useEffect(() => {
     if (id)
-      getCommentsById(id).then((result) => {
+      getCommentsByID(id).then((result) => {
         result.reverse();
         setComments(result);
       });

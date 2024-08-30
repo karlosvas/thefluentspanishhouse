@@ -6,16 +6,16 @@
   min-height: 80dvh;
 
   #blog {
-    min-height: 100dvh;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 50px;
     display: flex;
     height: auto;
-    width: 50%;
+    width: 60%;
     flex-wrap: wrap;
+    gap: 20px;
     .card-blog {
       flex-grow: 1;
-      flex-basis: 200;
+      flex-basis: 300px;
       animation: reveal 0.5s ease-in-out both;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       background-color: var(--secondary-white);
@@ -29,7 +29,6 @@
       overflow: hidden;
       transition: 0.25s;
       position: relative;
-      margin: 10px;
       a {
         display: block;
         width: 100%;
@@ -69,6 +68,7 @@
         h3 {
           text-align: center;
           width: 100%;
+          padding: 0 20px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: normal;

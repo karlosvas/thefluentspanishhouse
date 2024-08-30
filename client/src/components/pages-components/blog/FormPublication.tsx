@@ -1,6 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { delatePublication, handleSubmitPost } from "@/scripts/render-data";
+import { delatePublication, postPublication } from "@/scripts/render-data";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
 import {
@@ -148,10 +148,10 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     }
     try {
       if (cardsBlog.length !== 6) {
-        await handleSubmitPost(event, newPublication);
+        await postPublication(event, newPublication);
       } else {
         await delatePublication(cardsBlog[0]._id);
-        await handleSubmitPost(event, newPublication);
+        await postPublication(event, newPublication);
       }
     } catch (error) {
       console.error("Error al enviar el post:", error);

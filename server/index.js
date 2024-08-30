@@ -7,8 +7,13 @@ import { Types } from "mongoose";
 import express from "express";
 import cors from "cors";
 import { newMailChampSuscriber } from "./mailchamp.js";
-import { submitNote, submitEmalSuscriber } from "./nodemailer.js";
+import {
+  submitNote,
+  submitEmalSuscriber,
+  submitEmailComment,
+} from "./nodemailer.js";
 import { validateEmail } from "./utilities.js";
+import { deleteChildren } from "./utilities/delete-logic.js";
 
 const app = express();
 
@@ -113,12 +118,23 @@ app.get("/api/publications/:id", async (req, res) => {
 // Agregar comentarios
 app.post("/api/comments", async (req, res) => {
   let newCommentData = req.body;
+  const originUrl = req.body.originUrl;
+
   try {
     // Crear un nuevo ObjectId para el nuevo comentario
     newCommentData._id = new Types.ObjectId();
     // Crear un nuevo comentario hijo
     const newComment = new modelComment(newCommentData);
     newComment.save();
+
+    console.log(newComment);
+    // Avisamos por email a el admin_gmail
+    await submitEmailComment(
+      newComment.owner.email,
+      newComment.owner.displayName,
+      newComment.data,
+      originUrl
+    );
     res.status(201).json(newComment);
   } catch (error) {
     console.error("Error al añadir el comentario:", error);
@@ -174,16 +190,12 @@ app.post("/api/mailchamp", async (req, res) => {
     ],
   };
 
-  newMailChampSuscriber(newUserChamp, res);
-});
-
-app.post("/api/subscribers/email", async (req, res) => {
-  const { email, name, lastname, type } = req.body.newSuscriber;
-  if (!validateEmail(email)) return res.status(400).send("Email inválido");
   try {
+    const type = interests;
+    await newMailChampSuscriber(newUserChamp, res);
     await submitEmalSuscriber(email, name, lastname, type);
   } catch (error) {
-    console.error("Error sending email:", error);
+    throw new Error("Error sending email, or subscribing to mailchamp");
   }
 });
 
@@ -317,7 +329,10 @@ app.delete("/api/comments/del/:id", async (req, res) => {
   if (!Types.ObjectId.isValid(id))
     return res.status(400).json({ message: "Invalid publication ID" });
   try {
-    const result = await modelComment.findByIdAndDelete(id);
+    // Elimina los hijos del comentario
+    await deleteChildren(comment);
+    // Elimina el comentario principal
+    await Comment.findByIdAndDelete(commentId);
     if (!result)
       return res.status(404).json({ message: "Publication not found" });
     res.status(200).json({ message: "Publication deleted successfully" });
