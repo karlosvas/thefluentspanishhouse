@@ -240,3 +240,25 @@ export const editComment = async (id: string, textEdit: string) => {
     console.error("Error to submit post", error);
   }
 };
+
+export const setNewSubscriberEmail = async (
+  newSuscriber: {
+    name: string;
+    lastname: string;
+    email: string;
+    type: string;
+  },
+  type: string
+) => {
+  try {
+    newSuscriber.type = type;
+    await app.post(`${url_api}/api/subscribers/email`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ newSuscriber }),
+    });
+  } catch (error) {
+    console.error("Error to submit post", error);
+  }
+};

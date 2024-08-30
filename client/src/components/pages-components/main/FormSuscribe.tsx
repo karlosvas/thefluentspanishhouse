@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Buuton from "@/components/reusable/Button";
-import { handleSubmitSubscription } from "@/scripts/render-data";
+import {
+  handleSubmitSubscription,
+  setNewSubscriberEmail,
+} from "@/scripts/render-data";
 import toast from "react-hot-toast";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
@@ -16,6 +19,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
     name: "",
     lastname: "",
     email: "",
+    type: "",
   });
   const [suscribe, setSuscribe] = useState(false);
 
@@ -31,6 +35,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (buttonName === undefined) return;
     setSuscribe(true);
     try {
       await handleSubmitSubscription(
@@ -39,6 +44,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
         newSubscriber,
         buttonName
       );
+      await setNewSubscriberEmail(newSubscriber, buttonName);
     } catch (error) {
       toast.error("The information sent is not valid");
     }

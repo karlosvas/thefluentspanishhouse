@@ -29,16 +29,17 @@ const AboutMe = () => {
                 style={{ display: imageLoaded ? "block" : "none" }}
               />
               <figcaption>
-                "I was born and raised in Valladolid, two hundred kilometers
-                from Madrid. I love meeting people from around the world and
-                learning about different cultures. My hobbies are going for a
-                run, doing Pilates, cooking, and sharing a delicious meal with
-                friends and family."
+                I was born and raised in Valladolid, two hundred kilometers from
+                Madrid.
+                <br />I love meeting people from around the world and learning
+                about different cultures. My hobbies are going for a run, doing
+                Pilates, cooking, and sharing a delicious meal with friends and
+                family."
               </figcaption>
             </figure>
           </article>
           <article>
-            <h2>MY BACKGROUND</h2>
+            <h2>My background</h2>
             <p>
               I studied for a Bachelor’s in Spanish Language and Literature and
               culture at my town university. After completing my studies, I
@@ -53,7 +54,7 @@ const AboutMe = () => {
             </p>
           </article>
           <article>
-            <h2>TEACHING EXPERIENCE</h2>
+            <h2>Teaching experience</h2>
             <p>
               Since November 2018, I have been teaching one-to-one and group
               classes for English speakers online on Zoom. I prepare original

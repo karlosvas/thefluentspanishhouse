@@ -51,6 +51,7 @@ export interface SubscriberType {
   name: string;
   lastname: string;
   email: string;
+  type: string;
 }
 
 export type PublicationType = {

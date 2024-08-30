@@ -7,7 +7,7 @@ import { Types } from "mongoose";
 import express from "express";
 import cors from "cors";
 import { newMailChampSuscriber } from "./mailchamp.js";
-import { submitNote } from "./nodemailer.js";
+import { submitNote, submitEmalSuscriber } from "./nodemailer.js";
 import { validateEmail } from "./utilities.js";
 
 const app = express();
@@ -175,6 +175,16 @@ app.post("/api/mailchamp", async (req, res) => {
   };
 
   newMailChampSuscriber(newUserChamp, res);
+});
+
+app.post("/api/subscribers/email", async (req, res) => {
+  const { email, name, lastname, type } = req.body.newSuscriber;
+  if (!validateEmail(email)) return res.status(400).send("Email inválido");
+  try {
+    await submitEmalSuscriber(email, name, lastname, type);
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
 });
 
 // Envia nota al gmail de process.env.USER_GMAIL

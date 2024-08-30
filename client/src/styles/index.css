@@ -112,6 +112,9 @@ html.light {
 html.dark {
   transition: background-color 0.3s ease, color 0.1s ease;
   header {
+    #logo {
+      filter: drop-shadow(0 -10px 1rem black);
+    }
     color: var(--primary-white);
     background-color: var(--primary-black);
     transition: background-color 0.3s ease, color 0.1s ease;
