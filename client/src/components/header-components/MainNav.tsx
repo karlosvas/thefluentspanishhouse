@@ -16,7 +16,7 @@ const MainNav: React.FC<ThemeProps> = ({ theme, setTheme }) => {
           </Link>
         </li>
         <li>
-          <Link to="/blog" onClick={handleClickNavigate("/blog", navigate)}>
+          <Link to="/blog/1" onClick={handleClickNavigate("/blog", navigate)}>
             Blog
           </Link>
         </li>

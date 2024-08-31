@@ -61,6 +61,7 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
     subtitle: "",
     content: "",
     base64_img: "",
+    currentPage: 0,
   });
 
   const handleInputChange = (

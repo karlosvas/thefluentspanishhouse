@@ -9,12 +9,12 @@ import {
   type NoteType,
 } from "types/types";
 
-const app = Helper();
+const helper = Helper();
 
 ///////////////////////////// GET /////////////////////////////
 export const getUrlTest = async () => {
   try {
-    return await app.get(`${import.meta.env.VITE_URL_API}/api/test`, {
+    return await helper.get(`${import.meta.env.VITE_URL_API}/api/test`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export const getUrlTest = async () => {
 
 export const getCommentsByID = async (id: string) => {
   try {
-    return await app.get(`${url_api}/api/comments/${id}`, {
+    return await helper.get(`${url_api}/api/comments/${id}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -44,7 +44,7 @@ export const getCommentsByID = async (id: string) => {
 
 export const getChildsComment = async (id: string) => {
   try {
-    const data = await app.get(`${url_api}/api/comments/${id}`, {
+    const data = await helper.get(`${url_api}/api/comments/${id}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -58,7 +58,7 @@ export const getChildsComment = async (id: string) => {
 
 export const getPublicationByID = async (id: string) => {
   try {
-    const publication = await app.get(`${url_api}/api/publications/${id}`, {
+    const publication = await helper.get(`${url_api}/api/publications/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -70,15 +70,27 @@ export const getPublicationByID = async (id: string) => {
   }
 };
 
-export const getPublications = async () => {
+export const getPublications = async (page: string) => {
   try {
-    return await app.get(`${url_api}/api/publications`, {
+    return await helper.get(`${url_api}/api/publications/${page}`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
   } catch (error) {
     console.error("Error al obtener datos:", error);
+  }
+};
+
+export const getLastPublication = async () => {
+  try {
+    return await helper.get(`${url_api}/api/last/publication`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    throw new Error("Error al obtener la última publicación");
   }
 };
 
@@ -90,7 +102,7 @@ export const postComment = async (newCommentData: Comment) => {
       ...newCommentData,
       originUrl,
     };
-    await app.post(`${url_api}/api/comments/`, {
+    await helper.post(`${url_api}/api/comments/`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -106,7 +118,7 @@ export const postChildrenComment = async (
   id: string
 ) => {
   try {
-    return await app.post(`${url_api}/api/comments/children/${id}`, {
+    return await helper.post(`${url_api}/api/comments/children/${id}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -130,7 +142,7 @@ export const submitSubscriptionMailchamp = async (
       ...newSubscriber,
       interests: buttonName,
     };
-    const response = await app.post(`${url_api}/api/mailchamp`, {
+    const response = await helper.post(`${url_api}/api/mailchamp`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -150,15 +162,10 @@ export const postPublication = async (
 ) => {
   event.preventDefault();
   try {
-    const response = await app.post(`${url_api}/api/newpublication`, {
+    await helper.post(`${url_api}/api/newpublication`, {
       body: JSON.stringify(newPublication),
     });
-    if (response && window.location.pathname === "/blog")
-      window.location.reload();
-    else {
-      toast.error("Error al enviar el post");
-      throw Error;
-    }
+    window.location.reload();
   } catch (error) {
     console.error("Error al enviar el post:", error);
   }
@@ -166,7 +173,7 @@ export const postPublication = async (
 
 export const submitNote = async (newNote: NoteType) => {
   try {
-    const response = await app.post(`${url_api}/api/note`, {
+    const response = await helper.post(`${url_api}/api/note`, {
       body: JSON.stringify(newNote),
     });
     if (response) toast.success("The email has been sent successfully");
@@ -182,7 +189,7 @@ export const updateLikes = async (
   likes: number
 ) => {
   try {
-    await app.put(`${url_api}/api/comments/likes`, {
+    await helper.put(`${url_api}/api/comments/likes`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -197,7 +204,7 @@ export const putCommentPublication = async (
   editPublication: PublicationCardType
 ) => {
   try {
-    await app.put(`${url_api}/api/publications/edit`, {
+    await helper.put(`${url_api}/api/publications/edit`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -211,7 +218,7 @@ export const putCommentPublication = async (
 ///////////////////////////// DELETE /////////////////////////////
 export const delatePublication = async (id: string) => {
   try {
-    await app.del(`${url_api}/api/publications/del/${id}`, {
+    await helper.del(`${url_api}/api/publications/del/${id}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -223,7 +230,7 @@ export const delatePublication = async (id: string) => {
 
 export const deleteComment = async (id: string) => {
   try {
-    await app.del(`${url_api}/api/comments/del/${id}`, {
+    await helper.del(`${url_api}/api/comments/del/${id}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -235,7 +242,7 @@ export const deleteComment = async (id: string) => {
 
 export const editComment = async (id: string, textEdit: string) => {
   try {
-    return await app.put(`${url_api}/api/comments/edit/${id}`, {
+    return await helper.put(`${url_api}/api/comments/edit/${id}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -257,7 +264,7 @@ export const setNewSubscriberEmail = async (
 ) => {
   try {
     newSuscriber.type = type;
-    await app.post(`${url_api}/api/subscribers/email`, {
+    await helper.post(`${url_api}/api/subscribers/email`, {
       headers: {
         "Content-Type": "application/json",
       },

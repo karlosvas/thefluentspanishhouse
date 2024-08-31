@@ -13,3 +13,5 @@ export const url_client =
     : env === "preview"
     ? import.meta.env.VITE_URL_API_TEST
     : import.meta.env.VITE_URL_CLIENT_LOCAL;
+
+export const MAX_PUBLICATIONS_PER_PAGE = 6;

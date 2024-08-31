@@ -6,30 +6,26 @@ import { getPublications } from "@/scripts/render-data";
 import { type PublicationCardType } from "types/types";
 import "@/styles/main-blog.css";
 import { Helmet } from "react-helmet-async";
+import PaginationReactBoostrap from "@/components/pages-components/blog/Pagination";
+import { useParams } from "react-router";
 
 const Blog = () => {
   const [showModalPost, setShowModalPost] = useState(false);
   const [cardsBlog, setCardsBlog] = useState<PublicationCardType[]>([]);
   const [closing, setClosing] = useState(false);
-  const [newPublication, setNewPublication] = useState<PublicationCardType>({
-    _id: "",
-    title: "",
-    subtitle: "",
-    content: "",
-    base64_img: "",
-  });
   const [loading, setLoading] = useState(false);
+
+  const { page } = useParams<{ page: string }>();
 
   const handlePublicationChange = () => {
     handleChangeModal(showModalPost, setClosing, setShowModalPost);
   };
 
-  const fetchPublications = async () => {
+  const fetchPublications = async (page: string) => {
     try {
-      const publications = await getPublications();
+      const publications = await getPublications(page);
       publications.reverse();
-      if (Array.isArray(publications) && publications.length !== 0)
-        setCardsBlog(publications as PublicationCardType[]);
+      setCardsBlog(publications as PublicationCardType[]);
     } catch (error) {
       console.error("Error loading publications:", error);
     } finally {
@@ -38,8 +34,8 @@ const Blog = () => {
   };
 
   useEffect(() => {
-    fetchPublications();
-  }, []);
+    if (page) fetchPublications(page);
+  }, [page]);
 
   return (
     <>
@@ -56,9 +52,8 @@ const Blog = () => {
           <FormPublication
             closing={closing}
             handleChange={handlePublicationChange}
-            newPublication={newPublication}
-            setNewPublication={setNewPublication}
             cardsBlog={cardsBlog}
+            setCardsBlog={setCardsBlog}
           />
         )}
         <CardsPublicationBlog
@@ -67,6 +62,9 @@ const Blog = () => {
           setCardsBlog={setCardsBlog}
           loading={loading}
         />
+        {cardsBlog.length > 0 && (
+          <PaginationReactBoostrap page={page} cardsBlog={cardsBlog} />
+        )}
       </main>
     </>
   );

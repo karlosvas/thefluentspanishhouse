@@ -28,6 +28,11 @@ export interface ShowPasswordProps {
   >;
 }
 
+export interface PaginationProps {
+  page: string | undefined;
+  cardsBlog: PublicationCardType[];
+}
+
 export interface ButtonProps {
   id?: string;
   type?: "submit";
@@ -45,6 +50,7 @@ export interface PublicationCardType {
   subtitle: string;
   content: string;
   base64_img: string;
+  currentPage: number;
 }
 
 export interface SubscriberType {
@@ -140,9 +146,8 @@ export interface FormPublicationProps {
   closing: boolean;
   handleChange: Handler;
   buttonName?: string;
-  newPublication: PublicationCardType;
-  setNewPublication: Dispatch<SetStateAction<PublicationCardType>>;
   cardsBlog: PublicationCardType[];
+  setCardsBlog: Dispatch<SetStateAction<PublicationCardType[]>>;
 }
 export interface FormSuscriberProps {
   closing: boolean;

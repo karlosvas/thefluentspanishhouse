@@ -1,23 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { delatePublication, postPublication } from "@/scripts/render-data";
+import { postPublication } from "@/scripts/render-data";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
+import "@/styles/uploadfiles.css";
+import { useParams } from "react-router";
+import { MAX_PUBLICATIONS_PER_PAGE } from "@/constants/global";
 import {
   type PublicationCardType,
   type FormPublicationProps,
 } from "types/types";
-import "@/styles/uploadfiles.css";
 
 const FormPublication: React.FC<FormPublicationProps> = ({
   closing,
   handleChange,
-  newPublication,
-  setNewPublication,
   cardsBlog,
 }) => {
   const [error, setError] = useState("");
   const [imagePreview, setImagePreview] = useState<string>("");
+
+  const lastPage =
+    cardsBlog.length > 0 ? cardsBlog[cardsBlog.length - 1].currentPage : 1;
+
+  const [newPublication, setNewPublication] = useState<PublicationCardType>({
+    _id: "",
+    title: "",
+    subtitle: "",
+    content: "",
+    base64_img: "",
+    currentPage: lastPage,
+  });
+
+  const { page } = useParams<{ page: string }>();
+  if (page) newPublication.currentPage = parseInt(page);
 
   const resizeImage = (
     file: File,
@@ -147,16 +162,22 @@ const FormPublication: React.FC<FormPublicationProps> = ({
       }
     }
     try {
-      if (cardsBlog.length !== 6) {
+      if (cardsBlog.length !== MAX_PUBLICATIONS_PER_PAGE) {
         await postPublication(event, newPublication);
       } else {
-        await delatePublication(cardsBlog[0]._id);
+        console.log("Ahora se va a crear una nueva página");
+        newPublication.currentPage++;
+        console.log("newPublication.currentPage", newPublication.currentPage);
         await postPublication(event, newPublication);
       }
     } catch (error) {
       console.error("Error al enviar el post:", error);
     }
   };
+
+  useEffect(() => {
+    console.log("cardsBlog.length", cardsBlog.length);
+  }, [cardsBlog]);
 
   return (
     <>
