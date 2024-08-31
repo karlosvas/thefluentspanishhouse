@@ -26,6 +26,7 @@ const publicationBlogSchema = new Schema({
   subtitle: { type: String, required: true },
   content: { type: String, required: true },
   base64_img: { type: String, required: false },
+  currentPage: { type: Number, required: true },
 });
 
 export const modelPublication = model(

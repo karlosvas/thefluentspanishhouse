@@ -4,7 +4,10 @@ import mongoose from "mongoose";
 export const connectDB = async () => {
   if (mongoose.connection.readyState === 0) {
     try {
-      await mongoose.connect(process.env.MONGO_DB_FLUENT);
+      const url = process.env.MONGO_DB_FLUENT;
+      if (!url) throw new Error("Connection string not found");
+
+      await mongoose.connect(url);
     } catch (error) {
       console.error("Error al conectarse a la base de datos: ", error);
     }

@@ -1,6 +1,11 @@
 import { createTransport } from "nodemailer";
 
-export async function submitNote(email_user, username, subject, note) {
+export async function submitNote(
+  email_user: string,
+  username: string,
+  subject: string,
+  note: string
+) {
   // Configuración del transporte
   let transporter = createTransport({
     service: "gmail",
@@ -29,10 +34,10 @@ export async function submitNote(email_user, username, subject, note) {
 }
 
 export async function submitEmalSuscriber(
-  email_user,
-  username,
-  lastname,
-  type
+  email_user: string,
+  username: string,
+  lastname: string,
+  type: string
 ) {
   // Configuración del transporte
   let transporter = createTransport({
@@ -63,10 +68,10 @@ export async function submitEmalSuscriber(
 }
 
 export async function submitEmailComment(
-  email_user,
-  username,
-  data,
-  originUrl
+  email_user: string,
+  username: string,
+  data: string,
+  originUrl: string
 ) {
   // Configuración del transporte
   let transporter = createTransport({

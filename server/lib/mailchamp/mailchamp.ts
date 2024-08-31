@@ -1,7 +1,12 @@
+import { Response } from "express";
 import https from "https";
+import { type NewUserChamp } from "types/types";
 
-export async function newMailChampSuscriber(newUserChamp, res) {
-  const jsonChamp = JSON.stringify(newUserChamp);
+export async function newMailChampSuscriber(
+  newUserChamp: NewUserChamp,
+  res: Response
+) {
+  const jsonChamp = JSON.stringify(newUserChamp.members);
 
   const apiKey = process.env.MAILCHIMP_API;
   const dataCenter = process.env.MAILCHIMP_SERVER_PREFIX;
@@ -18,6 +23,7 @@ export async function newMailChampSuscriber(newUserChamp, res) {
   // Solicitud HTTPS a Mailchimp
   const request = https.request(url, options, function (response) {
     let data = "";
+
     // Recibe los datos de la respuesta en chunks
     response.on("data", (chunk) => {
       data += chunk;
@@ -32,7 +38,8 @@ export async function newMailChampSuscriber(newUserChamp, res) {
         res.status(200).send({ message: "Subscription sent successfully" });
       else {
         console.error(responseData);
-        res.status(response.statusCode).send(responseData);
+        if (response.statusCode)
+          res.status(response.statusCode).send(responseData);
       }
     });
   });
