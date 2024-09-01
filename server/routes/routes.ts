@@ -1,17 +1,27 @@
 import { Router } from "express";
 import { readdirSync } from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const PATH_ROUTER = `${__dirname}`;
-const router = Router();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+const PATH_ROUTER = __dirname;
 const cleanExtension = (file: string) => file.split(".")[0];
 
+const router = Router();
+
 readdirSync(PATH_ROUTER).forEach((file) => {
-  if (file !== "index.ts") {
-    import(`./${cleanExtension(file)}`).then((module) => {
-      console.log(`Adding route /${cleanExtension(file)}`);
-      router.use(`/${cleanExtension(file)}`, module.router);
-    });
+  const fileClean = cleanExtension(file);
+  if (fileClean !== "index") {
+    console.log(`Adding route /${fileClean}`);
+    const modulePath = path.join(PATH_ROUTER, `${fileClean}.js`);
+    import(modulePath)
+      .then((module) => {
+        router.use(`/${fileClean}`, module.router);
+      })
+      .catch((err) => {
+        console.error(`Error loading route ${fileClean}:`, err);
+      });
   }
 });
 

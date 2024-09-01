@@ -2,12 +2,30 @@ import { type Request, type Response, Router } from "express";
 import { modelComment, modelPublication } from "..//models.js";
 import { isValidObjectId, Types } from "mongoose";
 import { handleServerError } from "../utilities/errorHandle.js";
+import log from "../middelware/log.js";
 
 const router = Router();
 
 // <--------------- GET --------------->
 // Obtener publicaciones
-router.get("/:page", async (req: Request, res: Response) => {
+
+router.get("/last", log, async (req: Request, res: Response) => {
+  try {
+    const lastPublication = await modelPublication
+      .findOne()
+      .sort({ currentPage: -1 })
+      .exec();
+    if (!lastPublication)
+      return res.status(404).json({ message: "Publication not found" });
+    res.status(200).json(lastPublication);
+    res.status(200);
+  } catch (error) {
+    console.error("Error retrieving publication:", error);
+    handleServerError(res, error);
+  }
+});
+
+router.get("/page/:page", log, async (req: Request, res: Response) => {
   const page = parseInt(req.params.page, 10);
 
   if (isNaN(page)) {
@@ -26,7 +44,7 @@ router.get("/:page", async (req: Request, res: Response) => {
 });
 
 // Entrar en la publicación selecionada
-router.get("/api/publications/:id", async (req: Request, res: Response) => {
+router.get("/:id", log, async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     if (!isValidObjectId(id))
@@ -41,25 +59,9 @@ router.get("/api/publications/:id", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/api/last/publication", async (req: Request, res: Response) => {
-  try {
-    const lastPublication = await modelPublication
-      .findOne()
-      .sort({ currentPage: -1 })
-      .exec();
-    if (!lastPublication)
-      return res.status(404).json({ message: "Publication not found" });
-    res.status(200).json(lastPublication);
-    res.status(200);
-  } catch (error) {
-    console.error("Error retrieving publication:", error);
-    handleServerError(res, error);
-  }
-});
-
 // <--------------- POST --------------->
 // Nuevas publicaciones
-router.post("/new", async (req: Request, res: Response) => {
+router.post("/new", log, async (req: Request, res: Response) => {
   try {
     const { title, subtitle, content, base64_img, currentPage } = req.body;
     // Validaciones
@@ -80,9 +82,7 @@ router.post("/new", async (req: Request, res: Response) => {
 
     // Guardar el nuevo documento en la base de datos
     await newCardBlog.save();
-    res
-      .status(201)
-      .json({ message: "Card blog added successfully", cardBlog: newCardBlog });
+    res.status(201).json(newCardBlog);
   } catch (error) {
     console.error("Error adding card blog:", error);
     handleServerError(res, error);
@@ -90,11 +90,12 @@ router.post("/new", async (req: Request, res: Response) => {
 });
 
 // <--------------- PUT --------------->
-router.put("/edit", async (req: Request, res: Response) => {
+router.put("/edit/:id", log, async (req: Request, res: Response) => {
+  const { id } = req.params;
   const updatedFields = req.body;
 
   try {
-    const publication = await modelPublication.findById(updatedFields._id);
+    const publication = await modelPublication.findById(id);
     if (!publication)
       return res.status(404).json({ message: "Publication not found" });
 
@@ -112,7 +113,7 @@ router.put("/edit", async (req: Request, res: Response) => {
 
 // <--------------- DEL --------------->
 // Eliminar publicaciones
-router.delete("/del/:id", async (req: Request, res: Response) => {
+router.delete("/del/:id", log, async (req: Request, res: Response) => {
   const { id } = req.params;
   if (!isValidObjectId(id))
     return res.status(400).json({ message: "Invalid publication ID" });

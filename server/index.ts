@@ -4,13 +4,14 @@ dotenv.config();
 import { connectDB } from "./mongodb.js";
 import express from "express";
 import cors from "cors";
+import admin from "./lib/firebase/firebase-config.js";
 import { newMailChampSuscriber } from "./lib/mailchamp/mailchamp.js";
 import {
   submitNote,
   submitEmalSuscriber,
 } from "./lib/nodemailer/nodemailer.js";
 import { validateEmail } from "./utilities/validateEmail.js";
-import { router } from "./routes/publications.js";
+import { router } from "./routes/routes.js";
 import { NewUserChamp } from "types/types";
 
 const app = express();
@@ -24,7 +25,7 @@ async function inicializeApp() {
   const allowedOrigins = [
     process.env.URL_WEB,
     process.env.URL_WEB_TEST,
-    process.env.URL_WEB_LOCAL,
+    "http://localhost:5173",
   ];
 
   app.use(
