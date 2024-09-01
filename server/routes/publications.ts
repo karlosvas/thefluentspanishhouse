@@ -2,14 +2,14 @@ import { type Request, type Response, Router } from "express";
 import { modelComment, modelPublication } from "..//models.js";
 import { isValidObjectId, Types } from "mongoose";
 import { handleServerError } from "../utilities/errorHandle.js";
-import log from "../middelware/log.js";
+import { log, verifyIdToken } from "../middelware/token-logs.js";
 
 const router = Router();
 
 // <--------------- GET --------------->
 // Obtener publicaciones
 
-router.get("/last", log, async (req: Request, res: Response) => {
+router.get("/last", log, verifyIdToken, async (req: Request, res: Response) => {
   try {
     const lastPublication = await modelPublication
       .findOne()
@@ -25,26 +25,31 @@ router.get("/last", log, async (req: Request, res: Response) => {
   }
 });
 
-router.get("/page/:page", log, async (req: Request, res: Response) => {
-  const page = parseInt(req.params.page, 10);
+router.get(
+  "/page/:page",
+  log,
+  verifyIdToken,
+  async (req: Request, res: Response) => {
+    const page = parseInt(req.params.page, 10);
 
-  if (isNaN(page)) {
-    return res.status(400).json({ message: "Invalid page number" });
-  }
+    if (isNaN(page)) {
+      return res.status(400).json({ message: "Invalid page number" });
+    }
 
-  try {
-    const publications = await modelPublication.find({ currentPage: page });
-    if (!publications)
-      return res.status(404).json({ message: "Publication not found" });
-    res.status(200).json(publications);
-  } catch (error) {
-    console.error("Error retrieving publication:", error);
-    handleServerError(res, error);
+    try {
+      const publications = await modelPublication.find({ currentPage: page });
+      if (!publications)
+        return res.status(404).json({ message: "Publication not found" });
+      res.status(200).json(publications);
+    } catch (error) {
+      console.error("Error retrieving publication:", error);
+      handleServerError(res, error);
+    }
   }
-});
+);
 
 // Entrar en la publicación selecionada
-router.get("/:id", log, async (req: Request, res: Response) => {
+router.get("/:id", log, verifyIdToken, async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     if (!isValidObjectId(id))
@@ -61,7 +66,7 @@ router.get("/:id", log, async (req: Request, res: Response) => {
 
 // <--------------- POST --------------->
 // Nuevas publicaciones
-router.post("/new", log, async (req: Request, res: Response) => {
+router.post("/new", log, verifyIdToken, async (req: Request, res: Response) => {
   try {
     const { title, subtitle, content, base64_img, currentPage } = req.body;
     // Validaciones
@@ -90,43 +95,53 @@ router.post("/new", log, async (req: Request, res: Response) => {
 });
 
 // <--------------- PUT --------------->
-router.put("/edit/:id", log, async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const updatedFields = req.body;
+router.put(
+  "/edit/:id",
+  log,
+  verifyIdToken,
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const updatedFields = req.body;
 
-  try {
-    const publication = await modelPublication.findById(id);
-    if (!publication)
-      return res.status(404).json({ message: "Publication not found" });
+    try {
+      const publication = await modelPublication.findById(id);
+      if (!publication)
+        return res.status(404).json({ message: "Publication not found" });
 
-    publication.title = updatedFields.title;
-    publication.subtitle = updatedFields.subtitle;
-    publication.content = updatedFields.content;
-    await publication.save();
+      publication.title = updatedFields.title;
+      publication.subtitle = updatedFields.subtitle;
+      publication.content = updatedFields.content;
+      await publication.save();
 
-    res.status(200).json(publication);
-  } catch (error) {
-    console.error("Error updating publication:", error);
-    handleServerError(res, error);
+      res.status(200).json(publication);
+    } catch (error) {
+      console.error("Error updating publication:", error);
+      handleServerError(res, error);
+    }
   }
-});
+);
 
 // <--------------- DEL --------------->
 // Eliminar publicaciones
-router.delete("/del/:id", log, async (req: Request, res: Response) => {
-  const { id } = req.params;
-  if (!isValidObjectId(id))
-    return res.status(400).json({ message: "Invalid publication ID" });
-  try {
-    const result = await modelPublication.findByIdAndDelete(id);
-    await modelComment.deleteMany({ pattern_id: id });
-    if (!result)
-      return res.status(404).json({ message: "Publication not found" });
-    res.status(200).json({ message: "Publication deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting publication:", error);
-    handleServerError(res, error);
+router.delete(
+  "/del/:id",
+  log,
+  verifyIdToken,
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    if (!isValidObjectId(id))
+      return res.status(400).json({ message: "Invalid publication ID" });
+    try {
+      const result = await modelPublication.findByIdAndDelete(id);
+      await modelComment.deleteMany({ pattern_id: id });
+      if (!result)
+        return res.status(404).json({ message: "Publication not found" });
+      res.status(200).json({ message: "Publication deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting publication:", error);
+      handleServerError(res, error);
+    }
   }
-});
+);
 
 export { router };

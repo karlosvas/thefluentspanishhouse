@@ -1,9 +1,12 @@
 const Helper = () => {
   const customFetch = async (endpoint: string, options: RequestInit = {}) => {
+    const token =
+      localStorage.getItem("token") || import.meta.env.VITE_DEFAULT_TOKEN;
+
     const defaultHeader = {
       accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${token}`,
     };
 
     options.signal = options.signal || new AbortController().signal;
