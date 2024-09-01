@@ -163,7 +163,9 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     }
     try {
       if (cardsBlog.length !== MAX_PUBLICATIONS_PER_PAGE) {
-        await postPublication(event, newPublication);
+        const newCard = await postPublication(event, newPublication);
+        cardsBlog.push(newCard);
+        handleChange();
       } else {
         console.log("Ahora se va a crear una nueva página");
         newPublication.currentPage++;

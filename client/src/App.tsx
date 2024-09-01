@@ -10,7 +10,12 @@ import Footer from "@/layouts/Footer";
 import { createContext, useEffect, useState } from "react";
 import Newsetler from "@/pages/Newsletter";
 import CallbackVerify from "@/pages/CallbackVerify";
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  onIdTokenChanged,
+  User,
+} from "firebase/auth";
 import SingleTheme from "@/components/header-components/SingleTheme";
 import Contact from "@/pages/Contact";
 import { Toaster } from "react-hot-toast";
@@ -32,18 +37,51 @@ const App = () => {
   // Determina si el Header y el Footer deben ser ocultados
   const shouldHideHeaderFooter = exclude_header.includes(location.pathname);
 
-  // Scroll hacia arriba cuando se cambia de ruta
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location]);
-
-  // Listener que verifica si el usuario está autenticado
+  // Listener que verifica si el usuario está autenticado y detecta cambios en el token de ID del usuario
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setUser(user);
+      if (user) {
+        try {
+          // Obtén el token de ID del usuario autenticado
+          const token = await user.getIdToken();
+          // Almacena el token en localStorage
+          localStorage.setItem("token", token);
+          // Almacena el usuario en el estado
+          setUser(user);
+        } catch (error) {
+          console.error("Error updating ID token:", error);
+          localStorage.removeItem("token");
+          setUser(null);
+        }
+      } else {
+        // Si no hay usuario, elimina el token de localStorage y actualiza el estado del usuario
+        localStorage.removeItem("token");
+        setUser(null);
+      }
       setLoading(true);
     });
-    return () => unsubscribe();
+
+    // Listener que detecta cambios en el token de ID del usuario
+    const unsubscribeToken = onIdTokenChanged(auth, async (user) => {
+      if (user) {
+        try {
+          // Obtén el token de ID del usuario autenticado
+          const token = await user.getIdToken();
+          // Almacena el token en localStorage
+          localStorage.setItem("token", token);
+        } catch (error) {
+          console.error("Error updating ID token:", error);
+          localStorage.removeItem("token");
+        }
+      } else {
+        localStorage.removeItem("token");
+      }
+    });
+
+    return () => {
+      unsubscribe();
+      unsubscribeToken();
+    };
   }, [auth]);
 
   if (loading) {

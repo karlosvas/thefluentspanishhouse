@@ -3,6 +3,7 @@ const Helper = () => {
     const defaultHeader = {
       accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     };
 
     options.signal = options.signal || new AbortController().signal;

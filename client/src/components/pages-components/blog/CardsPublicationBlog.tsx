@@ -51,7 +51,9 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
 
   const [showModalEditPublication, setShowModalEditPublication] =
     useState(false);
-  const handleChangePublication = () => {
+
+  const handleChangePublication = (publication?: PublicationCardType) => {
+    if (publication) seteditPublication(publication);
     setShowModalEditPublication(!showModalEditPublication);
   };
 
@@ -83,7 +85,7 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
   ) => {
     e.preventDefault();
     try {
-      await putCommentPublication(editPublication);
+      await putCommentPublication(editPublication, editPublication._id);
       setCardsBlog(
         cardsBlog.map((card) =>
           card._id === editPublication._id ? editPublication : card
@@ -169,7 +171,10 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
                 }
                 className="close-card-button"
               />
-              <Button className="edited" event={handleChangePublication}>
+              <Button
+                className="edited"
+                event={() => handleChangePublication(publication)}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -179,7 +184,6 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
                   className="svgIcons"
                   width={20}
                   height={20}
-                  onClick={() => seteditPublication(publication)}
                 >
                   <path
                     strokeLinecap="round"
