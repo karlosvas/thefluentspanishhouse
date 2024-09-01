@@ -4,11 +4,11 @@ import { isValidObjectId, Types } from "mongoose";
 import { submitEmailComment } from "../lib/nodemailer/nodemailer.js";
 import { deleteCommentAndChildren } from "../utilities/delete-logic.js";
 import { handleServerError } from "../utilities/errorHandle.js";
-import log from "../middelware/log.js";
+import { verifyIdToken, log } from "../middelware/token-logs.js";
 const router = Router();
 // <--------------- GET --------------->
 // Obtener todos los comentarios
-router.get("/all", log, async (req, res) => {
+router.get("/all", log, verifyIdToken, async (req, res) => {
     // El id es el id del comentario padre (parent_id)
     try {
         // Buscar el comentario padre y obtener sus hijos
@@ -20,7 +20,7 @@ router.get("/all", log, async (req, res) => {
     }
 });
 // Obtener los hijos de un comentario
-router.get("/children/:id", log, async (req, res) => {
+router.get("/children/:id", log, verifyIdToken, async (req, res) => {
     // El id es el id del comentario padre (parent_id)
     const parentId = req.params.id;
     try {
@@ -35,7 +35,7 @@ router.get("/children/:id", log, async (req, res) => {
     }
 });
 // Carga de comentarios al entrar en una publicación
-router.get("/:id", log, async (req, res) => {
+router.get("/:id", log, verifyIdToken, async (req, res) => {
     const id = req.params.id;
     try {
         const parentComments = await modelComment.find({ pattern_id: id });
@@ -47,7 +47,7 @@ router.get("/:id", log, async (req, res) => {
 });
 // <--------------- POST --------------->
 // Agregar comentarios
-router.post("/new", log, async (req, res) => {
+router.post("/new", log, verifyIdToken, async (req, res) => {
     let newCommentData = req.body;
     const originUrl = req.body.originUrl;
     try {
@@ -69,7 +69,7 @@ router.post("/new", log, async (req, res) => {
         res.status(500).json({ error: "Error al añadir el comentario" });
     }
 });
-router.post("/children/:id", log, async (req, res) => {
+router.post("/children/:id", log, verifyIdToken, async (req, res) => {
     const parentCommentId = req.params.id;
     let newCommentData = req.body;
     try {
@@ -95,7 +95,7 @@ router.post("/children/:id", log, async (req, res) => {
 });
 // <--------------- PUT --------------->
 // Actualizar likes de comentarios
-router.put("/likes", log, async (req, res) => {
+router.put("/likes", log, verifyIdToken, async (req, res) => {
     const { uid_user_firebase, _id, likes } = req.body;
     if (likes === undefined || likes === null || !uid_user_firebase || !_id)
         return res.status(400).json({ error: "Los campos son requeridos" });
@@ -119,7 +119,7 @@ router.put("/likes", log, async (req, res) => {
         handleServerError(res, error);
     }
 });
-router.put("/edit/:id", log, async (req, res) => {
+router.put("/edit/:id", log, verifyIdToken, async (req, res) => {
     const { id } = req.params;
     const { textEdit } = req.body;
     if (!textEdit)
@@ -137,7 +137,7 @@ router.put("/edit/:id", log, async (req, res) => {
     }
 });
 // <--------------- DELETE --------------->
-router.delete("/del/:id", log, async (req, res) => {
+router.delete("/del/:id", log, verifyIdToken, async (req, res) => {
     const { id } = req.params;
     if (!isValidObjectId(id))
         return res.status(400).json({ message: "Invalid publication ID" });

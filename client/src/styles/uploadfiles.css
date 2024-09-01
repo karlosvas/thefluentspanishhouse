@@ -123,19 +123,14 @@
 }
 
 .upload-publication #submit-post {
-  background-color: var(--primary-blue);
   color: var(--primary-white);
   margin-top: 40px;
   align-self: flex-end;
   border-radius: 5px;
 }
 
-.upload-publication #submit-post:hover {
-  color: var(--primary-black);
-}
-
 .upload-publication #submit-post:focus {
-  outline: 5px solid var(--secondary-blue);
+  outline: 1px solid var(--secondary-blue);
 }
 
 .upload-publication.closing {

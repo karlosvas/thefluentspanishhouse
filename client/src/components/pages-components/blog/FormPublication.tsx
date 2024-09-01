@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { postPublication } from "@/scripts/render-data";
+import { getPublications, postPublication } from "@/scripts/render-data";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
 import "@/styles/uploadfiles.css";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { MAX_PUBLICATIONS_PER_PAGE } from "@/constants/global";
 import {
   type PublicationCardType,
   type FormPublicationProps,
 } from "types/types";
+import Button from "@/components/reusable/Button";
 
 const FormPublication: React.FC<FormPublicationProps> = ({
   closing,
@@ -139,8 +140,11 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     event.preventDefault();
   };
 
+  const navigate = useNavigate();
+  const [suscribe, setSuscribe] = useState(false);
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setSuscribe(true);
     const fileInput = document.getElementById(
       "fileInput"
     ) as HTMLInputElement | null;
@@ -162,24 +166,36 @@ const FormPublication: React.FC<FormPublicationProps> = ({
       }
     }
     try {
-      if (cardsBlog.length !== MAX_PUBLICATIONS_PER_PAGE) {
+      if (cardsBlog.length < MAX_PUBLICATIONS_PER_PAGE) {
         const newCard = await postPublication(event, newPublication);
         cardsBlog.push(newCard);
-        handleChange();
       } else {
-        console.log("Ahora se va a crear una nueva página");
-        newPublication.currentPage++;
-        console.log("newPublication.currentPage", newPublication.currentPage);
-        await postPublication(event, newPublication);
+        // Desde la pagina uno buscamos cual es la siguiente pagina donde hay menos de 6 publicaciones para insertar contenido
+        let actualPage = 1;
+        let arrayPublications = [] as PublicationCardType[];
+        while (
+          arrayPublications.length >= MAX_PUBLICATIONS_PER_PAGE ||
+          actualPage === 1
+        ) {
+          actualPage++;
+          arrayPublications = await getPublications(actualPage.toString());
+          if (actualPage == 10) break;
+        }
+        const updatedPublication = {
+          ...newPublication,
+          currentPage: actualPage,
+        };
+        await postPublication(event, updatedPublication);
+        navigate(`/blog/${actualPage}`);
       }
     } catch (error) {
       console.error("Error al enviar el post:", error);
     }
+    handleChange();
+    setTimeout(() => {
+      setSuscribe(false);
+    }, 1000);
   };
-
-  useEffect(() => {
-    console.log("cardsBlog.length", cardsBlog.length);
-  }, [cardsBlog]);
 
   return (
     <>
@@ -234,9 +250,9 @@ const FormPublication: React.FC<FormPublicationProps> = ({
               </div>
               {error && <p>{error}</p>}
             </li>
-            <button id="submit-post" type="submit">
+            <Button id="submit-post" type="submit" suscribe={suscribe}>
               Submit
-            </button>
+            </Button>
           </ul>
         </form>
       </div>

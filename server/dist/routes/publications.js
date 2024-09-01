@@ -2,15 +2,16 @@ import { Router } from "express";
 import { modelComment, modelPublication } from "..//models.js";
 import { isValidObjectId, Types } from "mongoose";
 import { handleServerError } from "../utilities/errorHandle.js";
-import log from "../middelware/log.js";
+import { log, verifyIdToken } from "../middelware/token-logs.js";
 const router = Router();
 // <--------------- GET --------------->
 // Obtener publicaciones
-router.get("/last", log, async (req, res) => {
+router.get("/last", log, verifyIdToken, async (req, res) => {
     try {
         const lastPublication = await modelPublication
             .findOne()
             .sort({ currentPage: -1 })
+            .select("currentPage")
             .exec();
         if (!lastPublication)
             return res.status(404).json({ message: "Publication not found" });
@@ -22,7 +23,7 @@ router.get("/last", log, async (req, res) => {
         handleServerError(res, error);
     }
 });
-router.get("/page/:page", log, async (req, res) => {
+router.get("/page/:page", log, verifyIdToken, async (req, res) => {
     const page = parseInt(req.params.page, 10);
     if (isNaN(page)) {
         return res.status(400).json({ message: "Invalid page number" });
@@ -39,7 +40,7 @@ router.get("/page/:page", log, async (req, res) => {
     }
 });
 // Entrar en la publicación selecionada
-router.get("/:id", log, async (req, res) => {
+router.get("/:id", log, verifyIdToken, async (req, res) => {
     try {
         const id = req.params.id;
         if (!isValidObjectId(id))
@@ -56,7 +57,7 @@ router.get("/:id", log, async (req, res) => {
 });
 // <--------------- POST --------------->
 // Nuevas publicaciones
-router.post("/new", log, async (req, res) => {
+router.post("/new", log, verifyIdToken, async (req, res) => {
     try {
         const { title, subtitle, content, base64_img, currentPage } = req.body;
         // Validaciones
@@ -83,7 +84,7 @@ router.post("/new", log, async (req, res) => {
     }
 });
 // <--------------- PUT --------------->
-router.put("/edit/:id", log, async (req, res) => {
+router.put("/edit/:id", log, verifyIdToken, async (req, res) => {
     const { id } = req.params;
     const updatedFields = req.body;
     try {
@@ -103,7 +104,7 @@ router.put("/edit/:id", log, async (req, res) => {
 });
 // <--------------- DEL --------------->
 // Eliminar publicaciones
-router.delete("/del/:id", log, async (req, res) => {
+router.delete("/del/:id", log, verifyIdToken, async (req, res) => {
     const { id } = req.params;
     if (!isValidObjectId(id))
         return res.status(400).json({ message: "Invalid publication ID" });

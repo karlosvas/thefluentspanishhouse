@@ -1,6 +1,7 @@
 .main-blog {
   padding-bottom: 100px;
   min-height: 80dvh;
+  position: relative;
 
   #blog {
     margin: auto;
@@ -83,13 +84,30 @@
     }
   }
   .change-page {
-    margin-top: 100px;
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    width: 100vw;
   }
 }
 
+@media only screen and (width <= 1024px) {
+  .main-blog {
+    #blog {
+      .card-blog:last-of-type {
+        margin-bottom: 100px;
+      }
+    }
+    .change-page {
+      bottom: 0;
+    }
+  }
+}
 @media only screen and (width <= 766px) {
   .main-blog {
     background-color: var(--secondary-white);

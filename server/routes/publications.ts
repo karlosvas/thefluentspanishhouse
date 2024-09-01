@@ -14,6 +14,7 @@ router.get("/last", log, verifyIdToken, async (req: Request, res: Response) => {
     const lastPublication = await modelPublication
       .findOne()
       .sort({ currentPage: -1 })
+      .select("currentPage")
       .exec();
     if (!lastPublication)
       return res.status(404).json({ message: "Publication not found" });
