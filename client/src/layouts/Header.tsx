@@ -13,6 +13,7 @@ import { handleClickNavigate } from "@/scripts/navigate";
 const Header = () => {
   // Estados
   const [theme, setTheme] = useState<string>(getTheme());
+  const [isShrunk, setIsShrunk] = useState<boolean>(false);
 
   // Recisar si estaba enteriormente en localstorage
   function getTheme() {
@@ -33,14 +34,30 @@ const Header = () => {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+  // Manejar el scroll para cambiar el tamaño del header
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsShrunk(true);
+      } else {
+        setIsShrunk(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   // Uri actual
   const location = useLocation();
   // Navegación
   const navigate = useNavigate();
 
   return (
-    <>
-      <header>
+    <header className={isShrunk ? "shrink" : ""}>
+      <div className="header-animation">
         <section id="sect">
           <div className="waves">
             <div className="wave" id="wave1"></div>
@@ -79,8 +96,8 @@ const Header = () => {
             </div>
           )}
         </div>
-      </header>
-    </>
+      </div>
+    </header>
   );
 };
 

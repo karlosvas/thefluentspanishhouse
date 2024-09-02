@@ -68,11 +68,10 @@ async function inicializeApp() {
             members: [
                 {
                     email_address: email,
-                    status: "subscribed",
                     merge_fields: {
                         FNAME: name,
                         LNAME: lastname,
-                        INTERESTSS: interests,
+                        CLASS: interests,
                     },
                 },
             ],

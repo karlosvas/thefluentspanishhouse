@@ -50,12 +50,12 @@ export interface ConfigUser {
 export interface MergeFields {
   FNAME: string;
   LNAME: string;
-  INTERESTSS: string[];
+  CLASS: string[];
 }
 
 export interface Member {
   email_address: string;
-  status: "subscribed" | "unsubscribed" | "cleaned" | "pending";
+  status?: "subscribed" | "unsubscribed" | "cleaned" | "pending";
   merge_fields: MergeFields;
 }
 

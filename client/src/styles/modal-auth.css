@@ -7,7 +7,7 @@
   color: var(--primary-black);
   padding: 20px;
   border-radius: 5px;
-  width: fit-content;
+  width: auto;
   height: auto;
   text-align: center;
   font-weight: 500;
@@ -22,12 +22,12 @@
 
   .login-form {
     padding: 10px;
+    min-width: 310px;
     display: flex;
     justify-content: center;
     align-items: end;
     flex-direction: column;
     font-size: medium;
-    min-width: 310px;
 
     .inputs {
       outline: none;
@@ -65,17 +65,22 @@
     max-width: 390px;
     margin: 10px;
   }
-  .googleAuth,
-  .facebookAuth {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    border: 2px solid var(--primary-black);
-    margin-bottom: 10px;
-    min-height: 30px;
-    .providers {
-      margin-left: 10px;
+
+  .providers-log {
+    margin: auto;
+    width: 390px;
+    .googleAuth,
+    .facebookAuth {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      border: 2px solid var(--primary-black);
+      margin-bottom: 10px;
+      min-height: 30px;
+      .providers {
+        margin-left: 10px;
+      }
     }
   }
 }
