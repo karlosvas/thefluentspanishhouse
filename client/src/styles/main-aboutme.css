@@ -1,7 +1,9 @@
 #haboutme {
-  text-align: center;
-  margin-bottom: 50px;
-  margin-top: 50px;
+  font-weight: 600;
+  font-size: 40px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  padding-bottom: 20px;
 }
 
 .main-aboutme {
@@ -12,6 +14,8 @@
   background-color: var(--primary-white);
 
   h2 {
+    font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial,
+      sans-serif;
     margin-top: 50px;
   }
   .div-aboutme {
@@ -62,9 +66,12 @@
 @media only screen and (width <= 1200px) and (width >= 766px) {
   .main-aboutme {
     .div-aboutme {
-      figure .img-aboutme {
-        width: 70vw;
-        height: 47vh;
+      figure {
+        width: 100vw;
+        .img-aboutme {
+          width: 70vw;
+          height: 47vh;
+        }
       }
       p,
       figure > figcaption {
@@ -79,10 +86,13 @@
       h2 {
         font-size: 2em;
       }
-      figure .img-aboutme {
-        margin-top: 10px;
-        width: 90vw;
-        height: 27vh;
+      figure {
+        width: 100vw;
+        .img-aboutme {
+          margin-top: 10px;
+          width: 90vw;
+          height: 27vh;
+        }
       }
       p,
       figure > figcaption {

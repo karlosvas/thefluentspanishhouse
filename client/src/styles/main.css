@@ -106,18 +106,18 @@
           font-weight: 600;
         }
         button {
-          background-color: rgb(72, 115, 196);
+          background-color: rgb(39, 89, 180);
           width: 200px;
           padding: 10px 20px;
           margin-top: 40px;
           color: var(--primary-white);
           border: none;
-          border-radius: 5px;
+          border-radius: 3px;
           font-size: 15px;
           font-weight: bold;
           cursor: pointer;
-          border-bottom: 5px solid rgb(48, 82, 131);
-          box-shadow: 0px 5px rgb(48, 82, 131);
+          border-bottom: 3px solid rgb(62, 88, 124);
+          box-shadow: 0px 5px rgb(42, 74, 117);
           transition: all 0.2s ease;
         }
 
@@ -156,16 +156,37 @@
     animation: reveal linear both;
     animation-timeline: view();
     animation-range: entry 20% cover 30%;
-    max-width: 800px;
-    margin: auto;
     padding-bottom: 100px;
-    margin-top: 100px;
     h2 {
       font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial,
         sans-serif;
       text-align: center;
       padding: 20px 40px;
       font-weight: 600;
+    }
+    .main-carrousel {
+      background-color: var(--secondary-white);
+      width: 100vw;
+      #carrousel {
+        width: 40vw;
+        margin: auto;
+        .content-caption {
+          border-radius: 5px;
+          height: 40vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          .caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 60%;
+          }
+        }
+      }
     }
   }
 }

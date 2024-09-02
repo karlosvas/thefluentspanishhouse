@@ -30,62 +30,89 @@ function ControlledCarousel() {
   }, []);
 
   return (
-    <Carousel
-      activeIndex={index}
-      onSelect={handleSelect}
-      data-bs-theme={!darkMode ? "dark" : "light"}
-    >
-      <Carousel.Item interval={5000}>
-        <div className="backdrop-caption"></div>
-        <img className="d-block w-100" src="/img/4.png" alt="Second slide" />
-        <Carousel.Caption className="caption">
-          <h3>Joan Penn</h3>
-          <p>
-            Marta is a wonderful and patient teacher. She is passionate about
-            teaching Spanish. I am an advanced beginner. I have learned a lot,
-            and when the learning doesn't soak in that quickly, she repeats
-            until I get it. Gracias Marta.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item interval={5000}>
-        <div className="backdrop-caption"></div>
-        <img className="d-block w-100" src="/img/4.png" alt="Third slide" />
-        <Carousel.Caption className="caption">
-          <h3>Red Salas</h3>
-          <p>
-            Marta's Spanish classes are fantastic. She has a unique way of
-            making complex topics easy to understand. I highly recommend her
-            classes to anyone looking to learn Spanish.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item interval={5000}>
-        <div className="backdrop-caption"></div>
-        <img className="d-block w-100" src="/img/4.png" alt="Third slide" />
-        <Carousel.Caption className="caption">
-          <h3>Tutoroo anonyme</h3>
-          <p>
-            Marta is an excellent teacher! Her classes are engaging,
-            challenging, and practical for gaining speaking skills, in Spanish.
-            Marta is patient and gives posittive, encourning facebock. I would
-            highly recommend her to anyone looking to learn or improve their
-            Spanish.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item interval={5000}>
-        <div className="backdrop-caption"></div>
-        <img className="d-block w-100" src="/img/4.png" alt="Third slide" />
-        <Carousel.Caption className="caption">
-          <h3>Tutoroo anonyme</h3>
-          <p>
-            Marta is exxcelent! I thoroughly enjoyed her as a tutor and look
-            forward to future lessons.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-    </Carousel>
+    <div className="main-carrousel">
+      <Carousel
+        activeIndex={index}
+        onSelect={handleSelect}
+        data-bs-theme={!darkMode ? "dark" : "light"}
+        id="carrousel"
+      >
+        <Carousel.Item interval={5000}>
+          <div className="backdrop-caption"></div>
+          <div
+            className="w-100 content-caption"
+            style={{
+              backgroundColor: "transparent",
+            }}
+          >
+            <Carousel.Caption className="caption">
+              <h3>Joan Penn</h3>
+              <p>
+                Marta is a wonderful and patient teacher. She is passionate
+                about teaching Spanish. I am an advanced beginner. I have
+                learned a lot, and when the learning doesn't soak in that
+                quickly, she repeats until I get it. Gracias Marta.
+              </p>
+            </Carousel.Caption>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item interval={5000}>
+          <div className="backdrop-caption"></div>
+          <div
+            className=" w-100 content-caption"
+            style={{
+              backgroundColor: "transparent",
+            }}
+          >
+            <Carousel.Caption className="caption">
+              <h3>Red Salas</h3>
+              <p>
+                Marta's Spanish classes are fantastic. She has a unique way of
+                making complex topics easy to understand. I highly recommend her
+                classes to anyone looking to learn Spanish.
+              </p>
+            </Carousel.Caption>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item interval={5000}>
+          <div className="backdrop-caption"></div>
+          <div
+            className="w-100 content-caption"
+            style={{
+              backgroundColor: "transparent",
+            }}
+          >
+            <Carousel.Caption className="caption">
+              <h3>Tutoroo anonyme</h3>
+              <p>
+                Marta is an excellent teacher! Her classes are engaging,
+                challenging, and practical for gaining speaking skills, in
+                Spanish. Marta is patient and gives posittive, encourning
+                facebock. I would highly recommend her to anyone looking to
+                learn or improve their Spanish.
+              </p>
+            </Carousel.Caption>
+          </div>
+        </Carousel.Item>
+        <Carousel.Item interval={5000}>
+          <div className="backdrop-caption"></div>
+          <div
+            className="w-100 content-caption"
+            style={{
+              backgroundColor: "transparent",
+            }}
+          >
+            <Carousel.Caption className="caption">
+              <h3>Tutoroo anonyme</h3>
+              <p>
+                Marta is exxcelent! I thoroughly enjoyed her as a tutor and look
+                forward to future lessons.
+              </p>
+            </Carousel.Caption>
+          </div>
+        </Carousel.Item>
+      </Carousel>
+    </div>
   );
 }
 

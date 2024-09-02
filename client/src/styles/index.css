@@ -151,6 +151,9 @@ html.dark {
           background-color: var(--secondary-black);
         }
       }
+      .main-carrousel {
+        background-color: var(--secondary-black);
+      }
     }
     .publication-main {
       .publication figure {

@@ -37,48 +37,8 @@ const Newsletter = () => {
       <main className="main-newsletter">
         <section className="nw-articles">
           <article className="nw-article">
-            <figure>
-              {!allImagesLoaded && (
-                <PlaceholderImg className={"img-newsletter"} />
-              )}
-              <img
-                className="img-newsletter"
-                src="./img/cafe.webp"
-                alt="Coffe image"
-                onLoad={() => handleImageLoad("img1")}
-                style={{ display: allImagesLoaded ? "block" : "none" }}
-              />
-            </figure>
             <div className="article-content">
               <h3>HEY, HOW ARE YOU?</h3>
-              <h2>A Studio Update</h2>
-              <p>
-                Dear students, I hope you are enjoying the learning process as
-                much as I enjoy teaching you. In today’s class, we explored new
-                ways to enrich our vocabulary and improve our grammatical
-                understanding. Remember, constant practice is key to mastering
-                any language.
-              </p>
-              <p>
-                Additionally, it’s important that you feel comfortable asking
-                questions. There are no silly questions; they all help us move
-                forward. So don’t hesitate to raise your hand if something isn’t
-                clear! Our goal is for each of you to feel confident using
-                Spanish in real-life situations.
-              </p>
-              <p>
-                Don’t forget to review your notes and complete the exercises we
-                assigned as homework. It’s essential to go over what you’ve
-                learned to solidify your knowledge. See you in the next class,
-                where we will continue working together to achieve the fluency
-                level you desire.
-              </p>
-            </div>
-          </article>
-          <article className="nw-article">
-            <div className="article-content">
-              <h3>HEY, HOW ARE YOU?</h3>
-              <h2>A Studio Update</h2>
               <p>
                 Dear students, I hope you are enjoying the learning process as
                 much as I enjoy teaching you. In today’s class, we explored new
