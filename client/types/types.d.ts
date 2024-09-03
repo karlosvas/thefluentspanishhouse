@@ -57,7 +57,6 @@ export interface SubscriberType {
   name: string;
   lastname: string;
   email: string;
-  type: string;
 }
 
 export type PublicationType = {
@@ -180,3 +179,22 @@ export interface EditType {
   index: number;
   state: bolean;
 }
+
+// Maichampp Types
+export interface MergeFields {
+  FNAME: string;
+  LNAME: string;
+}
+
+export interface Member {
+  email_address: string;
+  status: Status;
+  merge_fields: MergeFields;
+  tags: ChampTag[];
+}
+
+export interface NewUserChamp {
+  members: Member[];
+}
+
+type ChampTag = "GROUP_CLASS" | "PRIVATE_CLASS" | "FREE_CLASS";

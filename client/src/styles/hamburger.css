@@ -22,12 +22,12 @@
   justify-content: start;
   flex-direction: column;
   position: absolute;
-  left: -40px;
-  top: -20px;
+  left: -120%;
+  top: -110%;
   color: var(--primary-white);
   background-color: var(--primary-black);
   height: 105dvh;
-  width: 70vw;
+  width: 65vw;
   z-index: 1001;
   font-size: 1em;
   animation: slideDown 0.3s ease-out;

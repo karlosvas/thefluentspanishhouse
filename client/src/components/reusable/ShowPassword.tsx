@@ -34,6 +34,7 @@ const ShowPassword: React.FC<ShowPasswordProps> = ({ password, setID }) => {
           value={password}
           onChange={handleInputChange}
           required
+          autoComplete="off"
         />
         <button
           type="button"

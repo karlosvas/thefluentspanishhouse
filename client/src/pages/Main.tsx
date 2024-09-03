@@ -33,51 +33,57 @@ const Main = () => {
               }}
             />
             <figcaption>
-              Hi, my name is Marta. I’m a <strong>Spanish teacher</strong> from
-              Spain who helps <strong>English speakers</strong> to get{" "}
+              <span>Hi, my name is Marta</span>
+              <br /> I’m a <strong>Spanish teacher</strong> from Spain who helps{" "}
+              <strong>English speakers</strong> to get{" "}
               <strong>fluent in Spanish</strong>. <br />
               <br />
               Learning a language is an <strong>exciting journey</strong>, but
               you need
-              <strong>perseverance</strong> to get positive results. I was about
-              to quit many times until I found out what was holding me back. I’d
-              been
+              <strong> perseverance</strong> to get positive results. I was
+              about to quit many times until I found out what was holding me
+              back. I’d been
               <strong> prioritizing incorrectly</strong> for many years. <br />
-              That breakthrough was a <strong>real turning point</strong> for
-              me!
+              <strong>
+                That breakthrough was a real turning point for me!
+              </strong>
             </figcaption>
           </figure>
         </article>
         <div className="main-content">
-          <h2>What you can achive with mi assitence?</h2>
-          <ul>
-            <li>
-              <h4>An effective focus on the number one priorities:</h4>
-              <p>
-                Listening, comprehension and speaking. You’ll practice and
-                improve your listening comprehension and speaking through
-                engaging and interactive drills 100% oral. You will use
-                essential Spanish language structures in 90% of daily
-                conversations.
-              </p>
-            </li>
-            <li>
-              <h4>Guidance to correct grammar and pronunciation.</h4>
-              <p>
-                You’ll learn how to connect words to gain fluency and receive
-                the necessary corrections to avoid permanently ungrained
-                mistakes.
-              </p>
-            </li>
-            <li>
-              <h4>A high dose of motivation that boosts your confidence.</h4>
-              <p>
-                I’ll get ongoing feedback on the learning process. Besides,
-                you’ll learn interesting facts about the language and the
-                culture which makes the lessons encouraging and stimulating.
-              </p>
-            </li>
-          </ul>
+          <img src="img/planta1.png" alt="" className="planta left" />
+          <img src="img/planta2.png" className="planta rigth" />
+          <div className="achievements-section">
+            <h2>What you can achive with my assitence?</h2>
+            <ul>
+              <li>
+                <h4>An effective focus on the number one priorities:</h4>
+                <p>
+                  Listening, comprehension and speaking. You’ll practice and
+                  improve your listening comprehension and speaking through
+                  engaging and interactive drills 100% oral. You will use
+                  essential Spanish language structures in 90% of daily
+                  conversations.
+                </p>
+              </li>
+              <li>
+                <h4>Guidance to correct grammar and pronunciation.</h4>
+                <p>
+                  You’ll learn how to connect words to gain fluency and receive
+                  the necessary corrections to avoid permanently ungrained
+                  mistakes.
+                </p>
+              </li>
+              <li>
+                <h4>A high dose of motivation that boosts your confidence.</h4>
+                <p>
+                  I’ll get ongoing feedback on the learning process. Besides,
+                  you’ll learn interesting facts about the language and the
+                  culture which makes the lessons encouraging and stimulating.
+                </p>
+              </li>
+            </ul>
+          </div>
         </div>
         <Prices />
         <div className="main-reviews">

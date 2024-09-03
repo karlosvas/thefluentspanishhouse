@@ -3,15 +3,15 @@ import Button from "@/components/reusable/Button";
 import PlaceholderImg from "@/components/reusable/PlaceholderImg";
 import "@/styles/main-newsettler.css";
 import { Helmet } from "react-helmet-async";
+import toast from "react-hot-toast";
+import { subscribeNewsletter } from "@/scripts/render-data";
 
 const Newsletter = () => {
   const [imagesLoaded, setImagesLoaded] = useState({
     img1: false,
     img2: false,
-    img3: false,
-    img4: false,
-    img5: false,
   });
+  const [email, setEmail] = useState("");
   const [allImagesLoaded, setAllImagesLoaded] = useState(false);
 
   const handleImageLoad = (imgKey: keyof typeof imagesLoaded) => {
@@ -25,6 +25,16 @@ const Newsletter = () => {
     });
   };
 
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await subscribeNewsletter(email);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to subscribe to newsletter");
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -35,73 +45,7 @@ const Newsletter = () => {
         />
       </Helmet>
       <main className="main-newsletter">
-        <section className="nw-articles">
-          <article className="nw-article">
-            <div className="article-content">
-              <h3>HEY, HOW ARE YOU?</h3>
-              <p>
-                Dear students, I hope you are enjoying the learning process as
-                much as I enjoy teaching you. In today’s class, we explored new
-                ways to enrich our vocabulary and improve our grammatical
-                understanding. Remember, constant practice is key to mastering
-                any language.
-              </p>
-              <p>
-                Additionally, it’s important that you feel comfortable asking
-                questions. There are no silly questions; they all help us move
-                forward. So don’t hesitate to raise your hand if something isn’t
-                clear! Our goal is for each of you to feel confident using
-                Spanish in real-life situations.
-              </p>
-              <p>
-                Don’t forget to review your notes and complete the exercises we
-                assigned as homework. It’s essential to go over what you’ve
-                learned to solidify your knowledge. See you in the next class,
-                where we will continue working together to achieve the fluency
-                level you desire.
-              </p>
-            </div>
-
-            <figure>
-              {!allImagesLoaded && (
-                <PlaceholderImg className={"img-newsletter"} />
-              )}
-              <img
-                className="img-newsletter"
-                src="./img/newttseler.webp"
-                alt="Cafe"
-                onLoad={() => handleImageLoad("img2")}
-                style={{ display: allImagesLoaded ? "block" : "none" }}
-              />
-            </figure>
-          </article>
-        </section>
-        <section className="nw-freecontent">
-          <article className="freecontent-article">
-            <figure>
-              {!allImagesLoaded && (
-                <PlaceholderImg className={"img-newsletter"} />
-              )}
-              <img
-                className="img-newsletter"
-                src="./img/newttseler2.webp"
-                alt="Cafe"
-                onLoad={() => handleImageLoad("img3")}
-                style={{ display: allImagesLoaded ? "block" : "none" }}
-              />
-            </figure>
-            <div className="freecontent-content">
-              <h2>Our Latest Spanish Class Highlights</h2>
-              <h4>WE ABSOLUTELY LOVED TEACHING THIS GROUP OF STUDENTS!</h4>
-              <p>
-                This week, our students made incredible progress in mastering
-                conversational Spanish. We focused on practical scenarios,
-                helping them feel more confident in real-world situations. Their
-                dedication and enthusiasm truly shone through!
-              </p>
-              <Button>SEE FULL CLASS STUDY</Button>
-            </div>
-          </article>
+        <section>
           <div className="freecontent-felx">
             <article className="freecontent-article">
               <figure>
@@ -110,9 +54,9 @@ const Newsletter = () => {
                 )}
                 <img
                   className="img-newsletter"
-                  src="./img/paisaje.webp"
+                  src="./img/newsletter3.png"
                   alt="Cafe"
-                  onLoad={() => handleImageLoad("img4")}
+                  onLoad={() => handleImageLoad("img1")}
                   style={{ display: allImagesLoaded ? "block" : "none" }}
                 />
               </figure>
@@ -126,21 +70,9 @@ const Newsletter = () => {
                   Spanish lessons and start your journey to fluency today!
                 </p>
               </div>
-              <Button>INSTANT DOWNLOAD</Button>
             </article>
             <article className="freecontent-article">
-              <figure>
-                {!allImagesLoaded && (
-                  <PlaceholderImg className={"img-newsletter"} />
-                )}
-                <img
-                  className="img-newsletter"
-                  src="./img/paisaje2.webp"
-                  alt="Cafe"
-                  onLoad={() => handleImageLoad("img5")}
-                  style={{ display: allImagesLoaded ? "block" : "none" }}
-                />
-              </figure>
+              <h2>Do you wonnt all beneficies</h2>
               <div className="freecontent-content">
                 <h3>Get Your Free Spanish Guide</h3>
                 <p>
@@ -151,10 +83,45 @@ const Newsletter = () => {
                   language!
                 </p>
               </div>
-
-              <Button>FIND OUT MORE</Button>
+              <form onSubmit={onSubmit}>
+                <label htmlFor="email">
+                  Email:
+                  <input
+                    type="text"
+                    name="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </label>
+                <Button type="submit">DOWNLOAD NOW</Button>
+              </form>
             </article>
           </div>
+        </section>
+        <section className="nw-freecontent">
+          <article className="freecontent-article">
+            <figure>
+              {!allImagesLoaded && (
+                <PlaceholderImg className={"img-newsletter"} />
+              )}
+              <img
+                className="img-newsletter"
+                src="./img/newttseler2.webp"
+                alt="Cafe"
+                onLoad={() => handleImageLoad("img2")}
+                style={{ display: allImagesLoaded ? "block" : "none" }}
+              />
+            </figure>
+            <div className="freecontent-content">
+              <h2>Our Latest Spanish Class Highlights</h2>
+              <p>
+                This week, our students made incredible progress in mastering
+                conversational Spanish. We focused on practical scenarios,
+                helping them feel more confident in real-world situations. Their
+                dedication and enthusiasm truly shone through!
+              </p>
+              <Button>SEE FULL CLASS STUDY</Button>
+            </div>
+          </article>
         </section>
       </main>
     </>

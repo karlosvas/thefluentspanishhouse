@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Buuton from "@/components/reusable/Button";
-import {
-  submitSubscriptionMailchamp,
-  setNewSubscriberEmail,
-} from "@/scripts/render-data";
-import toast from "react-hot-toast";
+import { submitSubscriptionMailchamp } from "@/scripts/render-data";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
 import { type FormSuscriberProps, type SubscriberType } from "types/types";
@@ -19,7 +15,6 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
     name: "",
     lastname: "",
     email: "",
-    type: "",
   });
   const [suscribe, setSuscribe] = useState(false);
 
@@ -37,17 +32,12 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
     event.preventDefault();
     if (buttonName === undefined) return;
     setSuscribe(true);
-    try {
-      await submitSubscriptionMailchamp(
-        event,
-        handleSusribeChange,
-        newSubscriber,
-        buttonName
-      );
-      await setNewSubscriberEmail(newSubscriber, buttonName);
-    } catch (error) {
-      toast.error("The information sent is not valid");
-    }
+    await submitSubscriptionMailchamp(
+      event,
+      handleSusribeChange,
+      newSubscriber,
+      buttonName
+    );
     setSuscribe(false);
   };
 

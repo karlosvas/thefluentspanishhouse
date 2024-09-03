@@ -83,7 +83,6 @@ function ControlledCarousel() {
             }}
           >
             <Carousel.Caption className="caption">
-              <h3>Tutoroo anonyme</h3>
               <p>
                 Marta is an excellent teacher! Her classes are engaging,
                 challenging, and practical for gaining speaking skills, in
@@ -103,7 +102,6 @@ function ControlledCarousel() {
             }}
           >
             <Carousel.Caption className="caption">
-              <h3>Tutoroo anonyme</h3>
               <p>
                 Marta is exxcelent! I thoroughly enjoyed her as a tutor and look
                 forward to future lessons.

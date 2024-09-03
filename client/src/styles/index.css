@@ -5,7 +5,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  --primary-blue: #2b65e2;
+  --primary-blue: rgb(51, 104, 201);
   --secondary-blue: #87d9ff;
   --primary-white: #f0faff;
   --secondary-white: #ffffff;

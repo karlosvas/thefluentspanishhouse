@@ -1,56 +1,57 @@
-import { Response } from "express";
-import https from "https";
-import { type NewUserChamp } from "types/types";
+import dotenv from "dotenv";
+dotenv.config();
+import mailchimp from "@mailchimp/mailchimp_marketing";
+import crypto from "crypto";
+import { NewUserChamp, type Member } from "types/types";
 
-export async function newMailChampSuscriber(
-  newUserChamp: NewUserChamp,
-  res: Response
-) {
-  const jsonChamp = JSON.stringify(newUserChamp.members);
+mailchimp.setConfig({
+  apiKey: process.env.MAILCHIMP_API,
+  server: process.env.MAILCHIMP_SERVER_PREFIX,
+});
+const listId = process.env.MAILCHIMP_LIST_ID;
 
-  const apiKey = process.env.MAILCHIMP_API;
-  const dataCenter = process.env.MAILCHIMP_SERVER_PREFIX;
-  const url = `https://${dataCenter}.api.mailchimp.com/3.0/lists/21cf8c94a8`;
+export const addSubscriberChamp = async (newUserChamp: Member) => {
+  try {
+    const response = await mailchimp.lists.addListMember(listId, newUserChamp);
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+    throw new Error();
+  }
+};
 
-  const options = {
-    method: "POST",
-    auth: `karlosvas:${apiKey}`,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
+export async function uppdateSuscribe(email: string, status: mailchimp.Status) {
+  const subscriberHash = crypto
+    .createHash("md5")
+    .update(email.toLowerCase())
+    .digest("hex");
 
-  // Solicitud HTTPS a Mailchimp
-  const request = https.request(url, options, function (response) {
-    let data = "";
-
-    // Recibe los datos de la respuesta en chunks
-    response.on("data", (chunk) => {
-      data += chunk;
-    });
-
-    response.on("end", () => {
-      // Cuando la repuesta haya terminado lo parseamos a JSON
-      const responseData = JSON.parse(data);
-      if (responseData.title === "Member Exists")
-        res.status(400).send("The user is already subscribed");
-      else if (response.statusCode === 200)
-        res.status(200).send({ message: "Subscription sent successfully" });
-      else {
-        console.error(responseData);
-        if (response.statusCode)
-          res.status(response.statusCode).send(responseData);
+  try {
+    // Actualizar el estado del suscriptor a "subscribed"
+    const response = await mailchimp.lists.updateListMember(
+      listId,
+      subscriberHash,
+      {
+        status: status as mailchimp.Status,
       }
-    });
-  });
+    );
+    console.log(response);
+  } catch (error) {
+    // Manejar otros errores
+    console.error(
+      "Error updating status to Mailchimp:",
+      error.response ? error.response.body : error.message
+    );
+  }
+}
 
-  // Error in response
-  request.on("error", (error) => {
-    console.error("Error in response", error);
-    res.status(500).send("Error sending request");
-  });
-
-  // Enviar la información a Mailchimp
-  request.write(jsonChamp);
-  request.end();
+export async function getAllListChamp() {
+  try {
+    return await mailchimp.lists.getAllLists();
+  } catch (error) {
+    console.error(
+      "Error getting all members from Mailchimp:",
+      error.response ? error.response.body : error.message
+    );
+  }
 }

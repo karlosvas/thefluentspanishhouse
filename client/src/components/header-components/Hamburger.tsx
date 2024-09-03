@@ -15,6 +15,7 @@ const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
   const user = useContext(UserContext);
 
   const handleClick = () => {
+    console.log("handleClick");
     if (showModal) {
       setClosing(true);
       setTimeout(() => {
@@ -74,10 +75,12 @@ const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
                 <MainNav theme={theme} setTheme={setTheme} />
               </div>
             </div>
-            <Backdrop handleSusribeChange={handleClick} closing={closing} />
           </>
         )}
       </div>
+      {(showModal || closing) && (
+        <Backdrop handleSusribeChange={handleClick} closing={closing} />
+      )}
     </>
   );
 };

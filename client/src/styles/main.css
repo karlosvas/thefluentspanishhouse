@@ -6,7 +6,7 @@
     animation-range: entry 20% cover 30%;
   }
   .main-title {
-    padding: 100px 30px 50px 30px;
+    padding: 10vh 30px 35vh 30px;
     text-align: center;
     width: 100vw;
     #title {
@@ -33,33 +33,79 @@
         box-shadow: 0 1px 10px var(--primary-black);
       }
       figcaption {
-        padding: 30px;
+        text-align: start;
+        padding: 20px;
         padding-left: 0;
-        width: 70%;
+        width: 80%;
+        font-size: 16px;
+        span {
+          font-size: 30px;
+          color: var(--primary-blue);
+          font-weight: 600;
+          text-shadow: 0 1px 1px var(--primary-blue);
+        }
       }
     }
   }
 
   .main-content {
-    font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial,
-      sans-serif;
-    animation: reveal linear both;
-    animation-timeline: view();
-    animation-range: entry 20% cover 30%;
-    max-width: 900px;
-    margin: auto;
-    padding: 30px;
-    margin-top: 100px;
-    ul {
-      list-style: none;
-    }
+    width: 100vw;
+    background-image: linear-gradient(
+      315deg,
+      rgb(111, 96, 196) 0%,
+      rgb(28, 53, 165) 74%
+    );
+    background-size: cover;
+    position: relative;
+    padding: 0 20px;
+    overflow: hidden;
+
     h2 {
-      font-weight: 600;
-      text-align: center;
-      padding: 20px;
+      margin-top: 0;
     }
-    h4 {
-      padding: 5px 0;
+
+    .planta {
+      height: 200px;
+      position: absolute;
+      width: fit-content;
+    }
+
+    .planta.left {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 25vh;
+      filter: opacity(0.5);
+    }
+
+    .planta.rigth {
+      position: absolute;
+      bottom: -10%;
+      right: -3%;
+      height: 25vh;
+      filter: opacity(0.5);
+    }
+
+    .achievements-section {
+      font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial,
+        sans-serif;
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 30%;
+      max-width: 900px;
+      margin: auto;
+      padding-bottom: 50px;
+      ul {
+        list-style: none;
+      }
+      h2 {
+        font-weight: 600;
+        text-align: center;
+        padding: 50px;
+      }
+      h4 {
+        padding: 5px 0;
+      }
     }
   }
 
@@ -106,7 +152,9 @@
           font-weight: 600;
         }
         button {
-          background-color: rgb(39, 89, 180);
+          background-color: rgb(39, 91, 160);
+          border-bottom: 5px solid rgb(10, 48, 101);
+          box-shadow: 0px 5px rgb(10, 48, 101);
           width: 200px;
           padding: 10px 20px;
           margin-top: 40px;
@@ -116,8 +164,6 @@
           font-size: 15px;
           font-weight: bold;
           cursor: pointer;
-          border-bottom: 3px solid rgb(62, 88, 124);
-          box-shadow: 0px 5px rgb(42, 74, 117);
           transition: all 0.2s ease;
         }
 
@@ -125,6 +171,7 @@
           box-shadow: 0px 2px rgb(10, 48, 101);
           transform: translateY(4px);
         }
+
         ul {
           display: flex;
           flex-direction: column;
@@ -196,6 +243,23 @@
   #banner {
     object-position: center;
   }
+  .main-index {
+    .main-content {
+      .planta.rigth {
+        right: -10%;
+      }
+    }
+    .main-reviews .main-carrousel {
+      #carrousel {
+        width: 70vw;
+        .content-caption {
+          .caption {
+            top: 35%;
+          }
+        }
+      }
+    }
+  }
 }
 
 /* Moviles */
@@ -223,6 +287,9 @@
       }
     }
     .main-content {
+      .planta {
+        display: none;
+      }
       h2 {
         padding: 10px;
         padding-bottom: 20px;
@@ -246,19 +313,9 @@
         }
       }
     }
-    .main-reviews {
-      img {
-        min-height: 30vh;
-        object-fit: cover;
-      }
-      .backdrop-caption {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: rgb(228, 239, 255, 0.5);
-      }
-      .caption {
-        border-radius: 10px;
+    .main-reviews .main-carrousel {
+      #carrousel {
+        width: 100vw;
       }
     }
   }

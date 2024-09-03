@@ -4,8 +4,10 @@ dotenv.config();
 import { connectDB } from "./mongodb.js";
 import express from "express";
 import cors from "cors";
-import { newMailChampSuscriber } from "./lib/mailchamp/mailchamp.js";
-import { submitNote, submitEmalSuscriber, } from "./lib/nodemailer/nodemailer.js";
+import { addSubscriberChamp } from "./lib/mailchamp/mailchamp.js";
+import { submitNote,
+// submitEmalSuscriber,
+ } from "./lib/nodemailer/nodemailer.js";
 import { validateEmail } from "./utilities/validateEmail.js";
 import { router } from "./routes/routes.js";
 const app = express();
@@ -13,6 +15,7 @@ const app = express();
 async function inicializeApp() {
     app.use(express.json({ limit: "10mb" }));
     app.use(express.urlencoded({ limit: "10mb", extended: true }));
+    app.use(express.json());
     // Configuración global de CORS
     const allowedOrigins = [
         process.env.URL_WEB,
@@ -61,28 +64,26 @@ async function inicializeApp() {
     });
     // Nuevas suscripciones a Mailchamp
     app.post("/api/mailchamp", async (req, res) => {
-        const { email, name, lastname, interests } = req.body;
+        const { name, lastname, email, tags } = req.body;
         if (!validateEmail(email))
             return res.status(400).send("Email inválido");
         const newUserChamp = {
-            members: [
-                {
-                    email_address: email,
-                    merge_fields: {
-                        FNAME: name,
-                        LNAME: lastname,
-                        CLASS: interests,
-                    },
-                },
-            ],
+            email_address: email,
+            status: "pending",
+            merge_fields: {
+                FNAME: name,
+                LNAME: lastname,
+            },
+            tags,
         };
         try {
-            const type = interests;
-            await newMailChampSuscriber(newUserChamp, res);
-            await submitEmalSuscriber(email, name, lastname, type);
+            // Usuario y etiquetas para añadir al usuario
+            await addSubscriberChamp(newUserChamp);
+            res.status(200).send("Email sent successfully");
+            // await submitEmalSuscriber(email, name, lastname, type);
         }
         catch (error) {
-            throw new Error("Error sending email, or subscribing to mailchamp");
+            res.status(500).send("Error suscribing to Mailchimp");
         }
     });
     // Envia nota el contact us a gmail de process.env.USER_GMAIL
@@ -98,6 +99,24 @@ async function inicializeApp() {
             res.status(500).send({ message: "Error sending email", error });
         }
     });
+    // app.post("/mailchamp/newsletter", async (req, res) => {
+    //   const { email } = req.body;
+    //   if (!validateEmail(email)) return res.status(400).send("Email inválido");
+    //   const newUserChamp: NewUserChamp = {
+    //     members: [
+    //       {
+    //         email_address: email,
+    //         status: "subscribed",
+    //       },
+    //     ],
+    //   };
+    //   try {
+    //     await newMailChampSuscriber(newUserChamp, res);
+    //     res.status(200).send("Email sent successfully");
+    //   } catch (error) {
+    //     res.status(500).send("Error sending email");
+    //   }
+    // });
     const PORT_BACKEND = process.env.PORT;
     app.listen(PORT_BACKEND, () => {
         console.log(`Server runing: http://localhost:${PORT_BACKEND}`);

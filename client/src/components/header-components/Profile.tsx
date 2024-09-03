@@ -26,9 +26,7 @@ const Profile = () => {
             </>
           )}
       </div>
-      <div className="auth">
-        <Auth />
-      </div>
+      <Auth />
     </>
   );
 };

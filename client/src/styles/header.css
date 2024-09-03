@@ -3,7 +3,7 @@ header {
   top: 0;
   background-color: var(--primary-white);
   width: 100%;
-  z-index: 1000;
+  z-index: 500;
   box-sizing: border-box;
   .header-animation {
     height: 10vh;
@@ -167,7 +167,7 @@ header.shrink {
 
 /* Portátil and tablet */
 @media only screen and (width <= 1200px) and (width > 766px) {
-  header .header {
+  header .header-animation .header {
     #logo {
       margin-left: 10px;
     }
@@ -177,7 +177,7 @@ header.shrink {
 /* Moviles */
 @media only screen and (width <= 766px) {
   header {
-    .header {
+    .header-animation .header {
       z-index: 999;
       align-items: end;
       justify-content: center;

@@ -7,6 +7,7 @@ import {
   type SubscriberType,
   type Comment,
   type NoteType,
+  ChampTag,
 } from "types/types";
 
 const helper = Helper();
@@ -97,6 +98,12 @@ export const postChildrenComment = async (
   }
 };
 
+interface HttpError extends Error {
+  response?: {
+    status?: number;
+  };
+}
+
 export const submitSubscriptionMailchamp = async (
   event: React.FormEvent<HTMLFormElement>,
   handleChange: () => void,
@@ -106,18 +113,27 @@ export const submitSubscriptionMailchamp = async (
   event.preventDefault();
   if (!url_api) throw new Error("URL API no inicializada");
   try {
-    const mailChampSubscribe = {
+    const tag: ChampTag =
+      buttonName === "Group classes" ? "GROUP_CLASS" : "PRIVATE_CLASS";
+
+    const tags = [tag];
+    const updatedSuscribe = {
       ...newSubscriber,
-      interests: buttonName,
+      tags,
     };
+
     const response = await helper.post(`${url_api}/api/mailchamp`, {
-      body: JSON.stringify(mailChampSubscribe),
+      body: JSON.stringify(updatedSuscribe),
     });
     if (response) toast.success("Submitted successfully");
     handleChange();
   } catch (error) {
-    console.error("Error al enviar el post:", error);
-    throw Error;
+    const httpError = error as HttpError;
+    if (httpError.response && httpError.response.status === 409) {
+      toast.error("Member already exists");
+    } else {
+      toast.error("The information sent is not valid");
+    }
   }
 };
 
@@ -146,19 +162,10 @@ export const submitNote = async (newNote: NoteType) => {
   }
 };
 
-export const setNewSubscriberEmail = async (
-  newSuscriber: {
-    name: string;
-    lastname: string;
-    email: string;
-    type: string;
-  },
-  type: string
-) => {
+export const subscribeNewsletter = async (email: string) => {
   try {
-    newSuscriber.type = type;
-    await helper.post(`${url_api}/subscribers/email`, {
-      body: JSON.stringify({ newSuscriber }),
+    await helper.post(`${url_api}/mailchamp/newsletter`, {
+      body: JSON.stringify({ email }),
     });
   } catch (error) {
     console.error("Error to submit post", error);

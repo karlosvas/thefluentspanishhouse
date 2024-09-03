@@ -37,6 +37,11 @@ const App = () => {
   // Determina si el Header y el Footer deben ser ocultados
   const shouldHideHeaderFooter = exclude_header.includes(location.pathname);
 
+  // Scroll hacia arriba cuando se cambia de ruta
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
   // Listener que verifica si el usuario está autenticado y detecta cambios en el token de ID del usuario
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {

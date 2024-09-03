@@ -89,6 +89,7 @@
     h4 {
       font-size: 20px;
     }
+    margin-bottom: 100px;
   }
 }
 
@@ -98,6 +99,36 @@
   align-items: start;
   padding-top: 80px;
   padding-bottom: 5vh;
+  form {
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: none;
+  }
+
+  form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  form input {
+    color: currentColor;
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    background-color: transparent;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  form input:focus {
+    border-color: #007bff; /* Color del borde al enfocar */
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul al enfocar */
+  }
   p {
     width: 70%;
   }

@@ -2,14 +2,19 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100dvh;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: 500;
   overflow: hidden;
   animation: bgDown 0.3s ease-out;
 }
 
 .modal-backdropLog.closing {
   animation: bgUp 0.3s ease-out forwards;
+}
+
+.menu-left .modal-backdropLog {
+  top: -110%;
+  left: -120%;
 }

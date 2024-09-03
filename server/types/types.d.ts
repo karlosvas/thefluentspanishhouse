@@ -1,4 +1,5 @@
 import { type User } from "firebase/auth";
+import { type Status } from "@mailchimp/mailchimp_marketing";
 
 export interface PublicationCardType {
   _id: string;
@@ -13,7 +14,6 @@ export interface SubscriberType {
   name: string;
   lastname: string;
   email: string;
-  type: string;
 }
 
 export interface Comment {
@@ -46,19 +46,21 @@ export interface ConfigUser {
   phone: string;
 }
 
-// interfaces.ts
+// Maichampp Types
 export interface MergeFields {
   FNAME: string;
   LNAME: string;
-  CLASS: string[];
 }
 
 export interface Member {
   email_address: string;
-  status?: "subscribed" | "unsubscribed" | "cleaned" | "pending";
+  status: Status;
   merge_fields: MergeFields;
+  tags?: ChampTag[];
 }
 
 export interface NewUserChamp {
   members: Member[];
 }
+
+type ChampTag = "GROUP_CLASS" | "PRIVATE_CLASS" | "FREE_CLASS";
