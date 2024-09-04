@@ -181,16 +181,16 @@ export interface EditType {
 }
 
 // Maichampp Types
-export interface MergeFields {
-  FNAME: string;
-  LNAME: string;
-}
-
 export interface Member {
   email_address: string;
   status: Status;
-  merge_fields: MergeFields;
-  tags: ChampTag[];
+  email_type: "html" | "text";
+  merge_fields?: {
+    [key: string]: string;
+  };
+  tags?: ChampTag[];
+  status_if_new: Status;
+  update_existing?: boolean;
 }
 
 export interface NewUserChamp {

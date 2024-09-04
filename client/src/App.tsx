@@ -21,6 +21,7 @@ import Contact from "@/pages/Contact";
 import { Toaster } from "react-hot-toast";
 import Main from "./pages/Main";
 import { HelmetProvider } from "react-helmet-async";
+import Mantenince from "./components/reusable/Mantenince";
 
 export const UserContext = createContext<User | null>(null);
 
@@ -102,7 +103,8 @@ const App = () => {
             <Route path="/aboutme" element={<AboutMe />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/info" element={<Info />} />
-            <Route path="/newsetler" element={<Newsetler />} />
+            <Route path="/newsetler" element={<Mantenince />} />
+            <Route path="/feature" element={<Newsetler />} />
             <Route path="/404" element={<Error />} />
             <Route path="/verify" element={<CallbackVerify />} />
             {/* Maneja rutas no encontradas */}

@@ -8,6 +8,7 @@ import {
   type Comment,
   type NoteType,
   ChampTag,
+  Member,
 } from "types/types";
 
 const helper = Helper();
@@ -117,13 +118,23 @@ export const submitSubscriptionMailchamp = async (
       buttonName === "Group classes" ? "GROUP_CLASS" : "PRIVATE_CLASS";
 
     const tags = [tag];
-    const updatedSuscribe = {
-      ...newSubscriber,
+
+    const member: Member = {
+      email_address: newSubscriber.email,
+      status: "pending",
+      email_type: "html",
+      merge_fields: {
+        FNAME: newSubscriber.name,
+        LNAME: newSubscriber.lastname,
+      },
       tags,
+      status_if_new: "pending",
+      update_existing: true
     };
 
-    const response = await helper.post(`${url_api}/api/mailchamp`, {
-      body: JSON.stringify(updatedSuscribe),
+    
+    const response = await helper.put(`${url_api}/mailchimp/updatecontact`, {
+      body: JSON.stringify(member),
     });
     if (response) toast.success("Submitted successfully");
     handleChange();
