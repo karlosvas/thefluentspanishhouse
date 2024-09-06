@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "@/components/reusable/Button";
-import PlaceholderImg from "@/components/reusable/PlaceholderImg";
+// import PlaceholderImg from "@/components/reusable/PlaceholderImg";
 import "@/styles/main-newsettler.css";
 import { Helmet } from "react-helmet-async";
 import toast from "react-hot-toast";
@@ -49,9 +49,9 @@ const Newsletter = () => {
           <div className="freecontent-felx">
             <article className="freecontent-article">
               <figure>
-                {!allImagesLoaded && (
+                {/* {!allImagesLoaded && (
                   <PlaceholderImg className={"img-newsletter"} />
-                )}
+                )} */}
                 <img
                   className="img-newsletter"
                   src="./img/newsletter3.png"
@@ -100,9 +100,9 @@ const Newsletter = () => {
         <section className="nw-freecontent">
           <article className="freecontent-article">
             <figure>
-              {!allImagesLoaded && (
+              {/* {!allImagesLoaded && (
                 <PlaceholderImg className={"img-newsletter"} />
-              )}
+              )} */}
               <img
                 className="img-newsletter"
                 src="./img/newttseler2.webp"

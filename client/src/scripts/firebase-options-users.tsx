@@ -91,7 +91,7 @@ export const changeOptionsUserEmail = async (
   }, 10000);
 };
 
-export function resetPassword(email: string, navigate: NavigateFunction) {
+export async function resetPassword(email: string, navigate: NavigateFunction) {
   toast.loading("Sending...");
   sendPasswordResetEmail(auth, email)
     .then(() => {
@@ -106,6 +106,7 @@ export function resetPassword(email: string, navigate: NavigateFunction) {
       }, 10000);
     })
     .catch((error) => {
+      toast.dismiss();
       showMessageErrorFirebase(error);
     });
 }

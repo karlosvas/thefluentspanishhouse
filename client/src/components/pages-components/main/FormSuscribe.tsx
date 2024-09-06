@@ -1,43 +1,44 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Buuton from "@/components/reusable/Button";
-import { submitSubscriptionMailchamp } from "@/scripts/render-data";
+import { getMailchimpUser, isMember, submitSubscriptionMailchimp, updateTagsMailchimp } from "@/scripts/render-data";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
 import { type FormSuscriberProps, type SubscriberType } from "types/types";
+import { handleInputChange } from "@/utilities/utilities";
 
 const FormSuscribe: React.FC<FormSuscriberProps> = ({
   closing,
   handleSusribeChange,
   buttonName,
 }) => {
+  const [suscribe, setSuscribe] = useState(false);
   const [newSubscriber, setNewSubscriber] = useState<SubscriberType>({
     name: "",
     lastname: "",
     email: "",
   });
-  const [suscribe, setSuscribe] = useState(false);
-
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setNewSubscriber((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (buttonName === undefined) return;
     setSuscribe(true);
-    await submitSubscriptionMailchamp(
-      event,
-      handleSusribeChange,
-      newSubscriber,
-      buttonName
-    );
+
+    // Obtenemos el usuario de mailchimp
+    const mailchimpUser = await getMailchimpUser(newSubscriber.email); 
+
+    if(mailchimpUser && isMember(mailchimpUser)){
+      // El usuario se ha encontrado por lo que solo cambiamos su nuevo tag
+        await updateTagsMailchimp(mailchimpUser, buttonName, handleSusribeChange);
+    } else {
+      // El usuario no se ha encontrado, si no se a encontrado se crea
+      await submitSubscriptionMailchimp(
+        handleSusribeChange,
+        newSubscriber,
+        buttonName
+      );
+    }
+
     setSuscribe(false);
   };
 
@@ -54,7 +55,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
                 type="text"
                 name="email"
                 value={newSubscriber.email}
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event, setNewSubscriber)}
                 required
               />
             </li>
@@ -64,7 +65,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
                 type="text"
                 name="name"
                 value={newSubscriber.name}
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event, setNewSubscriber)}
                 required
               />
             </li>
@@ -74,7 +75,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
                 type="text"
                 name="lastname"
                 value={newSubscriber.lastname}
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event, setNewSubscriber)}
                 required
               />
             </li>

@@ -29,11 +29,12 @@ header {
       a {
         text-decoration: none;
         color: inherit;
-        cursor: pointer;
-        transition: all 0.25s;
-        z-index: 999;
       }
 
+      .svgIcons{
+        cursor: pointer;
+      }
+      
       li {
         display: flex;
         justify-content: center;

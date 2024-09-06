@@ -6,6 +6,7 @@ import { UserContext } from "@/App";
 import { type Comment } from "types/types";
 import "@/styles/comments.css";
 import toast from "react-hot-toast";
+import { isCommentArray } from "@/utilities/utilities";
 
 const CommentsPublication = () => {
   // Estado de los comentarios actuales, y del Text Area
@@ -52,8 +53,10 @@ const CommentsPublication = () => {
       await postComment(newCommentData);
       // Si se ha enviado correctamente, añadirlo a la lista de comentarios
       const updatedComments = await getCommentsByID(id);
-      updatedComments.reverse();
-      setComments(updatedComments);
+      if (isCommentArray(updatedComments)) {
+        updatedComments.reverse();
+        setComments(updatedComments);
+      }
     } else toast.error("Do you need login to comment");
   };
 
@@ -63,8 +66,10 @@ const CommentsPublication = () => {
   useEffect(() => {
     if (id)
       getCommentsByID(id).then((result) => {
-        result.reverse();
-        setComments(result);
+        if (isCommentArray(result)) {
+          result.reverse();
+          setComments(result);
+        }
       });
     else navigate("/404");
   }, [id, navigate]);

@@ -129,8 +129,11 @@ type HandlePublicationChange = () => void;
 type Handler = HandleSubscribeChange | HandlePublicationChange;
 
 export interface PlaceholderProps {
-  id?: string;
-  className?: string;
+  src: string;
+  className: string;
+  alt?: string;
+  areaLabel?: string;
+  children?: ReactNode;
 }
 
 export interface ButtonCloseProps {
@@ -188,7 +191,7 @@ export interface Member {
   merge_fields?: {
     [key: string]: string;
   };
-  tags?: ChampTag[];
+  tags: TagMailchamp[];
   status_if_new: Status;
   update_existing?: boolean;
 }
@@ -197,4 +200,25 @@ export interface NewUserChamp {
   members: Member[];
 }
 
-type ChampTag = "GROUP_CLASS" | "PRIVATE_CLASS" | "FREE_CLASS";
+
+type ErrorChamp = {
+  type: string,
+  title: string,
+  status: number,
+  detail: string,
+  instance: string
+}
+
+export interface ErrorResponseHelper {
+  err: boolean,
+  status: string,
+  statusText: string,
+  message?: ErrorChamp 
+}
+
+
+type OptionsChampTag = "GROUP_CLASS" | "PRIVATE_CLASS" | "FREE_CLASS";
+interface TagMailchamp {
+  name: OptionsChampTag;
+  status: "active" | "inactive";
+}

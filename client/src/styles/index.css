@@ -5,7 +5,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  --primary-blue: rgb(51, 104, 201);
+  --primary-blue: rgb(55, 71, 209);
   --secondary-blue: #87d9ff;
   --primary-white: #f0faff;
   --secondary-white: #ffffff;
@@ -100,13 +100,6 @@ html.light {
     .error {
       background-color: var(--primary-white);
       color: var(--primary-black);
-      label[for="username"] input[type="text"] {
-        border: 1px solid #ddd;
-        outline: none;
-      }
-      label[for="username"] input[type="text"]:focus {
-        border-color: #09abc3;
-      }
     }
   }
 }
@@ -124,13 +117,13 @@ html.dark {
     nav > ul > li a {
       color: var(--primary-white);
     }
-    .modal-auth {
+    .auth .modal-auth {
       color: var(--primary-white);
       background-color: var(--primary-black);
-    }
-    .googleAuth,
-    .facebookAuth {
-      border: 2px solid var(--primary-white);
+      .googleAuth,
+      .facebookAuth {
+        border: 2px solid var(--primary-white) ;
+      }
     }
     .menu-left {
       background-color: var(--primary-black);
@@ -145,6 +138,13 @@ html.dark {
       color: var(--primary-white);
     }
     .main-index {
+      .main-content{
+           background-image: linear-gradient(
+        180deg,
+       rgb(111, 96, 196) 0%,
+      rgb(28, 53, 165) 74%
+    ); 
+      }
       .div-pracing {
         color: var(--primary-white);
         .flex-cards .card-pracing {

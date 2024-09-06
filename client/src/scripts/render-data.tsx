@@ -7,11 +7,51 @@ import {
   type SubscriberType,
   type Comment,
   type NoteType,
-  ChampTag,
-  Member,
+  type Member,
+  type ErrorResponseHelper,
+  OptionsChampTag,
 } from "types/types";
 
 const helper = Helper();
+
+function isErrorResponseHelper(error: unknown): error is ErrorResponseHelper {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'err' in error &&
+    'status' in error &&
+    'statusText' in error
+  );
+}
+
+export const isMember = (obj: unknown): obj is Member => {
+  if (typeof obj !== "object" || obj === null)
+    return false;
+
+  const member = obj as Member;
+  const statusOptions = ["subscribed", "unsubscribed", "cleaned", "pending", "transactional"];
+
+  return (
+    typeof member.email_address === "string" &&
+    statusOptions.includes(member.status) &&
+    ["html", "text"].includes(member.email_type) &&
+    (member.merge_fields === undefined || typeof member.merge_fields === "object") &&
+    (member.tags === undefined || Array.isArray(member.tags)) &&
+    (member.status_if_new === undefined || statusOptions.includes(member.status_if_new)) &&
+    (member.update_existing === undefined || typeof member.update_existing === "boolean")
+  );
+};
+
+function errorMailchimp(error: ErrorResponseHelper){
+  const messageError = error.message?.detail
+  const status = error.status
+  console.log(messageError)
+  if (messageError?.includes("permanently deleted")) {
+    toast.error("This user is permanently deleted from Mailchimp, please contact with the support team.");
+  } 
+
+  return {messageError, status}
+}
 
 ///////////////////////////// GET /////////////////////////////
 export const getUrlTest = async () => {
@@ -70,6 +110,14 @@ export const getLastPublication = async () => {
   }
 };
 
+export const getMailchimpUser = async (email: string) => {
+  try {
+    return await helper.get(`${url_api}/mailchimp/getone/member/${email}`);
+  } catch (error) {
+    (isErrorResponseHelper(error)) ?  errorMailchimp(error) : toast.error("An expeted error ocurred");
+  }
+}
+
 ///////////////////////////// POST /////////////////////////////
 export const postComment = async (newCommentData: Comment) => {
   try {
@@ -96,55 +144,6 @@ export const postChildrenComment = async (
     });
   } catch (error) {
     console.error("Error al enviar el comentario:", error);
-  }
-};
-
-interface HttpError extends Error {
-  response?: {
-    status?: number;
-  };
-}
-
-export const submitSubscriptionMailchamp = async (
-  event: React.FormEvent<HTMLFormElement>,
-  handleChange: () => void,
-  newSubscriber: SubscriberType,
-  buttonName: string | undefined
-) => {
-  event.preventDefault();
-  if (!url_api) throw new Error("URL API no inicializada");
-  try {
-    const tag: ChampTag =
-      buttonName === "Group classes" ? "GROUP_CLASS" : "PRIVATE_CLASS";
-
-    const tags = [tag];
-
-    const member: Member = {
-      email_address: newSubscriber.email,
-      status: "pending",
-      email_type: "html",
-      merge_fields: {
-        FNAME: newSubscriber.name,
-        LNAME: newSubscriber.lastname,
-      },
-      tags,
-      status_if_new: "pending",
-      update_existing: true
-    };
-
-    
-    const response = await helper.put(`${url_api}/mailchimp/updatecontact`, {
-      body: JSON.stringify(member),
-    });
-    if (response) toast.success("Submitted successfully");
-    handleChange();
-  } catch (error) {
-    const httpError = error as HttpError;
-    if (httpError.response && httpError.response.status === 409) {
-      toast.error("Member already exists");
-    } else {
-      toast.error("The information sent is not valid");
-    }
   }
 };
 
@@ -221,19 +220,74 @@ export const editComment = async (id: string, textEdit: string) => {
   }
 };
 
+export const submitSubscriptionMailchimp = async (
+  handleChange: () => void,
+  newSubscriber: SubscriberType,
+  buttonName: string | undefined
+) => {
+  if (!url_api) throw new Error("URL API no inicializada");
+ 
+  const tag: OptionsChampTag =
+    buttonName === "Group classes" ? "GROUP_CLASS" : "PRIVATE_CLASS";
+
+  const member: Member = {
+    email_address: newSubscriber.email,
+    status: "pending",
+    email_type: "html",
+    merge_fields: {
+      FNAME: newSubscriber.name,
+      LNAME: newSubscriber.lastname,
+    },
+    tags: [{name: tag, status: "active"}],
+    status_if_new: "pending",
+    update_existing: true
+  };
+
+  
+  await helper.put(`${url_api}/mailchimp/updatecontact`, {
+    body: JSON.stringify(member)
+  })
+  .then(() => {
+      toast.success(`<b>${newSubscriber.name} ${newSubscriber.lastname}<b/> wlcome to ${buttonName}`);
+      handleChange();
+  })
+  .catch((error => (isErrorResponseHelper(error)) ?  errorMailchimp(error) : toast.error("An expeted error ocurred")))
+};
+
+export const updateTagsMailchimp = async (mailchimpUser: Member, buttonName: string, handleChange: () => void) => {
+    const newTag: OptionsChampTag =  buttonName === "Group classes" ? "GROUP_CLASS" : "PRIVATE_CLASS";
+    const email = mailchimpUser.email_address;
+
+    helper.put(`${url_api}/mailchimp/updatecontact/tag/${email}`, {
+      body: JSON.stringify({tag: newTag}),
+    })
+    .then(() => {
+      if(mailchimpUser.merge_fields)
+        toast.success(`<b>${mailchimpUser.merge_fields.FNAME} ${mailchimpUser.merge_fields.LNAME}<b/> are you register to new class ${buttonName}`)
+        handleChange();
+    }).catch((error) => (isErrorResponseHelper(error)) ?  errorMailchimp(error) : toast.error("An expeted error ocurred"))
+}
+
 ///////////////////////////// DELETE /////////////////////////////
 export const delatePublication = async (id: string) => {
-  try {
-    await helper.del(`${url_api}/publications/del/${id}`);
-  } catch (error) {
-    console.error("Error to submit post", error);
-  }
+    await helper.del(`${url_api}/publications/del/${id}`)
+    .catch((error) => console.error("Error to delete publication", error));
 };
 
 export const deleteComment = async (id: string) => {
-  try {
-    await helper.del(`${url_api}/comments/del/${id}`);
-  } catch (error) {
-    console.error("Error to submit post", error);
-  }
+  await helper.del(`${url_api}/publications/del/${id}`)
+  .catch((error) => console.error("Error to delete publication", error));
+};
+
+
+export const deleteUserChamp = async (email: string) => {
+    await helper.del(`${url_api}/user/del/${email}`)
+    .catch((error) => console.error("Error to delete user", error))
+};
+
+export const delateTagCahmp = async (email: string, tag: string) => {
+    await helper.del(`${url_api}/tag/del/${email}`, {
+      body: JSON.stringify({tag}),
+    })
+    .catch((error) => console.error("Error to delete tag", error));
 };

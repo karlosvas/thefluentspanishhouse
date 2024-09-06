@@ -165,10 +165,26 @@ const FormPublication: React.FC<FormPublicationProps> = ({
         return;
       }
     }
+
+    
+ function isPublicationCardType(obj: unknown): obj is PublicationCardType {
+  return (
+    typeof obj === 'object' &&
+    obj !== null &&
+    typeof (obj as PublicationCardType)._id === 'string' &&
+    typeof (obj as PublicationCardType).title === 'string' &&
+    typeof (obj as PublicationCardType).subtitle === 'string' &&
+    typeof (obj as PublicationCardType).content === 'string' &&
+    typeof (obj as PublicationCardType).base64_img === 'string' &&
+    typeof (obj as PublicationCardType).currentPage === 'number'
+  );
+}
+
     try {
       if (cardsBlog.length < MAX_PUBLICATIONS_PER_PAGE) {
         const newCard = await postPublication(event, newPublication);
-        cardsBlog.push(newCard);
+        if(isPublicationCardType(newCard))
+          cardsBlog.push(newCard);
       } else {
         // Desde la pagina uno buscamos cual es la siguiente pagina donde hay menos de 6 publicaciones para insertar contenido
         let actualPage = 1;
@@ -178,7 +194,10 @@ const FormPublication: React.FC<FormPublicationProps> = ({
           actualPage === 1
         ) {
           actualPage++;
-          arrayPublications = await getPublications(actualPage.toString());
+          const data = await getPublications(actualPage.toString());
+          if(Array.isArray(data))
+            arrayPublications = data;
+          
           if (actualPage == 10) break;
         }
         const updatedPublication = {

@@ -23,10 +23,14 @@ export const PaginationReactBoostrap: React.FC<PaginationProps> = ({
       navigate(`/blog/${currentPage + 1}`);
   };
 
+  type  LastPublicationResponse = {
+    currentPage: number;
+  }
   useEffect(() => {
     getLastPublication()
       .then((data) => {
-        setLastPage(data.currentPage);
+        if (data && typeof (data as LastPublicationResponse).currentPage === 'number')
+          setLastPage((data as LastPublicationResponse).currentPage);
         setCurrentPage(page ? parseInt(page) : 1);
       })
       .catch((error) => {

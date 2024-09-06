@@ -1,10 +1,8 @@
-import { useState } from "react";
 import PlaceholderImg from "@/components/reusable/PlaceholderImg";
 import { Helmet } from "react-helmet-async";
 import "@/styles/main-aboutme.css";
 
 const AboutMe = () => {
-  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <>
@@ -19,24 +17,19 @@ const AboutMe = () => {
         <div className="div-aboutme">
           <h2 id="haboutme">About me</h2>
           <article>
-            <figure>
-              {!imageLoaded && <PlaceholderImg className={"img-aboutme"} />}
-              <img
-                className="img-aboutme"
-                src="/img/escritorio.webp"
-                alt="Descripción de la imagen"
-                onLoad={() => setImageLoaded(true)}
-                style={{ display: imageLoaded ? "block" : "none" }}
-              />
-              <figcaption>
-                I was born and raised in Valladolid, two hundred kilometers from
+            <PlaceholderImg
+            className="img-aboutme"
+            src="/img/escritorio.webp"
+            alt="Decoración de libros y cafe en un escritorio"
+            areaLabel="Imagen decorativa de un escritorio con libros y café"
+            >
+            I was born and raised in Valladolid, two hundred kilometers from
                 Madrid.
                 <br />I love meeting people from around the world and learning
                 about different cultures. My hobbies are going for a run, doing
                 Pilates, cooking, and sharing a delicious meal with friends and
                 family."
-              </figcaption>
-            </figure>
+            </PlaceholderImg>
           </article>
           <article>
             <h2>My background</h2>

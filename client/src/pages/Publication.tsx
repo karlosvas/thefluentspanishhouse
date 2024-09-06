@@ -6,6 +6,7 @@ import { type PublicationCardType, type RouteParams } from "types/types";
 import "@/styles/main-publication.css";
 import CommentsPublication from "@/components/pages-components/publications/CommenstPublication";
 import { Helmet } from "react-helmet-async";
+import { isPublicationCardType } from "@/utilities/utilities";
 
 const Publication = () => {
   const [publication, setPublication] = useState<PublicationCardType>();
@@ -15,15 +16,11 @@ const Publication = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    let publication: PublicationCardType | undefined;
 
     if (id) {
       getPublicationByID(id)
         .then((result) => {
-          publication = result;
-          if (publication) {
-            setPublication(publication);
-          }
+          if (isPublicationCardType(result)) setPublication(result);
         })
         .catch((error) => {
           console.error(error);

@@ -70,25 +70,25 @@ const Auth = () => {
   };
 
   const forgotPasword = () => {
-    if (
-      user &&
-      user.email &&
-      user.providerData.some((provider) => provider.providerId !== "password")
-    ) {
-      toast(
-        `Cannot reset password for accounts authenticated with ${getProvider(
-          user
-        )}.`,
-        {
-          duration: 10000,
-          icon: "🔔",
-        }
-      );
-      resetPassword(user.email, navigate);
+    if (user && user.email) {
+      const currentProviderId = getProvider(user);
+      if(currentProviderId === "password")
+        resetPassword(user.email, navigate);
+      else {
+        toast(
+          `Can not reset password for accounts authenticated with ${getProvider(
+            user
+          )}.`,
+          {
+            duration: 10000,
+            icon: "🔔",
+          });
+      }
     } else {
-      toast.error("You must be logged in to reset your password");
+      navigate("/verify", { state: { reset: true } });
     }
   };
+
 
   function handleSusribeChange() {
     if (showModal) {

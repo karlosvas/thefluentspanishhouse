@@ -7,6 +7,7 @@ import Likes from "@/components/svg-component/Likes";
 import OptionsComment from "@/components/svg-component/OptionsComment";
 import ReplyToComment from "@/components/svg-component/ReplyToComment";
 import { type CommentCardProps, type Comment } from "types/types";
+import { isCommentArray } from "@/utilities/utilities";
 
 // Se renderiza cada comentario individualmente
 const CommentCard: React.FC<CommentCardProps> = ({
@@ -59,7 +60,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
           comment._id
         );
         const updatedComments = [newComment, ...childs];
-        setChilds(updatedComments);
+        if(isCommentArray(updatedComments)) setChilds(updatedComments);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -72,7 +73,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
   async function fetchChildComments(id: string) {
     try {
       const result = await getChildsComment(id);
-      setChilds(result.reverse());
+      if (isCommentArray(result)) setChilds(result.reverse());
     } catch (error) {
       console.error("Error al obtener datos:", error);
       toast.error("Error al obtener datos");

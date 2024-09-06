@@ -2,11 +2,9 @@ import Carrousel from "@/components/pages-components/main/Carrousel";
 import Prices from "@/components/pages-components/main/Prices";
 import PlaceholderImg from "@/components/reusable/PlaceholderImg";
 import "@/styles/main.css";
-import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 
 const Main = () => {
-  const [imageLoaded, setImageLoaded] = useState(false);
   return (
     <>
       <Helmet>
@@ -20,39 +18,28 @@ const Main = () => {
       <main className="main-index">
         <article className="main-title">
           <h1 id="title">The Fluent Spanish House</h1>
-          <figure>
-            {!imageLoaded && <PlaceholderImg id="banner" />}
-            <img
-              id="banner"
-              src="/img/carretera.jpg"
-              alt="Banner with inspiring images, sevillana dance"
-              onError={() => setImageLoaded(false)}
-              onLoad={() => setImageLoaded(true)}
-              style={{
-                display: imageLoaded ? "block" : "none",
-              }}
-            />
-            <figcaption>
-              <span>Hi, my name is Marta</span>
-              <br /> I’m a <strong>Spanish teacher</strong> from Spain who helps{" "}
-              <strong>English speakers</strong> to get{" "}
-              <strong>fluent in Spanish</strong>. <br />
-              <br />
-              Learning a language is an <strong>exciting journey</strong>, but
-              you need
-              <strong> perseverance</strong> to get positive results. I was
-              about to quit many times until I found out what was holding me
-              back. I’d been
-              <strong> prioritizing incorrectly</strong> for many years. <br />
-              <strong>
-                That breakthrough was a real turning point for me!
-              </strong>
-            </figcaption>
-          </figure>
+            <PlaceholderImg 
+              src="img/carretera.jpg" 
+              className="banner" 
+              alt="Banner with inspiring images, sevillana dance">
+                <span>Hi, my name is Marta</span>
+                <br /> I’m a <strong>Spanish teacher</strong> from Spain who helps{" "}
+                <strong>English speakers</strong> to get{" "}
+                <strong>fluent in Spanish</strong>. <br />
+                <br />
+                Learning a language is an <strong>exciting journey</strong>, but
+                you need
+                <strong> perseverance</strong> to get positive results. I was
+                about to quit many times until I found out what was holding me
+                back. I’d been
+                <strong> prioritizing incorrectly</strong> for many years. <br />
+                <strong>
+                  That breakthrough was a real turning point for me!
+                </strong>
+            </PlaceholderImg>
         </article>
         <div className="main-content">
           <img src="img/planta1.png" alt="" className="planta left" />
-          <img src="img/planta2.png" className="planta rigth" />
           <div className="achievements-section">
             <h2>What you can achive with my assitence?</h2>
             <ul>
@@ -84,6 +71,7 @@ const Main = () => {
               </li>
             </ul>
           </div>
+          <img src="img/planta1.png" className="planta right" />
         </div>
         <Prices />
         <div className="main-reviews">

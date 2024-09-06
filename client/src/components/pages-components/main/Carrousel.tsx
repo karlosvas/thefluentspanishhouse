@@ -38,12 +38,8 @@ function ControlledCarousel() {
         id="carrousel"
       >
         <Carousel.Item interval={5000}>
-          <div className="backdrop-caption"></div>
           <div
-            className="w-100 content-caption"
-            style={{
-              backgroundColor: "transparent",
-            }}
+            className="content-caption"
           >
             <Carousel.Caption className="caption">
               <h3>Joan Penn</h3>
@@ -57,12 +53,8 @@ function ControlledCarousel() {
           </div>
         </Carousel.Item>
         <Carousel.Item interval={5000}>
-          <div className="backdrop-caption"></div>
           <div
-            className=" w-100 content-caption"
-            style={{
-              backgroundColor: "transparent",
-            }}
+            className="content-caption"
           >
             <Carousel.Caption className="caption">
               <h3>Red Salas</h3>
@@ -75,12 +67,8 @@ function ControlledCarousel() {
           </div>
         </Carousel.Item>
         <Carousel.Item interval={5000}>
-          <div className="backdrop-caption"></div>
           <div
             className="w-100 content-caption"
-            style={{
-              backgroundColor: "transparent",
-            }}
           >
             <Carousel.Caption className="caption">
               <p>
@@ -94,16 +82,12 @@ function ControlledCarousel() {
           </div>
         </Carousel.Item>
         <Carousel.Item interval={5000}>
-          <div className="backdrop-caption"></div>
           <div
             className="w-100 content-caption"
-            style={{
-              backgroundColor: "transparent",
-            }}
           >
             <Carousel.Caption className="caption">
               <p>
-                Marta is exxcelent! I thoroughly enjoyed her as a tutor and look
+                Marta is excelent! I thoroughly enjoyed her as a tutor and look
                 forward to future lessons.
               </p>
             </Carousel.Caption>
