@@ -1,37 +1,69 @@
-import { useState } from "react";
-import Button from "@/components/reusable/Button";
-// import PlaceholderImg from "@/components/reusable/PlaceholderImg";
-import "@/styles/main-newsettler.css";
+import PlaceholderImg from "@/components/reusable/PlaceholderImg";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import "@/styles/main-newsettler.css";
 import toast from "react-hot-toast";
-import { subscribeNewsletter } from "@/scripts/render-data";
+import Button from "@/components/reusable/Button";
 
 const Newsletter = () => {
-  const [imagesLoaded, setImagesLoaded] = useState({
-    img1: false,
-    img2: false,
+  const [subscribed, setSubscribed] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    surnames: "",
+    birthday: "",
+    preferences: "",
+    privacy: false,
+    newsletter: false,
+    mailchimp: false,
   });
-  const [email, setEmail] = useState("");
-  const [allImagesLoaded, setAllImagesLoaded] = useState(false);
 
-  const handleImageLoad = (imgKey: keyof typeof imagesLoaded) => {
-    setImagesLoaded((prev) => {
-      const newImagesLoaded = { ...prev, [imgKey]: true };
-      const allLoaded = Object.values(newImagesLoaded).every(Boolean);
-      if (allLoaded) {
-        setAllImagesLoaded(true);
-      }
-      return newImagesLoaded;
-    });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { id, value, type } = e.target;
+    if (type === "checkbox") {
+      const { checked } = e.target as HTMLInputElement;
+      setForm((prevForm) => ({
+        ...prevForm,
+        [id]: checked,
+      }));
+    } else {
+      setForm((prevForm) => ({
+        ...prevForm,
+        [id]: value,
+      }));
+    }
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await subscribeNewsletter(email);
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to subscribe to newsletter");
+    setSubscribed(true);
+
+    for (const value of Object.values(form)) {
+      if (value === "" || value === false) {
+        toast.error("Please fill all the fields");
+        toast.error("This action is not yet implemented, we apologize for the inconvenience");
+        return;
+      }
+    }
+    toast.error("This action is not yet implemented, we apologize for the inconvenience.");
+    console.log("Formulario enviado");
+  };
+
+  const handleScroll = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    event.preventDefault();
+
+    const targetId = event.currentTarget.getAttribute("href")?.substring(1);
+    const targetElement = targetId ? document.getElementById(targetId) : null;
+
+    if (targetElement) {
+      const offset = 150;
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -45,81 +77,102 @@ const Newsletter = () => {
         />
       </Helmet>
       <main className="main-newsletter">
-        <section>
-          <div className="freecontent-felx">
-            <article className="freecontent-article">
-              <figure>
-                {/* {!allImagesLoaded && (
-                  <PlaceholderImg className={"img-newsletter"} />
-                )} */}
-                <img
-                  className="img-newsletter"
-                  src="./img/newsletter3.png"
-                  alt="Cafe"
-                  onLoad={() => handleImageLoad("img1")}
-                  style={{ display: allImagesLoaded ? "block" : "none" }}
-                />
-              </figure>
-              <div className="freecontent-content">
-                <h3>Free Spanish Learning Resources</h3>
-                <p>
-                  Are you eager to improve your Spanish skills? Download our
-                  free resources packed with essential vocabulary, grammar tips,
-                  and practice exercises. Perfect for beginners and advanced
-                  learners alike! Click the button below to get your free
-                  Spanish lessons and start your journey to fluency today!
-                </p>
-              </div>
-            </article>
-            <article className="freecontent-article">
-              <h2>Do you wonnt all beneficies</h2>
-              <div className="freecontent-content">
-                <h3>Get Your Free Spanish Guide</h3>
-                <p>
-                  Enhance your Spanish learning with our free guide! This
-                  resource includes practical exercises, key phrases, and tips
-                  to boost your confidence in speaking Spanish. Ideal for all
-                  levels. Download now and take the next step in mastering the
-                  language!
-                </p>
-              </div>
-              <form onSubmit={onSubmit}>
-                <label htmlFor="email">
-                  Email:
-                  <input
-                    type="text"
-                    name="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </label>
-                <Button type="submit">DOWNLOAD NOW</Button>
-              </form>
-            </article>
-          </div>
-        </section>
-        <section className="nw-freecontent">
-          <article className="freecontent-article">
-            <figure>
-              {/* {!allImagesLoaded && (
-                <PlaceholderImg className={"img-newsletter"} />
-              )} */}
-              <img
-                className="img-newsletter"
-                src="./img/newttseler2.webp"
-                alt="Cafe"
-                onLoad={() => handleImageLoad("img2")}
-                style={{ display: allImagesLoaded ? "block" : "none" }}
-              />
-            </figure>
-            <div className="freecontent-content">
-              <h2>Our Latest Spanish Class Highlights</h2>
+        <section className="info-section">
+          <article className="info-article">
+            <PlaceholderImg src="img/cafe.png" alt="Cafe" className="img-nw" />
+            <div className="info-content">
+              <h3>Free Spanish Learning Resources</h3>
               <p>
-                This week, our students made incredible progress in mastering
-                conversational Spanish. We focused on practical scenarios,
-                helping them feel more confident in real-world situations. Their
-                dedication and enthusiasm truly shone through!
+                Are you eager to improve your Spanish skills? Download our free resources packed with essential
+                vocabulary, grammar tips, and practice exercises. Perfect for beginners and advanced learners alike!
+                Click the button below to get your free Spanish lessons and start your journey to fluency today!
               </p>
-              <Button>SEE FULL CLASS STUDY</Button>
+            </div>
+          </article>
+          <article className="info-article">
+            <div className="info-content">
+              <section>
+                <h3>Do you want all benefits?</h3>
+                <h4>Get now is Free</h4>
+                <p>
+                  Enhance your Spanish learning with our free guide! This resource includes practical exercises, key
+                  phrases, and tips to boost your confidence in speaking Spanish. Ideal for all levels. Download now and
+                  take the next step in mastering the language!
+                </p>
+              </section>
+              <a href="#formulario" onClick={handleScroll}>
+                <Button>FREE DOWNLOAD</Button>
+              </a>
+            </div>
+          </article>
+        </section>
+        <section className="freecontent-section">
+          <article className="freecontent-article">
+            <PlaceholderImg src="img/reunion.webp" className="img-nw" alt="Cafe" />
+            <div className="freecontent-content">
+              <form id="formulario" onSubmit={onSubmit}>
+                <h1>Welcome to the Spanish newsletter!</h1>
+                <div className="form-group">
+                  <input type="text" id="name" placeholder=" " onChange={handleChange} />
+                  <label htmlFor="name" className={subscribed && form.name === "" ? "required" : ""}>
+                    Nombre
+                  </label>
+                </div>
+                <div className="form-group">
+                  <input type="email" id="email" placeholder=" " onChange={handleChange} />
+                  <label htmlFor="email" className={subscribed && form.email === "" ? "required" : ""}>
+                    Correo Electrónico
+                  </label>
+                </div>
+                <div className="form-group">
+                  <input type="text" id="surnames" placeholder=" " onChange={handleChange} />
+                  <label htmlFor="surnames" className={subscribed && form.surnames === "" ? "required" : ""}>
+                    Apellidos
+                  </label>
+                </div>
+                <div className="form-group">
+                  <input type="date" id="birthday" placeholder=" " onChange={handleChange} />
+                  <label htmlFor="birthday" className={subscribed && form.birthday === "" ? "required" : ""}>
+                    Fecha de Nacimiento
+                  </label>
+                </div>
+                <div className="form-group">
+                  <select id="preferences" value={form.preferences} onChange={handleChange}>
+                    <option value="" disabled></option>
+                    <option value="grammar">Gramática</option>
+                    <option value="vocabulary">Vocabulario</option>
+                    <option value="exercises">Ejercicios</option>
+                  </select>
+                  <label htmlFor="preferences" className={subscribed && form.preferences === "" ? "required" : ""}>
+                    Preferencias de Contenido
+                  </label>
+                </div>
+                <div className="checkbox-group">
+                  <input type="checkbox" id="privacy" checked={form.privacy} onChange={handleChange} />
+                  <label htmlFor="privacy" className={subscribed && !form.privacy ? "required" : ""}>
+                    I have read and accept the <a href="/info">privacy policy</a> and{" "}
+                    <a href="/info">terms and conditions</a>
+                  </label>
+                </div>
+                <div className="checkbox-group">
+                  <input type="checkbox" id="newsletter" checked={form.newsletter} onChange={handleChange} />
+                  <label htmlFor="newsletter" className={subscribed && !form.newsletter ? "required" : ""}>
+                    I want to receive the newsletter and commercial information from The Fluent Spanish House
+                  </label>
+                </div>
+                <div className="checkbox-group">
+                  <input type="checkbox" id="mailchimp" checked={form.mailchimp} onChange={handleChange} />
+                  <label htmlFor="newsletter" className={subscribed && !form.newsletter ? "required" : ""}>
+                    I accept that my data will be processed by{" "}
+                    <a href="https://mailchimp.com/legal/" target="_blank">
+                      Mailchimp
+                    </a>
+                  </label>
+                </div>
+                <Button type="submit" className="suscriber-btn">
+                  SUBSCRIBE
+                </Button>
+              </form>
             </div>
           </article>
         </section>

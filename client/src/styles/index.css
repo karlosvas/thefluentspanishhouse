@@ -1,11 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 
+@font-face {
+  font-family: "nemesis";
+  src: url("nemesis/nemesis.otf") format("opentype");
+}
+
 :root {
   line-height: 1.5;
   font-weight: 400;
 
-  --primary-blue: rgb(55, 71, 209);
+  --primary-blue: #3747d1;
   --secondary-blue: #87d9ff;
   --primary-white: #f0faff;
   --secondary-white: #ffffff;
@@ -122,7 +127,7 @@ html.dark {
       background-color: var(--primary-black);
       .googleAuth,
       .facebookAuth {
-        border: 2px solid var(--primary-white) ;
+        border: 2px solid var(--primary-white);
       }
     }
     .menu-left {
@@ -133,17 +138,16 @@ html.dark {
   body {
     background-color: var(--primary-black);
     color: var(--primary-white);
+
     main {
       background-color: var(--primary-black);
       color: var(--primary-white);
     }
+
+    /* Main */
     .main-index {
-      .main-content{
-           background-image: linear-gradient(
-        180deg,
-       rgb(111, 96, 196) 0%,
-      rgb(28, 53, 165) 74%
-    ); 
+      .main-content {
+        background-image: linear-gradient(180deg, rgb(111, 96, 196) 0%, rgb(28, 53, 165) 74%);
       }
       .div-pracing {
         color: var(--primary-white);
@@ -155,6 +159,8 @@ html.dark {
         background-color: var(--secondary-black);
       }
     }
+
+    /* Publicaciones */
     .publication-main {
       .publication figure {
         background-color: var(--secondary-black);
@@ -166,10 +172,14 @@ html.dark {
         }
       }
     }
+
+    /* Blog */
     .main-blog #blog .card-blog {
       background-color: var(--secondary-black);
       color: var(--primary-white);
     }
+
+    /* Acccount */
     .main-account {
       color: var(--primary-white);
       .ac-content {
@@ -182,6 +192,7 @@ html.dark {
         color: var(--primary-white);
       }
     }
+    /* Contact */
     .container {
       background-color: var(--primary-black);
     }
@@ -197,6 +208,19 @@ html.dark {
     }
     .upload-publication {
       color: var(--primary-black);
+    }
+
+    /* Newsletter */
+    .main-newsletter {
+      .freecontent-section .freecontent-article .freecontent-content .form-group {
+        label {
+          background-color: var(--primary-black);
+        }
+        input,
+        select {
+          color: var(--primary-white);
+        }
+      }
     }
   }
   footer {
