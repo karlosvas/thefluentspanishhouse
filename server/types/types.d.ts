@@ -47,20 +47,39 @@ export interface ConfigUser {
 }
 
 // Maichampp Types
-export interface MergeFields {
-  FNAME: string;
-  LNAME: string;
-}
-
 export interface Member {
   email_address: string;
   status: Status;
-  merge_fields: MergeFields;
-  tags?: ChampTag[];
+  email_type: "html" | "text";
+  merge_fields?: {
+    [key: string]: string;
+  };
+  tags: OptionsChampTag[];
+  status_if_new: Status;
+  update_existing?: boolean;
 }
 
 export interface NewUserChamp {
   members: Member[];
 }
 
-type ChampTag = "GROUP_CLASS" | "PRIVATE_CLASS" | "FREE_CLASS";
+type ErrorChamp = {
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  instance: string;
+};
+
+export interface ErrorResponseHelper {
+  err: boolean;
+  status: string;
+  statusText: string;
+  message?: ErrorChamp;
+}
+
+type OptionsChampTag = "GROUP_CLASS" | "PRIVATE_CLASS" | "FREE_CLASS";
+interface TagMailchamp {
+  name: OptionsChampTag;
+  status: "active" | "inactive";
+}

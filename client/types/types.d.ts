@@ -191,7 +191,7 @@ export interface Member {
   merge_fields?: {
     [key: string]: string;
   };
-  tags: TagMailchamp[];
+  tags: OptionsChampTag[];
   status_if_new: Status;
   update_existing?: boolean;
 }
@@ -200,22 +200,20 @@ export interface NewUserChamp {
   members: Member[];
 }
 
-
 type ErrorChamp = {
-  type: string,
-  title: string,
-  status: number,
-  detail: string,
-  instance: string
-}
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  instance: string;
+};
 
 export interface ErrorResponseHelper {
-  err: boolean,
-  status: string,
-  statusText: string,
-  message?: ErrorChamp 
+  err: boolean;
+  status: string;
+  statusText: string;
+  message?: ErrorChamp;
 }
-
 
 type OptionsChampTag = "GROUP_CLASS" | "PRIVATE_CLASS" | "FREE_CLASS";
 interface TagMailchamp {

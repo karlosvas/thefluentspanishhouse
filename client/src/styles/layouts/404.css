@@ -1,0 +1,92 @@
+body .error {
+  background-color: #0e1016;
+  color: var(--primary-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  width: 100vw;
+  flex-direction: column;
+  overflow: hidden;
+
+  p {
+    padding: 20px;
+  }
+  h1 {
+    padding-top: 10vh;
+    text-shadow: 1px 1px 1px var(--primary-white);
+    font-weight: 900;
+  }
+  section {
+    display: flex;
+    align-items: end;
+    padding: 10px;
+    a {
+      padding: 10px;
+      padding-left: 20px;
+    }
+  }
+  .err-flex {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    strong {
+      color: rgb(230, 59, 59);
+    }
+    h1 {
+      max-width: 1000px;
+      text-wrap: balance;
+    }
+  }
+
+  form {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    flex-direction: column;
+    margin: auto;
+  }
+
+  label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  input {
+    padding: 8px;
+    margin: 10px;
+    border-radius: 3px;
+    background-color: transparent;
+    width: 300px;
+    height: 35px;
+    color: currentColor;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #dddddd;
+  }
+
+  label[for="username"] input[type="text"]:focus {
+    border-color: #09abc3;
+  }
+
+  button {
+    border-radius: 0;
+    margin-left: 10px;
+    padding: 10px;
+    margin-bottom: 50px;
+    background-color: rgb(214, 53, 53);
+    color: var(--primary-white);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+  .send-info {
+    background-color: var(--primary-blue);
+  }
+  .delete:hover {
+    background-color: rgb(238, 90, 90);
+  }
+}
