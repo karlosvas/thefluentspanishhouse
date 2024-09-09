@@ -4,12 +4,13 @@ import toast from "react-hot-toast";
 import { FormEvent } from "react";
 import {
   type PublicationCardType,
-  type SubscriberType,
   type Comment,
   type NoteType,
   type Member,
   type ErrorResponseHelper,
   type OptionsChampTag,
+  type InterestCategoryResponse,
+  type InterestResponse,
 } from "types/types";
 
 const helper = Helper();
@@ -41,6 +42,10 @@ function errorMailchimp(error: ErrorResponseHelper) {
   console.log(messageError);
   if (messageError?.includes("permanently deleted")) {
     toast.error("This user is permanently deleted from Mailchimp, please contact with the support team.");
+  } else if (messageError?.includes("is already a list member")) {
+    toast("This user already exists in Mailchimp, We will try to offer better service ", {
+      icon: "🙈",
+    });
   }
 
   return { messageError, status };
@@ -197,35 +202,15 @@ export const editComment = async (id: string, textEdit: string) => {
   }
 };
 
-export const submitSubscriptionMailchimp = async (
-  handleChange: () => void,
-  newSubscriber: SubscriberType,
-  buttonName: string | undefined
-) => {
+export const submitSubscriptionMailchimp = async (member: Member) => {
   if (!url_api) throw new Error("URL API no inicializada");
 
-  const tag: OptionsChampTag = buttonName === "Group classes" ? "GROUP_CLASS" : "PRIVATE_CLASS";
-
-  const member: Member = {
-    email_address: newSubscriber.email,
-    status: "pending",
-    email_type: "html",
-    merge_fields: {
-      FNAME: newSubscriber.name,
-      LNAME: newSubscriber.lastname,
-    },
-    tags: [tag],
-    status_if_new: "pending",
-    update_existing: true,
-  };
-
-  await helper
-    .put(`${url_api}/mailchimp/updatecontact`, {
+  helper
+    .post(`${url_api}/mailchimp/add/member`, {
       body: JSON.stringify(member),
     })
     .then(() => {
-      toast.success(`<b>${newSubscriber.name} ${newSubscriber.lastname}<b/> wlcome to ${buttonName}`);
-      handleChange();
+      toast.success("You have been successfully subscribed to the newsletter");
     })
     .catch((error) => (isErrorResponseHelper(error) ? errorMailchimp(error) : toast.error("An expeted error ocurred")));
 };
@@ -271,4 +256,24 @@ export const delateTagCahmp = async (email: string, tag: string) => {
       body: JSON.stringify({ tag }),
     })
     .catch((error) => console.error("Error to delete tag", error));
+};
+
+export const getFirstInterestCategory = async (): Promise<InterestCategoryResponse> => {
+  try {
+    const data = await helper.get(`${url_api}/mailchimp/interests/category`);
+    return data as InterestCategoryResponse;
+  } catch (error) {
+    console.error("Error to get interest category", error);
+    throw error;
+  }
+};
+
+export const getInterests = async (idCategory: string): Promise<InterestResponse> => {
+  try {
+    const data = await helper.get(`${url_api}/mailchimp/interests/${idCategory}`);
+    return data as InterestResponse;
+  } catch (error) {
+    console.error("Error to get interest category", error);
+    throw error;
+  }
 };

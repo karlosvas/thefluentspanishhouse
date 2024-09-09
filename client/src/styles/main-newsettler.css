@@ -4,12 +4,8 @@
   margin-top: 100px;
   background-color: var(--primary-white);
 
-  img,
-  p,
-  h1,
-  h2,
-  h3,
-  h4 {
+  .info-section,
+  .freecontent-section {
     animation: reveal linear both;
     animation-timeline: view();
     animation-range: entry 20% cover 30%;
@@ -151,6 +147,7 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            text-align: left;
             margin-bottom: 15px;
           }
 

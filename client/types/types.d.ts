@@ -184,12 +184,18 @@ export interface EditType {
 }
 
 // Maichampp Types
+
+type Status = "subscribed" | "unsubscribed" | "cleaned" | "pending";
+
 export interface Member {
   email_address: string;
   status: Status;
   email_type: "html" | "text";
   merge_fields?: {
     [key: string]: string;
+  };
+  interests: {
+    [key: string]: boolean;
   };
   tags: OptionsChampTag[];
   status_if_new: Status;
@@ -219,4 +225,41 @@ type OptionsChampTag = "GROUP_CLASS" | "PRIVATE_CLASS" | "FREE_CLASS";
 interface TagMailchamp {
   name: OptionsChampTag;
   status: "active" | "inactive";
+}
+
+interface Link {
+  rel: string;
+  href: string;
+  method: string;
+  targetSchema?: string;
+  schema?: string;
+}
+
+interface Category {
+  list_id: string;
+  id: string;
+  title: string;
+  display_order: number;
+  type: string;
+  _links: Link[];
+}
+
+export interface InterestCategoryResponse {
+  list_id: string;
+  categories: Category[];
+  total_items: number;
+  _links: Link[];
+}
+
+interface Interest {
+  category_id: string;
+  list_id: string;
+  id: string;
+}
+export interface InterestResponse {
+  _links: Link[];
+  category_id: string;
+  interests: Interest[];
+  list_id: string;
+  total_items: number;
 }

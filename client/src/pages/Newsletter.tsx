@@ -1,9 +1,11 @@
 import PlaceholderImg from "@/components/reusable/PlaceholderImg";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import "@/styles/main-newsettler.css";
 import toast from "react-hot-toast";
 import Button from "@/components/reusable/Button";
+import { getFirstInterestCategory, getInterests, submitSubscriptionMailchimp } from "@/scripts/render-data";
+import { Member } from "types/types";
 
 const Newsletter = () => {
   const [subscribed, setSubscribed] = useState(false);
@@ -45,8 +47,39 @@ const Newsletter = () => {
         return;
       }
     }
-    toast.error("This action is not yet implemented, we apologize for the inconvenience.");
-    console.log("Formulario enviado");
+
+    const [year, month, day] = form.birthday.split("-");
+    console.log(year);
+    const formattedBirthday = `${day}/${month}`;
+
+    const allCategorys = await getFirstInterestCategory();
+    const category = await getInterests(allCategorys.categories[0].id);
+
+    const interestsIDs: string[] = Object.values(category.interests).map((interest) => {
+      return interest.id;
+    });
+
+    const interests = {
+      [interestsIDs[0].toString()]: form.preferences.includes("grammar"),
+      [interestsIDs[1].toString()]: form.preferences.includes("vocabulary"),
+      [interestsIDs[2].toString()]: form.preferences.includes("exercises"),
+    };
+
+    const member: Member = {
+      email_address: form.email,
+      status: "pending",
+      email_type: "html",
+      merge_fields: {
+        FNAME: form.name,
+        LNAME: form.surnames,
+        BIRTHDAY: formattedBirthday,
+      },
+      interests: interests,
+      tags: [],
+      status_if_new: "pending",
+    };
+
+    submitSubscriptionMailchimp(member);
   };
 
   const handleScroll = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -119,15 +152,15 @@ const Newsletter = () => {
                   </label>
                 </div>
                 <div className="form-group">
-                  <input type="email" id="email" placeholder=" " onChange={handleChange} />
-                  <label htmlFor="email" className={subscribed && form.email === "" ? "required" : ""}>
-                    Correo Electrónico
-                  </label>
-                </div>
-                <div className="form-group">
                   <input type="text" id="surnames" placeholder=" " onChange={handleChange} />
                   <label htmlFor="surnames" className={subscribed && form.surnames === "" ? "required" : ""}>
                     Apellidos
+                  </label>
+                </div>
+                <div className="form-group">
+                  <input type="email" id="email" placeholder=" " onChange={handleChange} />
+                  <label htmlFor="email" className={subscribed && form.email === "" ? "required" : ""}>
+                    Correo Electrónico
                   </label>
                 </div>
                 <div className="form-group">
