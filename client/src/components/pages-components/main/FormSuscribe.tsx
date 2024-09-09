@@ -15,6 +15,9 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
     name: "",
     lastname: "",
     email: "",
+    consentEmails: false,
+    acceptTerms: false,
+    acceptPrivacy: false,
   });
 
   const user = useContext(UserContext);
@@ -52,7 +55,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
                 type="text"
                 name="email"
                 value={newSubscriber.email}
-                onChange={(event) => handleInputChange(event, setNewSubscriber)}
+                onChange={(e) => handleInputChange(e, setNewSubscriber)}
                 required
               />
             </li>
@@ -62,7 +65,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
                 type="text"
                 name="name"
                 value={newSubscriber.name}
-                onChange={(event) => handleInputChange(event, setNewSubscriber)}
+                onChange={(e) => handleInputChange(e, setNewSubscriber)}
                 required
               />
             </li>
@@ -72,22 +75,39 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
                 type="text"
                 name="lastname"
                 value={newSubscriber.lastname}
-                onChange={(event) => handleInputChange(event, setNewSubscriber)}
+                onChange={(e) => handleInputChange(e, setNewSubscriber)}
                 required
               />
             </li>
             <label>
-              <input type="checkbox" name="terminos" required />I give my consent to receive informational emails terms
-              and conditions.
+              <input
+                type="checkbox"
+                name="consentEmails"
+                checked={newSubscriber.consentEmails}
+                onChange={(e) => handleInputChange(e, setNewSubscriber)}
+              />
+              I give my consent to receive informational emails terms and conditions.
             </label>
             <label>
-              <input type="checkbox" name="terminos" required /> I accept the{" "}
+              <input
+                type="checkbox"
+                name="acceptTerms"
+                checked={newSubscriber.acceptTerms}
+                onChange={(event) => handleInputChange(event, setNewSubscriber)}
+              />{" "}
+              I accept the{" "}
               <Link to="/info" target="_blank">
                 terms and conditions.
               </Link>
             </label>
             <label>
-              <input type="checkbox" name="terminos" required /> I have read and accept the{" "}
+              <input
+                type="checkbox"
+                name="acceptPrivacity"
+                checked={newSubscriber.acceptPrivacy}
+                onChange={(event) => handleInputChange(event, setNewSubscriber)}
+              />{" "}
+              I have read and accept the{" "}
               <Link to="/info" target="_blank">
                 privacity policity.
               </Link>

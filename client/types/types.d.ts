@@ -57,6 +57,9 @@ export interface SubscriberType {
   name: string;
   lastname: string;
   email: string;
+  consentEmails: false;
+  acceptTerms: false;
+  acceptPrivacy: false;
   [key: string]: unknown;
 }
 

@@ -6,15 +6,15 @@ import toast from "react-hot-toast";
 import { UserContext } from "@/App";
 import Button from "@/components/reusable/Button";
 import { getProvider } from "@/scripts/firebase-config";
-import { type ConfigUser } from "types/types";
 import "@/styles/main-account.css";
 import { Helmet } from "react-helmet-async";
+import { handleInputChange } from "@/utilities/utilities";
 
 const Account = () => {
   const navigate = useNavigate();
   const user = useContext(UserContext);
 
-  const [configUser, setConfigUser] = useState<ConfigUser>({
+  const [configUser, setConfigUser] = useState<Record<string, string>>({
     user: user?.uid || "",
     displayName: user?.displayName || "",
     email: user?.email || "",
@@ -27,14 +27,9 @@ const Account = () => {
   const [inputsState, setInputsState] = useState([false, false, false]);
 
   const manejarClickSVG = (index: number) => {
-    if (
-      user &&
-      user?.providerData.some((provider) => provider.providerId !== "password")
-    ) {
+    if (user && user?.providerData.some((provider) => provider.providerId !== "password")) {
       toast.error(
-        `The user authenticated with ${getProvider(
-          user
-        )} cannot change the account settings of some options`
+        `The user authenticated with ${getProvider(user)} cannot change the account settings of some options`
       );
       return;
     }
@@ -44,16 +39,6 @@ const Account = () => {
       nuevosEstados[index] = !prevStates[index];
       return nuevosEstados;
     });
-  };
-
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setConfigUser((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
   };
 
   const handleDelateUser = () => {
@@ -84,20 +69,13 @@ const Account = () => {
                   type="text"
                   name="displayName"
                   value={configUser.displayName}
-                  onChange={handleInputChange}
+                  onChange={(e) => handleInputChange(e, setConfigUser)}
                   disabled={!inputsState[0]}
                   style={{
-                    backgroundColor: inputsState[0]
-                      ? "transparent"
-                      : "rgba(128, 128, 128, 0.5)",
+                    backgroundColor: inputsState[0] ? "transparent" : "rgba(128, 128, 128, 0.5)",
                   }}
                 />
-                <Edit
-                  commentText={configUser.displayName}
-                  event={manejarClickSVG}
-                  index={0}
-                  state={inputsState[0]}
-                />
+                <Edit commentText={configUser.displayName} event={manejarClickSVG} index={0} state={inputsState[0]} />
               </li>
               <li>
                 Email
@@ -105,20 +83,13 @@ const Account = () => {
                   type="text"
                   name="email"
                   value={configUser.email}
-                  onChange={handleInputChange}
+                  onChange={(e) => handleInputChange(e, setConfigUser)}
                   disabled={!inputsState[1]}
                   style={{
-                    backgroundColor: inputsState[1]
-                      ? "transparent"
-                      : "rgba(128, 128, 128, 0.5)",
+                    backgroundColor: inputsState[1] ? "transparent" : "rgba(128, 128, 128, 0.5)",
                   }}
                 />
-                <Edit
-                  commentText={configUser.email}
-                  event={manejarClickSVG}
-                  index={1}
-                  state={inputsState[1]}
-                />
+                <Edit commentText={configUser.email} event={manejarClickSVG} index={1} state={inputsState[1]} />
               </li>
               {/* <li>
               Phone
@@ -159,10 +130,7 @@ const Account = () => {
               </li>
               <li>
                 I want to contact the website{" "}
-                <a
-                  href="https://github.com/karlosvas/thefluentspanishhouse"
-                  target="_blank"
-                >
+                <a href="https://github.com/karlosvas/thefluentspanishhouse" target="_blank">
                   owner
                 </a>
               </li>

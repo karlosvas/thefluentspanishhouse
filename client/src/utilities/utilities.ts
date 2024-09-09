@@ -10,12 +10,12 @@ export const handleInputChange = <T extends Record<string, unknown>>(
     const { checked } = event.target as HTMLInputElement;
     setterReact((prev) => ({
       ...prev,
-      [name]: checked,
+      [name]: checked as unknown as T[keyof T],
     }));
   } else {
     setterReact((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value as unknown as T[keyof T],
     }));
   }
 };

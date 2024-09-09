@@ -18,6 +18,7 @@ import { resetPassword } from "@/scripts/firebase-options-users";
 import "@/styles/modal-auth.css";
 import { getProvider } from "@/scripts/firebase-config";
 import { NavigateFunction, useNavigate } from "react-router";
+import { handleInputChange } from "@/utilities/utilities";
 
 const Auth = () => {
   const [showModal, setShowModal] = useState(false);
@@ -64,31 +65,20 @@ const Auth = () => {
     else toggleFormType(showModal, setShowModal, "login", setFormType);
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setID((prev) => ({ ...prev, [name]: value }));
-  };
-
   const forgotPasword = () => {
     if (user && user.email) {
       const currentProviderId = getProvider(user);
-      if(currentProviderId === "password")
-        resetPassword(user.email, navigate);
+      if (currentProviderId === "password") resetPassword(user.email, navigate);
       else {
-        toast(
-          `Can not reset password for accounts authenticated with ${getProvider(
-            user
-          )}.`,
-          {
-            duration: 10000,
-            icon: "🔔",
-          });
+        toast(`Can not reset password for accounts authenticated with ${getProvider(user)}.`, {
+          duration: 10000,
+          icon: "🔔",
+        });
       }
     } else {
       navigate("/verify", { state: { reset: true } });
     }
   };
-
 
   function handleSusribeChange() {
     if (showModal) {
@@ -96,6 +86,7 @@ const Auth = () => {
       setTimeout(() => {
         toggleFormType(showModal, setShowModal);
         setClosing(false);
+        setID({ username: "", password: "", email: "" });
       }, 300);
     } else {
       toggleFormType(showModal, setShowModal);
@@ -107,26 +98,16 @@ const Auth = () => {
       <Button id="sign-in" event={handleLoginOrLogout}>
         {user ? "Logout" : "Sign In"}
       </Button>
-      <Button
-        event={() =>
-          toggleFormType(showModal, setShowModal, "register", setFormType)
-        }
-        id="register"
-      >
+      <Button event={() => toggleFormType(showModal, setShowModal, "register", setFormType)} id="register">
         Register
       </Button>
       {showModal && (
         <>
-          <Backdrop
-            handleSusribeChange={handleSusribeChange}
-            closing={closing}
-          />
+          <Backdrop handleSusribeChange={handleSusribeChange} closing={closing} />
           <div className={"modal-auth"}>
             <ButtonClose handleSusribeChange={handleSusribeChange} />
             <div className="modal-content">
-              <h1 ref={typeLoginRegisterRef}>
-                {formType === "login" ? "Sign In" : "Register"}
-              </h1>
+              <h1 ref={typeLoginRegisterRef}>{formType === "login" ? "Sign In" : "Register"}</h1>
               <form onSubmit={handleFormSubmit} className="login-form">
                 <label>
                   Email
@@ -135,7 +116,7 @@ const Auth = () => {
                     type="text"
                     name="email"
                     value={ID.email}
-                    onChange={handleInputChange}
+                    onChange={(e) => handleInputChange(e, setID)}
                     required
                   />
                 </label>
@@ -147,7 +128,7 @@ const Auth = () => {
                       type="text"
                       name="username"
                       value={ID.username}
-                      onChange={handleInputChange}
+                      onChange={(e) => handleInputChange(e, setID)}
                       required
                     />
                   </label>
@@ -199,22 +180,13 @@ const Auth = () => {
                     height="30"
                     viewBox="0 0 100 100"
                   >
-                    <polygon
-                      fill="#4b4dff"
-                      points="79,78 18.126,78 18.126,19 78.622,19"
-                    ></polygon>
+                    <polygon fill="#4b4dff" points="79,78 18.126,78 18.126,19 78.622,19"></polygon>
                     <path
                       fill="#edf7f5"
                       d="M43.835,75.54h9.873V53.657h5.915l0.807-7.377h-6.722l0.009-4.139c0-1.975,0.19-3.019,3.009-3.019 H61v-7.348h-7.348c-7.263,0-9.816,3.655-9.816,9.807v4.699H40v7.377h3.835V75.54z"
                     ></path>
-                    <path
-                      fill="#4343bf"
-                      d="M82,81H15V16h67.052L82,81z M21,75h54.051l0.897-53H21V75z"
-                    ></path>
-                    <polygon
-                      fill="#3abcf8"
-                      points="85,85 21,85 21,75 75,75 75,22 85,22"
-                    ></polygon>
+                    <path fill="#4343bf" d="M82,81H15V16h67.052L82,81z M21,75h54.051l0.897-53H21V75z"></path>
+                    <polygon fill="#3abcf8" points="85,85 21,85 21,75 75,75 75,22 85,22"></polygon>
                   </svg>
                 </div>
               </div>

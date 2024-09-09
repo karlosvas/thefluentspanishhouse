@@ -17,19 +17,15 @@ const Edit: React.FC<EditType> = ({ commentText, event, index, state }) => {
           viewBox="0 0 24 24"
           width="20px"
           height="20px"
-          strokeWidth="1.5"
-          stroke="green"
+          strokeWidth="5"
+          stroke="#23e66ccf"
           className="svgIcons"
           onClick={() => {
             event(index);
             changeOptionsUser(commentText, navigate, user);
           }}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m4.5 12.75 6 6 9-13.5"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
         </svg>
       ) : (
         <svg
