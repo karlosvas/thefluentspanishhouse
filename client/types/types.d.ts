@@ -57,6 +57,7 @@ export interface SubscriberType {
   name: string;
   lastname: string;
   email: string;
+  [key: string]: unknown;
 }
 
 export type PublicationType = {
@@ -194,7 +195,7 @@ export interface Member {
   merge_fields?: {
     [key: string]: string;
   };
-  interests?: {
+  interests: {
     [key: string]: boolean;
   };
   tags: OptionsChampTag[];

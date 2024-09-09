@@ -54,7 +54,7 @@ export interface Member {
   merge_fields?: {
     [key: string]: string;
   };
-  interests?: {
+  interests: {
     [key: string]: boolean;
   };
   tags: OptionsChampTag[];

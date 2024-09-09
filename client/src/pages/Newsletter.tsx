@@ -4,11 +4,14 @@ import { Helmet } from "react-helmet-async";
 import "@/styles/main-newsettler.css";
 import toast from "react-hot-toast";
 import Button from "@/components/reusable/Button";
-import { submitSubscriptionMailchimp } from "@/scripts/render-data";
+import { getFirstInterestCategory, getInterests, submitSubscriptionMailchimp } from "@/scripts/render-data";
 import { Member } from "types/types";
+import { handleInputChange } from "@/utilities/utilities";
 
 const Newsletter = () => {
+  // Estado del formulario de suscripción
   const [subscribed, setSubscribed] = useState(false);
+  // Estado del formulario de suscripción
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -20,26 +23,11 @@ const Newsletter = () => {
     mailchimp: false,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { id, value, type } = e.target;
-    if (type === "checkbox") {
-      const { checked } = e.target as HTMLInputElement;
-      setForm((prevForm) => ({
-        ...prevForm,
-        [id]: checked,
-      }));
-    } else {
-      setForm((prevForm) => ({
-        ...prevForm,
-        [id]: value,
-      }));
-    }
-  };
-
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // Función para enviar el formulario de suscripción
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubscribed(true);
 
+    // Verificando que todos los campos estén llenos
     for (const value of Object.values(form)) {
       if (value === "" || value === false) {
         toast.error("Please fill all the fields");
@@ -48,23 +36,29 @@ const Newsletter = () => {
       }
     }
 
-    // const [year, month, day] = form.birthday.split("-");
-    // console.log(year, month, day);
-    // // const formattedBirthday = `${day}/${month}`;
+    // Procesando el formulario
+    setSubscribed(true);
+    toast.loading("Processing your subscription...");
 
-    // const allCategorys = await getFirstInterestCategory();
-    // const category = await getInterests(allCategorys.categories[0].id);
+    // Formateando la fecha de nacimiento
+    const [, month, day] = form.birthday.split("-");
+    const formattedBirthday = `${month}/${day}`;
+    // Obtenemos los IDs de las categorías de intereses
+    const allCategorys = await getFirstInterestCategory();
+    // Obtenemos los intereses de la primera categoría, actualmente solo se utiliza una categoría
+    const category = await getInterests(allCategorys.categories[0].id);
+    // Obtenemos los IDs de los intereses en la categoria
+    const interestsIDs: string[] = Object.values(category.interests).map((interest) => {
+      return interest.id;
+    });
+    // Formateamos los intereses
+    const interests = {
+      [interestsIDs[0].toString()]: form.preferences.includes("grammar"),
+      [interestsIDs[1].toString()]: form.preferences.includes("vocabulary"),
+      [interestsIDs[2].toString()]: form.preferences.includes("exercises"),
+    };
 
-    // const interestsIDs: string[] = Object.values(category.interests).map((interest) => {
-    //   return interest.id;
-    // });
-
-    // const interests = {
-    //   [interestsIDs[0].toString()]: form.preferences.includes("grammar"),
-    //   [interestsIDs[1].toString()]: form.preferences.includes("vocabulary"),
-    //   [interestsIDs[2].toString()]: form.preferences.includes("exercises"),
-    // };
-
+    // Creamos el objeto de miembro
     const member: Member = {
       email_address: form.email,
       status: "pending",
@@ -72,21 +66,27 @@ const Newsletter = () => {
       merge_fields: {
         FNAME: form.name,
         LNAME: form.surnames,
-        // BIRTHDAY: formattedBirthday,
+        BIRTHDAY: formattedBirthday,
       },
-      // interests: interests,
+      interests: interests,
       tags: [],
       status_if_new: "pending",
     };
 
-    console.log(member);
+    // Enviando la suscripción a la API de Mailchimp
     submitSubscriptionMailchimp(member);
+
+    // Detener el loading toast en caso de error
+    toast.dismiss();
+    toast.success("Subscription successful");
   };
 
-  const handleScroll = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    event.preventDefault();
+  // Función para manejar el scroll en la página
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault();
 
-    const targetId = event.currentTarget.getAttribute("href")?.substring(1);
+    // Obtenemos el ID del elemento al que se quiere hacer scroll
+    const targetId = e.currentTarget.getAttribute("href")?.substring(1);
     const targetElement = targetId ? document.getElementById(targetId) : null;
 
     if (targetElement) {
@@ -147,31 +147,31 @@ const Newsletter = () => {
               <form id="formulario" onSubmit={onSubmit}>
                 <h1>Welcome to the Spanish newsletter!</h1>
                 <div className="form-group">
-                  <input type="text" id="name" placeholder=" " onChange={handleChange} />
+                  <input type="text" name="name" value={form.name} onChange={(e) => handleInputChange(e, setForm)} />
                   <label htmlFor="name" className={subscribed && form.name === "" ? "required" : ""}>
                     Nombre
                   </label>
                 </div>
                 <div className="form-group">
-                  <input type="text" id="surnames" placeholder=" " onChange={handleChange} />
+                  <input type="text" id="surnames" placeholder=" " onChange={(e) => handleInputChange(e, setForm)} />
                   <label htmlFor="surnames" className={subscribed && form.surnames === "" ? "required" : ""}>
                     Apellidos
                   </label>
                 </div>
                 <div className="form-group">
-                  <input type="email" id="email" placeholder=" " onChange={handleChange} />
+                  <input type="email" id="email" placeholder=" " onChange={(e) => handleInputChange(e, setForm)} />
                   <label htmlFor="email" className={subscribed && form.email === "" ? "required" : ""}>
                     Correo Electrónico
                   </label>
                 </div>
                 <div className="form-group">
-                  <input type="date" id="birthday" placeholder=" " onChange={handleChange} />
+                  <input type="date" id="birthday" placeholder=" " onChange={(e) => handleInputChange(e, setForm)} />
                   <label htmlFor="birthday" className={subscribed && form.birthday === "" ? "required" : ""}>
                     Fecha de Nacimiento
                   </label>
                 </div>
                 <div className="form-group">
-                  <select id="preferences" value={form.preferences} onChange={handleChange}>
+                  <select id="preferences" value={form.preferences} onChange={(e) => handleInputChange(e, setForm)}>
                     <option value="" disabled></option>
                     <option value="grammar">Gramática</option>
                     <option value="vocabulary">Vocabulario</option>
@@ -182,20 +182,35 @@ const Newsletter = () => {
                   </label>
                 </div>
                 <div className="checkbox-group">
-                  <input type="checkbox" id="privacy" checked={form.privacy} onChange={handleChange} />
+                  <input
+                    type="checkbox"
+                    id="privacy"
+                    checked={form.privacy}
+                    onChange={(e) => handleInputChange(e, setForm)}
+                  />
                   <label htmlFor="privacy" className={subscribed && !form.privacy ? "required" : ""}>
                     I have read and accept the <a href="/info">privacy policy</a> and{" "}
                     <a href="/info">terms and conditions</a>
                   </label>
                 </div>
                 <div className="checkbox-group">
-                  <input type="checkbox" id="newsletter" checked={form.newsletter} onChange={handleChange} />
+                  <input
+                    type="checkbox"
+                    id="newsletter"
+                    checked={form.newsletter}
+                    onChange={(e) => handleInputChange(e, setForm)}
+                  />
                   <label htmlFor="newsletter" className={subscribed && !form.newsletter ? "required" : ""}>
                     I want to receive the newsletter and commercial information from The Fluent Spanish House
                   </label>
                 </div>
                 <div className="checkbox-group">
-                  <input type="checkbox" id="mailchimp" checked={form.mailchimp} onChange={handleChange} />
+                  <input
+                    type="checkbox"
+                    id="mailchimp"
+                    checked={form.mailchimp}
+                    onChange={(e) => handleInputChange(e, setForm)}
+                  />
                   <label htmlFor="newsletter" className={subscribed && !form.newsletter ? "required" : ""}>
                     I accept that my data will be processed by{" "}
                     <a href="https://mailchimp.com/legal/" target="_blank">

@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import mailchimp  from "@mailchimp/mailchimp_marketing";
+import mailchimp from "@mailchimp/mailchimp_marketing";
 
 // Configuracion del cliente de la API de Mailchimp marketing
 mailchimp.setConfig({
@@ -12,10 +12,9 @@ mailchimp.setConfig({
 // Id de la lista publica
 const listId = process.env.MAILCHIMP_LIST_ID;
 
-
 // Convierte los errores de Mailchimp a objeto de javascript
 function mailchimpErrors(error: any) {
   return JSON.parse(error.response.text);
 }
 
-export { listId, mailchimpErrors, mailchimp }
+export { listId, mailchimpErrors, mailchimp };

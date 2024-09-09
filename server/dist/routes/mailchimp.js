@@ -77,13 +77,8 @@ router.post("/add/member", log, verifyIdToken, async (req, res) => {
         // Añadimos el usuario a Mailchimp
         const response = await mailchimp.lists.addListMember(listId, member);
         // Enviamos un email al administrador
-        // const email = await submitEmalSuscriber(
-        //   member.email_address,
-        //   member.merge_fields.FNAME,
-        //   member.merge_fields.LNAME,
-        //   member.tags[member.tags.length - 1]
-        // );
-        res.status(200).json(response);
+        const email = await submitEmalSuscriber(member.email_address, member.merge_fields.FNAME, member.merge_fields.LNAME, member.tags[member.tags.length - 1]);
+        res.status(200).json({ response, email });
     }
     catch (error) {
         res.status(500).json(mailchimpErrors(error));
