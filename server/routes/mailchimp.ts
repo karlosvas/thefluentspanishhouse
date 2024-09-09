@@ -3,7 +3,7 @@ import { listId, mailchimpErrors, mailchimp } from "../lib/mailchimp/mailchimp.j
 import { log, verifyIdToken } from "../middelware/token-logs.js";
 import { validateEmail } from "../utilities/validateEmail.js";
 import { type Status } from "@mailchimp/mailchimp_marketing";
-import { type Member, type OptionsChampTag } from "types/types.js";
+import { InterestCategoryResponse, type Member, type OptionsChampTag } from "types/types.js";
 import crypto from "crypto";
 import { submitEmalSuscriber } from "../lib/nodemailer/nodemailer.js";
 
@@ -40,23 +40,53 @@ router.get("/getone/member/:email", log, verifyIdToken, async (req: Request, res
     });
 });
 
+router.get("/interests/category", log, verifyIdToken, async (req: Request, res: Response) => {
+  mailchimp.lists
+    .getListInterestCategories(listId)
+    .then((response) => {
+      res.status(200).json(response as InterestCategoryResponse);
+    })
+    .catch((error) => {
+      res.status(500).json(mailchimpErrors(error));
+    });
+});
+
+router.get("/interests/:idCategory", log, verifyIdToken, async (req: Request, res: Response) => {
+  const { idCategory } = req.params;
+
+  if (!idCategory) return res.status(400).send("Category ID is required");
+
+  mailchimp.lists
+    .listInterestCategoryInterests(listId, idCategory.toString())
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((error) => {
+      res.status(500).json(mailchimpErrors(error));
+    });
+});
+
 // <--------------- POST --------------->
 // Añadir un miembro a la lista
-router.post("/add/contact", log, verifyIdToken, async (req: Request, res: Response) => {
+router.post("/add/member", log, verifyIdToken, async (req: Request, res: Response) => {
   const member: Member = req.body;
 
   if (!validateEmail(member.email_address)) return res.status(400).send("Email inválido");
 
   try {
-    // Usuario y etiquetas para añadir al usuario
+    // Añadimos el usuario a Mailchimp
     await mailchimp.lists.addListMember(listId, member);
-    const response = await submitEmalSuscriber(
-      member.email_address,
-      member.merge_fields.FNAME,
-      member.merge_fields.LNAME,
-      member.tags[0]
-    );
-    res.status(200).send("Email sent, and add user successfully");
+
+    // Enviamos un email al administrador
+    // Desactivado temporalmente
+    // const response = await submitEmalSuscriber(
+    //   member.email_address,
+    //   member.merge_fields.FNAME,
+    //   member.merge_fields.LNAME,
+    //   "test"
+    // );
+
+    res.status(200).send({ response_text: "Email sent, and add user successfully" });
   } catch (error) {
     res.status(500).json(mailchimpErrors(error));
   }

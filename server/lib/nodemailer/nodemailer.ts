@@ -1,11 +1,6 @@
 import { createTransport } from "nodemailer";
 
-export async function submitNote(
-  email_user: string,
-  username: string,
-  subject: string,
-  note: string
-) {
+export async function submitNote(email_user: string, username: string, subject: string, note: string) {
   // Configuración del transporte
   let transporter = createTransport({
     service: "gmail",
@@ -17,7 +12,7 @@ export async function submitNote(
   // Datos del correo y opciones
   let mailOptions = {
     from: `"${email_user} via TheFluentSpanishHouse" ${process.env.USER_GMAIL}`,
-    to: process.env.USER_GMAIL,
+    to: "carlosvassan@thefluentspanishhouse.com",
     subject: subject,
     html: `<p>The user <strong>${username}</strong> sent you this message:</p><br /><p>${note}</p>`,
     replyTo: email_user,
@@ -33,12 +28,7 @@ export async function submitNote(
   }
 }
 
-export async function submitEmalSuscriber(
-  email_user: string,
-  username: string,
-  lastname: string,
-  type: string
-) {
+export async function submitEmalSuscriber(email_user: string, username: string, lastname: string, type: string) {
   // Configuración del transporte
   let transporter = createTransport({
     service: "gmail",
@@ -50,7 +40,7 @@ export async function submitEmalSuscriber(
   // Datos del correo y opciones
   let mailOptions = {
     from: `"${email_user} via TheFluentSpanishHouse" ${process.env.USER_GMAIL}`,
-    to: process.env.USER_GMAIL,
+    to: "carlosvassan@thefluentspanishhouse.com",
     subject: `New subscriber on TheFluentSpanishHouse ${username} ${lastname}`,
     html: `<p>The user <strong>${username} ${lastname}</strong> sent you this message:</p><br />
     <p>Wants to subscribe to ${type}<p/>`,
@@ -67,12 +57,7 @@ export async function submitEmalSuscriber(
   }
 }
 
-export async function submitEmailComment(
-  email_user: string,
-  username: string,
-  data: string,
-  originUrl: string
-) {
+export async function submitEmailComment(email_user: string, username: string, data: string, originUrl: string) {
   // Configuración del transporte
   let transporter = createTransport({
     service: "gmail",

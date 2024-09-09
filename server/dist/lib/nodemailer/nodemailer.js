@@ -11,7 +11,7 @@ export async function submitNote(email_user, username, subject, note) {
     // Datos del correo y opciones
     let mailOptions = {
         from: `"${email_user} via TheFluentSpanishHouse" ${process.env.USER_GMAIL}`,
-        to: process.env.USER_GMAIL,
+        to: "carlosvassan@thefluentspanishhouse.com",
         subject: subject,
         html: `<p>The user <strong>${username}</strong> sent you this message:</p><br /><p>${note}</p>`,
         replyTo: email_user,
@@ -38,7 +38,7 @@ export async function submitEmalSuscriber(email_user, username, lastname, type) 
     // Datos del correo y opciones
     let mailOptions = {
         from: `"${email_user} via TheFluentSpanishHouse" ${process.env.USER_GMAIL}`,
-        to: process.env.USER_GMAIL,
+        to: "carlosvassan@thefluentspanishhouse.com",
         subject: `New subscriber on TheFluentSpanishHouse ${username} ${lastname}`,
         html: `<p>The user <strong>${username} ${lastname}</strong> sent you this message:</p><br />
     <p>Wants to subscribe to ${type}<p/>`,
