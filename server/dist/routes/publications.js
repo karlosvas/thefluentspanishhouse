@@ -5,14 +5,10 @@ import { handleServerError } from "../utilities/errorHandle.js";
 import { log, verifyIdToken } from "../middelware/token-logs.js";
 const router = Router();
 // <--------------- GET --------------->
-// Obtener publicaciones
+// Obtener la última publicación
 router.get("/last", log, verifyIdToken, async (req, res) => {
     try {
-        const lastPublication = await modelPublication
-            .findOne()
-            .sort({ currentPage: -1 })
-            .select("currentPage")
-            .exec();
+        const lastPublication = await modelPublication.findOne().sort({ currentPage: -1 }).select("currentPage").exec();
         if (!lastPublication)
             return res.status(404).json({ message: "Publication not found" });
         res.status(200).json(lastPublication);
@@ -23,6 +19,7 @@ router.get("/last", log, verifyIdToken, async (req, res) => {
         handleServerError(res, error);
     }
 });
+// Obtener publicaciones segun la página
 router.get("/page/:page", log, verifyIdToken, async (req, res) => {
     const page = parseInt(req.params.page, 10);
     if (isNaN(page)) {
@@ -39,7 +36,7 @@ router.get("/page/:page", log, verifyIdToken, async (req, res) => {
         handleServerError(res, error);
     }
 });
-// Entrar en la publicación selecionada
+// Encontrar publicación por id del publication para entrar en la publicación selecionada
 router.get("/:id", log, verifyIdToken, async (req, res) => {
     try {
         const id = req.params.id;
@@ -56,7 +53,7 @@ router.get("/:id", log, verifyIdToken, async (req, res) => {
     }
 });
 // <--------------- POST --------------->
-// Nuevas publicaciones
+// Añadir nuevas publicaciones
 router.post("/new", log, verifyIdToken, async (req, res) => {
     try {
         const { title, subtitle, content, base64_img, currentPage } = req.body;
@@ -84,6 +81,7 @@ router.post("/new", log, verifyIdToken, async (req, res) => {
     }
 });
 // <--------------- PUT --------------->
+// Editar publicaciones
 router.put("/edit/:id", log, verifyIdToken, async (req, res) => {
     const { id } = req.params;
     const updatedFields = req.body;

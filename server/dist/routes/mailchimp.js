@@ -3,8 +3,19 @@ import { listId, mailchimpErrors, mailchimp } from "../lib/mailchimp/mailchimp.j
 import { log, verifyIdToken } from "../middelware/token-logs.js";
 import { validateEmail } from "../utilities/validateEmail.js";
 import crypto from "crypto";
+import { submitEmalSuscriber } from "../lib/mandrill/mandrill.js";
 const router = Router();
 // <--------------- GET --------------->
+// Obtener todos los miembros de una lista
+router.get("/", log, verifyIdToken, async (req, res) => {
+    try {
+        const response = await mailchimp.ping.get();
+        res.status(200).json(response);
+    }
+    catch (error) {
+        res.status(500).json(mailchimpErrors(error));
+    }
+});
 // Obtener todos los miembros de una lista
 router.get("/getall/member", log, verifyIdToken, async (req, res) => {
     mailchimp.lists
@@ -32,7 +43,7 @@ router.get("/getone/member/:email", log, verifyIdToken, async (req, res) => {
         res.status(parsedError.status).json(parsedError);
     });
 });
-router.get("/interests/category", log, verifyIdToken, async (req, res) => {
+router.get("/category", log, verifyIdToken, async (req, res) => {
     mailchimp.lists
         .getListInterestCategories(listId)
         .then((response) => {
@@ -62,17 +73,17 @@ router.post("/add/member", log, verifyIdToken, async (req, res) => {
     if (!validateEmail(member.email_address))
         return res.status(400).send("Email inválido");
     try {
+        console.log(member);
         // Añadimos el usuario a Mailchimp
-        await mailchimp.lists.addListMember(listId, member);
+        const response = await mailchimp.lists.addListMember(listId, member);
         // Enviamos un email al administrador
-        // Desactivado temporalmente
-        // const response = await submitEmalSuscriber(
+        // const email = await submitEmalSuscriber(
         //   member.email_address,
         //   member.merge_fields.FNAME,
         //   member.merge_fields.LNAME,
-        //   "test"
+        //   member.tags[member.tags.length - 1]
         // );
-        res.status(200).send({ response_text: "Email sent, and add user successfully" });
+        res.status(200).json(response);
     }
     catch (error) {
         res.status(500).json(mailchimpErrors(error));
@@ -83,12 +94,14 @@ router.post("/add/batchcontact", log, verifyIdToken, async (req, res) => {
     const members = req.body.member;
     try {
         // Usuario y etiquetas para añadir al usuario
-        await mailchimp.lists.batchListMembers(listId, {
+        const response = await mailchimp.lists.batchListMembers(listId, {
             members,
             update_existing: true,
         });
-        //   await submitEmalSuscriber(member.email_address, member.merge_fields.name, member.merge_fields.lastname, member.tags[0]);
-        res.status(200).send("Email sent successfully");
+        members.forEach(async (member) => {
+            await submitEmalSuscriber(member.email_address, member.merge_fields.FNAME, member.merge_fields.LNAME, member.tags[member.tags.length - 1]);
+        });
+        res.status(200).json(response);
     }
     catch (error) {
         res.status(500).json(mailchimpErrors(error));

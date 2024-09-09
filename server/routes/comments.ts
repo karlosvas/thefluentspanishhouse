@@ -1,7 +1,7 @@
 import { type Request, type Response, Router } from "express";
 import { modelComment } from "../models.js";
 import { isValidObjectId, Types } from "mongoose";
-import { submitEmailComment } from "../lib/nodemailer/nodemailer.js";
+import { submitEmailComment } from "../lib/mandrill/mandrill.js";
 import { deleteCommentAndChildren } from "../utilities/delete-logic.js";
 import { handleServerError } from "../utilities/errorHandle.js";
 import { verifyIdToken, log } from "../middelware/token-logs.js";
@@ -50,7 +50,7 @@ router.get("/:id", log, verifyIdToken, async (req, res) => {
 // Agregar comentarios
 router.post("/new", log, verifyIdToken, async (req, res) => {
   let newCommentData = req.body;
-  const originUrl = req.body.originUrl;
+  const originUrl = req.body;
 
   try {
     // Crear un nuevo ObjectId para el nuevo comentario
@@ -59,18 +59,8 @@ router.post("/new", log, verifyIdToken, async (req, res) => {
     const newComment = new modelComment(newCommentData);
     newComment.save();
 
-    // Avisamos por email a el admin_gmail
-    if (!newComment.owner) {
-      res.status(400).json({ error: "Owner is required" });
-      throw new Error("Owner is required");
-    }
-
-    await submitEmailComment(
-      newComment.owner.email,
-      newComment.owner.displayName,
-      newComment.data,
-      originUrl
-    );
+    // Avisamos al administrador de la web del nuevo comentario
+    await submitEmailComment(newComment.owner.email, newComment.owner.displayName, newComment.data, originUrl);
 
     res.status(201).json(newComment);
   } catch (error) {
@@ -79,120 +69,104 @@ router.post("/new", log, verifyIdToken, async (req, res) => {
   }
 });
 
-router.post(
-  "/children/:id",
-  log,
-  verifyIdToken,
-  async (req: Request, res: Response) => {
-    const parentCommentId = req.params.id;
-    let newCommentData = req.body;
+// Agregar comentarios hijos y hacer referencia al comentario padre
+router.post("/children/:id", log, verifyIdToken, async (req: Request, res: Response) => {
+  const parentCommentId = req.params.id;
+  let newCommentData = req.body;
+  const originUrl = req.body;
 
-    try {
-      // Crear un nuevo ObjectId para el nuevo comentario
-      newCommentData._id = new Types.ObjectId();
-      // Crear un nuevo comentario hijo
-      const newComment = new modelComment(newCommentData);
-      newComment.save();
+  try {
+    // Crear un nuevo ObjectId para el nuevo comentario
+    newCommentData._id = new Types.ObjectId();
+    // Crear un nuevo comentario hijo
+    const newComment = new modelComment(newCommentData);
+    newComment.save();
 
-      // Agregar el nuevo comentario al array de comentarios del comentario padre
-      const parentComment = await modelComment.findById(parentCommentId);
-      if (!parentComment) {
-        res.status(404).send("Parent comment not found");
-        throw new Error("Parent comment not found");
-      }
-      parentComment.answers.push(newComment._id);
-      await parentComment.save();
+    // Avisamos al administrador de la web del nuevo comentario
+    await submitEmailComment(newComment.owner.email, newComment.owner.displayName, newComment.data, originUrl);
 
-      res.status(201).send(newComment);
-    } catch (error) {
-      console.error("Error adding comment:", error);
-      res.status(500).send("Error adding comment:");
+    // Agregar el nuevo comentario al array de comentarios del comentario padre
+    const parentComment = await modelComment.findById(parentCommentId);
+    if (!parentComment) {
+      res.status(404).send("Parent comment not found");
+      throw new Error("Parent comment not found");
     }
+    parentComment.answers.push(newComment._id);
+    await parentComment.save();
+
+    res.status(201).send(newComment);
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    res.status(500).send("Error adding comment:");
   }
-);
+});
 
 // <--------------- PUT --------------->
 // Actualizar likes de comentarios
-router.put(
-  "/likes",
-  log,
-  verifyIdToken,
-  async (req: Request, res: Response) => {
-    const { uid_user_firebase, _id, likes } = req.body;
-    if (likes === undefined || likes === null || !uid_user_firebase || !_id)
-      return res.status(400).json({ error: "Los campos son requeridos" });
+router.put("/likes", log, verifyIdToken, async (req: Request, res: Response) => {
+  const { uid_user_firebase, _id, likes, originUrl } = req.body;
+  if (likes === undefined || likes === null || !uid_user_firebase || !_id)
+    return res.status(400).json({ error: "Los campos son requeridos" });
 
-    try {
-      const comment = await modelComment.findById(_id);
+  try {
+    const comment = await modelComment.findById(_id);
 
-      if (!comment)
-        return res.status(404).json({ error: "Comentario no encontrado" });
+    if (!comment) return res.status(404).json({ error: "Comentario no encontrado" });
 
-      if (comment.likedBy.includes(uid_user_firebase)) {
-        const index = comment.likedBy.indexOf(uid_user_firebase);
-        comment.likedBy.splice(index, 1);
-        comment.likes -= 1;
-      } else {
-        comment.likedBy.push(uid_user_firebase);
-        comment.likes += 1;
-      }
-
-      const updatedComment = await comment.save();
-      res.status(200).json(updatedComment);
-    } catch (error) {
-      handleServerError(res, error);
+    if (comment.likedBy.includes(uid_user_firebase)) {
+      const index = comment.likedBy.indexOf(uid_user_firebase);
+      comment.likedBy.splice(index, 1);
+      comment.likes -= 1;
+    } else {
+      comment.likedBy.push(uid_user_firebase);
+      comment.likes += 1;
+      // Avisamos al administrador de la web del nuevo like
+      await submitEmailComment(comment.owner.email, comment.owner.displayName, comment.data, originUrl);
     }
+
+    const updatedComment = await comment.save();
+    res.status(200).json(updatedComment);
+  } catch (error) {
+    handleServerError(res, error);
   }
-);
+});
 
-router.put(
-  "/edit/:id",
-  log,
-  verifyIdToken,
-  async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { textEdit } = req.body;
-    if (!textEdit) return res.status(400).json({ message: "Missing content" });
+// Editar comentarios
+router.put("/edit/:id", log, verifyIdToken, async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { textEdit } = req.body;
+  if (!textEdit) return res.status(400).json({ message: "Missing content" });
 
-    try {
-      const comment = await modelComment.findById(id);
-      if (!comment)
-        return res.status(404).json({ message: "Comment not found" });
+  try {
+    const comment = await modelComment.findById(id);
+    if (!comment) return res.status(404).json({ message: "Comment not found" });
 
-      comment.data = textEdit;
-      await comment.save();
-      res.status(200).json(comment);
-    } catch (error) {
-      handleServerError(res, error);
-    }
+    comment.data = textEdit;
+    await comment.save();
+    res.status(200).json(comment);
+  } catch (error) {
+    handleServerError(res, error);
   }
-);
+});
 
 // <--------------- DELETE --------------->
-router.delete(
-  "/del/:id",
-  log,
-  verifyIdToken,
-  async (req: Request, res: Response) => {
-    const { id } = req.params;
-    if (!isValidObjectId(id))
-      return res.status(400).json({ message: "Invalid publication ID" });
-    try {
-      const fatherComment = await modelComment.findById(id);
-      if (!fatherComment)
-        return res.status(404).json({ message: "Comment not found" });
+// Eliminar comentarios
+router.delete("/del/:id", log, verifyIdToken, async (req: Request, res: Response) => {
+  const { id } = req.params;
+  if (!isValidObjectId(id)) return res.status(400).json({ message: "Invalid publication ID" });
+  try {
+    const fatherComment = await modelComment.findById(id);
+    if (!fatherComment) return res.status(404).json({ message: "Comment not found" });
 
-      // Elimina los hijos del comentario
-      if (fatherComment.answers.length > 0)
-        await deleteCommentAndChildren(fatherComment.answers);
+    // Elimina los hijos del comentario
+    if (fatherComment.answers.length > 0) await deleteCommentAndChildren(fatherComment.answers);
 
-      // Elimina el comentario principal
-      await modelComment.findByIdAndDelete(id);
-      res.status(200).json({ message: "Publication deleted successfully" });
-    } catch (error) {
-      handleServerError(res, error);
-    }
+    // Elimina el comentario principal
+    await modelComment.findByIdAndDelete(id);
+    res.status(200).json({ message: "Publication deleted successfully" });
+  } catch (error) {
+    handleServerError(res, error);
   }
-);
+});
 
 export { router };

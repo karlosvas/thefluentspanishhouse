@@ -54,7 +54,7 @@ export interface Member {
   merge_fields?: {
     [key: string]: string;
   };
-  interests: {
+  interests?: {
     [key: string]: boolean;
   };
   tags: OptionsChampTag[];
@@ -122,4 +122,18 @@ export interface InterestResponse {
   interests: Interest[];
   list_id: string;
   total_items: number;
+}
+
+// Mandril
+export interface Message {
+  from_email: string;
+  from_name: string;
+  to: [
+    {
+      email: string;
+      type: "to" | "cc" | "bcc";
+    }
+  ];
+  subject: string;
+  html: string;
 }

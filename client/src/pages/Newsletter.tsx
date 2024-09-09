@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import "@/styles/main-newsettler.css";
 import toast from "react-hot-toast";
 import Button from "@/components/reusable/Button";
-import { getFirstInterestCategory, getInterests, submitSubscriptionMailchimp } from "@/scripts/render-data";
+import { submitSubscriptionMailchimp } from "@/scripts/render-data";
 import { Member } from "types/types";
 
 const Newsletter = () => {
@@ -48,22 +48,22 @@ const Newsletter = () => {
       }
     }
 
-    const [year, month, day] = form.birthday.split("-");
-    console.log(year);
-    const formattedBirthday = `${day}/${month}`;
+    // const [year, month, day] = form.birthday.split("-");
+    // console.log(year, month, day);
+    // // const formattedBirthday = `${day}/${month}`;
 
-    const allCategorys = await getFirstInterestCategory();
-    const category = await getInterests(allCategorys.categories[0].id);
+    // const allCategorys = await getFirstInterestCategory();
+    // const category = await getInterests(allCategorys.categories[0].id);
 
-    const interestsIDs: string[] = Object.values(category.interests).map((interest) => {
-      return interest.id;
-    });
+    // const interestsIDs: string[] = Object.values(category.interests).map((interest) => {
+    //   return interest.id;
+    // });
 
-    const interests = {
-      [interestsIDs[0].toString()]: form.preferences.includes("grammar"),
-      [interestsIDs[1].toString()]: form.preferences.includes("vocabulary"),
-      [interestsIDs[2].toString()]: form.preferences.includes("exercises"),
-    };
+    // const interests = {
+    //   [interestsIDs[0].toString()]: form.preferences.includes("grammar"),
+    //   [interestsIDs[1].toString()]: form.preferences.includes("vocabulary"),
+    //   [interestsIDs[2].toString()]: form.preferences.includes("exercises"),
+    // };
 
     const member: Member = {
       email_address: form.email,
@@ -72,13 +72,14 @@ const Newsletter = () => {
       merge_fields: {
         FNAME: form.name,
         LNAME: form.surnames,
-        BIRTHDAY: formattedBirthday,
+        // BIRTHDAY: formattedBirthday,
       },
-      interests: interests,
+      // interests: interests,
       tags: [],
       status_if_new: "pending",
     };
 
+    console.log(member);
     submitSubscriptionMailchimp(member);
   };
 

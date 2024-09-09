@@ -6,10 +6,12 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "tsc && node --watch dist/index.js",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "tsc && node dist/lib/mandril/mandril.js"
   },
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",
+    "@mailchimp/mailchimp_transactional": "^1.0.59",
     "@vercel/node": "^3.2.10",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
@@ -20,6 +22,7 @@
     "firebase": "^10.13.0",
     "firebase-admin": "^12.4.0",
     "jsonwebtoken": "^9.0.2",
+    "mailchimp_transactional": "^0.0.1-security",
     "mongoose": "^8.5.1",
     "nodemailer": "^6.9.14",
     "typescript": "^5.5.4"

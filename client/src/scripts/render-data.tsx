@@ -260,7 +260,7 @@ export const delateTagCahmp = async (email: string, tag: string) => {
 
 export const getFirstInterestCategory = async (): Promise<InterestCategoryResponse> => {
   try {
-    const data = await helper.get(`${url_api}/mailchimp/interests/category`);
+    const data = await helper.get(`${url_api}/mailchimp/category`);
     return data as InterestCategoryResponse;
   } catch (error) {
     console.error("Error to get interest category", error);

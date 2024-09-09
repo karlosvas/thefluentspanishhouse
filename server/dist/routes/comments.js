@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { modelComment } from "../models.js";
 import { isValidObjectId, Types } from "mongoose";
-import { submitEmailComment } from "../lib/nodemailer/nodemailer.js";
+import { submitEmailComment } from "../lib/mandrill/mandrill.js";
 import { deleteCommentAndChildren } from "../utilities/delete-logic.js";
 import { handleServerError } from "../utilities/errorHandle.js";
 import { verifyIdToken, log } from "../middelware/token-logs.js";
@@ -49,18 +49,14 @@ router.get("/:id", log, verifyIdToken, async (req, res) => {
 // Agregar comentarios
 router.post("/new", log, verifyIdToken, async (req, res) => {
     let newCommentData = req.body;
-    const originUrl = req.body.originUrl;
+    const originUrl = req.body;
     try {
         // Crear un nuevo ObjectId para el nuevo comentario
         newCommentData._id = new Types.ObjectId();
         // Crear un nuevo comentario hijo
         const newComment = new modelComment(newCommentData);
         newComment.save();
-        // Avisamos por email a el admin_gmail
-        if (!newComment.owner) {
-            res.status(400).json({ error: "Owner is required" });
-            throw new Error("Owner is required");
-        }
+        // Avisamos al administrador de la web del nuevo comentario
         await submitEmailComment(newComment.owner.email, newComment.owner.displayName, newComment.data, originUrl);
         res.status(201).json(newComment);
     }
@@ -69,15 +65,19 @@ router.post("/new", log, verifyIdToken, async (req, res) => {
         res.status(500).json({ error: "Error al añadir el comentario" });
     }
 });
+// Agregar comentarios hijos y hacer referencia al comentario padre
 router.post("/children/:id", log, verifyIdToken, async (req, res) => {
     const parentCommentId = req.params.id;
     let newCommentData = req.body;
+    const originUrl = req.body;
     try {
         // Crear un nuevo ObjectId para el nuevo comentario
         newCommentData._id = new Types.ObjectId();
         // Crear un nuevo comentario hijo
         const newComment = new modelComment(newCommentData);
         newComment.save();
+        // Avisamos al administrador de la web del nuevo comentario
+        await submitEmailComment(newComment.owner.email, newComment.owner.displayName, newComment.data, originUrl);
         // Agregar el nuevo comentario al array de comentarios del comentario padre
         const parentComment = await modelComment.findById(parentCommentId);
         if (!parentComment) {
@@ -96,7 +96,7 @@ router.post("/children/:id", log, verifyIdToken, async (req, res) => {
 // <--------------- PUT --------------->
 // Actualizar likes de comentarios
 router.put("/likes", log, verifyIdToken, async (req, res) => {
-    const { uid_user_firebase, _id, likes } = req.body;
+    const { uid_user_firebase, _id, likes, originUrl } = req.body;
     if (likes === undefined || likes === null || !uid_user_firebase || !_id)
         return res.status(400).json({ error: "Los campos son requeridos" });
     try {
@@ -111,6 +111,8 @@ router.put("/likes", log, verifyIdToken, async (req, res) => {
         else {
             comment.likedBy.push(uid_user_firebase);
             comment.likes += 1;
+            // Avisamos al administrador de la web del nuevo like
+            await submitEmailComment(comment.owner.email, comment.owner.displayName, comment.data, originUrl);
         }
         const updatedComment = await comment.save();
         res.status(200).json(updatedComment);
@@ -119,6 +121,7 @@ router.put("/likes", log, verifyIdToken, async (req, res) => {
         handleServerError(res, error);
     }
 });
+// Editar comentarios
 router.put("/edit/:id", log, verifyIdToken, async (req, res) => {
     const { id } = req.params;
     const { textEdit } = req.body;
@@ -137,6 +140,7 @@ router.put("/edit/:id", log, verifyIdToken, async (req, res) => {
     }
 });
 // <--------------- DELETE --------------->
+// Eliminar comentarios
 router.delete("/del/:id", log, verifyIdToken, async (req, res) => {
     const { id } = req.params;
     if (!isValidObjectId(id))

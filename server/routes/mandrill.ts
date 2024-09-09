@@ -1,12 +1,11 @@
 import { Router } from "express";
-import { submitNote } from "../lib/nodemailer/nodemailer.js";
+import { submitNote } from "../lib/mandrill/mandrill.js";
 import { type NoteType } from "types/types";
 
 const router = Router();
 
 router.post("/note", async (req, res) => {
   const newNote: NoteType = req.body;
-  console.log(newNote);
 
   if (!newNote.email_user || !newNote.username || !newNote.subject || !newNote.note)
     return res.status(400).send({ message: "Missing required fields" });
