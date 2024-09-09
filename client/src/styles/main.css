@@ -158,13 +158,13 @@
           font-weight: bold;
           cursor: pointer;
           transition: all 0.2s ease;
-          background-color: rgb(68, 53, 199);
-          border-bottom: 5px solid rgb(53, 39, 173);
-          box-shadow: 0px 5px rgb(53, 39, 173);
+          background-color: rgb(40, 67, 187);
+          border-bottom: 5px solid rgb(25, 53, 146);
+          box-shadow: 0px 5px rgb(25, 53, 146);
         }
 
         button:active {
-          box-shadow: 0px 2px rgb(72, 57, 201);
+          box-shadow: 0px 2px rgb(25, 53, 146);
           transform: translateY(4px);
         }
 
