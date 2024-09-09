@@ -1,5 +1,4 @@
-import { ChangeEvent, useContext, useRef, useState } from "react";
-import toast from "react-hot-toast";
+import { useContext, useRef, useState } from "react";
 import {
   signInWithGoogle,
   signOutUser,
@@ -14,11 +13,9 @@ import ShowPassword from "@/components/reusable/ShowPassword";
 import { UserContext } from "@/App";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
-import { resetPassword } from "@/scripts/firebase-options-users";
 import "@/styles/modal-auth.css";
-import { getProvider } from "@/scripts/firebase-config";
 import { NavigateFunction, useNavigate } from "react-router";
-import { handleInputChange } from "@/utilities/utilities";
+import { forgotPasword, handleInputChange } from "@/utilities/utilities";
 
 const Auth = () => {
   const [showModal, setShowModal] = useState(false);
@@ -63,21 +60,6 @@ const Auth = () => {
   const handleLoginOrLogout = async () => {
     if (isLogged()) await signOutUser();
     else toggleFormType(showModal, setShowModal, "login", setFormType);
-  };
-
-  const forgotPasword = () => {
-    if (user && user.email) {
-      const currentProviderId = getProvider(user);
-      if (currentProviderId === "password") resetPassword(user.email, navigate);
-      else {
-        toast(`Can not reset password for accounts authenticated with ${getProvider(user)}.`, {
-          duration: 10000,
-          icon: "🔔",
-        });
-      }
-    } else {
-      navigate("/verify", { state: { reset: true } });
-    }
   };
 
   function handleSusribeChange() {
@@ -136,7 +118,7 @@ const Auth = () => {
                 <label>
                   <ShowPassword password={ID.password} setID={setID} />
                 </label>
-                <small onClick={forgotPasword}>Forgot your password?</small>
+                <small onClick={() => forgotPasword(user, navigate)}>Forgot your password?</small>
                 <Button type="submit" suscribe={suscribe}>
                   Submit
                 </Button>

@@ -17,6 +17,17 @@
     z-index: 0;
   }
 
+  .action-btn {
+    display: flex;
+    align-self: flex-end;
+    .save-user {
+      background-color: #354394cf;
+    }
+    .save-user.active {
+      background-color: var(--primary-blue);
+    }
+  }
+
   .ac-content {
     height: 100%;
     min-width: 50vw;

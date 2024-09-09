@@ -7,6 +7,7 @@ import {
   GoogleAuthProvider,
   sendEmailVerification,
   FacebookAuthProvider,
+  User,
 } from "firebase/auth";
 import { toast } from "react-hot-toast";
 import { auth, showMessageErrorFirebase } from "./firebase-config";
@@ -50,14 +51,7 @@ export async function localSignin(email: string, password: string) {
         </span>
       );
     } else {
-      toast(
-        `Welcome ${user.displayName}, Do you need verify your email. Please check your email for the verification link.`,
-        {
-          duration: 10000,
-          icon: "🔔",
-        }
-      );
-      await sendEmailVerification(user);
+      await sendEmailVerificationFirebase(user);
     }
   } catch (error) {
     showMessageErrorFirebase(error);
@@ -65,22 +59,14 @@ export async function localSignin(email: string, password: string) {
 }
 
 // Registrarse en local
-export async function localRegister(
-  email: string,
-  password: string,
-  username: string
-) {
+export async function localRegister(email: string, password: string, username: string) {
   try {
     // Si esta logeado no se puede registrar
     if (isLogged()) {
       toast.error("You are already logged in");
       return;
     }
-    const { user } = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    const { user } = await createUserWithEmailAndPassword(auth, email, password);
     // Actualizamos el perfil con el nombre de usuario
     await updateProfile(user, { displayName: username });
     // Si no esta verificado se le avisa enviando un correo
@@ -91,11 +77,7 @@ export async function localRegister(
         </span>
       );
     } else {
-      toast("Welcome! Please check your email for the verification link.", {
-        duration: 10000,
-        icon: "🔔",
-      });
-      await sendEmailVerification(user);
+      await sendEmailVerificationFirebase(user);
     }
   } catch (error) {
     showMessageErrorFirebase(error);
@@ -142,3 +124,25 @@ export async function signInWithFacebook() {
       showMessageErrorFirebase(error);
     });
 }
+
+// Verificación del correo electrónico
+export const sendEmailVerificationFirebase = async (user: User) => {
+  toast.loading("Updating...");
+  try {
+    await sendEmailVerification(user);
+    toast.dismiss();
+    toast(
+      <span>
+        Welcome <b>{user.displayName}</b>!, please verify your email by checking the verification link we sent 📧,
+      </span>,
+      {
+        duration: 10000,
+        icon: "🔔",
+      }
+    );
+  } catch (error) {
+    showMessageErrorFirebase(error);
+    toast.dismiss();
+    toast.error("Error sending verification email");
+  }
+};

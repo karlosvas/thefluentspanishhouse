@@ -5,7 +5,6 @@ header {
   width: 100%;
   z-index: 500;
   box-sizing: border-box;
-
   .header-animation {
     height: 10vh;
     transition: height 0.3s ease;
@@ -100,8 +99,9 @@ header {
       }
       .exit-publication {
         position: absolute;
-        right: 20px;
-        top: 12px;
+        right: 5%;
+        top: 50%;
+        transform: translate(0, -50%);
       }
       .exit-header {
         margin-right: 10px;

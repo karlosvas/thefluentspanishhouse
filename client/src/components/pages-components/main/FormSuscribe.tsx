@@ -8,6 +8,7 @@ import { type FormSuscriberProps, type SubscriberType } from "types/types";
 import { handleInputChange } from "@/utilities/utilities";
 import { saveUser } from "@/scripts/firebase-db";
 import { UserContext } from "@/App";
+import toast from "react-hot-toast";
 
 const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChange, buttonName }) => {
   const [suscribe, setSuscribe] = useState(false);
@@ -25,7 +26,9 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (buttonName === undefined) return;
+
     setSuscribe(true);
+    toast.loading("Aiming for classes...");
 
     // Obtenemos el usuario de Mailchimp
     const mailchimpUser = await getMailchimpUser(newSubscriber.email);
@@ -37,9 +40,22 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
       // El usuario no se ha encontrado por lo que lo creamos en firebase database y le añadimos el tag,
       // para que posterirormente cuando se suscriba podamos recuperarlo
       if (user && user.uid) saveUser(user?.uid, buttonName);
-    }
+      toast.dismiss();
+      toast.success(
+        <span>
+          <b>
+            {newSubscriber.name} {newSubscriber.lastname}
+          </b>{" "}
+          you have been successfully subscribed to the course
+        </span>,
+        {
+          duration: 5000,
+        }
+      );
 
-    setSuscribe(false);
+      // Enviar email a el admin y dirijirlo a nesletter (next feature)
+      setSuscribe(false);
+    }
   };
 
   return (
@@ -103,7 +119,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
             <label>
               <input
                 type="checkbox"
-                name="acceptPrivacity"
+                name="acceptPrivacy"
                 checked={newSubscriber.acceptPrivacy}
                 onChange={(event) => handleInputChange(event, setNewSubscriber)}
               />{" "}

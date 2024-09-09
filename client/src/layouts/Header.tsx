@@ -6,7 +6,7 @@ import Exit from "@/components/svg-component/Exit";
 import MainNav from "@/components/header-components/MainNav";
 import Theme from "@/components/svg-component/Theme";
 import Settings from "@/components/svg-component/Settings";
-import "@/styles/header.css";
+import "@/styles/layouts/header.css";
 import { Link } from "react-router-dom";
 import { handleClickNavigate } from "@/scripts/navigate";
 
@@ -69,11 +69,7 @@ const Header = () => {
         <div className="header">
           {window.innerWidth >= 766 ? (
             <Link to="/" onClick={handleClickNavigate("/", navigate)}>
-              <img
-                src="/logos/logo.png"
-                alt="fluent spanish house logo"
-                id="logo"
-              />
+              <img src="/logos/logo.png" alt="fluent spanish house logo" id="logo" />
             </Link>
           ) : (
             <>
@@ -83,10 +79,7 @@ const Header = () => {
           {window.innerWidth > 766 ? (
             <MainNav theme={theme} setTheme={setTheme} />
           ) : (
-            window.innerWidth <= 766 &&
-            location.pathname !== "/" && (
-              <Exit optionalClass="exit-publication" />
-            )
+            window.innerWidth <= 766 && location.pathname !== "/" && <Exit optionalClass="exit-publication" />
           )}
           {window.innerWidth > 766 && (
             <div className="nav-icons">

@@ -1,9 +1,11 @@
 import { PublicationCardType, type ErrorResponseHelper, type Member, type Comment } from "types/types";
 
+// Función de tipo guardia para verificar si un objeto es de tipo ErrorResponseHelper
 export function isErrorResponseHelper(error: unknown): error is ErrorResponseHelper {
   return typeof error === "object" && error !== null && "err" in error && "status" in error && "statusText" in error;
 }
 
+// Función de tipo guardia para verificar si un objeto es de tipo Member
 export const isMember = (obj: unknown): obj is Member => {
   if (typeof obj !== "object" || obj === null) return false;
 

@@ -6,7 +6,7 @@ import { UserContext } from "@/App";
 import { type Comment } from "types/types";
 import "@/styles/comments.css";
 import toast from "react-hot-toast";
-import { isCommentArray } from "@/utilities/utilities";
+import { isCommentArray } from "@/utilities/utilities-types";
 
 const CommentsPublication = () => {
   // Estado de los comentarios actuales, y del Text Area
@@ -79,12 +79,7 @@ const CommentsPublication = () => {
       <h3>User Comments</h3>
 
       <form onSubmit={handleSubmit}>
-        <textarea
-          ref={newCommentRef}
-          placeholder="Write your comment..."
-          rows={4}
-          cols={50}
-        />
+        <textarea ref={newCommentRef} placeholder="Write your comment..." rows={4} cols={50} />
         <br />
         <button type="submit">Submit Comment</button>
       </form>

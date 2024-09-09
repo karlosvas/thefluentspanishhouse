@@ -38,6 +38,9 @@ export function getProvider(user: User) {
     case "facebook.com":
       providerName = "Facebook";
       break;
+    default:
+      providerName = providerId;
+      break;
   }
   return providerName;
 }

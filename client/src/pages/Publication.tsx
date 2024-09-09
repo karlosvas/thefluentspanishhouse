@@ -2,11 +2,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PlaceholderPublications from "@/components/pages-components/publications/PlaceholderPublication";
 import { getPublicationByID } from "@/scripts/render-data";
-import { type PublicationCardType, type RouteParams } from "types/types";
-import "@/styles/main-publication.css";
 import CommentsPublication from "@/components/pages-components/publications/CommenstPublication";
 import { Helmet } from "react-helmet-async";
-import { isPublicationCardType } from "@/utilities/utilities";
+import { type PublicationCardType, type RouteParams } from "types/types";
+import { isPublicationCardType } from "@/utilities/utilities-types";
+import "@/styles/main-publication.css";
 
 const Publication = () => {
   const [publication, setPublication] = useState<PublicationCardType>();
@@ -16,7 +16,6 @@ const Publication = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-
     if (id) {
       getPublicationByID(id)
         .then((result) => {

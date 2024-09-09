@@ -224,10 +224,22 @@ export const updateTagsMailchimp = async (mailchimpUser: Member, buttonName: str
       body: JSON.stringify({ tag: newTag }),
     })
     .then(() => {
-      if (mailchimpUser.merge_fields)
-        toast.success(
-          `<b>${mailchimpUser.merge_fields.FNAME} ${mailchimpUser.merge_fields.LNAME}<b/> are you register to new class ${buttonName}`
+      if (mailchimpUser.merge_fields) {
+        toast.dismiss();
+        toast(
+          <span>
+            <b>
+              {mailchimpUser.merge_fields.FNAME} {mailchimpUser.merge_fields.LNAME}
+            </b>{" "}
+            are you in the class of <br />
+            <b>{buttonName}</b>, we are glad that you want to repeat the experience.
+          </span>,
+          {
+            icon: "🔥",
+            duration: 5000,
+          }
         );
+      }
       handleChange();
     })
     .catch((error) => (isErrorResponseHelper(error) ? errorMailchimp(error) : toast.error("An expeted error ocurred")));
