@@ -18,21 +18,25 @@ import { NavigateFunction, useNavigate } from "react-router";
 import { forgotPasword, handleInputChange } from "@/utilities/utilities";
 
 const Auth = () => {
+  // Enseña o esconde el modal
   const [showModal, setShowModal] = useState(false);
+  // Animación de cierre
   const [closing, setClosing] = useState(false);
-  // Timo de formulario
+  // Tipo de formulario
   const [formType, setFormType] = useState<"login" | "register">("login");
+  // Referenica al formulario
   const typeLoginRegisterRef = useRef<HTMLHeadingElement>(null);
   // Actual user
   const user = useContext(UserContext);
-  // Inputs
+  // Inputs del formulario
   const [ID, setID] = useState({
     username: "",
     password: "",
     email: "",
   });
+  // Procesador de envio de formulario
   const [suscribe, setSuscribe] = useState(false);
-
+  // Navegador de React Router
   const navigate: NavigateFunction = useNavigate();
 
   // Enviar formulario par registrarse o logearse
@@ -47,21 +51,20 @@ const Auth = () => {
     setSuscribe(false);
   };
 
-  const handleGoogleAuth = async () => {
-    await signInWithGoogle();
+  // Autenticación con Google y Facebook
+  const handleAuth = async (provider: string) => {
+    if (provider === "google") await signInWithGoogle();
+    else if (provider === "facebook") await signInWithFacebook();
     toggleFormType(showModal, setShowModal);
   };
 
-  const handleFacebookAuth = async () => {
-    await signInWithFacebook();
-    toggleFormType(showModal, setShowModal);
-  };
-
+  // Mostrar el formulario de o desloguear
   const handleLoginOrLogout = async () => {
     if (isLogged()) await signOutUser();
     else toggleFormType(showModal, setShowModal, "login", setFormType);
   };
 
+  // Manejador de cambio de formulario
   function handleSusribeChange() {
     if (showModal) {
       setClosing(true);
@@ -124,7 +127,7 @@ const Auth = () => {
                 </Button>
               </form>
               <div className="providers-log">
-                <div className="googleAuth" onClick={handleGoogleAuth}>
+                <div className="googleAuth" onClick={() => handleAuth("google")}>
                   Continue with
                   <svg
                     className="providers"
@@ -151,7 +154,7 @@ const Auth = () => {
                     ></path>
                   </svg>
                 </div>
-                <div className="facebookAuth" onClick={handleFacebookAuth}>
+                <div className="facebookAuth" onClick={() => handleAuth("facebook")}>
                   Continue with
                   <svg
                     className="providers"

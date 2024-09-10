@@ -8,10 +8,11 @@ import {
   type NoteType,
   type Member,
   type ErrorResponseHelper,
-  type OptionsChampTag,
   type InterestCategoryResponse,
   type InterestResponse,
+  SubscriberType,
 } from "types/types";
+import { getTag } from "@/utilities/utilities";
 
 const helper = Helper();
 
@@ -150,22 +151,33 @@ export const postPublication = async (event: FormEvent<HTMLFormElement>, newPubl
   }
 };
 
-export const submitNote = async (newNote: NoteType) => {
-  try {
-    const response = await helper.post(`${url_api}/api/note`, {
-      body: JSON.stringify(newNote),
-    });
-    if (response) toast.success("The email has been sent successfully");
-  } catch (error) {
-    console.error("Error to submit post", error);
-  }
-};
-
 export const subscribeNewsletter = async (email: string) => {
   try {
     await helper.post(`${url_api}/mailchamp/newsletter`, {
       body: JSON.stringify({ email }),
     });
+  } catch (error) {
+    console.error("Error to submit post", error);
+  }
+};
+
+///////////////////////////// EMAILS /////////////////////////////
+export const sendEmailNewClass = async (newSubscriber: SubscriberType) => {
+  console.log("newSubscriber", newSubscriber);
+  console.log(`${url_api}/mandrill/newstudent`);
+  helper
+    .post(`${url_api}/mandrill/newstudent`, {
+      body: JSON.stringify(newSubscriber),
+    })
+    .catch((error) => isErrorResponseHelper(error) && errorMailchimp(error));
+};
+
+export const submitNote = async (newNote: NoteType) => {
+  try {
+    const response = await helper.post(`${url_api}/mandrill/note`, {
+      body: JSON.stringify(newNote),
+    });
+    if (response) toast.success("The email has been sent successfully");
   } catch (error) {
     console.error("Error to submit post", error);
   }
@@ -216,8 +228,8 @@ export const submitSubscriptionMailchimp = async (member: Member) => {
 };
 
 export const updateTagsMailchimp = async (mailchimpUser: Member, buttonName: string, handleChange: () => void) => {
-  const newTag: OptionsChampTag = buttonName === "Group classes" ? "GROUP_CLASS" : "PRIVATE_CLASS";
   const email = mailchimpUser.email_address;
+  const newTag = getTag(buttonName);
 
   helper
     .put(`${url_api}/mailchimp/updatecontact/tag/${email}`, {

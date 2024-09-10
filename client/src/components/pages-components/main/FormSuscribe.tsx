@@ -1,30 +1,35 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Buuton from "@/components/reusable/Button";
-import { getMailchimpUser, isMember, updateTagsMailchimp } from "@/scripts/render-data";
+import { getMailchimpUser, isMember, sendEmailNewClass, updateTagsMailchimp } from "@/scripts/render-data";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
 import { type FormSuscriberProps, type SubscriberType } from "types/types";
-import { handleInputChange } from "@/utilities/utilities";
+import { getTag, handleInputChange } from "@/utilities/utilities";
 import { saveUser } from "@/scripts/firebase-db";
 import { UserContext } from "@/App";
 import toast from "react-hot-toast";
 
 const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChange, buttonName }) => {
+  // Estado para saber si se ha enviado el formulario o si se esta procesando
   const [suscribe, setSuscribe] = useState(false);
+  // Inputs del formulario
   const [newSubscriber, setNewSubscriber] = useState<SubscriberType>({
     name: "",
     lastname: "",
     email: "",
+    class: "",
     consentEmails: false,
     acceptTerms: false,
     acceptPrivacy: false,
   });
-
+  // Usuario actual
   const user = useContext(UserContext);
 
+  // Envio de formulario
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // Button name es la clase selecionada
     if (buttonName === undefined) return;
 
     setSuscribe(true);
@@ -53,8 +58,14 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
         }
       );
 
-      // Enviar email a el admin y dirijirlo a nesletter (next feature)
+      // Le añadimos el tag al usuario
+      newSubscriber.class = getTag(buttonName);
+      // Enviamos el email al administrador para que sepa que hay un nuevo suscriptor
+      await sendEmailNewClass(newSubscriber);
+
+      // Cerramos el formulario
       setSuscribe(false);
+      handleSusribeChange();
     }
   };
 

@@ -14,6 +14,11 @@ export interface SubscriberType {
   name: string;
   lastname: string;
   email: string;
+  class: OptionsChampTag;
+  consentEmails: false;
+  acceptTerms: false;
+  acceptPrivacy: false;
+  [key: string]: unknown;
 }
 
 export interface Comment {
@@ -136,4 +141,7 @@ export interface Message {
   ];
   subject: string;
   html: string;
+  headers?: {
+    "Reply-To": string;
+  };
 }

@@ -1,13 +1,15 @@
 import { getProvider } from "@/scripts/firebase-config";
 import { resetPassword } from "@/scripts/firebase-options-users";
 import { User } from "firebase/auth";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { type NavigateFunction } from "react-router";
+import { OptionsChampTag } from "types/types";
 
 // Función para manejar el cambio de un input
 export const handleInputChange = <T extends Record<string, unknown>>(
-  event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
-  setterReact: React.Dispatch<React.SetStateAction<T>>
+  event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  setterReact: Dispatch<SetStateAction<T>>
 ) => {
   const { name, value, type } = event.target;
   if (type === "checkbox") {
@@ -39,4 +41,8 @@ export const forgotPasword = (user: User | null, navigate: NavigateFunction) => 
   } else {
     navigate("/verify", { state: { reset: true } });
   }
+};
+
+export const getTag = (name: string): OptionsChampTag => {
+  return name === "Group classes" ? "GROUP_CLASS" : "PRIVATE_CLASS";
 };

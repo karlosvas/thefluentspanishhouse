@@ -14,7 +14,7 @@ export async function submitNote(email_user: string, username: string, subject: 
     from_name: `${email_user}`,
     to: [
       {
-        email: process.env.USER_GMAIL,
+        email: process.env.ADMIN_GMAIL,
         type: "to" as const,
       },
     ],
@@ -39,13 +39,16 @@ export async function submitEmalSuscriber(email_user: string, username: string, 
     from_name: `${email_user}`,
     to: [
       {
-        email: process.env.USER_GMAIL,
+        email: process.env.ADMIN_GMAIL,
         type: "to" as const,
       },
     ],
-    subject: `New subscriber on TheFluentSpanishHouse ${username} ${lastname}`,
-    html: `<p>The user <strong>${username} ${lastname}</strong> sent you this message:</p><br />
-    <p>Wants to subscribe to ${type}<p/>`,
+    subject: `New student on TheFluentSpanishHouse ${username} ${lastname}`,
+    html: `<p>The user <b>${username} ${lastname}</b> wants to be a new student:</p><br />
+    <p>He wants to sign up for <b>${type}<b/><p/>`,
+    headers: {
+      "Reply-To": email_user,
+    },
   };
 
   // Enviar el correo mediante el transporte
@@ -62,11 +65,11 @@ export async function submitEmailComment(email_user: string, username: string, d
   // Configuración del transporte
   // Datos del correo y opciones
   let message: Message = {
-    from_email: `"${email_user} via TheFluentSpanishHouse" ${process.env.USER_GMAIL}`,
+    from_email: `"${email_user} via TheFluentSpanishHouse" ${process.env.ADMIN_GMAIL}`,
     from_name: `${email_user}`,
     to: [
       {
-        email: process.env.USER_GMAIL,
+        email: process.env.ADMIN_GMAIL,
         type: "to" as const,
       },
     ],
