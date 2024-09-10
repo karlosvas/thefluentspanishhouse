@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Buuton from "@/components/reusable/Button";
-import { getMailchimpUser, isMember, sendEmailNewClass, updateTagsMailchimp } from "@/scripts/render-data";
+import { getMailchimpUser, sendEmailNewClass, updateTagsMailchimp } from "@/scripts/render-data";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
 import { type FormSuscriberProps, type SubscriberType } from "types/types";
@@ -9,6 +9,7 @@ import { getTag, handleInputChange } from "@/utilities/utilities";
 import { saveUser } from "@/scripts/firebase-db";
 import { UserContext } from "@/App";
 import toast from "react-hot-toast";
+import { isMember } from "@/utilities/utilities-types";
 
 const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChange, buttonName }) => {
   // Estado para saber si se ha enviado el formulario o si se esta procesando
@@ -32,6 +33,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
     // Button name es la clase selecionada
     if (buttonName === undefined) return;
 
+    // Comienzo del proceso de suscripción
     setSuscribe(true);
     toast.loading("Aiming for classes...");
 
@@ -62,11 +64,11 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
       newSubscriber.class = getTag(buttonName);
       // Enviamos el email al administrador para que sepa que hay un nuevo suscriptor
       await sendEmailNewClass(newSubscriber);
-
-      // Cerramos el formulario
-      setSuscribe(false);
-      handleSusribeChange();
     }
+
+    // Cerramos el formulario
+    setSuscribe(false);
+    handleSusribeChange();
   };
 
   return (

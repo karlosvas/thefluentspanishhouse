@@ -12,15 +12,13 @@ const ContactForm = () => {
   const user = useContext(UserContext);
 
   const [newNote, setNewNote] = useState<NoteType>({
-    email_user: user?.email,
+    email_user: user?.email || "",
     username: "",
     subject: "",
     note: "",
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setNewNote((prevNote) => ({
       ...prevNote,
@@ -28,9 +26,7 @@ const ContactForm = () => {
     }));
   };
 
-  const inputRefs = useRef<(HTMLInputElement | HTMLTextAreaElement | null)[]>(
-    []
-  );
+  const inputRefs = useRef<(HTMLInputElement | HTMLTextAreaElement | null)[]>([]);
 
   const onSubmitNote = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,17 +35,15 @@ const ContactForm = () => {
       return;
     }
     setSuscribe(true);
-    try {
-      await submitNote(newNote);
-      setNewNote({
-        email_user: user.email,
-        username: "",
-        subject: "",
-        note: "",
-      } as NoteType);
-    } catch (error) {
-      toast.error("An error occurred while sending the data");
-    }
+
+    await submitNote(newNote);
+    setNewNote({
+      email_user: user.email,
+      username: "",
+      subject: "",
+      note: "",
+    } as NoteType);
+
     setSuscribe(false);
   };
 
@@ -101,9 +95,7 @@ const ContactForm = () => {
           <div className="form">
             <div className="contact-info">
               <h3 className="title">Let's get in touch</h3>
-              <p className="text">
-                Do you want to sign up? Ask me any question you have
-              </p>
+              <p className="text">Do you want to sign up? Ask me any question you have</p>
 
               <div className="info">
                 <div className="information">
@@ -123,16 +115,10 @@ const ContactForm = () => {
               <div className="social-media">
                 <p>Connect with us :</p>
                 <div className="social-icons">
-                  <a
-                    href="https://www.facebook.com/thefluentspanishhouse/"
-                    target="_blank"
-                  >
+                  <a href="https://www.facebook.com/thefluentspanishhouse/" target="_blank">
                     <i className="fab fa-facebook-f">F</i>
                   </a>
-                  <a
-                    href="https://github.com/karlosvas/thefluentspanishhouse"
-                    target="_blank"
-                  >
+                  <a href="https://github.com/karlosvas/thefluentspanishhouse" target="_blank">
                     <i className="fab fa-github">&lt;/&gt;</i>
                   </a>
                 </div>

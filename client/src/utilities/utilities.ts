@@ -4,7 +4,7 @@ import { User } from "firebase/auth";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { type NavigateFunction } from "react-router";
-import { OptionsChampTag } from "types/types";
+import { type ErrorResponseHelper, type OptionsChampTag } from "types/types";
 
 // Función para manejar el cambio de un input
 export const handleInputChange = <T extends Record<string, unknown>>(
@@ -46,3 +46,17 @@ export const forgotPasword = (user: User | null, navigate: NavigateFunction) => 
 export const getTag = (name: string): OptionsChampTag => {
   return name === "Group classes" ? "GROUP_CLASS" : "PRIVATE_CLASS";
 };
+
+export function errorMailchimp(error: ErrorResponseHelper) {
+  const messageError = error.message?.detail;
+  const status = error.status;
+  if (messageError?.includes("permanently deleted")) {
+    toast.error("This user is permanently deleted from Mailchimp, please contact with the support team.");
+  } else if (messageError?.includes("is already a list member")) {
+    toast("This user already exists in Mailchimp, We will try to offer better service ", {
+      icon: "🙈",
+    });
+  }
+
+  return { messageError, status };
+}

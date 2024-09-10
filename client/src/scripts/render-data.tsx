@@ -7,50 +7,14 @@ import {
   type Comment,
   type NoteType,
   type Member,
-  type ErrorResponseHelper,
   type InterestCategoryResponse,
   type InterestResponse,
   SubscriberType,
 } from "types/types";
-import { getTag } from "@/utilities/utilities";
+import { errorMailchimp, getTag } from "@/utilities/utilities";
+import { isErrorResponseHelper } from "@/utilities/utilities-types";
 
 const helper = Helper();
-
-function isErrorResponseHelper(error: unknown): error is ErrorResponseHelper {
-  return typeof error === "object" && error !== null && "err" in error && "status" in error && "statusText" in error;
-}
-
-export const isMember = (obj: unknown): obj is Member => {
-  if (typeof obj !== "object" || obj === null) return false;
-
-  const member = obj as Member;
-  const statusOptions = ["subscribed", "unsubscribed", "cleaned", "pending", "transactional"];
-
-  return (
-    typeof member.email_address === "string" &&
-    statusOptions.includes(member.status) &&
-    ["html", "text"].includes(member.email_type) &&
-    (member.merge_fields === undefined || typeof member.merge_fields === "object") &&
-    (member.tags === undefined || Array.isArray(member.tags)) &&
-    (member.status_if_new === undefined || statusOptions.includes(member.status_if_new)) &&
-    (member.update_existing === undefined || typeof member.update_existing === "boolean")
-  );
-};
-
-function errorMailchimp(error: ErrorResponseHelper) {
-  const messageError = error.message?.detail;
-  const status = error.status;
-  console.log(messageError);
-  if (messageError?.includes("permanently deleted")) {
-    toast.error("This user is permanently deleted from Mailchimp, please contact with the support team.");
-  } else if (messageError?.includes("is already a list member")) {
-    toast("This user already exists in Mailchimp, We will try to offer better service ", {
-      icon: "🙈",
-    });
-  }
-
-  return { messageError, status };
-}
 
 ///////////////////////////// GET /////////////////////////////
 export const getUrlTest = async () => {
