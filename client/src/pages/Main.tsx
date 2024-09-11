@@ -19,7 +19,7 @@ const Main = () => {
         <article className="main-title">
           <h1 id="title">The Fluent Spanish House</h1>
           <PlaceholderImg
-            src="img/carretera.jpg"
+            src="img/carretera.webp"
             className="banner"
             alt="Banner with inspiring images, sevillana dance"
           >
@@ -35,8 +35,10 @@ const Main = () => {
           </PlaceholderImg>
         </article>
         <div className="main-content">
-          <img src="img/plantas.png" className="planta left" alt="Image of decorative plants left" />
+          <img src="img/plantas.webp" className="planta left" alt="Image of decorative plants left" />
+          <img src="img/plantas.webp" className="planta right" alt="Image of decorative plants right" />
           <div className="achievements-section">
+            webp
             <h2>What you can achive with my assitence?</h2>
             <ul>
               <li>
@@ -63,7 +65,6 @@ const Main = () => {
               </li>
             </ul>
           </div>
-          <img src="img/plantas.png" className="planta right" alt="Image of decorative plants right" />
         </div>
         <Prices />
         <div className="main-reviews">

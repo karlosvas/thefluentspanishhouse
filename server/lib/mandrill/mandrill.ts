@@ -19,7 +19,11 @@ export async function submitNote(email_user: string, username: string, subject: 
       },
     ],
     subject: subject,
-    html: `<p>The user <strong>${username}</strong> sent you this message:</p><br /><p>${note}</p>`,
+    html: `
+    <p>The user <strong>${username}</strong> sent you this message:</p><br /><p>${note}</p>`,
+    headers: {
+      "Reply-To": email_user,
+    },
   };
 
   // Enviar el correo mediante el cliente de Mandrill

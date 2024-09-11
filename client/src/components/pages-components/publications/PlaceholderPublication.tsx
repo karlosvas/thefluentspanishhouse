@@ -1,9 +1,6 @@
 import Placeholder from "react-bootstrap/Placeholder";
-import { PlaceholderPublicationsProps } from "types/types";
 
-const PlaceholderPublications = ({
-  imgClass,
-}: PlaceholderPublicationsProps) => {
+const PlaceholderPublications = ({ imgClass }: { imgClass: string }) => {
   return (
     <div className="publication">
       <Placeholder animation="wave" className="title-ph">

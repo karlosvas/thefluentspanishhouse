@@ -1,37 +1,41 @@
 import PlaceholderImg from "@/components/reusable/PlaceholderImg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import "@/styles/main-newsettler.css";
 import toast from "react-hot-toast";
 import Button from "@/components/reusable/Button";
 import { getFirstInterestCategory, getInterests, submitSubscriptionMailchimp } from "@/scripts/render-data";
-import { Member } from "types/types";
+import { type Member, type NesletterType } from "types/types";
 import { handleInputChange } from "@/utilities/utilities";
+import MultiSelectTag from "@/components/reusable/MultiSelectTag";
 
 const Newsletter = () => {
   // Estado del formulario de suscripción
   const [subscribed, setSubscribed] = useState(false);
   // Estado del formulario de suscripción
-  const [form, setForm] = useState({
-    name: "",
+  const [form, setForm] = useState<NesletterType>({
     email: "",
+    name: "",
     surnames: "",
     birthday: "",
-    preferences: "",
+    preferences: [],
     privacy: false,
     newsletter: false,
     mailchimp: false,
   });
 
+  const [active, setActive] = useState(false);
+
   // Función para enviar el formulario de suscripción
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    setSubscribed(true);
 
     // Verificando que todos los campos estén llenos
     for (const value of Object.values(form)) {
       if (value === "" || value === false) {
         toast.error("Please fill all the fields");
-        toast.error("This action is not yet implemented, we apologize for the inconvenience");
         return;
       }
     }
@@ -101,6 +105,29 @@ const Newsletter = () => {
     }
   };
 
+  useEffect(() => {
+    if (!window.isMultiSelectTagInitialized) {
+      MultiSelectTag("preferences", {
+        rounded: true,
+        shadow: false,
+        placeholder: "Search",
+        tagColor: {
+          textColor: "var(--primary-black",
+          borderColor: "#4ca3dd",
+          bgColor: "#e0f7ff",
+        },
+        onChange: function (values) {
+          const preferencesValues = values.map((preference: Record<string, string>) => preference.value);
+          setForm((prev) => ({ ...prev, preferences: preferencesValues }));
+        },
+      });
+      window.isMultiSelectTagInitialized = true;
+    }
+  }, []);
+
+  // Verificando si hay preferencias seleccionadas
+  useEffect(() => (form.preferences.length > 0 ? setActive(true) : setActive(false)), [form.preferences]);
+
   return (
     <>
       <Helmet>
@@ -113,7 +140,7 @@ const Newsletter = () => {
       <main className="main-newsletter">
         <section className="info-section">
           <article className="info-article">
-            <PlaceholderImg src="img/cafe.png" alt="Cafe" className="img-nw" />
+            <PlaceholderImg src="img/cafe.webp" alt="Cafe" className="img-nw" />
             <div className="info-content">
               <h3>Free Spanish Learning Resources</h3>
               <p>
@@ -143,48 +170,74 @@ const Newsletter = () => {
         <section className="freecontent-section">
           <article className="freecontent-article">
             <PlaceholderImg src="img/reunion.webp" className="img-nw" alt="Cafe" />
+
             <div className="freecontent-content">
               <form id="formulario" onSubmit={onSubmit}>
                 <h1>Welcome to the Spanish newsletter!</h1>
                 <div className="form-group">
-                  <input type="text" name="name" value={form.name} onChange={(e) => handleInputChange(e, setForm)} />
+                  <input
+                    type="text"
+                    name="name"
+                    value={form.name}
+                    placeholder=" "
+                    onChange={(e) => handleInputChange(e, setForm)}
+                  />
                   <label htmlFor="name" className={subscribed && form.name === "" ? "required" : ""}>
-                    Nombre
+                    Name
                   </label>
                 </div>
                 <div className="form-group">
-                  <input type="text" id="surnames" placeholder=" " onChange={(e) => handleInputChange(e, setForm)} />
+                  <input type="text" name="surnames" placeholder=" " onChange={(e) => handleInputChange(e, setForm)} />
                   <label htmlFor="surnames" className={subscribed && form.surnames === "" ? "required" : ""}>
-                    Apellidos
+                    Lastname
                   </label>
                 </div>
                 <div className="form-group">
-                  <input type="email" id="email" placeholder=" " onChange={(e) => handleInputChange(e, setForm)} />
+                  <input type="email" name="email" placeholder=" " onChange={(e) => handleInputChange(e, setForm)} />
                   <label htmlFor="email" className={subscribed && form.email === "" ? "required" : ""}>
-                    Correo Electrónico
+                    Email
                   </label>
                 </div>
                 <div className="form-group">
-                  <input type="date" id="birthday" placeholder=" " onChange={(e) => handleInputChange(e, setForm)} />
+                  <input
+                    type="date"
+                    name="birthday"
+                    placeholder=" "
+                    onChange={(e) => {
+                      handleInputChange(e, setForm);
+                      if (e.target.value) {
+                        e.target.classList.add("has-value");
+                      } else {
+                        e.target.classList.remove("has-value");
+                      }
+                    }}
+                  />
                   <label htmlFor="birthday" className={subscribed && form.birthday === "" ? "required" : ""}>
-                    Fecha de Nacimiento
+                    Birthday
                   </label>
                 </div>
-                <div className="form-group">
-                  <select id="preferences" value={form.preferences} onChange={(e) => handleInputChange(e, setForm)}>
-                    <option value="" disabled></option>
-                    <option value="grammar">Gramática</option>
-                    <option value="vocabulary">Vocabulario</option>
-                    <option value="exercises">Ejercicios</option>
-                  </select>
-                  <label htmlFor="preferences" className={subscribed && form.preferences === "" ? "required" : ""}>
-                    Preferencias de Contenido
+                <div className={`form-group-select ${active ? "active" : ""}`}>
+                  <label
+                    htmlFor="preferences"
+                    className={subscribed && form.preferences.length === 0 ? "required" : ""}
+                  >
+                    Preferences
                   </label>
+                  <select id="preferences" multiple>
+                    <option value="grammar">Grammar</option>
+                    <option value="vocabulary">Vocabulary</option>
+                    <option value="exercises">Exercises</option>
+                    <option value="pronunciation">Pronunciation</option>
+                    <option value="listening">Listening</option>
+                    <option value="speaking">Speaking</option>
+                    <option value="writing">Writing</option>
+                    <option value="conversation">Conversation practice</option>
+                  </select>
                 </div>
                 <div className="checkbox-group">
                   <input
                     type="checkbox"
-                    id="privacy"
+                    name="privacy"
                     checked={form.privacy}
                     onChange={(e) => handleInputChange(e, setForm)}
                   />
@@ -196,7 +249,7 @@ const Newsletter = () => {
                 <div className="checkbox-group">
                   <input
                     type="checkbox"
-                    id="newsletter"
+                    name="newsletter"
                     checked={form.newsletter}
                     onChange={(e) => handleInputChange(e, setForm)}
                   />
@@ -207,11 +260,11 @@ const Newsletter = () => {
                 <div className="checkbox-group">
                   <input
                     type="checkbox"
-                    id="mailchimp"
+                    name="mailchimp"
                     checked={form.mailchimp}
                     onChange={(e) => handleInputChange(e, setForm)}
                   />
-                  <label htmlFor="newsletter" className={subscribed && !form.newsletter ? "required" : ""}>
+                  <label htmlFor="mailchimp" className={subscribed && !form.mailchimp ? "required" : ""}>
                     I accept that my data will be processed by{" "}
                     <a href="https://mailchimp.com/legal/" target="_blank">
                       Mailchimp

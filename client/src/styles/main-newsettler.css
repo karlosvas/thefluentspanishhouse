@@ -131,11 +131,16 @@
               padding: 0 5px;
               z-index: 3;
             }
-          }
 
-          form input:focus,
-          form select:focus {
-            border-color: #007bff;
+            input[type="date"]:not(:placeholder-shown) + label,
+            label[for="birthday"] {
+              color: #999;
+            }
+
+            input[type="date"].has-value + label[for="birthday"],
+            input[type="date"]:focus + label {
+              color: #007bff;
+            }
           }
 
           .required::after {

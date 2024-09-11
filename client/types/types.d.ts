@@ -1,9 +1,9 @@
 import { type User } from "firebase/auth";
 
-export type TFunction = (key: string, options?: object) => string;
-
-export interface OptionalTranslations {
-  translation?: TFunction<"global", undefined>;
+declare global {
+  interface Window {
+    isMultiSelectTagInitialized: boolean;
+  }
 }
 
 export interface CardsPublicationBlogProps {
@@ -11,10 +11,6 @@ export interface CardsPublicationBlogProps {
   setCardsBlog: React.Dispatch<React.SetStateAction<PublicationCardType[]>>;
   handlePublicationChange: Handler;
   loading: boolean;
-}
-
-export interface PlaceholderPublicationsProps {
-  imgClass: string;
 }
 
 export interface ShowPasswordProps {
@@ -60,6 +56,18 @@ export interface SubscriberType {
   consentEmails: false;
   acceptTerms: false;
   acceptPrivacy: false;
+  [key: string]: unknown;
+}
+
+export interface NesletterType {
+  email: string;
+  name: string;
+  surnames: string;
+  birthday: string;
+  preferences: string[];
+  privacy: boolean;
+  newsletter: boolean;
+  mailchimp: boolean;
   [key: string]: unknown;
 }
 
@@ -266,4 +274,23 @@ export interface InterestResponse {
   interests: Interest[];
   list_id: string;
   total_items: number;
+}
+
+// MultiSelectTagOptions
+export interface MultiSelectTagOptions {
+  shadow?: boolean;
+  rounded?: boolean;
+  tagColor?: {
+    textColor?: string;
+    borderColor?: string;
+    bgColor?: string;
+  };
+  placeholder?: string;
+  onChange?: (selectedValues: { label: string; value: string }[]) => void;
+}
+
+export interface Option {
+  value: string;
+  label: string;
+  selected: boolean;
 }
