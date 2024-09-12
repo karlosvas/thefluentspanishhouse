@@ -256,9 +256,9 @@ export const getFirstInterestCategory = async (): Promise<InterestCategoryRespon
   }
 };
 
-export const getInterests = async (idCategory: string): Promise<InterestResponse> => {
+export const getInterests = async (): Promise<InterestResponse> => {
   try {
-    const data = await helper.get(`${url_api}/mailchimp/interests/${idCategory}`);
+    const data = await helper.get(`${url_api}/mailchimp/get/interests`);
     return data as InterestResponse;
   } catch (error) {
     console.error("Error to get interest category", error);

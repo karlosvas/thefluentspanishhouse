@@ -206,9 +206,7 @@ export interface Member {
   merge_fields?: {
     [key: string]: string;
   };
-  interests: {
-    [key: string]: boolean;
-  };
+  interests: Record<string, boolean>[];
   tags: OptionsChampTag[];
   status_if_new: Status;
   update_existing?: boolean;
@@ -267,6 +265,7 @@ interface Interest {
   category_id: string;
   list_id: string;
   id: string;
+  name: string;
 }
 export interface InterestResponse {
   _links: Link[];

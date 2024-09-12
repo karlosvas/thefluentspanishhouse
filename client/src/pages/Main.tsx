@@ -38,7 +38,6 @@ const Main = () => {
           <img src="img/plantas.webp" className="planta left" alt="Image of decorative plants left" />
           <img src="img/plantas.webp" className="planta right" alt="Image of decorative plants right" />
           <div className="achievements-section">
-            webp
             <h2>What you can achive with my assitence?</h2>
             <ul>
               <li>

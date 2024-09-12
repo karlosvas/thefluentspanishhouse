@@ -41,6 +41,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
       figure {
         margin: 0;
         .img-nw {
@@ -49,18 +50,22 @@
           height: 20vh;
         }
       }
+
       .info-content {
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
+
         h3 {
           min-width: 190px;
         }
         /* Button download esta dentro de el ancore */
+
         a {
           align-self: center;
           margin-left: 50px;
         }
+
         section {
           width: 60%;
           margin-bottom: 60px;
@@ -96,7 +101,7 @@
             select {
               width: 100%;
               padding: 10px;
-              border: 1px solid #ccc;
+              border: 1px solid rgb(218, 221, 224);
               background-color: transparent;
               border-radius: 5px;
               box-sizing: border-box;
@@ -112,7 +117,7 @@
               left: 10px;
               color: #999;
               font-size: 16px;
-              transition: all 0.3s ease-in-out;
+              transition: top 0.3s ease-in-out;
               pointer-events: none;
               z-index: 2;
               background-color: var(--primary-white);

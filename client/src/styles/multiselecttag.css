@@ -8,7 +8,7 @@
   left: 0.75rem;
   background: var(--primary-white);
   padding: 0 0.25rem;
-  transition: all 0.2s ease;
+  transition: top 0.2s ease;
   color: #6b7280;
 }
 
@@ -39,7 +39,7 @@
     display: flex;
     border: 1px solid var(--border-color);
     background: transparent;
-    min-height: 2.5rem;
+    min-height: 3rem;
     width: 100%;
     min-width: 14rem;
     margin-bottom: 20px;
@@ -48,7 +48,7 @@
     display: flex;
     flex-wrap: wrap;
     flex: 1 1 auto;
-    padding: 0.1rem;
+    padding: 0.1rem 0.3rem;
     align-items: center;
     margin: 10px 0;
   }

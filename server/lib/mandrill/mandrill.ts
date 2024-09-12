@@ -7,8 +7,8 @@ import { Message } from "types/types";
 // Configurar el cliente de Mandrill
 const mandrill = mailchimp(process.env.MANDRILL_API_KEY);
 
+// Enviar nota de contact us a el administrador
 export async function submitNote(email_user: string, username: string, subject: string, note: string) {
-  // Datos del correo y opciones
   const message: Message = {
     from_email: "no-reply@thefluentspanishhouse.com",
     from_name: `${email_user}`,
@@ -26,7 +26,6 @@ export async function submitNote(email_user: string, username: string, subject: 
     },
   };
 
-  // Enviar el correo mediante el cliente de Mandrill
   try {
     const response = await mandrill.messages.send({ message });
     return response;
@@ -36,8 +35,8 @@ export async function submitNote(email_user: string, username: string, subject: 
   }
 }
 
-export async function submitEmalSuscriber(email_user: string, username: string, lastname: string, type: string) {
-  // Datos del correo y opciones
+// Enviar email de nuevo estuidiante a el administrador
+export async function submitEmalStudent(email_user: string, username: string, lastname: string, className: string) {
   let message: Message = {
     from_email: "no-reply@thefluentspanishhouse.com",
     from_name: `${email_user}`,
@@ -49,25 +48,21 @@ export async function submitEmalSuscriber(email_user: string, username: string, 
     ],
     subject: `New student on TheFluentSpanishHouse ${username} ${lastname}`,
     html: `<p>The user <b>${username} ${lastname}</b> wants to be a new student:</p><br />
-    <p>He wants to sign up for <b>${type}<b/><p/>`,
+    <p>He wants to sign up for <b>${className}<b/><p/>`,
     headers: {
       "Reply-To": email_user,
     },
   };
-
-  // Enviar el correo mediante el transporte
   try {
-    const info = await mandrill.messages.send({ message });
-    return info;
+    return await mandrill.messages.send({ message });
   } catch (error) {
     console.error("Error sending email", error);
     throw error;
   }
 }
 
+// Enviar email de nuevo comentario a el administrador
 export async function submitEmailComment(email_user: string, username: string, data: string, originUrl: string) {
-  // Configuración del transporte
-  // Datos del correo y opciones
   let message: Message = {
     from_email: `"${email_user} via TheFluentSpanishHouse" ${process.env.ADMIN_GMAIL}`,
     from_name: `${email_user}`,
@@ -83,10 +78,8 @@ export async function submitEmailComment(email_user: string, username: string, d
     <p>Desde la publicación: ${originUrl}<p/>`,
   };
 
-  // Enviar el correo mediante el transporte
   try {
-    const info = await mandrill.messages.send({ message });
-    return info;
+    return await mandrill.messages.send({ message });
   } catch (error) {
     console.error("Error sending email", error);
     throw error;

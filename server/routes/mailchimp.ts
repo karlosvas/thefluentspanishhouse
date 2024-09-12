@@ -1,25 +1,21 @@
 import { type Request, type Response, Router } from "express";
-import { listId, mailchimpErrors, mailchimp } from "../lib/mailchimp/mailchimp.js";
+import {
+  listId,
+  mailchimpErrors,
+  mailchimp,
+  addInterestToCategory,
+  deleteInterestCategory,
+  groupId,
+} from "../lib/mailchimp/mailchimp.js";
 import { log, verifyIdToken } from "../middelware/token-logs.js";
 import { validateEmail } from "../utilities/validateEmail.js";
 import { type Status } from "@mailchimp/mailchimp_marketing";
 import { InterestCategoryResponse, type Member, type OptionsChampTag } from "types/types.js";
 import crypto from "crypto";
-import { submitEmalSuscriber } from "../lib/mandrill/mandrill.js";
 
 const router = Router();
 
 // <--------------- GET --------------->
-// Obtener todos los miembros de una lista
-router.get("/", log, verifyIdToken, async (req: Request, res: Response) => {
-  try {
-    const response = await mailchimp.ping.get();
-    res.status(200).json(response);
-  } catch (error) {
-    res.status(500).json(mailchimpErrors(error));
-  }
-});
-
 // Obtener todos los miembros de una lista
 router.get("/getall/member", log, verifyIdToken, async (req: Request, res: Response) => {
   mailchimp.lists
@@ -50,7 +46,7 @@ router.get("/getone/member/:email", log, verifyIdToken, async (req: Request, res
     });
 });
 
-router.get("/category", log, verifyIdToken, async (req: Request, res: Response) => {
+router.get("/groupscategory", log, verifyIdToken, async (req: Request, res: Response) => {
   mailchimp.lists
     .getListInterestCategories(listId)
     .then((response) => {
@@ -61,13 +57,11 @@ router.get("/category", log, verifyIdToken, async (req: Request, res: Response) 
     });
 });
 
-router.get("/interests/:idCategory", log, verifyIdToken, async (req: Request, res: Response) => {
-  const { idCategory } = req.params;
-
-  if (!idCategory) return res.status(400).send("Category ID is required");
+router.get("/get/interests", log, verifyIdToken, async (req: Request, res: Response) => {
+  if (!groupId) return res.status(400).send("groupID is required");
 
   mailchimp.lists
-    .listInterestCategoryInterests(listId, idCategory.toString())
+    .listInterestCategoryInterests(listId, groupId.toString())
     .then((response) => {
       res.status(200).json(response);
     })
@@ -83,48 +77,47 @@ router.post("/add/member", log, verifyIdToken, async (req: Request, res: Respons
 
   if (!validateEmail(member.email_address)) return res.status(400).send("Email inválido");
 
-  try {
-    console.log(member);
-    // Añadimos el usuario a Mailchimp
-    const response = await mailchimp.lists.addListMember(listId, member);
-
-    // Enviamos un email al administrador
-    const email = await submitEmalSuscriber(
-      member.email_address,
-      member.merge_fields.FNAME,
-      member.merge_fields.LNAME,
-      member.tags[member.tags.length - 1]
-    );
-
-    res.status(200).json({ response, email });
-  } catch (error) {
-    res.status(500).json(mailchimpErrors(error));
-  }
+  mailchimp.lists
+    .addListMember(listId, member)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((error) => {
+      res.status(500).json(mailchimpErrors(error));
+    });
 });
 
 // Añadir varios miembros a la lista
 router.post("/add/batchcontact", log, verifyIdToken, async (req: Request, res: Response) => {
   const members: Member[] = req.body.member;
-  try {
-    // Usuario y etiquetas para añadir al usuario
-    const response = await mailchimp.lists.batchListMembers(listId, {
+
+  // Usuario y etiquetas para añadir al usuario
+  mailchimp.lists
+    .batchListMembers(listId, {
       members,
       update_existing: true,
+    })
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((error) => {
+      res.status(500).json(mailchimpErrors(error));
     });
+});
 
-    members.forEach(async (member) => {
-      await submitEmalSuscriber(
-        member.email_address,
-        member.merge_fields.FNAME,
-        member.merge_fields.LNAME,
-        member.tags[member.tags.length - 1]
-      );
+router.post("/add/interests", log, verifyIdToken, async (req: Request, res: Response) => {
+  const groupId = process.env.MAILCHIMP_GROUP_ID;
+  const { name } = req.body;
+
+  if (!groupId || !name) return res.status(400).send("Category ID and interest name are required");
+
+  addInterestToCategory(groupId, name)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((error) => {
+      res.status(500).json(mailchimpErrors(error));
     });
-
-    res.status(200).json(response);
-  } catch (error) {
-    res.status(500).json(mailchimpErrors(error));
-  }
 });
 
 // <--------------- PUT --------------->
@@ -135,17 +128,17 @@ router.put("/updatecontact/status/:email", log, verifyIdToken, async (req: Reque
 
   if (!validateEmail(email)) return res.status(400).send("Email inválido");
 
-  try {
-    const subscriberHash = crypto.createHash("md5").update(email.toLowerCase()).digest("hex");
+  const subscriberHash = crypto.createHash("md5").update(email.toLowerCase()).digest("hex");
 
-    const response = await mailchimp.lists.updateListMember(listId, subscriberHash, {
+  mailchimp.lists
+    .updateListMember(listId, subscriberHash, {
       status: status,
+    })
+    .then((response) => res.status(200).json(response))
+    .catch((error) => {
+      const parserError = mailchimpErrors(error);
+      res.status(parserError.status).json(parserError);
     });
-    res.status(200).json(response);
-  } catch (error) {
-    const parserError = mailchimpErrors(error);
-    res.status(parserError.status).json(parserError);
-  }
 });
 
 // Añadir el tag de un miembro de la lista
@@ -210,6 +203,18 @@ router.delete("/tags/del/:email", log, verifyIdToken, async (req: Request, res: 
     .catch((error) => {
       const parserError = mailchimpErrors(error);
       res.status(parserError.status).json(parserError);
+    });
+});
+
+router.delete("/del/interests/:idCategoty", log, verifyIdToken, async (req: Request, res: Response) => {
+  const { idCategoty } = req.params;
+
+  deleteInterestCategory(idCategoty)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((error) => {
+      res.status(500).json(mailchimpErrors(error));
     });
 });
 

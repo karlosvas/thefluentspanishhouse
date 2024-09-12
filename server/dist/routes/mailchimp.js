@@ -1,21 +1,10 @@
 import { Router } from "express";
-import { listId, mailchimpErrors, mailchimp } from "../lib/mailchimp/mailchimp.js";
+import { listId, mailchimpErrors, mailchimp, addInterestToCategory, deleteInterestCategory, groupId, } from "../lib/mailchimp/mailchimp.js";
 import { log, verifyIdToken } from "../middelware/token-logs.js";
 import { validateEmail } from "../utilities/validateEmail.js";
 import crypto from "crypto";
-import { submitEmalSuscriber } from "../lib/mandrill/mandrill.js";
 const router = Router();
 // <--------------- GET --------------->
-// Obtener todos los miembros de una lista
-router.get("/", log, verifyIdToken, async (req, res) => {
-    try {
-        const response = await mailchimp.ping.get();
-        res.status(200).json(response);
-    }
-    catch (error) {
-        res.status(500).json(mailchimpErrors(error));
-    }
-});
 // Obtener todos los miembros de una lista
 router.get("/getall/member", log, verifyIdToken, async (req, res) => {
     mailchimp.lists
@@ -43,7 +32,7 @@ router.get("/getone/member/:email", log, verifyIdToken, async (req, res) => {
         res.status(parsedError.status).json(parsedError);
     });
 });
-router.get("/category", log, verifyIdToken, async (req, res) => {
+router.get("/groupscategory", log, verifyIdToken, async (req, res) => {
     mailchimp.lists
         .getListInterestCategories(listId)
         .then((response) => {
@@ -53,12 +42,11 @@ router.get("/category", log, verifyIdToken, async (req, res) => {
         res.status(500).json(mailchimpErrors(error));
     });
 });
-router.get("/interests/:idCategory", log, verifyIdToken, async (req, res) => {
-    const { idCategory } = req.params;
-    if (!idCategory)
-        return res.status(400).send("Category ID is required");
+router.get("/get/interests", log, verifyIdToken, async (req, res) => {
+    if (!groupId)
+        return res.status(400).send("groupID is required");
     mailchimp.lists
-        .listInterestCategoryInterests(listId, idCategory.toString())
+        .listInterestCategoryInterests(listId, groupId.toString())
         .then((response) => {
         res.status(200).json(response);
     })
@@ -72,35 +60,43 @@ router.post("/add/member", log, verifyIdToken, async (req, res) => {
     const member = req.body;
     if (!validateEmail(member.email_address))
         return res.status(400).send("Email inválido");
-    try {
-        console.log(member);
-        // Añadimos el usuario a Mailchimp
-        const response = await mailchimp.lists.addListMember(listId, member);
-        // Enviamos un email al administrador
-        const email = await submitEmalSuscriber(member.email_address, member.merge_fields.FNAME, member.merge_fields.LNAME, member.tags[member.tags.length - 1]);
-        res.status(200).json({ response, email });
-    }
-    catch (error) {
+    mailchimp.lists
+        .addListMember(listId, member)
+        .then((response) => {
+        res.status(200).json(response);
+    })
+        .catch((error) => {
         res.status(500).json(mailchimpErrors(error));
-    }
+    });
 });
 // Añadir varios miembros a la lista
 router.post("/add/batchcontact", log, verifyIdToken, async (req, res) => {
     const members = req.body.member;
-    try {
-        // Usuario y etiquetas para añadir al usuario
-        const response = await mailchimp.lists.batchListMembers(listId, {
-            members,
-            update_existing: true,
-        });
-        members.forEach(async (member) => {
-            await submitEmalSuscriber(member.email_address, member.merge_fields.FNAME, member.merge_fields.LNAME, member.tags[member.tags.length - 1]);
-        });
+    // Usuario y etiquetas para añadir al usuario
+    mailchimp.lists
+        .batchListMembers(listId, {
+        members,
+        update_existing: true,
+    })
+        .then((response) => {
         res.status(200).json(response);
-    }
-    catch (error) {
+    })
+        .catch((error) => {
         res.status(500).json(mailchimpErrors(error));
-    }
+    });
+});
+router.post("/add/interests", log, verifyIdToken, async (req, res) => {
+    const groupId = process.env.MAILCHIMP_GROUP_ID;
+    const { name } = req.body;
+    if (!groupId || !name)
+        return res.status(400).send("Category ID and interest name are required");
+    addInterestToCategory(groupId, name)
+        .then((response) => {
+        res.status(200).json(response);
+    })
+        .catch((error) => {
+        res.status(500).json(mailchimpErrors(error));
+    });
 });
 // <--------------- PUT --------------->
 // Actualizar el estado de un miembro de la lista
@@ -109,17 +105,16 @@ router.put("/updatecontact/status/:email", log, verifyIdToken, async (req, res) 
     const status = req.body.status;
     if (!validateEmail(email))
         return res.status(400).send("Email inválido");
-    try {
-        const subscriberHash = crypto.createHash("md5").update(email.toLowerCase()).digest("hex");
-        const response = await mailchimp.lists.updateListMember(listId, subscriberHash, {
-            status: status,
-        });
-        res.status(200).json(response);
-    }
-    catch (error) {
+    const subscriberHash = crypto.createHash("md5").update(email.toLowerCase()).digest("hex");
+    mailchimp.lists
+        .updateListMember(listId, subscriberHash, {
+        status: status,
+    })
+        .then((response) => res.status(200).json(response))
+        .catch((error) => {
         const parserError = mailchimpErrors(error);
         res.status(parserError.status).json(parserError);
-    }
+    });
 });
 // Añadir el tag de un miembro de la lista
 router.put("/updatecontact/tag/:email", log, verifyIdToken, async (req, res) => {
@@ -175,6 +170,16 @@ router.delete("/tags/del/:email", log, verifyIdToken, async (req, res) => {
         .catch((error) => {
         const parserError = mailchimpErrors(error);
         res.status(parserError.status).json(parserError);
+    });
+});
+router.delete("/del/interests/:idCategoty", log, verifyIdToken, async (req, res) => {
+    const { idCategoty } = req.params;
+    deleteInterestCategory(idCategoty)
+        .then((response) => {
+        res.status(200).json(response);
+    })
+        .catch((error) => {
+        res.status(500).json(mailchimpErrors(error));
     });
 });
 export { router };

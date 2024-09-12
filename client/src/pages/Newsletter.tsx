@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import "@/styles/main-newsettler.css";
 import toast from "react-hot-toast";
 import Button from "@/components/reusable/Button";
-import { getFirstInterestCategory, getInterests, submitSubscriptionMailchimp } from "@/scripts/render-data";
+import { getInterests, submitSubscriptionMailchimp } from "@/scripts/render-data";
 import { type Member, type NesletterType } from "types/types";
 import { handleInputChange } from "@/utilities/utilities";
 import MultiSelectTag from "@/components/reusable/MultiSelectTag";
@@ -47,20 +47,15 @@ const Newsletter = () => {
     // Formateando la fecha de nacimiento
     const [, month, day] = form.birthday.split("-");
     const formattedBirthday = `${month}/${day}`;
-    // Obtenemos los IDs de las categorías de intereses
-    const allCategorys = await getFirstInterestCategory();
-    // Obtenemos los intereses de la primera categoría, actualmente solo se utiliza una categoría
-    const category = await getInterests(allCategorys.categories[0].id);
-    // Obtenemos los IDs de los intereses en la categoria
-    const interestsIDs: string[] = Object.values(category.interests).map((interest) => {
-      return interest.id;
-    });
-    // Formateamos los intereses
-    const interests = {
-      [interestsIDs[0].toString()]: form.preferences.includes("grammar"),
-      [interestsIDs[1].toString()]: form.preferences.includes("vocabulary"),
-      [interestsIDs[2].toString()]: form.preferences.includes("exercises"),
-    };
+
+    // Obtenemos los intereses de la primera categoría (.env), actualmente solo se utiliza una categoría
+    const group = await getInterests();
+    const interests: Record<string, boolean>[] = [];
+
+    for (let i = 0; i < group.total_items; i++) {
+      const { name, id } = group.interests[i];
+      name === form.preferences[i] ? interests.push({ [id]: true }) : interests.push({ [id]: false });
+    }
 
     // Creamos el objeto de miembro
     const member: Member = {
@@ -72,7 +67,7 @@ const Newsletter = () => {
         LNAME: form.surnames,
         BIRTHDAY: formattedBirthday,
       },
-      interests: interests,
+      interests,
       tags: [],
       status_if_new: "pending",
     };

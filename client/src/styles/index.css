@@ -145,6 +145,34 @@ html.dark {
       color: var(--primary-white);
     }
 
+    .main-newsletter .freecontent-section .freecontent-article .freecontent-content > #formulario {
+      .form-group label {
+        background-color: var(--primary-black);
+      }
+      .form-group input {
+        color: var(--secondary-white);
+      }
+      .form-group-select {
+        label {
+          background-color: var(--primary-black);
+        }
+        .mult-select-tag ul {
+          background-color: var(--primary-black);
+        }
+        .mult-select-tag {
+          .input-body {
+            background-color: var(--primary-black);
+            input {
+              color: var(--primary-white);
+            }
+          }
+          button {
+            color: var(--primary-white);
+          }
+        }
+      }
+    }
+
     /* Main */
     .main-index {
       .main-content {
