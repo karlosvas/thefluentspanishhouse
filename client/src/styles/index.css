@@ -144,6 +144,20 @@ html.dark {
       color: var(--primary-white);
     }
 
+    .change-page .custom-pagination {
+      .page-item {
+        .page-link {
+          background-color: var(--secondary-black);
+          color: var(--primary-white);
+        }
+      }
+      .page-item.disabled .page-link {
+        color: #6c757d;
+        pointer-events: none;
+        cursor: not-allowed;
+        background-color: var(--primary-black);
+      }
+    }
     .main-newsletter .freecontent-section .freecontent-article .freecontent-content > #formulario {
       .form-group label {
         background-color: var(--primary-black);

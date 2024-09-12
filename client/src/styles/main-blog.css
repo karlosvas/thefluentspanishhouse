@@ -93,6 +93,21 @@
     align-items: center;
     justify-content: center;
     width: 100vw;
+    /* Pagination.css */
+    .custom-pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      .page-item .page-link {
+        color: var(--primary-black);
+      }
+    }
+
+    .custom-pagination .page-item.active .page-link {
+      background-color: #007bff;
+      font-weight: 600;
+      border-color: #007bff;
+    }
   }
 }
 

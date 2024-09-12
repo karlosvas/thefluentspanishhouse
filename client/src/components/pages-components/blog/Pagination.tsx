@@ -5,31 +5,24 @@ import { type PaginationProps } from "types/types";
 import { useEffect, useState } from "react";
 import { getLastPublication } from "@/scripts/render-data";
 
-export const PaginationReactBoostrap: React.FC<PaginationProps> = ({
-  page,
-  cardsBlog,
-}) => {
+export const PaginationReactBoostrap: React.FC<PaginationProps> = ({ page, cardsBlog }) => {
   const [lastPage, setLastPage] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const navigate = useNavigate();
 
   const changePage = (go: string) => {
     if (go === "left" && currentPage > 1) navigate(`/blog/${currentPage - 1}`);
-    else if (
-      go === "rigth" &&
-      currentPage < 10 &&
-      cardsBlog.length === MAX_PUBLICATIONS_PER_PAGE
-    )
+    else if (go === "rigth" && currentPage < 10 && cardsBlog.length === MAX_PUBLICATIONS_PER_PAGE)
       navigate(`/blog/${currentPage + 1}`);
   };
 
-  type  LastPublicationResponse = {
+  type LastPublicationResponse = {
     currentPage: number;
-  }
+  };
   useEffect(() => {
     getLastPublication()
       .then((data) => {
-        if (data && typeof (data as LastPublicationResponse).currentPage === 'number')
+        if (data && typeof (data as LastPublicationResponse).currentPage === "number")
           setLastPage((data as LastPublicationResponse).currentPage);
         setCurrentPage(page ? parseInt(page) : 1);
       })
@@ -40,7 +33,7 @@ export const PaginationReactBoostrap: React.FC<PaginationProps> = ({
 
   return (
     <div className="change-page">
-      <Pagination>
+      <Pagination className="custom-pagination">
         <Pagination.First onClick={() => changePage("left")} />
         {[...Array(5)].map((_, index) => {
           const pageNumber = currentPage + index;
