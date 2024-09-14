@@ -7,6 +7,7 @@ import Likes from "@/components/svg-component/Likes";
 import OptionsComment from "@/components/svg-component/OptionsComment";
 import ReplyToComment from "@/components/svg-component/ReplyToComment";
 import { type CommentCardProps, type Comment } from "types/types";
+import { isCommentArray } from "@/utilities/utilities-types";
 
 // Se renderiza cada comentario individualmente
 const CommentCard: React.FC<CommentCardProps> = ({
@@ -23,9 +24,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
   const [hasShownCloseTread, setHasShownCloseTread] = useState(false);
   const responseComment = useRef<HTMLInputElement>(null);
 
-  const handleSubmitChildren = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmitChildren = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Creamos un nuevo comentario
     if (
@@ -54,12 +53,9 @@ const CommentCard: React.FC<CommentCardProps> = ({
       responseComment.current.value = "";
       setIsResponse(false);
       try {
-        const newComment = await postChildrenComment(
-          newCommentData,
-          comment._id
-        );
+        const newComment = await postChildrenComment(newCommentData, comment._id);
         const updatedComments = [newComment, ...childs];
-        setChilds(updatedComments);
+        if (isCommentArray(updatedComments)) setChilds(updatedComments);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -72,7 +68,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
   async function fetchChildComments(id: string) {
     try {
       const result = await getChildsComment(id);
-      setChilds(result.reverse());
+      if (isCommentArray(result)) setChilds(result.reverse());
     } catch (error) {
       console.error("Error al obtener datos:", error);
       toast.error("Error al obtener datos");
@@ -96,26 +92,13 @@ const CommentCard: React.FC<CommentCardProps> = ({
           <ImgUser photoURL={comment.owner.photoURL} />
           <section>
             <strong>{comment.owner.displayName}</strong>
-            {comment.owner.email && (
-              <small>
-                {comment.owner.email.slice(0, comment.owner.email.indexOf("@"))}
-              </small>
-            )}
+            {comment.owner.email && <small>{comment.owner.email.slice(0, comment.owner.email.indexOf("@"))}</small>}
           </section>
           <div className="comments-content">
             <p>{comment.data}</p>
-            <OptionsComment
-              id={comment._id}
-              comment={comment}
-              setComments={setComments}
-              comments={comments}
-            />
+            <OptionsComment id={comment._id} comment={comment} setComments={setComments} comments={comments} />
           </div>
-          <ReplyToComment
-            user={user}
-            isResponse={isResponse}
-            setIsResponse={setIsResponse}
-          />
+          <ReplyToComment user={user} isResponse={isResponse} setIsResponse={setIsResponse} />
           <Likes comment={comment} />
         </div>
       </li>
@@ -123,11 +106,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
         <div className="response-comment">
           <ImgUser photoURL={user?.photoURL} />
           <form onSubmit={handleSubmitChildren}>
-            <input
-              type="text"
-              ref={responseComment}
-              placeholder="Text here..."
-            />
+            <input type="text" ref={responseComment} placeholder="Text here..." />
             <button type="submit">Enviar</button>
           </form>
         </div>

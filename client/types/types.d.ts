@@ -1,9 +1,9 @@
 import { type User } from "firebase/auth";
 
-export type TFunction = (key: string, options?: object) => string;
-
-export interface OptionalTranslations {
-  translation?: TFunction<"global", undefined>;
+declare global {
+  interface Window {
+    isMultiSelectTagInitialized: boolean;
+  }
 }
 
 export interface CardsPublicationBlogProps {
@@ -11,10 +11,6 @@ export interface CardsPublicationBlogProps {
   setCardsBlog: React.Dispatch<React.SetStateAction<PublicationCardType[]>>;
   handlePublicationChange: Handler;
   loading: boolean;
-}
-
-export interface PlaceholderPublicationsProps {
-  imgClass: string;
 }
 
 export interface ShowPasswordProps {
@@ -57,7 +53,22 @@ export interface SubscriberType {
   name: string;
   lastname: string;
   email: string;
-  type: string;
+  consentEmails: false;
+  acceptTerms: false;
+  acceptPrivacy: false;
+  [key: string]: unknown;
+}
+
+export interface NesletterType {
+  email: string;
+  name: string;
+  surnames: string;
+  birthday: string;
+  preferences: string[];
+  privacy: boolean;
+  newsletter: boolean;
+  mailchimp: boolean;
+  [key: string]: unknown;
 }
 
 export type PublicationType = {
@@ -130,8 +141,11 @@ type HandlePublicationChange = () => void;
 type Handler = HandleSubscribeChange | HandlePublicationChange;
 
 export interface PlaceholderProps {
-  id?: string;
-  className?: string;
+  src: string;
+  className: string;
+  alt?: string;
+  areaLabel?: string;
+  children?: ReactNode;
 }
 
 export interface ButtonCloseProps {
@@ -160,7 +174,7 @@ export type PublicationsProp = {
 };
 
 export interface NoteType {
-  email_user: string | null | undefined;
+  email_user: string | undefined;
   username: string;
   subject: string;
   note: string;
@@ -179,4 +193,103 @@ export interface EditType {
   event: (index: number) => void;
   index: number;
   state: bolean;
+}
+
+// Maichampp Types
+
+type Status = "subscribed" | "unsubscribed" | "cleaned" | "pending";
+
+export interface Member {
+  email_address: string;
+  status: Status;
+  email_type: "html" | "text";
+  merge_fields?: {
+    [key: string]: string;
+  };
+  interests: Record<string, boolean>[];
+  tags: OptionsChampTag[];
+  status_if_new: Status;
+  update_existing?: boolean;
+}
+
+export interface NewUserChamp {
+  members: Member[];
+}
+
+type ErrorChamp = {
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  instance: string;
+};
+
+export interface ErrorResponseHelper {
+  err: boolean;
+  status: string;
+  statusText: string;
+  message?: ErrorChamp;
+}
+
+type OptionsChampTag = "GROUP_CLASS" | "PRIVATE_CLASS" | "FREE_CLASS";
+interface TagMailchamp {
+  name: OptionsChampTag;
+  status: "active" | "inactive";
+}
+
+interface Link {
+  rel: string;
+  href: string;
+  method: string;
+  targetSchema?: string;
+  schema?: string;
+}
+
+interface Category {
+  list_id: string;
+  id: string;
+  title: string;
+  display_order: number;
+  type: string;
+  _links: Link[];
+}
+
+export interface InterestCategoryResponse {
+  list_id: string;
+  categories: Category[];
+  total_items: number;
+  _links: Link[];
+}
+
+interface Interest {
+  category_id: string;
+  list_id: string;
+  id: string;
+  name: string;
+}
+export interface InterestResponse {
+  _links: Link[];
+  category_id: string;
+  interests: Interest[];
+  list_id: string;
+  total_items: number;
+}
+
+// MultiSelectTagOptions
+export interface MultiSelectTagOptions {
+  shadow?: boolean;
+  rounded?: boolean;
+  tagColor?: {
+    textColor?: string;
+    borderColor?: string;
+    bgColor?: string;
+  };
+  placeholder?: string;
+  onChange?: (selectedValues: { label: string; value: string }[]) => void;
+}
+
+export interface Option {
+  value: string;
+  label: string;
+  selected: boolean;
 }

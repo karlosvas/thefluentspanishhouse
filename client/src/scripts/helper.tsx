@@ -1,9 +1,16 @@
+import { type ErrorResponseHelper } from "types/types";
+
+type FetchResponse = unknown | Blob | FormData | string | ErrorResponseHelper
+
 const Helper = () => {
-  const customFetch = async (endpoint: string, options: RequestInit = {}) => {
+  const customFetch = async (endpoint: string, options: RequestInit = {}): Promise<FetchResponse> => {
+    const token =
+      localStorage.getItem("token") || import.meta.env.VITE_DEFAULT_TOKEN;
+
     const defaultHeader = {
       accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${token}`,
     };
 
     options.signal = options.signal || new AbortController().signal;
@@ -17,12 +24,21 @@ const Helper = () => {
     return fetch(endpoint, options)
       .then((res) => {
         if (!res.ok) {
-          throw {
-            err: true,
-            status: res.status || "00",
-            statusText: res.statusText || "Ocurrió un Error personalizado",
-          };
-        }
+          return res.text().then((text) => {
+            let message;
+            try {
+              message = JSON.parse(text);
+            } catch (parseError) {
+              message = { message: text };
+            }
+            throw {
+              err: true,
+              status: res.status || "00",
+              statusText: res.statusText || "Ocurrió un Error personalizado",
+              message,
+            } as ErrorResponseHelper;
+          });
+        }  
         const contentType = res.headers.get("content-type");
 
         if (contentType) {

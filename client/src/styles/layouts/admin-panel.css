@@ -1,0 +1,30 @@
+.admin-panel {
+  position: fixed;
+  bottom: -10%;
+  left: 50%;
+  width: 100%;
+  height: 15vh;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  border-radius: 3px;
+  figure {
+    background-color: rgb(47, 255, 151);
+    border-radius: 100%;
+    margin: 5px;
+    padding: 10px;
+    img,
+    svg,
+    strong,
+    span {
+      margin: 0;
+      filter: drop-shadow(0 0 1px var(--primary-black));
+      height: 4vh;
+    }
+  }
+  .close-panel {
+    background-color: rgb(216, 24, 82);
+  }
+}

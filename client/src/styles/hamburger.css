@@ -1,10 +1,11 @@
 #hamburger {
   z-index: 999;
   position: absolute;
-  left: 35px;
-  top: 20%;
-  height: 20px;
-  width: 20px;
+  transform: translate(50%, -50%);
+  top: 50%;
+  left: 5%;
+  height: 30px;
+  width: 30px;
 }
 
 .auth {
@@ -20,12 +21,12 @@
   justify-content: start;
   flex-direction: column;
   position: absolute;
-  left: -40px;
-  top: -20px;
+  left: -120%;
+  top: -110%;
   color: var(--primary-white);
   background-color: var(--primary-black);
   height: 105dvh;
-  width: 70vw;
+  width: 65vw;
   z-index: 1001;
   font-size: 1em;
   animation: slideDown 0.3s ease-out;

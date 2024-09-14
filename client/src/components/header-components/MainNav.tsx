@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import Theme from "@/components/svg-component/Theme";
-import Account from "@/components/svg-component/Account";
 import { type ThemeProps } from "types/types";
 import { handleClickNavigate } from "@/scripts/navigate";
+import Settings from "../svg-component/Settings";
 
 const MainNav: React.FC<ThemeProps> = ({ theme, setTheme }) => {
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ const MainNav: React.FC<ThemeProps> = ({ theme, setTheme }) => {
         {window.innerWidth <= 766 && (
           <>
             <li>
-              <Account>Account</Account>
+              <Settings>Account</Settings>
             </li>
             <li>
               <Theme theme={theme} setTheme={setTheme}>

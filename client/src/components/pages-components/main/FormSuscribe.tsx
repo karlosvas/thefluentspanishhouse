@@ -1,54 +1,74 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Buuton from "@/components/reusable/Button";
-import {
-  submitSubscriptionMailchamp,
-  setNewSubscriberEmail,
-} from "@/scripts/render-data";
-import toast from "react-hot-toast";
+import { getMailchimpUser, sendEmailNewClass, updateTagsMailchimp } from "@/scripts/render-data";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
 import { type FormSuscriberProps, type SubscriberType } from "types/types";
+import { getTag, handleInputChange } from "@/utilities/utilities";
+import { saveUser } from "@/scripts/firebase-db";
+import { UserContext } from "@/App";
+import toast from "react-hot-toast";
+import { isMember } from "@/utilities/utilities-types";
 
-const FormSuscribe: React.FC<FormSuscriberProps> = ({
-  closing,
-  handleSusribeChange,
-  buttonName,
-}) => {
+const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChange, buttonName }) => {
+  // Estado para saber si se ha enviado el formulario o si se esta procesando
+  const [suscribe, setSuscribe] = useState(false);
+  // Inputs del formulario
   const [newSubscriber, setNewSubscriber] = useState<SubscriberType>({
     name: "",
     lastname: "",
     email: "",
-    type: "",
+    class: "",
+    consentEmails: false,
+    acceptTerms: false,
+    acceptPrivacy: false,
   });
-  const [suscribe, setSuscribe] = useState(false);
+  // Usuario actual
+  const user = useContext(UserContext);
 
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setNewSubscriber((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
+  // Envio de formulario
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // Button name es la clase selecionada
     if (buttonName === undefined) return;
+
+    // Comienzo del proceso de suscripción
     setSuscribe(true);
-    try {
-      await submitSubscriptionMailchamp(
-        event,
-        handleSusribeChange,
-        newSubscriber,
-        buttonName
+    toast.loading("Aiming for classes...");
+
+    // Obtenemos el usuario de Mailchimp
+    const mailchimpUser = await getMailchimpUser(newSubscriber.email);
+
+    if (mailchimpUser && isMember(mailchimpUser)) {
+      // El usuario se ha encontrado por lo que solo cambiamos su nuevo tag
+      await updateTagsMailchimp(mailchimpUser, buttonName, handleSusribeChange);
+    } else {
+      // El usuario no se ha encontrado por lo que lo creamos en firebase database y le añadimos el tag,
+      // para que posterirormente cuando se suscriba podamos recuperarlo
+      if (user && user.uid) saveUser(user?.uid, buttonName);
+      toast.dismiss();
+      toast.success(
+        <span>
+          <b>
+            {newSubscriber.name} {newSubscriber.lastname}
+          </b>{" "}
+          you have been successfully subscribed to the course
+        </span>,
+        {
+          duration: 5000,
+        }
       );
-      await setNewSubscriberEmail(newSubscriber, buttonName);
-    } catch (error) {
-      toast.error("The information sent is not valid");
+
+      // Le añadimos el tag al usuario
+      newSubscriber.class = getTag(buttonName);
+      // Enviamos el email al administrador para que sepa que hay un nuevo suscriptor
+      await sendEmailNewClass(newSubscriber);
     }
+
+    // Cerramos el formulario
     setSuscribe(false);
+    handleSusribeChange();
   };
 
   return (
@@ -64,7 +84,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
                 type="text"
                 name="email"
                 value={newSubscriber.email}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, setNewSubscriber)}
                 required
               />
             </li>
@@ -74,7 +94,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
                 type="text"
                 name="name"
                 value={newSubscriber.name}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, setNewSubscriber)}
                 required
               />
             </li>
@@ -84,23 +104,39 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({
                 type="text"
                 name="lastname"
                 value={newSubscriber.lastname}
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e, setNewSubscriber)}
                 required
               />
             </li>
             <label>
-              <input type="checkbox" name="terminos" required />I give my
-              consent to receive informational emails terms and conditions.
+              <input
+                type="checkbox"
+                name="consentEmails"
+                checked={newSubscriber.consentEmails}
+                onChange={(e) => handleInputChange(e, setNewSubscriber)}
+              />
+              I give my consent to receive informational emails terms and conditions.
             </label>
             <label>
-              <input type="checkbox" name="terminos" required /> I accept the{" "}
+              <input
+                type="checkbox"
+                name="acceptTerms"
+                checked={newSubscriber.acceptTerms}
+                onChange={(event) => handleInputChange(event, setNewSubscriber)}
+              />{" "}
+              I accept the{" "}
               <Link to="/info" target="_blank">
                 terms and conditions.
               </Link>
             </label>
             <label>
-              <input type="checkbox" name="terminos" required /> I have read and
-              accept the{" "}
+              <input
+                type="checkbox"
+                name="acceptPrivacy"
+                checked={newSubscriber.acceptPrivacy}
+                onChange={(event) => handleInputChange(event, setNewSubscriber)}
+              />{" "}
+              I have read and accept the{" "}
               <Link to="/info" target="_blank">
                 privacity policity.
               </Link>

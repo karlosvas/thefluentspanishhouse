@@ -4,10 +4,15 @@ import toast from "react-hot-toast";
 import { FormEvent } from "react";
 import {
   type PublicationCardType,
-  type SubscriberType,
   type Comment,
   type NoteType,
+  type Member,
+  type InterestCategoryResponse,
+  type InterestResponse,
+  SubscriberType,
 } from "types/types";
+import { errorMailchimp, getTag } from "@/utilities/utilities";
+import { isErrorResponseHelper } from "@/utilities/utilities-types";
 
 const helper = Helper();
 
@@ -16,10 +21,7 @@ export const getUrlTest = async () => {
   try {
     return await helper.get(`${import.meta.env.VITE_URL_API}/api/test`);
   } catch (error) {
-    console.error(
-      "Error al hacer fetch para obtener la URL de los test desde el cliente",
-      error
-    );
+    console.error("Error al hacer fetch para obtener la URL de los test desde el cliente", error);
     throw error;
   }
 };
@@ -68,6 +70,14 @@ export const getLastPublication = async () => {
   }
 };
 
+export const getMailchimpUser = async (email: string) => {
+  try {
+    return await helper.get(`${url_api}/mailchimp/getone/member/${email}`);
+  } catch (error) {
+    isErrorResponseHelper(error) ? errorMailchimp(error) : toast.error("An expeted error ocurred");
+  }
+};
+
 ///////////////////////////// POST /////////////////////////////
 export const postComment = async (newCommentData: Comment) => {
   try {
@@ -84,10 +94,7 @@ export const postComment = async (newCommentData: Comment) => {
   }
 };
 
-export const postChildrenComment = async (
-  newCommentData: Comment,
-  id: string
-) => {
+export const postChildrenComment = async (newCommentData: Comment, id: string) => {
   try {
     return await helper.post(`${url_api}/comments/children/${id}`, {
       body: JSON.stringify(newCommentData),
@@ -97,34 +104,7 @@ export const postChildrenComment = async (
   }
 };
 
-export const submitSubscriptionMailchamp = async (
-  event: React.FormEvent<HTMLFormElement>,
-  handleChange: () => void,
-  newSubscriber: SubscriberType,
-  buttonName: string | undefined
-) => {
-  event.preventDefault();
-  if (!url_api) throw new Error("URL API no inicializada");
-  try {
-    const mailChampSubscribe = {
-      ...newSubscriber,
-      interests: buttonName,
-    };
-    const response = await helper.post(`${url_api}/api/mailchamp`, {
-      body: JSON.stringify(mailChampSubscribe),
-    });
-    if (response) toast.success("Submitted successfully");
-    handleChange();
-  } catch (error) {
-    console.error("Error al enviar el post:", error);
-    throw Error;
-  }
-};
-
-export const postPublication = async (
-  event: FormEvent<HTMLFormElement>,
-  newPublication: PublicationCardType
-) => {
+export const postPublication = async (event: FormEvent<HTMLFormElement>, newPublication: PublicationCardType) => {
   event.preventDefault();
   try {
     return await helper.post(`${url_api}/publications/new`, {
@@ -135,9 +115,30 @@ export const postPublication = async (
   }
 };
 
+export const subscribeNewsletter = async (email: string) => {
+  try {
+    await helper.post(`${url_api}/mailchamp/newsletter`, {
+      body: JSON.stringify({ email }),
+    });
+  } catch (error) {
+    console.error("Error to submit post", error);
+  }
+};
+
+///////////////////////////// EMAILS /////////////////////////////
+export const sendEmailNewClass = async (newSubscriber: SubscriberType) => {
+  console.log("newSubscriber", newSubscriber);
+  console.log(`${url_api}/mandrill/newstudent`);
+  helper
+    .post(`${url_api}/mandrill/newstudent`, {
+      body: JSON.stringify(newSubscriber),
+    })
+    .catch((error) => isErrorResponseHelper(error) && errorMailchimp(error));
+};
+
 export const submitNote = async (newNote: NoteType) => {
   try {
-    const response = await helper.post(`${url_api}/api/note`, {
+    const response = await helper.post(`${url_api}/mandrill/note`, {
       body: JSON.stringify(newNote),
     });
     if (response) toast.success("The email has been sent successfully");
@@ -146,31 +147,8 @@ export const submitNote = async (newNote: NoteType) => {
   }
 };
 
-export const setNewSubscriberEmail = async (
-  newSuscriber: {
-    name: string;
-    lastname: string;
-    email: string;
-    type: string;
-  },
-  type: string
-) => {
-  try {
-    newSuscriber.type = type;
-    await helper.post(`${url_api}/subscribers/email`, {
-      body: JSON.stringify({ newSuscriber }),
-    });
-  } catch (error) {
-    console.error("Error to submit post", error);
-  }
-};
-
 ///////////////////////////// PUT /////////////////////////////
-export const updateLikes = async (
-  uid_user_firebase: string,
-  _id: string,
-  likes: number
-) => {
+export const updateLikes = async (uid_user_firebase: string, _id: string, likes: number) => {
   try {
     await helper.put(`${url_api}/comments/likes`, {
       body: JSON.stringify({ uid_user_firebase, _id, likes }),
@@ -180,10 +158,7 @@ export const updateLikes = async (
   }
 };
 
-export const putCommentPublication = async (
-  editPublication: PublicationCardType,
-  id: string
-) => {
+export const putCommentPublication = async (editPublication: PublicationCardType, id: string) => {
   try {
     await helper.put(`${url_api}/publications/edit/${id}`, {
       body: JSON.stringify(editPublication),
@@ -203,19 +178,90 @@ export const editComment = async (id: string, textEdit: string) => {
   }
 };
 
+export const submitSubscriptionMailchimp = async (member: Member) => {
+  if (!url_api) throw new Error("URL API no inicializada");
+
+  helper
+    .post(`${url_api}/mailchimp/add/member`, {
+      body: JSON.stringify(member),
+    })
+    .then(() => {
+      toast.success("You have been successfully subscribed to the newsletter");
+    })
+    .catch((error) => (isErrorResponseHelper(error) ? errorMailchimp(error) : toast.error("An expeted error ocurred")));
+};
+
+export const updateTagsMailchimp = async (mailchimpUser: Member, buttonName: string, handleChange: () => void) => {
+  const email = mailchimpUser.email_address;
+  const newTag = getTag(buttonName);
+
+  helper
+    .put(`${url_api}/mailchimp/updatecontact/tag/${email}`, {
+      body: JSON.stringify({ tag: newTag }),
+    })
+    .then(() => {
+      if (mailchimpUser.merge_fields) {
+        toast.dismiss();
+        toast(
+          <span>
+            <b>
+              {mailchimpUser.merge_fields.FNAME} {mailchimpUser.merge_fields.LNAME}
+            </b>{" "}
+            are you in the class of <br />
+            <b>{buttonName}</b>, we are glad that you want to repeat the experience.
+          </span>,
+          {
+            icon: "🔥",
+            duration: 5000,
+          }
+        );
+      }
+      handleChange();
+    })
+    .catch((error) => (isErrorResponseHelper(error) ? errorMailchimp(error) : toast.error("An expeted error ocurred")));
+};
+
 ///////////////////////////// DELETE /////////////////////////////
 export const delatePublication = async (id: string) => {
-  try {
-    await helper.del(`${url_api}/publications/del/${id}`);
-  } catch (error) {
-    console.error("Error to submit post", error);
-  }
+  await helper
+    .del(`${url_api}/publications/del/${id}`)
+    .catch((error) => console.error("Error to delete publication", error));
 };
 
 export const deleteComment = async (id: string) => {
+  await helper
+    .del(`${url_api}/publications/del/${id}`)
+    .catch((error) => console.error("Error to delete publication", error));
+};
+
+export const deleteUserChamp = async (email: string) => {
+  await helper.del(`${url_api}/user/del/${email}`).catch((error) => console.error("Error to delete user", error));
+};
+
+export const delateTagCahmp = async (email: string, tag: string) => {
+  await helper
+    .del(`${url_api}/tag/del/${email}`, {
+      body: JSON.stringify({ tag }),
+    })
+    .catch((error) => console.error("Error to delete tag", error));
+};
+
+export const getFirstInterestCategory = async (): Promise<InterestCategoryResponse> => {
   try {
-    await helper.del(`${url_api}/comments/del/${id}`);
+    const data = await helper.get(`${url_api}/mailchimp/category`);
+    return data as InterestCategoryResponse;
   } catch (error) {
-    console.error("Error to submit post", error);
+    console.error("Error to get interest category", error);
+    throw error;
+  }
+};
+
+export const getInterests = async (): Promise<InterestResponse> => {
+  try {
+    const data = await helper.get(`${url_api}/mailchimp/get/interests`);
+    return data as InterestResponse;
+  } catch (error) {
+    console.error("Error to get interest category", error);
+    throw error;
   }
 };

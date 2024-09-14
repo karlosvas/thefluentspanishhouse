@@ -8,6 +8,7 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import {
   changeOptionsUserEmail,
   delateUserFirebase,
+  resetPassword,
 } from "@/scripts/firebase-options-users";
 import toast from "react-hot-toast";
 import ShowPassword from "@/components/reusable/ShowPassword";
@@ -29,7 +30,7 @@ export const CallbackVerify = () => {
   const navigate: NavigateFunction = useNavigate();
   const location = useLocation();
   const { email, del } = location.state || {};
-  const newEmail = email;
+  const { reset } = location.state || {};
 
   // Usuario actual
   const user = useContext(UserContext);
@@ -37,13 +38,19 @@ export const CallbackVerify = () => {
   // Enviar datos para verificar email
   async function submitDataVerifyEmail(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
-    try {
-      // Si el usuario y el nuevo email existen se cambia el email
-      if (user && newEmail)
-        await changeOptionsUserEmail(ID.password, navigate, newEmail, user);
-      else throw new Error();
-    } catch (error) {
-      showMessageErrorFirebase(error);
+    if(user && email){
+      try {
+        // Si el usuario y el nuevo email existen se cambia el email
+        if (user && email)
+          await changeOptionsUserEmail(ID.password, navigate, email, user);
+        else throw new Error();
+      } catch (error) {
+        showMessageErrorFirebase(error);
+      }
+    } else if(reset){
+      await resetPassword(response, navigate).catch((error) => showMessageErrorFirebase(error));
+    } else {
+      navigate("/404");
     }
   }
 
@@ -60,8 +67,8 @@ export const CallbackVerify = () => {
   }
 
   useEffect(() => {
-    if (!email) navigate("/404");
-  }, [email, navigate]);
+    if (!email && !reset) navigate("/404");
+  }, [email,reset, navigate]);
 
   return (
     <>
@@ -106,7 +113,7 @@ export const CallbackVerify = () => {
               I CONFIRM THAT I WANT TO DELETE THE USER
             </button>
           </>
-        ) : (
+        ) : !reset ? (
           <>
             <section className="err-flex">
               <h1>Please enter your password to change to your email</h1>
@@ -118,6 +125,25 @@ export const CallbackVerify = () => {
                 <ShowPassword password={ID.password} setID={setID} />
               </label>
               <button type="submit">Send</button>
+            </form>
+          </>
+        ):(
+          <>
+            <section className="err-flex">
+              <h1>Please enter your email to change to your password</h1>
+              <Link to="/">Go Home</Link>
+            </section>
+
+            <form onSubmit={submitDataVerifyEmail}>
+            <label htmlFor="username">
+                  Email
+                  <input
+                    type="text"
+                    value={response}
+                    onChange={(e) => setResponse(e.target.value)}
+                  />
+                </label>
+              <button type="submit" className="send-info">Send</button>
             </form>
           </>
         )}

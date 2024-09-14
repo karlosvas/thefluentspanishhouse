@@ -39,6 +39,9 @@ body .error {
       text-wrap: balance;
     }
   }
+  .send-info{
+    background-color: var(--primary-blue);
+  }
   button {
     border-radius: 0;
     margin-left: 10px;
@@ -64,11 +67,17 @@ body .error {
     padding: 8px;
     margin: 10px;
     border-radius: 3px;
-    background-color: white;
+    background-color: transparent;
     width: 300px;
     height: 35px;
-    color: var(--primary-white);
+    color: currentColor;
     border: none;
+    outline: none;
+    border-bottom: 2px solid #dddddd;
+  }
+  
+  label[for="username"] input[type="text"]:focus {
+    border-color: #09abc3;
   }
 
   button {

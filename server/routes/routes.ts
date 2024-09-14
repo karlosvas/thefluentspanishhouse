@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { readdirSync } from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath, pathToFileURL } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -15,7 +15,8 @@ readdirSync(PATH_ROUTER).forEach((file) => {
   if (fileClean !== "index") {
     console.log(`Adding route /${fileClean}`);
     const modulePath = path.join(PATH_ROUTER, `${fileClean}.js`);
-    import(modulePath)
+    const moduleURL = pathToFileURL(modulePath).href;
+    import(moduleURL)
       .then((module) => {
         router.use(`/${fileClean}`, module.router);
       })

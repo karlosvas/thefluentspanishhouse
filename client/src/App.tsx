@@ -10,32 +10,35 @@ import Footer from "@/layouts/Footer";
 import { createContext, useEffect, useState } from "react";
 import Newsetler from "@/pages/Newsletter";
 import CallbackVerify from "@/pages/CallbackVerify";
-import {
-  getAuth,
-  onAuthStateChanged,
-  onIdTokenChanged,
-  User,
-} from "firebase/auth";
+import { getAuth, onAuthStateChanged, onIdTokenChanged, User } from "firebase/auth";
 import SingleTheme from "@/components/header-components/SingleTheme";
 import Contact from "@/pages/Contact";
 import { Toaster } from "react-hot-toast";
 import Main from "./pages/Main";
 import { HelmetProvider } from "react-helmet-async";
+import AdminPanel from "./layouts/AdminPanel";
 
 export const UserContext = createContext<User | null>(null);
 
 const App = () => {
   // Usuario actual
   const [user, setUser] = useState<User | null>(null);
-  // Index cargado o no
+  // Página de carga
   const [loading, setLoading] = useState(false);
+  // Estado para saber si el usuario actual es administrador
 
   const auth = getAuth();
   const location = useLocation();
   const exclude_header = ["/info", "/404", "/verify"];
+  const isAdmin = import.meta.env.VITE_ADMINS.split(",").includes(user?.email?.split("@")[0]);
 
   // Determina si el Header y el Footer deben ser ocultados
   const shouldHideHeaderFooter = exclude_header.includes(location.pathname);
+
+  // Scroll hacia arriba cuando se cambia de ruta
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   // Listener que verifica si el usuario está autenticado y detecta cambios en el token de ID del usuario
   useEffect(() => {
@@ -48,6 +51,7 @@ const App = () => {
           localStorage.setItem("token", token);
           // Almacena el usuario en el estado
           setUser(user);
+          // Actualiza el estado del usuario administrador si el usuario actual es administrador
         } catch (error) {
           console.error("Error updating ID token:", error);
           localStorage.removeItem("token");
@@ -103,6 +107,7 @@ const App = () => {
             {/* Maneja rutas no encontradas */}
             <Route path="*" element={<Navigate to="/404" />} />
           </Routes>
+          {isAdmin && <AdminPanel />}
           {!shouldHideHeaderFooter && <Footer />}
           <Toaster position="bottom-right" />
         </HelmetProvider>

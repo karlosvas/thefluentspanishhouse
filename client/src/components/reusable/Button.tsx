@@ -6,7 +6,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   ref
 ) {
   let buttonStyle: React.CSSProperties = {
-    borderRadius: "5px",
+    borderRadius: "3px",
   };
 
   if (type == "submit" && suscribe !== undefined) {

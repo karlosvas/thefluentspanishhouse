@@ -1,18 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
-/////////////
+///////////////////////////////////////////
 import { connectDB } from "./mongodb.js";
 import express from "express";
 import cors from "cors";
-import admin from "./lib/firebase/firebase-config.js";
-import { newMailChampSuscriber } from "./lib/mailchamp/mailchamp.js";
-import {
-  submitNote,
-  submitEmalSuscriber,
-} from "./lib/nodemailer/nodemailer.js";
-import { validateEmail } from "./utilities/validateEmail.js";
 import { router } from "./routes/routes.js";
-import { NewUserChamp } from "types/types";
 
 const app = express();
 
@@ -20,6 +12,8 @@ const app = express();
 async function inicializeApp() {
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ limit: "10mb", extended: true }));
+  app.use(express.json());
+  app.use(express.static("public"));
 
   // Configuración global de CORS
   const allowedOrigins = [
@@ -51,13 +45,12 @@ async function inicializeApp() {
   }
 
   app.get("/", (req, res) => {
-    res.send("Welcome to the API :)");
+    res.send("Welcome to thefluentespnaishouse serverr");
   });
 
   // Rutas de la aplicación
   app.use(router);
 
-  // Rutas de librerias de terceros
   // Obtener la URL de los preview para hacer testing
   app.get("/api/test", async (req, res) => {
     try {
@@ -71,48 +64,7 @@ async function inicializeApp() {
     }
   });
 
-  // Nuevas suscripciones a Mailchamp
-  app.post("/api/mailchamp", async (req, res) => {
-    const { email, name, lastname, interests } = req.body;
-
-    if (!validateEmail(email)) return res.status(400).send("Email inválido");
-
-    const newUserChamp: NewUserChamp = {
-      members: [
-        {
-          email_address: email,
-          status: "subscribed",
-          merge_fields: {
-            FNAME: name,
-            LNAME: lastname,
-            INTERESTSS: interests,
-          },
-        },
-      ],
-    };
-    try {
-      const type = interests;
-      await newMailChampSuscriber(newUserChamp, res);
-      await submitEmalSuscriber(email, name, lastname, type);
-    } catch (error) {
-      throw new Error("Error sending email, or subscribing to mailchamp");
-    }
-  });
-
-  // Envia nota el contact us a gmail de process.env.USER_GMAIL
-  app.post("/api/note", async (req, res) => {
-    const { email_user, username, subject, note } = req.body;
-    if (!email_user || !username || !subject || !note)
-      return res.status(400).send({ message: "Missing required fields" });
-    try {
-      await submitNote(email_user, username, subject, note);
-      res.status(200).send({ message: "Email sent successfully" });
-    } catch (error) {
-      res.status(500).send({ message: "Error sending email", error });
-    }
-  });
-
-  const PORT_BACKEND = process.env.PORT;
+  const PORT_BACKEND = 8080;
   app.listen(PORT_BACKEND, () => {
     console.log(`Server runing: http://localhost:${PORT_BACKEND}`);
   });

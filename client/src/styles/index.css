@@ -1,11 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 
+@font-face {
+  font-family: "nemesis";
+  src: url("/nemesis/nemesis.otf");
+}
+
 :root {
   line-height: 1.5;
   font-weight: 400;
 
-  --primary-blue: #2b65e2;
+  --primary-blue: #2c4ace;
   --secondary-blue: #87d9ff;
   --primary-white: #f0faff;
   --secondary-white: #ffffff;
@@ -100,13 +105,6 @@ html.light {
     .error {
       background-color: var(--primary-white);
       color: var(--primary-black);
-      label[for="username"] input[type="text"] {
-        border: 1px solid #ddd;
-        outline: none;
-      }
-      label[for="username"] input[type="text"]:focus {
-        border-color: #09abc3;
-      }
     }
   }
 }
@@ -124,13 +122,13 @@ html.dark {
     nav > ul > li a {
       color: var(--primary-white);
     }
-    .modal-auth {
+    .auth .modal-auth {
       color: var(--primary-white);
       background-color: var(--primary-black);
-    }
-    .googleAuth,
-    .facebookAuth {
-      border: 2px solid var(--primary-white);
+      .googleAuth,
+      .facebookAuth {
+        border: 2px solid var(--primary-white);
+      }
     }
     .menu-left {
       background-color: var(--primary-black);
@@ -140,18 +138,71 @@ html.dark {
   body {
     background-color: var(--primary-black);
     color: var(--primary-white);
+
     main {
       background-color: var(--primary-black);
       color: var(--primary-white);
     }
+
+    .change-page .custom-pagination {
+      .page-item {
+        .page-link {
+          background-color: var(--secondary-black);
+          color: var(--primary-white);
+        }
+      }
+      .page-item.disabled .page-link {
+        color: #6c757d;
+        pointer-events: none;
+        cursor: not-allowed;
+        background-color: var(--primary-black);
+      }
+    }
+    .main-newsletter .freecontent-section .freecontent-article .freecontent-content > #formulario {
+      .form-group label {
+        background-color: var(--primary-black);
+      }
+      .form-group input {
+        color: var(--secondary-white);
+      }
+      .form-group-select {
+        label {
+          background-color: var(--primary-black);
+        }
+        .mult-select-tag ul {
+          background-color: var(--primary-black);
+        }
+        .mult-select-tag {
+          .input-body {
+            background-color: var(--primary-black);
+            input {
+              color: var(--primary-white);
+            }
+          }
+          button {
+            color: var(--primary-white);
+          }
+        }
+      }
+    }
+
+    /* Main */
     .main-index {
+      .main-content {
+        background-image: linear-gradient(180deg, rgb(111, 96, 196) 0%, rgb(28, 53, 165) 74%);
+      }
       .div-pracing {
         color: var(--primary-white);
         .flex-cards .card-pracing {
           background-color: var(--secondary-black);
         }
       }
+      .main-carrousel {
+        background-color: var(--secondary-black);
+      }
     }
+
+    /* Publicaciones */
     .publication-main {
       .publication figure {
         background-color: var(--secondary-black);
@@ -163,10 +214,14 @@ html.dark {
         }
       }
     }
+
+    /* Blog */
     .main-blog #blog .card-blog {
       background-color: var(--secondary-black);
       color: var(--primary-white);
     }
+
+    /* Acccount */
     .main-account {
       color: var(--primary-white);
       .ac-content {
@@ -179,6 +234,7 @@ html.dark {
         color: var(--primary-white);
       }
     }
+    /* Contact */
     .container {
       background-color: var(--primary-black);
     }
@@ -194,6 +250,19 @@ html.dark {
     }
     .upload-publication {
       color: var(--primary-black);
+    }
+
+    /* Newsletter */
+    .main-newsletter {
+      .freecontent-section .freecontent-article .freecontent-content .form-group {
+        label {
+          background-color: var(--primary-black);
+        }
+        input,
+        select {
+          color: var(--primary-white);
+        }
+      }
     }
   }
   footer {

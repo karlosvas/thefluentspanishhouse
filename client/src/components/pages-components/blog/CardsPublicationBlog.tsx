@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import CardPlaceholder from "./CardPlaceholder";
 import Button from "@/components/reusable/Button";
 import { UserContext } from "@/App";
@@ -37,9 +37,17 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
     user?.email === "carlosvassan@gmail.com" ||
     user?.email === "mar411geca@gmail.com";
 
-  const handledelatePublication = async (id: string) => {
+  const { page } = useParams<{ page: string }>();
+  const navigate = useNavigate();
+
+  const handleDeletePublication = async (id: string) => {
     try {
       await delatePublication(id);
+      if (cardsBlog.length === 1) {
+        let actualPage: number = page ? parseInt(page) : 1;
+        console.log("actualPage", actualPage);
+        navigate(`/blog/${--actualPage}`);
+      }
       setCardsBlog((prevCardsBlog) =>
         prevCardsBlog.filter((publication) => publication._id !== id)
       );
@@ -167,7 +175,7 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
             <>
               <ButtonClose
                 handleSusribeChange={() =>
-                  handledelatePublication(publication._id)
+                  handleDeletePublication(publication._id)
                 }
                 className="close-card-button"
               />

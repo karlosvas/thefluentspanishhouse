@@ -38,19 +38,40 @@ const OptionsComment: React.FC<OptionsCommentProps> = ({
     }
   };
 
+  const isComment = (obj: unknown): obj is Comment => {
+    if (typeof obj !== 'object' || obj === null) return false;
+  
+    const comment = obj as Comment;
+    return (
+      comment._id === 'string' &&
+      typeof comment.pattern_id === 'string' &&
+      comment.owner &&
+      typeof comment.owner.uid === 'string' &&
+      typeof comment.owner.displayName === 'string' &&
+      typeof comment.owner.email === 'string' &&
+      typeof comment.owner.photoURL === 'string' &&
+      typeof comment.data === 'string' &&
+      typeof comment.likes === 'number' &&
+      Array.isArray(comment.likedBy) &&
+      comment.likedBy.every((id: unknown) => typeof id === 'string') &&
+      Array.isArray(comment.answers) &&
+      comment.answers.every((answer: unknown) => isComment(answer))
+    );
+  };
+
   const handleEdit = async () => {
     if (user && user.uid === comment.owner.uid) {
       try {
         const updatedComment = await editComment(id, textEdit);
-        setComments(
-          comments.map((comment) =>
-            comment._id === updatedComment._id ? updatedComment : comment
-          )
-        );
+        
+        if (isComment(updatedComment))
+          setComments(comments.map((comment) => comment._id === updatedComment._id ? updatedComment : comment));
+        
         toast.success("Comment edited successfully");
-      } catch (error) {
-        console.error("Error to submit post", error);
-        toast.error("Error to delete comment");
+        
+        } catch (error) {
+          console.error("Error to submit post", error);
+          toast.error("Error to delete comment");
       }
       setShowModal(false);
       setShowEditComment(false);

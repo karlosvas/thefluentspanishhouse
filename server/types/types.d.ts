@@ -1,4 +1,5 @@
 import { type User } from "firebase/auth";
+import { type Status } from "@mailchimp/mailchimp_marketing";
 
 export interface PublicationCardType {
   _id: string;
@@ -13,7 +14,11 @@ export interface SubscriberType {
   name: string;
   lastname: string;
   email: string;
-  type: string;
+  class: OptionsChampTag;
+  consentEmails: false;
+  acceptTerms: false;
+  acceptPrivacy: false;
+  [key: string]: unknown;
 }
 
 export interface Comment {
@@ -32,7 +37,7 @@ export interface Comment {
 }
 
 export interface NoteType {
-  email_user: string | null | undefined;
+  email_user: string | undefined;
   username: string;
   subject: string;
   note: string;
@@ -46,19 +51,97 @@ export interface ConfigUser {
   phone: string;
 }
 
-// interfaces.ts
-export interface MergeFields {
-  FNAME: string;
-  LNAME: string;
-  INTERESTSS: string[];
-}
-
+// Maichampp Types
 export interface Member {
   email_address: string;
-  status: "subscribed" | "unsubscribed" | "cleaned" | "pending";
-  merge_fields: MergeFields;
+  status: Status;
+  email_type: "html" | "text";
+  merge_fields?: {
+    [key: string]: string;
+  };
+  interests: {
+    [key: string]: boolean;
+  };
+  tags: OptionsChampTag[];
+  status_if_new: Status;
+  update_existing?: boolean;
 }
 
 export interface NewUserChamp {
   members: Member[];
+}
+
+type ErrorChamp = {
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  instance: string;
+};
+
+export interface ErrorResponseHelper {
+  err: boolean;
+  status: string;
+  statusText: string;
+  message?: ErrorChamp;
+}
+
+type OptionsChampTag = "GROUP_CLASS" | "PRIVATE_CLASS" | "FREE_CLASS";
+interface TagMailchamp {
+  name: OptionsChampTag;
+  status: "active" | "inactive";
+}
+
+interface Link {
+  rel: string;
+  href: string;
+  method: string;
+  targetSchema?: string;
+  schema?: string;
+}
+
+interface Category {
+  list_id: string;
+  id: string;
+  title: string;
+  display_order: number;
+  type: string;
+  _links: Link[];
+}
+
+export interface InterestCategoryResponse {
+  list_id: string;
+  categories: Category[];
+  total_items: number;
+  _links: Link[];
+}
+
+interface Interest {
+  category_id: string;
+  list_id: string;
+  id: string;
+}
+export interface InterestResponse {
+  _links: Link[];
+  category_id: string;
+  interests: Interest[];
+  list_id: string;
+  total_items: number;
+}
+
+// Mandril
+export interface Message {
+  from_email: string;
+  from_name: string;
+  to: [
+    {
+      email: string;
+      type: "to" | "cc" | "bcc";
+    }
+  ];
+  subject: string;
+  html: string;
+  headers?: {
+    "Reply-To": string;
+  };
 }

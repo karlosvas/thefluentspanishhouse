@@ -24,7 +24,8 @@ const Blog = () => {
   const fetchPublications = async (page: string) => {
     try {
       const publications = await getPublications(page);
-      publications.reverse();
+      if(Array.isArray(publications))
+        publications.reverse();
       setCardsBlog(publications as PublicationCardType[]);
     } catch (error) {
       console.error("Error loading publications:", error);
