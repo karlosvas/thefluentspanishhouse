@@ -1,8 +1,9 @@
 import { type User } from "firebase/auth";
 import { type Status } from "@mailchimp/mailchimp_marketing";
+import { ObjectId } from "mongoose";
 
 export interface PublicationCardType {
-  _id: string;
+  _id: ObjectId;
   title: string;
   subtitle: string;
   content: string;
@@ -32,8 +33,8 @@ export interface Comment {
   };
   data: string;
   likes: number;
-  likedBy: string[];
-  answers: Comment[];
+  likedBy: string[] | undefined;
+  answers: ObjectId[] | undefined;
 }
 
 export interface NoteType {

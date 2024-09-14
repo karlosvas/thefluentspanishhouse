@@ -8,8 +8,9 @@ export const deleteCommentAndChildren = async (commentId: Types.ObjectId) => {
   if (!comment) throw new Error("Comment not found");
 
   // Eliminar recursivamente todos los hijos
-  for (const childCommentId of comment.answers)
-    await deleteCommentAndChildren(childCommentId);
+  if (comment.answers)
+    for (const childCommentId of comment.answers)
+      await deleteCommentAndChildren(childCommentId);
 
   // Eliminar el comentario padre
   await modelComment.findByIdAndDelete(commentId);

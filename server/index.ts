@@ -16,11 +16,10 @@ async function inicializeApp() {
   app.use(express.static("public"));
 
   // Configuración global de CORS
-  const allowedOrigins = [
-    process.env.URL_WEB,
-    process.env.URL_WEB_TEST,
-    "http://localhost:5173",
-  ];
+  const allowedOrigins =
+    process.env.NODE_ENV === "production"
+      ? [process.env.URL_WEB, process.env.URL_WEB_TEST]
+      : ["http://localhost:5173"];
 
   app.use(
     cors({

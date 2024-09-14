@@ -36,9 +36,7 @@ export async function verifyIdToken(
     const decodedToken = await admin.auth().verifyIdToken(token);
     req.user = decodedToken; // Añade el usuario decodificado a la solicitud
   } catch (error) {
-    return res
-      .status(401)
-      .json({ message: "Unauthorized", error: error.message });
+    return res.status(401).json({ message: "Unauthorized", error });
   }
 
   // Validación de datos de solicitud
