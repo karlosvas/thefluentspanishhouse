@@ -10,7 +10,12 @@ import Footer from "@/layouts/Footer";
 import { createContext, useEffect, useState } from "react";
 import Newsetler from "@/pages/Newsletter";
 import CallbackVerify from "@/pages/CallbackVerify";
-import { getAuth, onAuthStateChanged, onIdTokenChanged, User } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  onIdTokenChanged,
+  User,
+} from "firebase/auth";
 import SingleTheme from "@/components/header-components/SingleTheme";
 import Contact from "@/pages/Contact";
 import { Toaster } from "react-hot-toast";
@@ -30,7 +35,9 @@ const App = () => {
   const auth = getAuth();
   const location = useLocation();
   const exclude_header = ["/info", "/404", "/verify"];
-  const isAdmin = import.meta.env.VITE_ADMINS.split(",").includes(user?.email?.split("@")[0]);
+  const isAdmin = import.meta.env.VITE_ADMINS.split(",").includes(
+    user?.email?.split("@")[0]
+  );
 
   // Determina si el Header y el Footer deben ser ocultados
   const shouldHideHeaderFooter = exclude_header.includes(location.pathname);

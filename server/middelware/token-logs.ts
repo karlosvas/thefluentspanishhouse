@@ -35,15 +35,9 @@ export async function verifyIdToken(
     // Verifica el token de Firebase usando firebase-admin
     const decodedToken = await admin.auth().verifyIdToken(token);
     req.user = decodedToken; // Añade el usuario decodificado a la solicitud
+    next();
   } catch (error) {
+    console.log("Error verifying Firebase ID token:", error);
     return res.status(401).json({ message: "Unauthorized", error });
   }
-
-  // Validación de datos de solicitud
-  if (!req.body || typeof req.body !== "object") {
-    return res.status(400).json({ message: "Invalid request body" });
-  }
-
-  // Configuración de encabezados de respuesta
-  next();
 }

@@ -15,7 +15,6 @@ readdirSync(PATH_ROUTER).forEach((file) => {
         !file.endsWith(".ts.map")) {
         const modulePath = path.join(PATH_ROUTER, `${fileClean}${fileExtension}`);
         const moduleURL = pathToFileURL(modulePath).href;
-        console.log(`Loading route ${fileClean} from ${moduleURL}`);
         import(moduleURL)
             .then((module) => {
             console.log(`Route ${fileClean} loaded successfully`);

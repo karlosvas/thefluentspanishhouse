@@ -1,9 +1,12 @@
 import { type ErrorResponseHelper } from "types/types";
 
-type FetchResponse = unknown | Blob | FormData | string | ErrorResponseHelper
+type FetchResponse = unknown | Blob | FormData | string | ErrorResponseHelper;
 
 const Helper = () => {
-  const customFetch = async (endpoint: string, options: RequestInit = {}): Promise<FetchResponse> => {
+  const customFetch = async (
+    endpoint: string,
+    options: RequestInit = {}
+  ): Promise<FetchResponse> => {
     const token =
       localStorage.getItem("token") || import.meta.env.VITE_DEFAULT_TOKEN;
 
@@ -38,7 +41,7 @@ const Helper = () => {
               message,
             } as ErrorResponseHelper;
           });
-        }  
+        }
         const contentType = res.headers.get("content-type");
 
         if (contentType) {
