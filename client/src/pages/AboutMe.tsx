@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet-async";
 import "@/styles/main-aboutme.css";
 
 const AboutMe = () => {
-
   return (
     <>
       <Helmet>
@@ -18,17 +17,17 @@ const AboutMe = () => {
           <h2 id="haboutme">About me</h2>
           <article>
             <PlaceholderImg
-            className="img-aboutme"
-            src="/img/escritorio.webp"
-            alt="Decoración de libros y cafe en un escritorio"
-            areaLabel="Imagen decorativa de un escritorio con libros y café"
+              className="img-aboutme"
+              src="/img/escritorio.webp"
+              alt="Decoración de libros y cafe en un escritorio"
+              areaLabel="Imagen decorativa de un escritorio con libros y café"
             >
-            I was born and raised in Valladolid, two hundred kilometers from
-                Madrid.
-                <br />I love meeting people from around the world and learning
-                about different cultures. My hobbies are going for a run, doing
-                Pilates, cooking, and sharing a delicious meal with friends and
-                family."
+              I was born and raised in Valladolid, two hundred kilometers from
+              Madrid.
+              <br />I love meeting people from around the world and learning
+              about different cultures. My hobbies are going for a run, doing
+              Pilates, cooking, and sharing a delicious meal with friends and
+              family."
             </PlaceholderImg>
           </article>
           <article>
