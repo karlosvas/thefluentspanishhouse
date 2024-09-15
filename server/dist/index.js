@@ -11,7 +11,6 @@ async function inicializeApp() {
     app.use(express.json({ limit: "10mb" }));
     app.use(express.urlencoded({ limit: "10mb", extended: true }));
     app.use(express.json());
-    app.use(express.static("public"));
     // Configuración global de CORS
     const allowedOrigins = process.env.NODE_ENV === "production"
         ? [process.env.URL_WEB, process.env.URL_WEB_TEST]
