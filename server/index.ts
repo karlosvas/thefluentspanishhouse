@@ -16,25 +16,27 @@ async function inicializeApp() {
   app.use(express.json());
 
   // Configuración global de CORS
-  const allowedOrigins =
-    process.env.NODE_ENV === "production"
-      ? [process.env.URL_WEB, process.env.URL_WEB_TEST]
-      : ["http://localhost:5173"];
+  // const allowedOrigins =
+  //   process.env.NODE_ENV === "production"
+  //     ? [process.env.URL_WEB, process.env.URL_WEB_TEST]
+  //     : ["http://localhost:5173"];
 
-  app.use(
-    cors({
-      origin: function (origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-          callback(null, true);
-        } else {
-          callback(new Error("Not allowed by CORS"));
-        }
-      },
-      methods: "GET,POST,PUT,DELETE,OPTIONS",
-      allowedHeaders: "Content-Type,Authorization",
-      credentials: true,
-    })
-  );
+  // app.use(
+  //   cors({
+  //     origin: function (origin, callback) {
+  //       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+  //         callback(null, true);
+  //       } else {
+  //         callback(new Error("Not allowed by CORS"));
+  //       }
+  //     },
+  //     methods: "GET,POST,PUT,DELETE,OPTIONS",
+  //     allowedHeaders: "Content-Type,Authorization",
+  //     credentials: true,
+  //   })
+  // );
+
+  app.use(cors());
 
   // Conexión a la base de datos
   try {
@@ -57,9 +59,7 @@ async function inicializeApp() {
       if (!previewUrl) throw new Error("VERCEL_URL no está definida");
       res.send(previewUrl);
     } catch (error) {
-      res
-        .status(500)
-        .json({ error: "Error en el servidor para obtener URL de preview" });
+      res.status(500).json({ error: "Error en el servidor para obtener URL de preview" });
     }
   });
 
