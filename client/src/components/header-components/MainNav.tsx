@@ -30,8 +30,8 @@ const MainNav: React.FC<ThemeProps> = ({ theme, setTheme }) => {
         </li>
         <li>
           <Link
-            to="/newsetler"
-            onClick={handleClickNavigate("/newsetler", navigate)}
+            to="/newsletter"
+            onClick={handleClickNavigate("/newsletter", navigate)}
           >
             Newsletter
           </Link>

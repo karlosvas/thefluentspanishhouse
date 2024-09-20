@@ -48,9 +48,12 @@ const AboutMe = () => {
           <article>
             <h2>Teaching experience</h2>
             <p>
-              Since November 2018, I have been teaching one-to-one and group
-              classes for English speakers online on Zoom. I prepare original
-              materials for my students to use in and out of class.
+              I have been a freelance Spanish teacher since 2018, specializing
+              in one-to-one and two-student sessions for English speakers. With
+              over 1,000 hours of teaching experience, I have guided students
+              from A1 to B2 levels. My advanced proficiency in English allows me
+              to explain the nuances between both languages, making the learning
+              process smoother and more effective for my students.
             </p>
           </article>
         </div>

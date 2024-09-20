@@ -26,10 +26,10 @@
       flex-direction: row-reverse;
       .banner {
         height: 50vh;
-        border-radius: 5px;
+        border-radius: 3px;
         object-fit: contain;
         object-position: bottom;
-        box-shadow: 0 1px 5px var(--primary-black);
+        box-shadow: 0 1px 3px var(--primary-black);
       }
       figcaption {
         text-align: start;

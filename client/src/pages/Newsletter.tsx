@@ -1,5 +1,5 @@
 import PlaceholderImg from "@/components/reusable/PlaceholderImg";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import "@/styles/main-newsettler.css";
 import toast from "react-hot-toast";
@@ -105,8 +105,12 @@ const Newsletter = () => {
     }
   };
 
+  const isMultiSelectTagInitialized = useRef(false);
   useEffect(() => {
-    if (!window.isMultiSelectTagInitialized) {
+    if (
+      location.pathname === "/newsletter" &&
+      !isMultiSelectTagInitialized.current
+    ) {
       MultiSelectTag("preferences", {
         rounded: true,
         shadow: false,
@@ -123,9 +127,11 @@ const Newsletter = () => {
           setForm((prev) => ({ ...prev, preferences: preferencesValues }));
         },
       });
-      window.isMultiSelectTagInitialized = true;
+      isMultiSelectTagInitialized.current = true; // Marcar como inicializado
+    } else if (location.pathname !== "/newsletter") {
+      isMultiSelectTagInitialized.current = false; // Resetear la inicialización cuando se navega fuera de /newsletter
     }
-  }, []);
+  }, [location.pathname]);
 
   // Verificando si hay preferencias seleccionadas
   useEffect(

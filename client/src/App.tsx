@@ -108,7 +108,7 @@ const App = () => {
             <Route path="/aboutme" element={<AboutMe />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/info" element={<Info />} />
-            <Route path="/newsetler" element={<Newsetler />} />
+            <Route path="/newsletter" element={<Newsetler />} />
             <Route path="/404" element={<Error />} />
             <Route path="/verify" element={<CallbackVerify />} />
             {/* Maneja rutas no encontradas */}
