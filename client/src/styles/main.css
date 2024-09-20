@@ -17,6 +17,12 @@
       font-size: 60px;
       font-weight: 600;
     }
+    strong {
+      font-size: 22px;
+      text-align: center;
+      font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana,
+        sans-serif;
+    }
     figure {
       margin: auto;
       display: flex;
@@ -32,11 +38,12 @@
         box-shadow: 0 1px 3px var(--primary-black);
       }
       figcaption {
+        /* font-family: alegreya-sans; */
         text-align: start;
         padding: 20px;
         padding-left: 0;
         width: 80%;
-        font-size: 16px;
+        font-size: 18px;
         span {
           font-size: 30px;
           color: var(--primary-blue);
@@ -52,12 +59,14 @@
     animation-timeline: view();
     animation-range: entry 20% cover 30%;
     width: 100vw;
-    background-color: var(--primary-blue);
+    /* background-color: rgb(55, 131, 232); */
+    background-color: rgb(55, 131, 232);
     background-size: cover;
     position: relative;
     padding: 0 20px;
     overflow: hidden;
     color: var(--primary-white);
+    box-shadow: 0 1px 10px rgb(55, 131, 232);
 
     h2 {
       margin-top: 0;
@@ -84,8 +93,7 @@
 
     .achievements-section {
       /* color: var(--primary-white) !important; */
-      font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial,
-        sans-serif;
+      font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
       animation: reveal linear both;
       animation-timeline: view();
       animation-range: entry 20% cover 30%;
@@ -119,8 +127,7 @@
     margin-bottom: 200px;
     margin-top: 100px;
     h2 {
-      font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial,
-        sans-serif;
+      font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
       font-weight: 600;
       margin-bottom: 20px;
       text-align: center;
@@ -203,8 +210,7 @@
     animation-range: entry 20% cover 30%;
     padding-bottom: 100px;
     h2 {
-      font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial,
-        sans-serif;
+      font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
       text-align: center;
       padding: 20px 40px;
       font-weight: 600;
@@ -232,8 +238,7 @@
             flex-direction: column;
             font-size: 20px;
             h3 {
-              font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica,
-                Arial;
+              font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial;
               font-weight: 600;
             }
           }
@@ -285,8 +290,7 @@
         figcaption {
           padding: 0;
           padding-top: 20px;
-          font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial,
-            sans-serif;
+          font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
           width: 100%;
         }
       }

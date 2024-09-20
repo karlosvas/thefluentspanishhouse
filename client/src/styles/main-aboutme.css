@@ -1,8 +1,7 @@
 #haboutme {
   font-weight: 600;
   font-size: 40px;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   padding-bottom: 20px;
 }
 
@@ -14,8 +13,7 @@
   background-color: var(--primary-white);
 
   h2 {
-    font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial,
-      sans-serif;
+    font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     margin-top: 50px;
   }
   .div-aboutme {
@@ -29,13 +27,13 @@
     figure {
       width: 40vw;
       .img-aboutme {
+        box-shadow: 0 1px 5px var(--primary-black);
         animation: reveal linear both;
         animation-timeline: view();
         animation-range: entry 20% cover 30%;
         border-radius: 5px;
-        width: 100%;
+        width: 53%;
         height: 50vh;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin: auto;
       }
       figcaption {

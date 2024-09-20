@@ -6,6 +6,11 @@
   src: url("/nemesis/nemesis.otf");
 }
 
+/* @font-face {
+  font-family: "alegreya-sans";
+  src: url("/alegreya-sans/AlegreyaSans-Light.ttf");
+} */
+
 :root {
   line-height: 1.5;
   font-weight: 400;
@@ -13,6 +18,7 @@
   --primary-blue: #2c4ace;
   --secondary-blue: #87d9ff;
   --primary-white: #f0faff;
+  --primary-white: #d4edff;
   --secondary-white: #ffffff;
   --secondary-white: rgb(228, 239, 255);
   --primary-black: #1f2028;
@@ -33,7 +39,7 @@
 }
 
 body {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
   overflow-x: hidden;
   margin: 0;
   padding: 0;

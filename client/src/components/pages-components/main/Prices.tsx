@@ -33,17 +33,13 @@ const Prices = () => {
             </div>
             <ul>
               <li>A sample free 1-hour class for new students</li>
-              <li>
-                Participative and dynamic classes according to the level group
-              </li>
-              <li>Small groups of 2 to 4 students</li>
+              <li>Private English lessons for two people at the same level</li>
+              <li>Enjoy the benefits of individual classes combined with the dynamic interaction of a group class</li>
               <li>Access to exclusive online content</li>
               <li>Access to exclusive content</li>
               <li>And out-of-class communication with the teacher.</li>
             </ul>
-            <Button event={() => handleSusribeChange("Group classes")}>
-              GET A SAMPLE FREE 1-HOUR CLASS
-            </Button>
+            <Button event={() => handleSusribeChange("Group classes")}>GET A SAMPLE FREE 1-HOUR CLASS</Button>
           </div>
           <div className="card-pracing">
             <h3>One-to-one classes</h3>
@@ -58,9 +54,7 @@ const Prices = () => {
               <li>Access to exclusive content and homework assignments</li>
               <li>And out-of-class communication with the teacher.</li>
             </ul>
-            <Button event={() => handleSusribeChange("One-to-one classes")}>
-              GET A SAMPLE FREE 1-HOUR CLASS
-            </Button>
+            <Button event={() => handleSusribeChange("One-to-one classes")}>GET A SAMPLE FREE 1-HOUR CLASS</Button>
           </div>
         </div>
       </div>
