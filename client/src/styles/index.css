@@ -179,10 +179,21 @@ html.dark {
         label {
           background-color: var(--primary-black);
         }
-        .mult-select-tag ul {
-          background-color: var(--primary-black);
-        }
         .mult-select-tag {
+          ul {
+            background-color: var(--primary-black);
+            li.selected {
+              background-color: var(--secondary-black);
+            }
+          }
+          .item-container {
+            background-color: var(--primary-black) !important;
+            color: var(--primary-white) !important;
+          }
+
+          .item-label {
+            color: var(--primary-white) !important;
+          }
           .input-body {
             background-color: var(--primary-black);
             input {

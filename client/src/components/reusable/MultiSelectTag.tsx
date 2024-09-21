@@ -205,7 +205,7 @@ export default function MultiSelectTag(
 
     // Change bg color and checking the checkbox
     if (selected) {
-      li.style.backgroundColor = tagColor.bgColor!;
+      li.classList.toggle("selected");
       checkbox.checked = true;
     }
   }

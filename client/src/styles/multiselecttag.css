@@ -7,6 +7,7 @@
   top: 0.75rem;
   left: 0.75rem;
   background: var(--primary-white);
+
   padding: 0 0.25rem;
   transition: top 0.2s ease;
   color: #71747c;
@@ -110,14 +111,19 @@
     margin: 0;
   }
   .mult-select-tag ul li {
+    transition: background 0.2s ease;
     text-align: start;
     padding: 0.5rem;
     border-radius: 0.25rem;
     cursor: pointer;
   }
   .mult-select-tag ul li:hover {
-    background: rgb(191, 198, 255);
+    background: rgb(65, 153, 235);
   }
+  .mult-select-tag ul li.selected {
+    background-color: rgb(173, 216, 230);
+  }
+
   .mult-select-tag .item-container {
     display: flex;
     justify-content: center;
@@ -125,7 +131,7 @@
     padding: 0.2rem 0.4rem;
     margin: 0.2rem;
     font-weight: 500;
-    border: 1px solid;
+    border: 1px solid rgb(51, 100, 236) !important;
     border-radius: 9999px;
   }
   .mult-select-tag .item-label {
@@ -141,9 +147,9 @@
     flex-direction: row-reverse;
   }
   .mult-select-tag .item-close-svg {
-    width: 1rem;
-    margin-left: 0.5rem;
-    height: 1rem;
+    width: 18px;
+    margin-left: 0.3rem;
+    height: 13px;
     cursor: pointer;
     border-radius: 9999px;
     display: block;

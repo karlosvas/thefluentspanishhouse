@@ -116,9 +116,9 @@ const Newsletter = () => {
         shadow: false,
         placeholder: "Search",
         tagColor: {
-          textColor: "var(--primary-black",
-          borderColor: "#4ca3dd",
-          bgColor: "#e0f7ff",
+          textColor: "var(--primary-black)",
+          borderColor: "var(--primary-black)",
+          bgColor: "rgb(173, 216, 230)",
         },
         onChange: function (values) {
           const preferencesValues = values.map(
