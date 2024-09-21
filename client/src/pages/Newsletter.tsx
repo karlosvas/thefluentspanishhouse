@@ -55,13 +55,13 @@ const Newsletter = () => {
     const group = await getInterests();
     const interests: Record<string, boolean>[] = [];
 
+    let actualPreference = 0;
     for (let i = 0; i < group.total_items; i++) {
       const { name, id } = group.interests[i];
-      name === form.preferences[i]
-        ? interests.push({ [id]: true })
+      name === form.preferences[actualPreference]
+        ? interests.push({ [id]: true }) && actualPreference++
         : interests.push({ [id]: false });
     }
-
     // Creamos el objeto de miembro
     const member: Member = {
       email_address: form.email,

@@ -87,8 +87,10 @@
         text-align: center;
 
         h1 {
-          font-family: AntonioV;
+          font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial,
+            sans-serif;
           margin-bottom: 50px;
+          font-weight: bold;
         }
 
         #formulario {

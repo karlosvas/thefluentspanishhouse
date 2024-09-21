@@ -35,7 +35,9 @@ router.get("/getone/member/:email", log, verifyIdToken, async (req, res) => {
         res.status(parsedError.status).json(parsedError);
     });
 });
+// Obtener todos los grupos de categorias
 router.get("/groupscategory", log, verifyIdToken, async (req, res) => {
+    console.log("listId", listId);
     mailchimp.lists
         .getListInterestCategories(listId)
         .then((response) => {
@@ -45,6 +47,7 @@ router.get("/groupscategory", log, verifyIdToken, async (req, res) => {
         res.status(500).json(mailchimpErrors(error));
     });
 });
+// Obtener los intereses de un grupo de categorias
 router.get("/get/interests", log, verifyIdToken, async (req, res) => {
     if (!groupId)
         return res.status(400).send("groupID is required");

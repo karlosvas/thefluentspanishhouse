@@ -64,11 +64,13 @@ router.get(
   }
 );
 
+// Obtener todos los grupos de categorias
 router.get(
   "/groupscategory",
   log,
   verifyIdToken,
   async (req: Request, res: Response) => {
+    console.log("listId", listId);
     mailchimp.lists
       .getListInterestCategories(listId)
       .then((response) => {
@@ -80,6 +82,7 @@ router.get(
   }
 );
 
+// Obtener los intereses de un grupo de categorias
 router.get(
   "/get/interests",
   log,
