@@ -17,8 +17,13 @@ readdirSync(PATH_ROUTER).forEach((file) => {
         const moduleURL = pathToFileURL(modulePath).href;
         import(moduleURL)
             .then((module) => {
-            console.log(`Route ${fileClean} loaded successfully`);
-            router.use(`/${fileClean}`, module.router);
+            if (module.router) {
+                console.log(`Route ${fileClean} loaded successfully`);
+                router.use(`/${fileClean}`, module.router);
+            }
+            else {
+                console.error(`Error: No router found in module ${fileClean}`);
+            }
         })
             .catch((err) => {
             console.error(`Error loading route ${fileClean}:`, err);

@@ -6,10 +6,15 @@
   src: url("/nemesis/nemesis.otf");
 }
 
-/* @font-face {
+@font-face {
   font-family: "alegreya-sans";
   src: url("/alegreya-sans/AlegreyaSans-Light.ttf");
-} */
+}
+
+@font-face {
+  font-family: "alegreya-medium";
+  src: url("/alegreya-sans/AlegreyaSans-Medium.ttf");
+}
 
 :root {
   line-height: 1.5;
@@ -164,7 +169,11 @@ html.dark {
         background-color: var(--primary-black);
       }
     }
-    .main-newsletter .freecontent-section .freecontent-article .freecontent-content > #formulario {
+    .main-newsletter
+      .freecontent-section
+      .freecontent-article
+      .freecontent-content
+      > #formulario {
       .form-group label {
         background-color: var(--primary-black);
       }
@@ -195,7 +204,11 @@ html.dark {
     /* Main */
     .main-index {
       .main-content {
-        background-image: linear-gradient(180deg, rgb(111, 96, 196) 0%, rgb(28, 53, 165) 74%);
+        background-image: linear-gradient(
+          180deg,
+          rgb(111, 96, 196) 0%,
+          rgb(28, 53, 165) 74%
+        );
       }
       .div-pracing {
         color: var(--primary-white);
@@ -260,7 +273,10 @@ html.dark {
 
     /* Newsletter */
     .main-newsletter {
-      .freecontent-section .freecontent-article .freecontent-content .form-group {
+      .freecontent-section
+        .freecontent-article
+        .freecontent-content
+        .form-group {
         label {
           background-color: var(--primary-black);
         }
