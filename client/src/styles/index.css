@@ -11,11 +11,6 @@
   src: url("/alegreya-sans/AlegreyaSans-Light.ttf");
 }
 
-@font-face {
-  font-family: "alegreya-medium";
-  src: url("/alegreya-sans/AlegreyaSans-Medium.ttf");
-}
-
 :root {
   line-height: 1.5;
   font-weight: 400;
