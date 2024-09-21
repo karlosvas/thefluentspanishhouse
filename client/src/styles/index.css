@@ -2,13 +2,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 
 @font-face {
-  font-family: "nemesis";
-  src: url("/nemesis/nemesis.otf");
+  font-family: "AlegreyaV";
+  src: url("/fonts/alegreya/AlegreyaSans-Medium.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "alegreya-sans";
-  src: url("/alegreya-sans/AlegreyaSans-Light.ttf");
+  font-family: "AntonioV";
+  src: url("/fonts/antonio/Antonio-VariableFont_wght.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
 }
 
 :root {
@@ -39,7 +41,7 @@
 }
 
 body {
-  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
   margin: 0;
   padding: 0;

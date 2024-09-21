@@ -87,7 +87,7 @@
         text-align: center;
 
         h1 {
-          font-family: alegreya-sans;
+          font-family: AntonioV;
           margin-bottom: 50px;
         }
 
@@ -149,10 +149,9 @@
 
             /* Cambiar el color del icono de fecha en WebKit (Chrome, Safari, Edge) */
             input[type="date"]::-webkit-calendar-picker-indicator {
-              filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg)
+              filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg)
                 brightness(0) contrast(0);
             }
-
             /* Ocultar el icono de fecha en Firefox y agregar un icono personalizado */
             input[type="date"]::-moz-calendar-picker-indicator {
               color: transparent;
@@ -165,7 +164,6 @@
               top: 50%;
               transform: translateY(-50%);
               pointer-events: none;
-              color: var(--primary-black);
             }
           }
 
