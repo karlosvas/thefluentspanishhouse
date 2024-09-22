@@ -63,8 +63,8 @@ export interface NesletterType {
   email: string;
   name: string;
   surnames: string;
-  birthday: string;
-  preferences: string[];
+  birthday?: string;
+  preferences?: string[];
   privacy: boolean;
   newsletter: boolean;
   mailchimp: boolean;

@@ -37,6 +37,7 @@ const Newsletter = () => {
 
     // Verificando que todos los campos estén llenos
     for (const value of Object.values(form)) {
+      if (value === "date" || value === "preferences") continue;
       if (value === "" || value === false) {
         toast.error("Please fill all the fields");
         return;
@@ -47,21 +48,26 @@ const Newsletter = () => {
     setSubscribed(true);
     toast.loading("Processing your subscription...");
 
-    // Formateando la fecha de nacimiento
-    const [, month, day] = form.birthday.split("-");
-    const formattedBirthday = `${month}/${day}`;
-
-    // Obtenemos los intereses de la primera categoría (.env), actualmente solo se utiliza una categoría
-    const group = await getInterests();
-    const interests: Record<string, boolean>[] = [];
-
-    let actualPreference = 0;
-    for (let i = 0; i < group.total_items; i++) {
-      const { name, id } = group.interests[i];
-      name === form.preferences[actualPreference]
-        ? interests.push({ [id]: true }) && actualPreference++
-        : interests.push({ [id]: false });
+    let formattedBirthday = "";
+    if (form.birthday) {
+      // Formateando la fecha de nacimiento
+      const [, month, day] = form.birthday.split("-");
+      formattedBirthday = `${month}/${day}`;
     }
+
+    const interests: Record<string, boolean>[] = [];
+    if (form.preferences) {
+      // Obtenemos los intereses de la primera categoría (.env), actualmente solo se utiliza una categoría
+      const group = await getInterests();
+      let actualPreference = 0;
+      for (let i = 0; i < group.total_items; i++) {
+        const { name, id } = group.interests[i];
+        name === form.preferences[actualPreference]
+          ? interests.push({ [id]: true }) && actualPreference++
+          : interests.push({ [id]: false });
+      }
+    }
+
     // Creamos el objeto de miembro
     const member: Member = {
       email_address: form.email,
@@ -135,7 +141,10 @@ const Newsletter = () => {
 
   // Verificando si hay preferencias seleccionadas
   useEffect(
-    () => (form.preferences.length > 0 ? setActive(true) : setActive(false)),
+    () =>
+      form.preferences && form.preferences.length > 0
+        ? setActive(true)
+        : setActive(false),
     [form.preferences]
   );
 
@@ -254,26 +263,10 @@ const Newsletter = () => {
                       }
                     }}
                   />
-                  <label
-                    htmlFor="birthday"
-                    className={
-                      subscribed && form.birthday === "" ? "required" : ""
-                    }
-                  >
-                    Birthday
-                  </label>
+                  <label htmlFor="birthday">Birthday</label>
                 </div>
                 <div className={`form-group-select ${active ? "active" : ""}`}>
-                  <label
-                    htmlFor="preferences"
-                    className={
-                      subscribed && form.preferences.length === 0
-                        ? "required"
-                        : ""
-                    }
-                  >
-                    Preferences
-                  </label>
+                  <label htmlFor="preferences">Preferences</label>
                   <select id="preferences" multiple>
                     <option value="grammar">Grammar</option>
                     <option value="vocabulary">Vocabulary</option>
