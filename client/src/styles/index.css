@@ -203,13 +203,6 @@ html.dark {
 
     /* Main */
     .main-index {
-      .main-content {
-        background-image: linear-gradient(
-          180deg,
-          rgb(111, 96, 196) 0%,
-          rgb(28, 53, 165) 74%
-        );
-      }
       .div-pracing {
         color: var(--primary-white);
         .flex-cards .card-pracing {

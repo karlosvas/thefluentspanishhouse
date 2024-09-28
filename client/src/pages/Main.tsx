@@ -18,8 +18,9 @@ const Main = () => {
       <main className="main-index">
         <article className="main-title">
           <h1 id="title">The Fluent Spanish House</h1>
+
           <PlaceholderImg
-            src="img/2.webp"
+            src="img/perfil-main.webp"
             className="banner"
             alt="Banner with inspiring images, sevillana dance"
           >
@@ -41,6 +42,7 @@ const Main = () => {
             priority. <br /> If you need to change your language learning
             approach significantly, I can help you.
           </PlaceholderImg>
+          <div className="backgroundBanner"></div>
         </article>
         <div className="main-content">
           <img

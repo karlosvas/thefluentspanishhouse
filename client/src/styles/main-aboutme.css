@@ -12,6 +12,18 @@
   align-items: center;
   flex-direction: column;
   background-color: var(--primary-white);
+  position: relative;
+
+  .backgroundBanner {
+    background-color: rgb(55, 131, 232);
+    position: absolute;
+    top: 126px;
+    width: 100vw;
+    height: 47vh;
+    box-shadow: 0 0px 5px rgba(0, 4, 255, 0.5);
+    z-index: 0;
+  }
+
   .div-aboutme {
     display: flex;
     justify-content: center;
@@ -19,21 +31,23 @@
     flex-direction: column;
     width: 80%;
     text-align: center;
-    padding-bottom: 100px;
-    .img-aboutme {
-      box-shadow: 0 1px 5px var(--primary-black);
-      animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 20% cover 30%;
-      border-radius: 5px;
-      height: 40vh;
-      margin: auto;
-    }
-    figcaption {
-      font-size: 18px;
-      margin: auto;
-      padding-top: 20px;
-      width: 40vw;
+    padding-bottom: 200px;
+
+    article {
+      .img-aboutme {
+        animation: reveal linear both;
+        animation-timeline: view();
+        animation-range: entry 20% cover 30%;
+        height: 47vh;
+        margin: auto;
+        box-shadow: 0 0px 5px rgba(0, 4, 255, 0.5);
+      }
+      figcaption {
+        font-size: 18px;
+        margin: auto;
+        padding-top: 20px;
+        width: 40vw;
+      }
     }
     article {
       animation: reveal linear both;

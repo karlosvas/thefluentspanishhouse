@@ -17,7 +17,6 @@
   background-color: var(--primary-white);
   border-radius: 10px;
   box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
@@ -43,14 +42,14 @@
   width: 130px;
   height: 130px;
   top: 130px;
-  right: -40px;
+  right: 10px;
 }
 
 .circle.two {
   width: 80px;
   height: 80px;
   top: 10px;
-  right: 30px;
+  right: 100px;
 }
 
 .contact-form:before {
@@ -69,6 +68,7 @@ form {
   z-index: 10;
   overflow: hidden;
   position: relative;
+  width: 100%;
 }
 
 .title {
@@ -211,6 +211,8 @@ textarea.input {
   margin: 0.7rem 0;
   align-items: center;
   font-size: 0.95rem;
+  align-items: flex-start;
+  font-weight: 600;
 }
 
 .icon {

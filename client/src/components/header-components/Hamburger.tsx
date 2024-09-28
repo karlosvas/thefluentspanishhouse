@@ -4,18 +4,16 @@ import MainNav from "./MainNav";
 import { handleScroll } from "@/scripts/modal";
 import { useLocation } from "react-router-dom";
 import Backdrop from "@/components/reusable/Backdrop";
-import { type ThemeProps } from "types/types";
-import "@/styles/hamburger.css";
 import { UserContext } from "@/App";
+import "@/styles/hamburger.css";
 
-const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
+const Hamburger = () => {
   const [showModal, setShowModal] = useState(false);
   const [closing, setClosing] = useState(false);
   const location = useLocation();
   const user = useContext(UserContext);
 
   const handleClick = () => {
-    console.log("handleClick");
     if (showModal) {
       setClosing(true);
       setTimeout(() => {
@@ -72,7 +70,7 @@ const Hamburger: React.FC<ThemeProps> = ({ theme, setTheme }) => {
             <div className={`menu-left ${closing ? "closing" : ""}`}>
               <Profile />
               <div className="config">
-                <MainNav theme={theme} setTheme={setTheme} />
+                <MainNav />
               </div>
             </div>
           </>

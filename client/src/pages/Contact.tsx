@@ -18,7 +18,9 @@ const ContactForm = () => {
     note: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setNewNote((prevNote) => ({
       ...prevNote,
@@ -26,7 +28,9 @@ const ContactForm = () => {
     }));
   };
 
-  const inputRefs = useRef<(HTMLInputElement | HTMLTextAreaElement | null)[]>([]);
+  const inputRefs = useRef<(HTMLInputElement | HTMLTextAreaElement | null)[]>(
+    []
+  );
 
   const onSubmitNote = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -95,7 +99,9 @@ const ContactForm = () => {
           <div className="form">
             <div className="contact-info">
               <h3 className="title">Let's get in touch</h3>
-              <p className="text">Do you want to sign up? Ask me any question you have</p>
+              <p className="text">
+                Do you want to sign up? Ask me any question you have
+              </p>
 
               <div className="info">
                 <div className="information">
@@ -108,18 +114,33 @@ const ContactForm = () => {
                 </div>
                 <div className="information">
                   <img src="img/phone.webp" className="icon" alt="" />
-                  <p>+34617286125</p>
+                  <p>+34 617286125</p>
                 </div>
               </div>
 
               <div className="social-media">
                 <p>Connect with us :</p>
                 <div className="social-icons">
-                  <a href="https://www.facebook.com/thefluentspanishhouse/" target="_blank">
+                  <a
+                    href="https://www.facebook.com/thefluentspanishhouse/"
+                    target="_blank"
+                    title="Facebook"
+                  >
                     <i className="fab fa-facebook-f">F</i>
                   </a>
-                  <a href="https://github.com/karlosvas/thefluentspanishhouse" target="_blank">
+                  <a
+                    href="https://github.com/karlosvas/thefluentspanishhouse"
+                    target="_blank"
+                    title="Github"
+                  >
                     <i className="fab fa-github">&lt;/&gt;</i>
+                  </a>
+                  <a
+                    href="https://www.instagram.com/thefluentspanishhouse/"
+                    target="_blank"
+                    title="Intagram"
+                  >
+                    <i className="fab fa-github">I</i>
                   </a>
                 </div>
               </div>

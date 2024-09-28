@@ -13,12 +13,13 @@ const AboutMe = () => {
         />
       </Helmet>
       <main className="main-aboutme">
+        <div className="backgroundBanner"></div>
         <div className="div-aboutme">
           <h2 id="haboutme">About me</h2>
           <article>
             <PlaceholderImg
               className="img-aboutme"
-              src="/img/1.webp"
+              src="/img/perfil-aboutme.webp"
               alt="Decoración de libros y cafe en un escritorio"
               areaLabel="Imagen decorativa de un escritorio con libros y café"
             >

@@ -71,6 +71,10 @@ export interface NesletterType {
   [key: string]: unknown;
 }
 
+export interface SingleThemeProps {
+  children?: React.ReactNode;
+}
+
 export type PublicationType = {
   publication: CardType | undefined;
 };

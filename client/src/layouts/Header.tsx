@@ -4,35 +4,14 @@ import Hamburger from "@/components/header-components/Hamburger";
 import Auth from "@/components/header-components/Auth";
 import Exit from "@/components/svg-component/Exit";
 import MainNav from "@/components/header-components/MainNav";
-import Theme from "@/components/svg-component/Theme";
+import Theme from "@/components/header-components/Theme";
 import Settings from "@/components/svg-component/Settings";
 import "@/styles/layouts/header.css";
 import { Link } from "react-router-dom";
 import { handleClickNavigate } from "@/scripts/navigate";
 
 const Header = () => {
-  // Estados
-  const [theme, setTheme] = useState<string>(getTheme());
   const [isShrunk, setIsShrunk] = useState<boolean>(false);
-
-  // Recisar si estaba enteriormente en localstorage
-  function getTheme() {
-    const darkorligth = localStorage.getItem("theme");
-    return darkorligth || "light";
-  }
-
-  // Efectos para cambiar de tema
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) setTheme(savedTheme);
-    else setTheme("light");
-  }, [setTheme]);
-
-  useEffect(() => {
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
 
   // Manejar el scroll para cambiar el tamaño del header
   useEffect(() => {
@@ -69,22 +48,27 @@ const Header = () => {
         <div className="header">
           {window.innerWidth >= 766 ? (
             <Link to="/" onClick={handleClickNavigate("/", navigate)}>
-              <img src="/logos/logo.png" alt="fluent spanish house logo" id="logo" />
+              <img
+                src="/logos/logo.png"
+                alt="fluent spanish house logo"
+                id="logo"
+              />
             </Link>
           ) : (
-            <>
-              <Hamburger theme={theme} setTheme={setTheme} />
-            </>
+            <Hamburger />
           )}
           {window.innerWidth > 766 ? (
-            <MainNav theme={theme} setTheme={setTheme} />
+            <MainNav />
           ) : (
-            window.innerWidth <= 766 && location.pathname !== "/" && <Exit optionalClass="exit-publication" />
+            window.innerWidth <= 766 &&
+            location.pathname !== "/" && (
+              <Exit optionalClass="exit-publication" />
+            )
           )}
           {window.innerWidth > 766 && (
             <div className="nav-icons">
               <Settings />
-              <Theme theme={theme} setTheme={setTheme} />
+              <Theme />
               <Auth />
             </div>
           )}

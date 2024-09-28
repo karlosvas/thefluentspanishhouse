@@ -45,7 +45,7 @@ async function inicializeApp() {
   }
 
   app.get("/", (req, res) => {
-    res.send("Welcome to thefluentespnaishouse serverr");
+    res.send("Welcome to thefluentespnaishouse server");
   });
 
   // Rutas de la aplicación

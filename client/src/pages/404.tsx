@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
-import "@/styles/404.css";
+import "@/styles/layouts/404.css";
 import { Helmet } from "react-helmet-async";
 
 export const Error = () => {

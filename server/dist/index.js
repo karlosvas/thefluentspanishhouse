@@ -39,7 +39,7 @@ async function inicializeApp() {
         throw new Error("Error connecting to the database");
     }
     app.get("/", (req, res) => {
-        res.send("Welcome to thefluentespnaishouse serverr");
+        res.send("Welcome to thefluentespnaishouse server");
     });
     // Rutas de la aplicación
     app.use(router);
