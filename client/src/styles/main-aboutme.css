@@ -87,6 +87,12 @@
 }
 @media only screen and (width <= 766px) {
   .main-aboutme {
+    #haboutme {
+      margin-top: 20px;
+    }
+    .backgroundBanner {
+      display: none;
+    }
     .div-aboutme {
       h2 {
         font-size: 2em;
@@ -98,7 +104,7 @@
       p,
       figure > figcaption {
         width: 80vw;
-        font-size: 0.8em;
+        font-size: 0.9em;
       }
       h2 {
         margin-top: 50px;

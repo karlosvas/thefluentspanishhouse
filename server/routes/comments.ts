@@ -1,5 +1,5 @@
 import { type Request, type Response, Router } from "express";
-import { modelComment } from "../models.js";
+import { modelComment } from "../src/mongodb/models.js";
 import { isValidObjectId, Types } from "mongoose";
 import { submitEmailComment } from "../lib/mandrill/mandrill.js";
 import { deleteCommentAndChildren } from "../utilities/delete-logic.js";

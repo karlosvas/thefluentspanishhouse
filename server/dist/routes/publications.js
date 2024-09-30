@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { modelComment, modelPublication } from "..//models.js";
+import { modelComment, modelPublication } from "../src/mongodb/models.js";
 import { isValidObjectId, Types } from "mongoose";
 import { handleServerError } from "../utilities/errorHandle.js";
 import { log, verifyIdToken } from "../middelware/token-logs.js";
@@ -8,7 +8,11 @@ const router = Router();
 // Obtener la última publicación
 router.get("/last", log, verifyIdToken, async (req, res) => {
     try {
-        const lastPublication = await modelPublication.findOne().sort({ currentPage: -1 }).select("currentPage").exec();
+        const lastPublication = await modelPublication
+            .findOne()
+            .sort({ currentPage: -1 })
+            .select("currentPage")
+            .exec();
         if (!lastPublication)
             return res.status(404).json({ message: "Publication not found" });
         res.status(200).json(lastPublication);

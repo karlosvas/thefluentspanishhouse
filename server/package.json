@@ -1,12 +1,13 @@
 {
-  "name": "backend_tfsh",
+  "name": "backend_thefluentspanishhouse",
   "version": "1.0.0",
   "type": "module",
   "main": "index.ts",
   "scripts": {
-    "start": "node dist/index.js",
-    "dev": "node --loader ts-node/esm index.js",
-    "build": "tsc"
+    "start": "npm run build && node dist/src/index.js",
+    "dev": "node --loader ts-node/esm src/index.js",
+    "test": "npm run build && playwright test",
+    "build": "tsc -b"
   },
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",
@@ -20,9 +21,11 @@
     "firebase": "^10.13.0",
     "firebase-admin": "^12.4.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.5.1"
+    "mongoose": "^8.5.1",
+    "playwright": "^1.47.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.47.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",

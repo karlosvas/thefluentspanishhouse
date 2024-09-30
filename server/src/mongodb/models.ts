@@ -1,5 +1,5 @@
 import { Schema, model, Document } from "mongoose";
-import { Comment, PublicationCardType } from "./types/types";
+import { Comment, PublicationCardType } from "../../types/types";
 
 const commentSchema = new Schema<Comment>({
   _id: { type: Schema.Types.ObjectId, required: true },

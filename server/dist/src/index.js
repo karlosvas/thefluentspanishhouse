@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
 ///////////////////////////////////////////
-import { connectDB } from "./mongodb.js";
+import { connectDB } from "./mongodb/mongodb.js";
 import express from "express";
 import cors from "cors";
-import { router } from "./routes/routes.js";
+import { router } from "../routes/routes.js";
 const app = express();
 // Configuración global de CORS
 const allowedOrigins = [

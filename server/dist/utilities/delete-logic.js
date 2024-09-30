@@ -1,4 +1,4 @@
-import { modelComment } from "../models.js";
+import { modelComment } from "../src/mongodb/models.js";
 export const deleteCommentAndChildren = async (commentId) => {
     // Obtener el comentario con sus hijos
     const comment = await modelComment.findById(commentId).populate("answers");
