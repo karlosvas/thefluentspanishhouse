@@ -7,7 +7,7 @@
     "start": "npm run build && node dist/src/index.js",
     "dev": "node --loader ts-node/esm src/index.js",
     "test": "npm run build && playwright test",
-    "build": "tsc -b"
+    "build": "tsc"
   },
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",

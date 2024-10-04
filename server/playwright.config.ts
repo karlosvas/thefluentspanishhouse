@@ -1,4 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
+import dotenv from "dotenv";
+dotenv.config();
 
 export default defineConfig({
   // Look for test files in the "tests" directory, relative to this configuration file.
@@ -22,10 +24,15 @@ export default defineConfig({
   use: {
     // Base URL to use in actions like `await page.goto('/')`.
     baseURL: "http://127.0.0.1:8080",
-
     // Collect trace when retrying the failed test.
     trace: "on-first-retry",
+    // Add extra HTTP headers
+    extraHTTPHeaders: {
+      Authorization: `Bearer ${process.env.DEFAULT_TOKEN}`,
+      Aplication: "aplication-json",
+    },
   },
+
   // Configure projects for major browsers.
   projects: [
     {

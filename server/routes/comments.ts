@@ -29,7 +29,7 @@ router.get("/children/:id", log, verifyIdToken, async (req, res) => {
     // Buscar el comentario padre y obtener sus hijos
     const comments = await modelComment.findById(parentId).populate("answers");
     if (!comments) throw new Error("Comments not found");
-    res.json(comments.answers);
+    res.status(200).json(comments.answers);
   } catch (error) {
     res.status(500).json({ error: "Error al obtener los comentarios" });
   }
@@ -40,7 +40,7 @@ router.get("/:id", log, verifyIdToken, async (req, res) => {
   const id = req.params.id;
   try {
     const parentComments = await modelComment.find({ pattern_id: id });
-    res.json(parentComments);
+    res.status(200).json(parentComments);
   } catch (error) {
     res.status(500).json({ error: "Error al obtener los comentarios" });
   }
@@ -202,7 +202,8 @@ router.delete(
 
       // Elimina el comentario principal
       await modelComment.findByIdAndDelete(id);
-      res.status(200).json({ message: "Publication deleted successfully" });
+
+      res.status(200).send();
     } catch (error) {
       handleServerError(res, error);
     }

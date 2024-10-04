@@ -138,7 +138,7 @@ router.delete(
       await modelComment.deleteMany({ pattern_id: id });
       if (!result)
         return res.status(404).json({ message: "Publication not found" });
-      res.status(200).json({ message: "Publication deleted successfully" });
+      res.status(200).send();
     } catch (error) {
       console.error("Error deleting publication:", error);
       handleServerError(res, error);
