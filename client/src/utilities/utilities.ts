@@ -6,9 +6,10 @@ import toast from "react-hot-toast";
 import { type NavigateFunction } from "react-router";
 import { type ErrorResponseHelper, type OptionsChampTag } from "types/types";
 
-// Función para manejar el cambio de un input
+// Función para manejar el cambio en los formularios
+// Tipo objeto string: desconocido, donde el desconocido puede ser cualquier tipo de valor, el evento puede ser input o textarea, y el setter de react puede ser cualquier tipo de dato.
 export const handleInputChange = <T extends Record<string, unknown>>(
-  event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   setterReact: Dispatch<SetStateAction<T>>
 ) => {
   const { name, value, type } = event.target;
@@ -26,36 +27,51 @@ export const handleInputChange = <T extends Record<string, unknown>>(
   }
 };
 
-export const forgotPasword = (user: User | null, navigate: NavigateFunction) => {
+// Envio de correo para restablecer la contraseña
+export const forgotPasword = (
+  user: User | null,
+  navigate: NavigateFunction
+) => {
   if (user && user.email) {
     const currentProviderId = getProvider(user);
-    console.log(currentProviderId);
 
     if (currentProviderId === "password") resetPassword(user.email, navigate);
     else {
-      toast(`Can not reset password for accounts authenticated with ${getProvider(user)}.`, {
-        duration: 10000,
-        icon: "🔔",
-      });
+      toast(
+        `Can not reset password for accounts authenticated with ${getProvider(
+          user
+        )}.`,
+        {
+          duration: 10000,
+          icon: "🔔",
+        }
+      );
     }
   } else {
     navigate("/verify", { state: { reset: true } });
   }
 };
 
+// Función para obtener el tipo de tag de mailchip
 export const getTag = (name: string): OptionsChampTag => {
   return name === "Group classes" ? "GROUP_CLASS" : "PRIVATE_CLASS";
 };
 
+// Función para manejar los errores de mailchimp
 export function errorMailchimp(error: ErrorResponseHelper) {
   const messageError = error.message?.detail;
   const status = error.status;
   if (messageError?.includes("permanently deleted")) {
-    toast.error("This user is permanently deleted from Mailchimp, please contact with the support team.");
+    toast.error(
+      "This user is permanently deleted from Mailchimp, please contact with the support team."
+    );
   } else if (messageError?.includes("is already a list member")) {
-    toast("This user already exists in Mailchimp, We will try to offer better service ", {
-      icon: "🙈",
-    });
+    toast(
+      "This user already exists in Mailchimp, We will try to offer better service ",
+      {
+        icon: "🙈",
+      }
+    );
   }
 
   return { messageError, status };

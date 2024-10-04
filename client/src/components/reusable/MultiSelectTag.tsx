@@ -4,7 +4,10 @@ import { type MultiSelectTagOptions, type Option } from "types/types";
 // Author: Habib Mhamadi
 // Email: habibmhamadi@gmail.com
 
-export default function MultiSelectTag(el: string, customs: MultiSelectTagOptions = { shadow: false, rounded: true }) {
+export default function MultiSelectTag(
+  el: string,
+  customs: MultiSelectTagOptions = { shadow: false, rounded: true }
+) {
   // Initialize variables
   let element: HTMLSelectElement | null = null,
     options: Option[] = [],
@@ -60,8 +63,13 @@ export default function MultiSelectTag(el: string, customs: MultiSelectTagOption
     });
 
     input!.addEventListener("keydown", (e) => {
-      if (e.key === "Backspace" && !(e.target as HTMLInputElement).value && inputContainer!.childElementCount > 1) {
-        const child = body!.children[inputContainer!.childElementCount - 2].firstChild as HTMLElement;
+      if (
+        e.key === "Backspace" &&
+        !(e.target as HTMLInputElement).value &&
+        inputContainer!.childElementCount > 1
+      ) {
+        const child = body!.children[inputContainer!.childElementCount - 2]
+          .firstChild as HTMLElement;
         const option = options.find((op) => op.value == child.dataset.value);
         if (option) {
           option.selected = false;
@@ -164,17 +172,25 @@ export default function MultiSelectTag(el: string, customs: MultiSelectTagOption
 
     // Place TailwindTagSelection after the element
     if (element?.nextSibling) {
-      element.parentNode!.insertBefore(customSelectContainer, element.nextSibling);
+      element.parentNode!.insertBefore(
+        customSelectContainer,
+        element.nextSibling
+      );
     } else {
       element?.parentNode!.appendChild(customSelectContainer);
     }
   }
 
-  function createElementInSelectList(option: Option, val: string | null, selected: boolean = false) {
+  function createElementInSelectList(
+    option: Option,
+    val: string | null,
+    selected: boolean = false
+  ) {
     // Create a <li> elmt in the drop-down list,
     // selected parameters tells if the checkbox need to be selected and the bg color changed
     const li = document.createElement("li");
-    li.innerHTML = "<input type='checkbox' style='margin:0 0.5em 0 0' class='input_checkbox'>"; // add the checkbox at the left of the <li>
+    li.innerHTML =
+      "<input type='checkbox' style='margin:0 0.5em 0 0' class='input_checkbox'>"; // add the checkbox at the left of the <li>
     li.innerHTML += option.label;
     li.dataset.value = option.value;
     const checkbox = li.firstChild as HTMLInputElement;
@@ -189,7 +205,7 @@ export default function MultiSelectTag(el: string, customs: MultiSelectTagOption
 
     // Change bg color and checking the checkbox
     if (selected) {
-      li.style.backgroundColor = tagColor.bgColor!;
+      li.classList.toggle("selected");
       checkbox.checked = true;
     }
   }
@@ -273,7 +289,10 @@ export default function MultiSelectTag(el: string, customs: MultiSelectTagOption
   function isTagSelected(val: string) {
     // If the item is already selected
     for (const child of inputContainer!.children) {
-      if (!child.classList.contains("input-body") && (child.firstChild as HTMLElement).dataset.value == val) {
+      if (
+        !child.classList.contains("input-body") &&
+        (child.firstChild as HTMLElement).dataset.value == val
+      ) {
         return true;
       }
     }
@@ -283,7 +302,10 @@ export default function MultiSelectTag(el: string, customs: MultiSelectTagOption
   function removeTag(val: string) {
     // Remove selected item
     for (const child of inputContainer!.children) {
-      if (!child.classList.contains("input-body") && (child.firstChild as HTMLElement).dataset.value == val) {
+      if (
+        !child.classList.contains("input-body") &&
+        (child.firstChild as HTMLElement).dataset.value == val
+      ) {
         inputContainer!.removeChild(child);
       }
     }
@@ -295,10 +317,16 @@ export default function MultiSelectTag(el: string, customs: MultiSelectTagOption
     for (let i = 0; i < options.length; i++) {
       element!.options[i].selected = options[i].selected;
       if (options[i].selected) {
-        selected_values.push({ label: options[i].label, value: options[i].value });
+        selected_values.push({
+          label: options[i].label,
+          value: options[i].value,
+        });
       }
     }
-    if (fireEvent && Object.prototype.hasOwnProperty.call(customs, "onChange")) {
+    if (
+      fireEvent &&
+      Object.prototype.hasOwnProperty.call(customs, "onChange")
+    ) {
       customs.onChange!(selected_values);
     }
   }

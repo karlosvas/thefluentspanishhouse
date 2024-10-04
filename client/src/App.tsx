@@ -16,12 +16,12 @@ import {
   onIdTokenChanged,
   User,
 } from "firebase/auth";
-import SingleTheme from "@/components/header-components/SingleTheme";
 import Contact from "@/pages/Contact";
 import { Toaster } from "react-hot-toast";
 import Main from "./pages/Main";
 import { HelmetProvider } from "react-helmet-async";
 import AdminPanel from "./layouts/AdminPanel";
+import Theme from "./components/header-components/Theme";
 
 export const UserContext = createContext<User | null>(null);
 
@@ -99,7 +99,13 @@ const App = () => {
     return (
       <UserContext.Provider value={user}>
         <HelmetProvider>
-          {!shouldHideHeaderFooter ? <Header /> : <SingleTheme />}
+          {!shouldHideHeaderFooter ? (
+            <Header />
+          ) : (
+            <span className="single-theme">
+              <Theme />
+            </span>
+          )}
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/publication/:id" element={<Publication />} />

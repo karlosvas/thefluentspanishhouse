@@ -1,7 +1,7 @@
 # Marta - Spanish Teacher
 
 Welcome to the official website of Marta, your trusted Spanish teacher. Here you'll find all the necessary information about her classes, prices, and teaching methods.  
-**Official URL: https://thefluentspanishhouse.vercel.app**
+**Official URL: https://thefluentspanishhouse.com**
 
 ## About Marta
 
@@ -31,7 +31,7 @@ For more information or to book a class, you can contact Marta through:
 
 - **Email:** mar411geca@gmail.com
 - **Phone:** +34 617 286 125
-- [Contact Form](https://thefluentspanishhouse.vercel.app/contact)
+- [Contact Form](https://thefluentspanishhouse.com/contact)
 
 ## Social Media
 

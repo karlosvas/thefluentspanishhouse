@@ -1,8 +1,21 @@
-import { PublicationCardType, type ErrorResponseHelper, type Member, type Comment } from "types/types";
+import {
+  PublicationCardType,
+  type ErrorResponseHelper,
+  type Member,
+  type Comment,
+} from "types/types";
 
 // Función de tipo guardia para verificar si un objeto es de tipo ErrorResponseHelper
-export function isErrorResponseHelper(error: unknown): error is ErrorResponseHelper {
-  return typeof error === "object" && error !== null && "err" in error && "status" in error && "statusText" in error;
+export function isErrorResponseHelper(
+  error: unknown
+): error is ErrorResponseHelper {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "err" in error &&
+    "status" in error &&
+    "statusText" in error
+  );
 }
 
 // Función de tipo guardia para verificar si un objeto es de tipo Member
@@ -10,21 +23,32 @@ export const isMember = (obj: unknown): obj is Member => {
   if (typeof obj !== "object" || obj === null) return false;
 
   const member = obj as Member;
-  const statusOptions = ["subscribed", "unsubscribed", "cleaned", "pending", "transactional"];
+  const statusOptions = [
+    "subscribed",
+    "unsubscribed",
+    "cleaned",
+    "pending",
+    "transactional",
+  ];
 
   return (
     typeof member.email_address === "string" &&
     statusOptions.includes(member.status) &&
     ["html", "text"].includes(member.email_type) &&
-    (member.merge_fields === undefined || typeof member.merge_fields === "object") &&
+    (member.merge_fields === undefined ||
+      typeof member.merge_fields === "object") &&
     (member.tags === undefined || Array.isArray(member.tags)) &&
-    (member.status_if_new === undefined || statusOptions.includes(member.status_if_new)) &&
-    (member.update_existing === undefined || typeof member.update_existing === "boolean")
+    (member.status_if_new === undefined ||
+      statusOptions.includes(member.status_if_new)) &&
+    (member.update_existing === undefined ||
+      typeof member.update_existing === "boolean")
   );
 };
 
 // Función de tipo guardia para verificar si un objeto es de tipo PublicationCardType
-export function isPublicationCardType(obj: unknown): obj is PublicationCardType {
+export function isPublicationCardType(
+  obj: unknown
+): obj is PublicationCardType {
   return (
     typeof obj === "object" &&
     obj !== null &&
@@ -61,6 +85,7 @@ export function isCommentArray(obj: unknown): obj is Comment[] {
   );
 }
 
+// Función de tipo guardia para verificar si un objeto es de tipo Comment
 export function isComment(obj: unknown): obj is Comment {
   return (
     typeof obj === "object" &&

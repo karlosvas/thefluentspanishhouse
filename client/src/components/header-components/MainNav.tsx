@@ -1,10 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import Theme from "@/components/svg-component/Theme";
-import { type ThemeProps } from "types/types";
 import { handleClickNavigate } from "@/scripts/navigate";
 import Settings from "../svg-component/Settings";
+import Theme from "./Theme";
 
-const MainNav: React.FC<ThemeProps> = ({ theme, setTheme }) => {
+const MainNav = () => {
   const navigate = useNavigate();
 
   return (
@@ -50,9 +49,7 @@ const MainNav: React.FC<ThemeProps> = ({ theme, setTheme }) => {
               <Settings>Account</Settings>
             </li>
             <li>
-              <Theme theme={theme} setTheme={setTheme}>
-                Theme
-              </Theme>
+              <Theme>Theme</Theme>
             </li>
           </>
         )}

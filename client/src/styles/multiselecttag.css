@@ -7,9 +7,10 @@
   top: 0.75rem;
   left: 0.75rem;
   background: var(--primary-white);
+
   padding: 0 0.25rem;
   transition: top 0.2s ease;
-  color: #6b7280;
+  color: #71747c;
 }
 
 .form-group-select.active label {
@@ -28,8 +29,9 @@
     align-items: center;
     position: relative;
     --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --tw-shadow-color: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
-    --border-color: rgb(218, 221, 224);
+    --tw-shadow-color: 0 1px 3px 0 var(--tw-shadow-color),
+      0 1px 2px -1px var(--tw-shadow-color);
+    --border-color: rgb(75, 75, 75);
     font-family: Verdana, sans-serif;
   }
   .mult-select-tag .wrapper {
@@ -82,14 +84,15 @@
     padding: 0;
     background: 0 0;
     background-image: none;
-    --webkit-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
     text-transform: none;
     box-shadow: none;
-    margin: 0;
   }
   .mult-select-tag button:first-child {
-    width: 1rem;
-    height: 90%;
+    width: 20px;
+    height: 20px;
+    margin: 0;
   }
   .mult-select-tag .drawer {
     position: absolute;
@@ -108,14 +111,19 @@
     margin: 0;
   }
   .mult-select-tag ul li {
+    transition: background 0.2s ease;
     text-align: start;
     padding: 0.5rem;
     border-radius: 0.25rem;
     cursor: pointer;
   }
   .mult-select-tag ul li:hover {
-    background: rgb(191, 198, 255);
+    background: rgb(65, 153, 235);
   }
+  .mult-select-tag ul li.selected {
+    background-color: rgb(173, 216, 230);
+  }
+
   .mult-select-tag .item-container {
     display: flex;
     justify-content: center;
@@ -123,7 +131,7 @@
     padding: 0.2rem 0.4rem;
     margin: 0.2rem;
     font-weight: 500;
-    border: 1px solid;
+    border: 1px solid rgb(51, 100, 236) !important;
     border-radius: 9999px;
   }
   .mult-select-tag .item-label {
@@ -139,9 +147,9 @@
     flex-direction: row-reverse;
   }
   .mult-select-tag .item-close-svg {
-    width: 1rem;
-    margin-left: 0.5rem;
-    height: 1rem;
+    width: 18px;
+    margin-left: 0.3rem;
+    height: 13px;
     cursor: pointer;
     border-radius: 9999px;
     display: block;
@@ -150,7 +158,8 @@
     display: none;
   }
   .mult-select-tag .shadow {
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+      var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
   .mult-select-tag .rounded {
     border-radius: 0.375rem;

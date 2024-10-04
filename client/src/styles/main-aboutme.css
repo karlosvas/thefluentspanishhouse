@@ -1,8 +1,9 @@
 #haboutme {
   font-weight: 600;
   font-size: 40px;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial;
   padding-bottom: 20px;
+  margin-top: 50px;
 }
 
 .main-aboutme {
@@ -11,11 +12,18 @@
   align-items: center;
   flex-direction: column;
   background-color: var(--primary-white);
+  position: relative;
 
-  h2 {
-    font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    margin-top: 50px;
+  .backgroundBanner {
+    background-color: rgb(55, 131, 232);
+    position: absolute;
+    top: 126px;
+    width: 100vw;
+    height: 47vh;
+    box-shadow: 0 0px 5px rgba(0, 4, 255, 0.5);
+    z-index: 0;
   }
+
   .div-aboutme {
     display: flex;
     justify-content: center;
@@ -23,23 +31,22 @@
     flex-direction: column;
     width: 80%;
     text-align: center;
-    padding-bottom: 100px;
-    figure {
-      width: 40vw;
+    padding-bottom: 200px;
+
+    article {
       .img-aboutme {
-        box-shadow: 0 1px 5px var(--primary-black);
         animation: reveal linear both;
         animation-timeline: view();
         animation-range: entry 20% cover 30%;
-        border-radius: 5px;
-        width: 53%;
-        height: 50vh;
+        height: 47vh;
         margin: auto;
+        box-shadow: 0 0px 5px rgba(0, 4, 255, 0.5);
       }
       figcaption {
         font-size: 18px;
         margin: auto;
         padding-top: 20px;
+        width: 40vw;
       }
     }
     article {
@@ -47,6 +54,8 @@
       animation-timeline: view();
       animation-range: entry 20% cover 30%;
       h2 {
+        font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial;
+        font-weight: 600;
         margin-top: 100px;
       }
     }
@@ -65,9 +74,7 @@
   .main-aboutme {
     .div-aboutme {
       figure {
-        width: 100vw;
         .img-aboutme {
-          width: 70vw;
           height: 47vh;
         }
       }
@@ -80,22 +87,24 @@
 }
 @media only screen and (width <= 766px) {
   .main-aboutme {
+    #haboutme {
+      margin-top: 20px;
+    }
+    .backgroundBanner {
+      display: none;
+    }
     .div-aboutme {
       h2 {
         font-size: 2em;
       }
-      figure {
-        width: 100vw;
-        .img-aboutme {
-          margin-top: 10px;
-          width: 90vw;
-          height: 27vh;
-        }
+      .img-aboutme {
+        margin-top: 10px;
+        height: 27vh;
       }
       p,
       figure > figcaption {
         width: 80vw;
-        font-size: 0.8em;
+        font-size: 0.9em;
       }
       h2 {
         margin-top: 50px;

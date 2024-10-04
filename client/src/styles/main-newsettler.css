@@ -87,8 +87,10 @@
         text-align: center;
 
         h1 {
-          font-family: nemesis;
+          font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial,
+            sans-serif;
           margin-bottom: 50px;
+          font-weight: bold;
         }
 
         #formulario {
@@ -101,7 +103,7 @@
             select {
               width: 100%;
               padding: 10px;
-              border: 1px solid rgb(218, 221, 224);
+              border: 1px solid rgb(75, 75, 75);
               background-color: transparent;
               border-radius: 5px;
               box-sizing: border-box;
@@ -145,6 +147,25 @@
             input[type="date"].has-value + label[for="birthday"],
             input[type="date"]:focus + label {
               color: #007bff;
+            }
+
+            /* Cambiar el color del icono de fecha en WebKit (Chrome, Safari, Edge) */
+            input[type="date"]::-webkit-calendar-picker-indicator {
+              filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg)
+                brightness(0) contrast(0);
+            }
+            /* Ocultar el icono de fecha en Firefox y agregar un icono personalizado */
+            input[type="date"]::-moz-calendar-picker-indicator {
+              color: transparent;
+            }
+
+            input[type="date"]::before {
+              content: "\1F4C5";
+              position: absolute;
+              right: 10px;
+              top: 50%;
+              transform: translateY(-50%);
+              pointer-events: none;
             }
           }
 

@@ -3,14 +3,14 @@ footer {
   background-color: var(--primary-black);
   height: 20dvh;
   width: 100vw;
-  color: var(--primary-white);
+  color: aliceblue;
   display: flex;
   justify-content: space-around;
   align-items: center;
   border-top: 1px solid transparent;
   a {
     transition: color 0.2s;
-    color: var(--primary-white);
+    color: aliceblue;
     text-decoration: none;
     &:hover {
       color: var(--primary-blue);

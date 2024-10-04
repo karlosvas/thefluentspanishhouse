@@ -1,42 +1,37 @@
 import dotenv from "dotenv";
 dotenv.config();
 ///////////////////////////////////////////
-import { connectDB } from "./mongodb.js";
+import { connectDB } from "./mongodb/mongodb.js";
 import express from "express";
 import cors from "cors";
-import { router } from "./routes/routes.js";
-import admin from "./lib/firebase/firebase-config.js";
+import { router } from "../routes/routes.js";
+import admin from "../lib/firebase/firebase-config.js";
 
 const app = express();
+// Configuración global de CORS
+const allowedOrigins = ["https://thefluentspanishhouse.com", process.env.URL_WEB_TEST, "http://localhost:5173"];
 
 // Extendemos el límite para que pueda almacenar imagenes en base64
 async function inicializeApp() {
+  // Configuración global de CORS
+  app.use(
+    cors({
+      origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+      credentials: true,
+    })
+  );
+
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ limit: "10mb", extended: true }));
   app.use(express.json());
-
-  // Configuración global de CORS
-  // const allowedOrigins =
-  //   process.env.NODE_ENV === "production"
-  //     ? [process.env.URL_WEB, process.env.URL_WEB_TEST]
-  //     : ["http://localhost:5173"];
-
-  // app.use(
-  //   cors({
-  //     origin: function (origin, callback) {
-  //       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-  //         callback(null, true);
-  //       } else {
-  //         callback(new Error("Not allowed by CORS"));
-  //       }
-  //     },
-  //     methods: "GET,POST,PUT,DELETE,OPTIONS",
-  //     allowedHeaders: "Content-Type,Authorization",
-  //     credentials: true,
-  //   })
-  // );
-
-  app.use(cors());
 
   // Conexión a la base de datos
   try {
@@ -46,7 +41,7 @@ async function inicializeApp() {
   }
 
   app.get("/", (req, res) => {
-    res.send("Welcome to thefluentespnaishouse serverr");
+    res.send("Welcome to thefluentespnaishouse server");
   });
 
   // Rutas de la aplicación

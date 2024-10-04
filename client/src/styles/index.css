@@ -1,15 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 
 @font-face {
-  font-family: "nemesis";
-  src: url("/nemesis/nemesis.otf");
+  font-family: "AlegreyaV";
+  src: url("/fonts/alegreya/AlegreyaSans-Medium.ttf") format("truetype");
 }
-
-/* @font-face {
-  font-family: "alegreya-sans";
-  src: url("/alegreya-sans/AlegreyaSans-Light.ttf");
-} */
 
 :root {
   line-height: 1.5;
@@ -39,7 +33,7 @@
 }
 
 body {
-  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
@@ -164,7 +158,11 @@ html.dark {
         background-color: var(--primary-black);
       }
     }
-    .main-newsletter .freecontent-section .freecontent-article .freecontent-content > #formulario {
+    .main-newsletter
+      .freecontent-section
+      .freecontent-article
+      .freecontent-content
+      > #formulario {
       .form-group label {
         background-color: var(--primary-black);
       }
@@ -175,10 +173,21 @@ html.dark {
         label {
           background-color: var(--primary-black);
         }
-        .mult-select-tag ul {
-          background-color: var(--primary-black);
-        }
         .mult-select-tag {
+          ul {
+            background-color: var(--primary-black);
+            li.selected {
+              background-color: var(--secondary-black);
+            }
+          }
+          .item-container {
+            background-color: var(--primary-black) !important;
+            color: var(--primary-white) !important;
+          }
+
+          .item-label {
+            color: var(--primary-white) !important;
+          }
           .input-body {
             background-color: var(--primary-black);
             input {
@@ -194,9 +203,6 @@ html.dark {
 
     /* Main */
     .main-index {
-      .main-content {
-        background-image: linear-gradient(180deg, rgb(111, 96, 196) 0%, rgb(28, 53, 165) 74%);
-      }
       .div-pracing {
         color: var(--primary-white);
         .flex-cards .card-pracing {
@@ -260,7 +266,10 @@ html.dark {
 
     /* Newsletter */
     .main-newsletter {
-      .freecontent-section .freecontent-article .freecontent-content .form-group {
+      .freecontent-section
+        .freecontent-article
+        .freecontent-content
+        .form-group {
         label {
           background-color: var(--primary-black);
         }
