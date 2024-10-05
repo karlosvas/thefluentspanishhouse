@@ -3,22 +3,20 @@ import dotenv from "dotenv";
 import { Types } from "mongoose";
 dotenv.config();
 //####################### GET #######################
-// Test para obtener todos los comentarios
 test("/comments/all obtener todos los comentarios", async ({ page }) => {
-    const responseAll = await page.goto("http://127.0.0.1:8080/comments/all");
+    const responseAll = await page.goto("/comments/all");
     expect(responseAll?.status()).toBe(200);
     const allComments = await responseAll?.json();
     expect(allComments).toBeDefined();
 });
-// Test para obtener un comentario por ID
 test("/comments/:id obtener por id", async ({ page }) => {
-    const responseAll = await page.goto("http://127.0.0.1:8080/comments/all");
+    const responseAll = await page.goto("/comments/all");
     expect(responseAll?.status()).toBe(200);
     const allComments = await responseAll?.json();
     expect(allComments).toBeDefined();
     if (allComments.length > 0) {
         // Si existe algun comentario se obtiene el primer comentario
-        const responseID = await page.goto(`http://127.0.0.1:8080/comments/${allComments[0]._id}`);
+        const responseID = await page.goto(`/comments/${allComments[0]._id}`);
         expect(responseID?.status()).toBe(200);
     }
     else {
@@ -27,15 +25,14 @@ test("/comments/:id obtener por id", async ({ page }) => {
         expect(allComments.length).toBe(0);
     }
 });
-// Test para obtener los hijos de un comentario por ID
 test("comments/children/:id obtener por id los hijos", async ({ page }) => {
-    const responseAll = await page.goto("http://127.0.0.1:8080/comments/all");
+    const responseAll = await page.goto("/comments/all");
     expect(responseAll?.status()).toBe(200);
     const allComments = await responseAll?.json();
     expect(allComments).toBeDefined();
     if (allComments.length > 0) {
         // Si existe algun comentario se obtiene el primer comentario
-        const responseChildren = await page.goto(`http://127.0.0.1:8080/comments/children/${allComments[0]._id}`);
+        const responseChildren = await page.goto(`/comments/children/${allComments[0]._id}`);
         expect(responseChildren?.status()).toBe(200);
     }
     else {
@@ -71,7 +68,7 @@ test.describe.serial("Comment tests", () => {
     //####################### POST #######################
     test("/comments/new agregar nuevo comentario", async ({ page }) => {
         // Cremos un comentario padre
-        const responseNewComment = await page.request.post("http://127.0.0.1:8080/comments/new", {
+        const responseNewComment = await page.request.post("/comments/new", {
             data: { ...newComment, originUrl },
         });
         expect(responseNewComment.status()).toBe(201);
@@ -84,13 +81,13 @@ test.describe.serial("Comment tests", () => {
     test("/comments/new editar nuevo comentario", async ({ page }) => {
         newComment.data = "Este es un comentario editado";
         // Cremos un comentario padre
-        const responsePost = await page.request.put(`http://127.0.0.1:8080/comments/edit/${createdCommentId}`, {
+        const responsePost = await page.request.put(`/comments/edit/${createdCommentId}`, {
             data: { textEdit: "Este es un comentario editado" },
         });
         expect(responsePost.status()).toBe(200);
     });
     test("/likes add", async ({ page }) => {
-        const responseLike = await page.request.put(`http://127.0.0.1:8080/comments/likes`, {
+        const responseLike = await page.request.put(`/comments/likes`, {
             data: requestBody,
         });
         expect(responseLike.status()).toBe(200);
@@ -100,7 +97,7 @@ test.describe.serial("Comment tests", () => {
     test("/likes del", async ({ page }) => {
         const newRequestBody = { ...requestBody };
         newRequestBody.likes = 1;
-        const responseDislike = await page.request.put(`http://127.0.0.1:8080/comments/likes`, {
+        const responseDislike = await page.request.put(`/comments/likes`, {
             data: newRequestBody,
         });
         expect(responseDislike.status()).toBe(200);
@@ -111,7 +108,7 @@ test.describe.serial("Comment tests", () => {
     test("/comments/del/:id eliminar comentario", async ({ page }) => {
         if (!createdCommentId)
             throw new Error("No comment ID available to delete");
-        const responseDel = await page.request.delete(`http://127.0.0.1:8080/comments/del/${createdCommentId}`);
+        const responseDel = await page.request.delete(`/comments/del/${createdCommentId}`);
         expect(responseDel.status()).toBe(204);
         console.log(`Deleted comment ID: ${createdCommentId}`);
     });

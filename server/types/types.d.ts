@@ -57,7 +57,9 @@ export interface Member {
   email_address: string;
   status: Status;
   email_type: "html" | "text";
-  merge_fields?: {
+  merge_fields: {
+    FNAME: string;
+    LNAME: string;
     [key: string]: string;
   };
   interests: {
@@ -106,7 +108,7 @@ interface Category {
   id: string;
   title: string;
   display_order: number;
-  type: string;
+  tyº: string;
   _links: Link[];
 }
 
@@ -121,6 +123,7 @@ interface Interest {
   category_id: string;
   list_id: string;
   id: string;
+  name: string;
 }
 export interface InterestResponse {
   _links: Link[];

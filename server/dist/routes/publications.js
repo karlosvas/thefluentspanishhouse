@@ -8,11 +8,7 @@ const router = Router();
 // Obtener la última publicación
 router.get("/last", log, verifyIdToken, async (req, res) => {
     try {
-        const lastPublication = await modelPublication
-            .findOne()
-            .sort({ currentPage: -1 })
-            .select("currentPage")
-            .exec();
+        const lastPublication = await modelPublication.findOne().sort({ currentPage: -1 }).select("currentPage").exec();
         if (!lastPublication)
             return res.status(404).json({ message: "Publication not found" });
         res.status(200).json(lastPublication);
@@ -115,7 +111,7 @@ router.delete("/del/:id", log, verifyIdToken, async (req, res) => {
         await modelComment.deleteMany({ pattern_id: id });
         if (!result)
             return res.status(404).json({ message: "Publication not found" });
-        res.status(200).send();
+        res.status(204).send();
     }
     catch (error) {
         console.error("Error deleting publication:", error);
