@@ -22,6 +22,11 @@ export interface SubscriberType {
   [key: string]: unknown;
 }
 
+export interface ErrorAxios {
+  status: number;
+  message: string;
+}
+
 export interface Comment {
   _id: ObjectId;
   pattern_id: string;

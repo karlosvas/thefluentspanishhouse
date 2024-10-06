@@ -25,33 +25,46 @@ async function addInterestToCategory(interestCategoryId, interestName) {
         name: interestName,
     };
     try {
+        // El user puede ser cualquier string, no importa
         const response = await axios.post(url, data, {
             auth: {
-                username: "anystring",
+                username: "admin",
                 password: mailchimpKey,
             },
         });
-        console.log("Interest added to category:", response.data);
         return response;
     }
     catch (error) {
-        console.error("Error adding interest to category:", error);
+        if (axios.isAxiosError(error) && error.response) {
+            throw { status: error.response.status, message: error.response.data };
+        }
+        else {
+            throw { status: 500, message: "Unexpected error occurred" };
+        }
     }
 }
 async function deleteInterestCategory(interestCategoryId) {
-    const url = `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${listId}/interest-categories/${interestCategoryId}`;
+    const url = `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${listId}/interest-categories/${groupId}/interests/${interestCategoryId}`;
+    // const url = https://${dc}.api.mailchimp.com/3.0/lists/{list_id}/interest-categories/{interest_category_id}/interests/{interest_id}
     try {
+        // El user puede ser cualquier string, no importa
         const response = await axios.delete(url, {
             auth: {
-                username: "anystring",
+                username: "admin",
                 password: mailchimpKey,
             },
         });
-        console.log("Interest category deleted:", response.data);
+        console.log(response);
         return response;
     }
     catch (error) {
-        console.error("Error deleting interest category:", error);
+        if (axios.isAxiosError(error) && error.response) {
+            console.log(error);
+            throw { status: error.response.status, message: error.response.data };
+        }
+        else {
+            throw { status: 500, message: "Unexpected error occurred" };
+        }
     }
 }
-export { listId, mailchimpErrors, mailchimp, addInterestToCategory, deleteInterestCategory, groupId, };
+export { listId, mailchimpErrors, mailchimp, addInterestToCategory, deleteInterestCategory, groupId };

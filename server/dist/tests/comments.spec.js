@@ -41,32 +41,32 @@ test("comments/children/:id obtener por id los hijos", async ({ page }) => {
         expect(allComments.length).toBe(0);
     }
 });
-let createdCommentId;
-const originUrl = "https://thefluentspanishhouse.com/publication/66d4e739b705f46a0a395947";
-const fatherID = new Types.ObjectId().toString();
-const newComment = {
-    _id: fatherID,
-    pattern_id: "66d4e739b705f46a0a395947",
-    owner: {
-        uid: "user123",
-        displayName: "John Doe",
-        email: "john.doe@example.com",
-        photoURL: "http://example.com/photo.jpg",
-    },
-    data: "Este es un nuevo comentario",
-    likes: 0,
-    likedBy: [],
-    answers: [],
-};
-const requestBody = {
-    uid_user_firebase: "user_firebase_123",
-    _id: "",
-    likes: 0,
-    originUrl,
-};
 test.describe.serial("Comment tests", () => {
+    let createdCommentId;
+    const originUrl = "https://thefluentspanishhouse.com/publication/66d4e739b705f46a0a395947";
+    const fatherID = new Types.ObjectId().toString();
+    const requestBody = {
+        uid_user_firebase: "user_firebase_123",
+        _id: "",
+        likes: 0,
+        originUrl,
+    };
     //####################### POST #######################
     test("/comments/new agregar nuevo comentario", async ({ page }) => {
+        const newComment = {
+            _id: fatherID,
+            pattern_id: "66d4e739b705f46a0a395947",
+            owner: {
+                uid: "user123",
+                displayName: "John Doe",
+                email: "john.doe@example.com",
+                photoURL: "http://example.com/photo.jpg",
+            },
+            data: "Este es un nuevo comentario",
+            likes: 0,
+            likedBy: [],
+            answers: [],
+        };
         // Cremos un comentario padre
         const responseNewComment = await page.request.post("/comments/new", {
             data: { ...newComment, originUrl },
@@ -78,11 +78,14 @@ test.describe.serial("Comment tests", () => {
         requestBody._id = fatherComment._id;
     });
     //####################### PUT #######################
-    test("/comments/new editar nuevo comentario", async ({ page }) => {
-        newComment.data = "Este es un comentario editado";
+    test("/comments/edit/:id editar nuevo comentario", async ({ page }) => {
+        const textEdit = "Este es un comentario editado";
         // Cremos un comentario padre
         const responsePost = await page.request.put(`/comments/edit/${createdCommentId}`, {
-            data: { textEdit: "Este es un comentario editado" },
+            data: textEdit,
+            headers: {
+                "Content-Type": "text/plain",
+            },
         });
         expect(responsePost.status()).toBe(200);
     });
@@ -110,6 +113,5 @@ test.describe.serial("Comment tests", () => {
             throw new Error("No comment ID available to delete");
         const responseDel = await page.request.delete(`/comments/del/${createdCommentId}`);
         expect(responseDel.status()).toBe(204);
-        console.log(`Deleted comment ID: ${createdCommentId}`);
     });
 });

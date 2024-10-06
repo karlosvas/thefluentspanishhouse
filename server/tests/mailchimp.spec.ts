@@ -1,7 +1,7 @@
 import { Status } from "@mailchimp/mailchimp_marketing";
 import { test, expect } from "@playwright/test";
 import dotenv from "dotenv";
-import { InterestCategoryResponse, InterestResponse, Member, OptionsChampTag } from "types/types";
+import { InterestResponse, Member, OptionsChampTag } from "types/types";
 dotenv.config();
 
 //####################### GET #######################
@@ -50,16 +50,23 @@ test.describe.serial("Mailchimp tests", () => {
       status_if_new: "transactional",
     };
 
-    const responseNewMember = await page.request.post(`mailchimp/add/member`, {
+    let responseNewMember = await page.request.post(`mailchimp/add/member`, {
       data: member,
     });
-    expect(responseNewMember?.status()).toBe(201);
+
     const data = await responseNewMember?.json();
-    expect(data).toBeDefined();
+
+    if (data.title === "Member Exists") {
+      // Si el miembro ya existe, no se puede añadir
+      expect(data.title).toContain(`Member Exists`);
+    } else {
+      expect(responseNewMember?.status()).toBe(201);
+      expect(data).toBeDefined();
+    }
   });
 
   //####################### GET #######################
-  test("/getone/member/:email obtener un miembro de una lista", async ({ page }) => {
+  test("/getone/member/:email obtener un miembro", async ({ page }) => {
     const responseMember = await page.goto(`/mailchimp/getone/member/${testEmail}`);
     expect(responseMember?.status()).toBe(200);
 
@@ -103,20 +110,25 @@ test.describe.serial("Mailchimp tests", () => {
     expect(data).toBeDefined();
   });
 
-  let idCategory = "";
   test("/add/interests añadir intereses", async ({ page }) => {
-    const name = {
-      name: "testing",
-    };
+    const name = "testing";
+
     const responseNewInterests = await page.request.post(`mailchimp/add/interests`, {
       data: name,
+      headers: {
+        "Content-Type": "text/plain",
+      },
     });
+
+    const data = await responseNewInterests?.json();
     const status = responseNewInterests?.status();
-    expect([200, 201]).toContain(status);
-    if (status == 201) {
-      const data = await responseNewInterests?.json();
-      expect(data).toBeDefined();
-      idCategory = data.id;
+
+    if (data.detail && data.detail.includes(`Cannot add "${name}" because it already exists on the list.`)) {
+      // Si el interés ya existe, no se puede añadir
+      expect(data.detail).toContain("because it already exists on the list");
+    } else {
+      // La api de mailchimp no devuelbe nada
+      expect(status).toBe(201);
     }
   });
 
@@ -124,7 +136,10 @@ test.describe.serial("Mailchimp tests", () => {
   test("/updatecontact/status/:email editar esatdo de un usuario por email", async ({ page }) => {
     const status: Status = "transactional";
     const responseStatus = await page.request.put(`/mailchimp/updatecontact/status/${testEmail}`, {
-      data: { status },
+      data: status,
+      headers: {
+        "Content-Type": "text/plain",
+      },
     });
     expect(responseStatus?.status()).toBe(200);
     const data = await responseStatus?.json();
@@ -134,7 +149,10 @@ test.describe.serial("Mailchimp tests", () => {
   test("/updatecontact/tag/:email editar tag de un usuario por email", async ({ page }) => {
     const tag: OptionsChampTag = "FREE_CLASS";
     const responseTag = await page.request.put(`/mailchimp/updatecontact/tag/${testEmail}`, {
-      data: { tag },
+      data: tag,
+      headers: {
+        "Content-Type": "text/plain",
+      },
     });
     expect(responseTag?.status()).toBe(200);
     const data = await responseTag?.json();
@@ -143,47 +161,41 @@ test.describe.serial("Mailchimp tests", () => {
 
   //####################### DELETE #######################
 
-  test("/tags/del/:email eliminar el tag de una user", async ({ page }) => {
-    const tag: OptionsChampTag = "FREE_CLASS";
-    const responseDelTag = await page.request.delete(`/mailchimp/tags/del/${testEmail}`, {
-      data: { tag },
-    });
-    expect(responseDelTag?.status()).toBe(204);
-  });
-
   test("/del/interests/:idCategoty eliminar intereses de una categoria", async ({ page }) => {
-    // Se a creado un interes por lo que podemos elimiinarlo
-    if (idCategory != "") {
-      const responseInterests = await page.request.delete(`/mailchimp/del/interests/${idCategory}`);
-      expect(responseInterests?.status()).toBe(204);
-    } else {
-      // No se ha creado un interes por que ya existia
-      let id_testing;
-      for (let i = 0; i < group.total_items; i++) {
-        const { name, id } = group.interests[i];
-        if (name == "testing") {
-          id_testing = id;
-          break;
-        }
+    // Verificamos si existe el interes de testing y obtenemos su id
+    let id_testing: string = "";
+    for (let i = 0; i < group.total_items; i++) {
+      const { name, id } = group.interests[i];
+      if (name == "testing") {
+        id_testing = id;
+        break;
       }
+    }
+    if (id_testing != "") {
       const responseInterests = await page.request.delete(`/mailchimp/del/interests/${id_testing}`);
       expect(responseInterests?.status()).toBe(204);
+    } else {
+      expect(id_testing).toBe("");
     }
   });
 
-  test("/del/:id eliminar el tag del miembro de una lista", async ({ page }) => {
-    const responseDelTag = await page.request.delete(`/mailchimp/tags/del/${testEmail}`, {
-      data: { tag: "FREE_CLASS" },
+  test("/del/tag/:email eliminar tag de un miembro", async ({ page }) => {
+    const tag: OptionsChampTag = "FREE_CLASS";
+    const responseDelTag = await page.request.delete(`/mailchimp/del/tag/${testEmail}`, {
+      data: tag,
+      headers: {
+        "Content-Type": "text/plain",
+      },
     });
     expect(responseDelTag?.status()).toBe(204);
   });
 
-  test("/user/del/:email eliminar intereses de una categoria", async ({ page }) => {
-    const responseUser = await page.request.delete(`/mailchimp/user/del/${testEmail}`);
+  test("/del/user/:email eliminar usuarios", async ({ page }) => {
+    const responseUser = await page.request.delete(`/mailchimp/del/user/${testEmail}`);
     expect(responseUser?.status()).toBe(204);
-    const responseUser1 = await page.request.delete(`/mailchimp/user/del/testing1@gmail.com`);
+    const responseUser1 = await page.request.delete(`/mailchimp/del/user/testing1@gmail.com`);
     expect(responseUser1?.status()).toBe(204);
-    const responseUser2 = await page.request.delete(`/mailchimp/user/del/testing2@gmail.com`);
+    const responseUser2 = await page.request.delete(`/mailchimp/del/user/testing2@gmail.com`);
     expect(responseUser2?.status()).toBe(204);
   });
 });

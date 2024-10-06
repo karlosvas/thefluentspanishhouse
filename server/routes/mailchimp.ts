@@ -10,8 +10,9 @@ import {
 import { log, verifyIdToken } from "../middelware/token-logs.js";
 import { validateEmail } from "../utilities/validateEmail.js";
 import { type Status } from "@mailchimp/mailchimp_marketing";
-import { InterestCategoryResponse, type Member, type OptionsChampTag } from "types/types.js";
+import { type ErrorAxios, type Member, type OptionsChampTag } from "types/types.js";
 import crypto from "crypto";
+import { isErrorAxios } from "../utilities/axios-utils.js";
 
 const router = Router();
 
@@ -30,10 +31,10 @@ router.get("/getall/member", log, verifyIdToken, async (req: Request, res: Respo
 
 // Obtener un miembro de la lista por email
 router.get("/getone/member/:email", log, verifyIdToken, async (req: Request, res: Response) => {
-  const memberemail = req.params.email;
-  const subscriberHash = crypto.createHash("md5").update(memberemail).digest("hex");
+  const { email } = req.params;
+  const subscriberHash = crypto.createHash("md5").update(email).digest("hex");
 
-  if (!validateEmail(memberemail)) return res.status(400).send("Email inválido");
+  if (!validateEmail(email)) return res.status(400).send("Email inválido");
 
   mailchimp.lists
     .getListMember(listId, subscriberHash)
@@ -108,28 +109,20 @@ router.post("/add/batchcontact", log, verifyIdToken, async (req: Request, res: R
 });
 
 router.post("/add/interests", log, verifyIdToken, async (req: Request, res: Response) => {
-  const { name } = req.body;
+  const name: string = req.body;
 
-  if (!groupId || !name) return res.status(400).send("Category ID and interest name are required");
+  if (!groupId || !name) res.status(400).send("Category ID and interest name are required");
 
+  // Añadir el nuevo interés
   try {
-    // Verificar si el interés ya existe
-    const existingInterests = await mailchimp.lists.listInterestCategoryInterests(listId, groupId);
-    if ("interests" in existingInterests) {
-      const interestExists = existingInterests.interests.some((interest: any) => interest.name === name);
-      if (interestExists) {
-        return res.status(200).send(`Interest "${name}" already exists.`);
-      }
+    await addInterestToCategory(groupId, name);
+    res.status(201).json({ message: "Interest added successfully" });
+  } catch (error: ErrorAxios | unknown) {
+    if (isErrorAxios(error)) {
+      res.status(error.status).json(error.message);
     } else {
-      return res.status(500).send("Failed to retrieve interests.");
+      res.status(500).json(error);
     }
-
-    // Añadir el nuevo interés
-    const response = await addInterestToCategory(groupId, name);
-    res.status(201).json(response);
-  } catch (error) {
-    const parserError = mailchimpErrors(error);
-    res.status(parserError.status).json(parserError);
   }
 });
 
@@ -137,9 +130,9 @@ router.post("/add/interests", log, verifyIdToken, async (req: Request, res: Resp
 // Actualizar el estado de un miembro de la lista
 router.put("/updatecontact/status/:email", log, verifyIdToken, async (req: Request, res: Response) => {
   const email: string = req.params.email;
-  const status: Status = req.body.status;
+  const status: Status = req.body;
 
-  if (!validateEmail(email)) return res.status(400).send("Email inválido");
+  if (!validateEmail(email)) res.status(400).send("Email inválido");
 
   const subscriberHash = crypto.createHash("md5").update(email.toLowerCase()).digest("hex");
 
@@ -157,7 +150,7 @@ router.put("/updatecontact/status/:email", log, verifyIdToken, async (req: Reque
 // Añadir el tag de un miembro de la lista
 router.put("/updatecontact/tag/:email", log, verifyIdToken, async (req: Request, res: Response) => {
   const email: string = req.params.email;
-  const tag: OptionsChampTag = req.body.tag;
+  const tag: OptionsChampTag = req.body;
 
   if (!validateEmail(email)) return res.status(400).send("Email inválido");
 
@@ -176,7 +169,7 @@ router.put("/updatecontact/tag/:email", log, verifyIdToken, async (req: Request,
 
 // <--------------- DEL --------------->
 // Eliminar un miembro de la lista
-router.delete("/user/del/:email", log, verifyIdToken, async (req: Request, res: Response) => {
+router.delete("/del/user/:email", log, verifyIdToken, async (req: Request, res: Response) => {
   // Obtenemos el email del usuario a eliminar desde la URL
   const email = req.params.email;
   const subscriberHash = crypto.createHash("md5").update(email).digest("hex");
@@ -195,10 +188,10 @@ router.delete("/user/del/:email", log, verifyIdToken, async (req: Request, res: 
 });
 
 // Eliminar un tag de un miembro de la lista
-router.delete("/tags/del/:email", log, verifyIdToken, async (req: Request, res: Response) => {
+router.delete("/del/tag/:email", log, verifyIdToken, async (req: Request, res: Response) => {
   // Obtenemos el email del usuario a eliminar desde la URL
-  const email: string = req.params.email;
-  const tag: OptionsChampTag = req.body.tag;
+  const { email } = req.params;
+  const tag: OptionsChampTag = req.body;
 
   // Verificamos que el email sea válido
   if (!validateEmail(email)) return res.status(400).send("Invalid email");
@@ -221,13 +214,16 @@ router.delete("/tags/del/:email", log, verifyIdToken, async (req: Request, res: 
 router.delete("/del/interests/:idCategoty", log, verifyIdToken, async (req: Request, res: Response) => {
   const { idCategoty } = req.params;
 
-  deleteInterestCategory(idCategoty)
-    .then((response) => {
-      res.status(204).json(response);
-    })
-    .catch((error) => {
-      res.status(500).json(mailchimpErrors(error));
-    });
+  try {
+    await deleteInterestCategory(idCategoty);
+    res.status(204).end();
+  } catch (error: ErrorAxios | unknown) {
+    if (isErrorAxios(error)) {
+      res.status(error.status).json(error.message);
+    } else {
+      res.status(500).json(error);
+    }
+  }
 });
 
 export { router };

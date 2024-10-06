@@ -7,15 +7,15 @@ router.post("/note", log, verifyIdToken, async (req, res) => {
     if (!newNote.email_user || !newNote.username || !newNote.subject || !newNote.note)
         return res.status(400).send({ message: "Missing required fields" });
     submitNote(newNote.email_user, newNote.username, newNote.subject, newNote.note)
-        .then((response) => res.status(200).json({ message: "Email sent successfully", response }))
+        .then((response) => res.status(201).json({ message: "Email sent successfully", response }))
         .catch((error) => res.status(500).send({ message: "Error sending email", error }));
 });
 router.post("/newstudent", log, verifyIdToken, async (req, res) => {
-    const newSuscriber = req.body;
-    if (!newSuscriber.email || !newSuscriber.name || !newSuscriber.lastname || !newSuscriber.class)
+    const newSubcriber = req.body;
+    if (!newSubcriber.email || !newSubcriber.name || !newSubcriber.lastname || !newSubcriber.class)
         return res.status(400).send({ message: "Missing required fields" });
-    submitEmalStudent(newSuscriber.email, newSuscriber.name, newSuscriber.lastname, newSuscriber.class)
-        .then((response) => res.status(200).json({ message: "Email sent successfully", response }))
+    submitEmalStudent(newSubcriber.email, newSubcriber.name, newSubcriber.lastname, newSubcriber.class)
+        .then((response) => res.status(201).json({ message: "Email sent successfully", response }))
         .catch((error) => res.status(500).send({ message: "Error sending email", error }));
 });
 export { router };

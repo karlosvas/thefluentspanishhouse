@@ -9,12 +9,7 @@ const mandrill = mailchimp(process.env.MANDRILL_API_KEY as string);
 const admin = process.env.ADMIN_GMAIL as string;
 
 // Enviar nota de contact us a el administrador
-export async function submitNote(
-  email_user: string,
-  username: string,
-  subject: string,
-  note: string
-) {
+export async function submitNote(email_user: string, username: string, subject: string, note: string) {
   const message: Message = {
     from_email: "no-reply@thefluentspanishhouse.com",
     from_name: `${email_user}`,
@@ -42,12 +37,7 @@ export async function submitNote(
 }
 
 // Enviar email de nuevo estuidiante a el administrador
-export async function submitEmalStudent(
-  email_user: string,
-  username: string,
-  lastname: string,
-  className: string
-) {
+export async function submitEmalStudent(email_user: string, username: string, lastname: string, className: string) {
   let message: Message = {
     from_email: "no-reply@thefluentspanishhouse.com",
     from_name: `${email_user}`,
@@ -65,7 +55,7 @@ export async function submitEmalStudent(
     },
   };
   try {
-    return await mandrill.messages.send({ message });
+    if (process.env.NODE_ENV === "production") return await mandrill.messages.send({ message });
   } catch (error) {
     console.error("Error sending email", error);
     throw error;
@@ -73,12 +63,7 @@ export async function submitEmalStudent(
 }
 
 // Enviar email de nuevo comentario a el administrador
-export async function submitEmailComment(
-  email_user: string,
-  username: string,
-  data: string,
-  originUrl: string
-) {
+export async function submitEmailComment(email_user: string, username: string, data: string, originUrl: string) {
   let message: Message = {
     from_email: "no-reply@thefluentspanishhouse.com",
     from_name: `${email_user}`,
@@ -95,7 +80,7 @@ export async function submitEmailComment(
   };
 
   try {
-    return await mandrill.messages.send({ message });
+    if (process.env.NODE_ENV === "production") return await mandrill.messages.send({ message });
   } catch (error) {
     console.error("Error sending email", error);
     throw error;

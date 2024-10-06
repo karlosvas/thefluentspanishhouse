@@ -124,7 +124,7 @@ router.put("/likes", log, verifyIdToken, async (req, res) => {
 // Editar comentarios
 router.put("/edit/:id", log, verifyIdToken, async (req, res) => {
     const { id } = req.params;
-    const { textEdit } = req.body;
+    const textEdit = req.body;
     if (!textEdit)
         return res.status(400).json({ message: "Missing content" });
     try {
