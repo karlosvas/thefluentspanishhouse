@@ -51,7 +51,8 @@ export async function submitEmalStudent(email_user, username, lastname, classNam
         },
     };
     try {
-        // return await mandrill.messages.send({ message });
+        if (process.env.NODE_ENV === "production")
+            return await mandrill.messages.send({ message });
     }
     catch (error) {
         console.error("Error sending email", error);
@@ -75,7 +76,8 @@ export async function submitEmailComment(email_user, username, data, originUrl) 
     <p>Desde la publicación: ${originUrl}<p/>`,
     };
     try {
-        // return await mandrill.messages.send({ message });
+        if (process.env.NODE_ENV === "production")
+            return await mandrill.messages.send({ message });
     }
     catch (error) {
         console.error("Error sending email", error);

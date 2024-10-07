@@ -82,12 +82,8 @@ export const getMailchimpUser = async (email: string) => {
 export const postComment = async (newCommentData: Comment) => {
   try {
     const originUrl = window.location.href;
-    const dataToSend = {
-      ...newCommentData,
-      originUrl,
-    };
     await helper.post(`${url_api}/comments/new`, {
-      body: JSON.stringify(dataToSend),
+      body: JSON.stringify({ newCommentData, originUrl }),
     });
   } catch (error) {
     console.error("Error al enviar el comentario:", error);
@@ -96,8 +92,9 @@ export const postComment = async (newCommentData: Comment) => {
 
 export const postChildrenComment = async (newCommentData: Comment, id: string) => {
   try {
+    const originUrl = window.location.href;
     return await helper.post(`${url_api}/comments/children/${id}`, {
-      body: JSON.stringify(newCommentData),
+      body: JSON.stringify({ newCommentData, originUrl }),
     });
   } catch (error) {
     console.error("Error al enviar el comentario:", error);
@@ -127,8 +124,6 @@ export const subscribeNewsletter = async (email: string) => {
 
 ///////////////////////////// EMAILS /////////////////////////////
 export const sendEmailNewClass = async (newSubscriber: SubscriberType) => {
-  console.log("newSubscriber", newSubscriber);
-  console.log(`${url_api}/mandrill/newstudent`);
   helper
     .post(`${url_api}/mandrill/newstudent`, {
       body: JSON.stringify(newSubscriber),
@@ -193,11 +188,11 @@ export const submitSubscriptionMailchimp = async (member: Member) => {
 
 export const updateTagsMailchimp = async (mailchimpUser: Member, buttonName: string, handleChange: () => void) => {
   const email = mailchimpUser.email_address;
-  const newTag = getTag(buttonName);
+  const tag = getTag(buttonName);
 
   helper
     .put(`${url_api}/mailchimp/updatecontact/tag/${email}`, {
-      body: JSON.stringify({ tag: newTag }),
+      body: JSON.stringify({ tag }),
     })
     .then(() => {
       if (mailchimpUser.merge_fields) {

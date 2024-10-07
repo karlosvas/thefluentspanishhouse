@@ -3,7 +3,7 @@ import { type Status } from "@mailchimp/mailchimp_marketing";
 import { ObjectId } from "mongoose";
 
 export interface PublicationCardType {
-  _id: ObjectId;
+  _id: Types.ObjectId;
   title: string;
   subtitle: string;
   content: string;
@@ -16,9 +16,9 @@ export interface SubscriberType {
   lastname: string;
   email: string;
   class: OptionsChampTag;
-  consentEmails: false;
-  acceptTerms: false;
-  acceptPrivacy: false;
+  consentEmails: boolean;
+  acceptTerms: boolean;
+  acceptPrivacy: boolean;
   [key: string]: unknown;
 }
 
@@ -28,7 +28,7 @@ export interface ErrorAxios {
 }
 
 export interface Comment {
-  _id: ObjectId;
+  _id: Types.ObjectId;
   pattern_id: string;
   owner: {
     uid: string;
@@ -67,7 +67,7 @@ export interface Member {
     LNAME: string;
     [key: string]: string;
   };
-  interests: {
+  interests?: {
     [key: string]: boolean;
   };
   tags: OptionsChampTag[];

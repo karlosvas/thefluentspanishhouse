@@ -28,24 +28,16 @@ export const handleInputChange = <T extends Record<string, unknown>>(
 };
 
 // Envio de correo para restablecer la contraseña
-export const forgotPasword = (
-  user: User | null,
-  navigate: NavigateFunction
-) => {
+export const forgotPasword = (user: User | null, navigate: NavigateFunction) => {
   if (user && user.email) {
     const currentProviderId = getProvider(user);
 
     if (currentProviderId === "password") resetPassword(user.email, navigate);
     else {
-      toast(
-        `Can not reset password for accounts authenticated with ${getProvider(
-          user
-        )}.`,
-        {
-          duration: 10000,
-          icon: "🔔",
-        }
-      );
+      toast(`Can not reset password for accounts authenticated with ${getProvider(user)}.`, {
+        duration: 10000,
+        icon: "🔔",
+      });
     }
   } else {
     navigate("/verify", { state: { reset: true } });
@@ -59,19 +51,18 @@ export const getTag = (name: string): OptionsChampTag => {
 
 // Función para manejar los errores de mailchimp
 export function errorMailchimp(error: ErrorResponseHelper) {
+  const titleMessage = error.message?.title;
   const messageError = error.message?.detail;
   const status = error.status;
+
+  console.log(error.message);
+
   if (messageError?.includes("permanently deleted")) {
-    toast.error(
-      "This user is permanently deleted from Mailchimp, please contact with the support team."
-    );
-  } else if (messageError?.includes("is already a list member")) {
-    toast(
-      "This user already exists in Mailchimp, We will try to offer better service ",
-      {
-        icon: "🙈",
-      }
-    );
+    toast.error("This user is permanently deleted from Mailchimp, please contact with the support team.");
+  } else if (titleMessage == "Member Exists") {
+    toast("This user already exists in Mailchimp, We will try to offer better service ", {
+      icon: "🙈",
+    });
   }
 
   return { messageError, status };

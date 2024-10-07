@@ -24,10 +24,10 @@ router.get("/all", log, verifyIdToken, async (req, res) => {
 // Obtener los hijos de un comentario
 router.get("/children/:id", log, verifyIdToken, async (req, res) => {
   // El id es el id del comentario padre (parent_id)
-  const parentId = req.params.id;
+  const { id } = req.params;
   try {
     // Buscar el comentario padre y obtener sus hijos
-    const comments = await modelComment.findById(parentId).populate("answers");
+    const comments = await modelComment.findById(id).populate("answers");
     if (!comments) throw new Error("Comments not found");
     res.status(200).json(comments.answers);
   } catch (error) {
@@ -37,7 +37,7 @@ router.get("/children/:id", log, verifyIdToken, async (req, res) => {
 
 // Carga de comentarios al entrar en una publicación
 router.get("/:id", log, verifyIdToken, async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   try {
     const parentComments = await modelComment.find({ pattern_id: id });
     res.status(200).json(parentComments);
@@ -49,8 +49,7 @@ router.get("/:id", log, verifyIdToken, async (req, res) => {
 // <--------------- POST --------------->
 // Agregar comentarios
 router.post("/new", log, verifyIdToken, async (req, res) => {
-  let newCommentData = req.body;
-  const originUrl = req.body;
+  const { newCommentData, originUrl } = req.body;
 
   try {
     // Crear un nuevo ObjectId para el nuevo comentario
@@ -71,9 +70,8 @@ router.post("/new", log, verifyIdToken, async (req, res) => {
 
 // Agregar comentarios hijos y hacer referencia al comentario padre
 router.post("/children/:id", log, verifyIdToken, async (req: Request, res: Response) => {
-  const parentCommentId = req.params.id;
-  let newCommentData = req.body;
-  const originUrl = req.body;
+  const { id } = req.params;
+  const { newCommentData, originUrl } = req.body;
 
   try {
     // Crear un nuevo ObjectId para el nuevo comentario
@@ -86,7 +84,7 @@ router.post("/children/:id", log, verifyIdToken, async (req: Request, res: Respo
     await submitEmailComment(newComment.owner.email, newComment.owner.displayName, newComment.data, originUrl);
 
     // Agregar el nuevo comentario al array de comentarios del comentario padre
-    const parentComment = await modelComment.findById(parentCommentId);
+    const parentComment = await modelComment.findById(id);
     if (!parentComment) {
       res.status(404).send("Parent comment not found");
       throw new Error("Parent comment not found");
@@ -134,7 +132,7 @@ router.put("/likes", log, verifyIdToken, async (req: Request, res: Response) => 
 // Editar comentarios
 router.put("/edit/:id", log, verifyIdToken, async (req: Request, res: Response) => {
   const { id } = req.params;
-  const textEdit = req.body;
+  const { textEdit } = req.body;
   if (!textEdit) return res.status(400).json({ message: "Missing content" });
 
   try {

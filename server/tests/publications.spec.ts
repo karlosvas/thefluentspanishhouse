@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
-import dotenv from "dotenv";
-dotenv.config();
+import { Types } from "mongoose";
+import { PublicationCardType } from "types/types";
 
 //####################### GET #######################
 test("/last obtener la última publicacion", async ({ page }) => {
@@ -22,13 +22,15 @@ test("/page/:page obtener publicaciones por página", async ({ page }) => {
 test.describe.serial("Comment tests", () => {
   //####################### POST #######################
   let id_publication: string;
-  const newPublication = {
-    title: "Title",
-    subtitle: "Subtitle",
-    content: "Content",
+  const newPublication: PublicationCardType = {
+    _id: new Types.ObjectId(),
+    title: "Test",
+    subtitle: "Test",
+    content: "Test",
     base64_img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABjElEQVR42mNkAAYy",
     currentPage: 1,
   };
+
   test("/new añadir publicaciones", async ({ page }) => {
     const responseNewPublication = await page.request.post(`/publications/new`, {
       data: newPublication,
@@ -38,6 +40,7 @@ test.describe.serial("Comment tests", () => {
     const data = await responseNewPublication?.json();
     expect(data).toBeDefined();
 
+    // La .id cambia en el servidor, por lo que se debe cambiar
     id_publication = data._id;
   });
 
@@ -50,13 +53,13 @@ test.describe.serial("Comment tests", () => {
     expect(data).toBeDefined();
   });
 
-  const updateFields = {
-    ...newPublication,
-  };
-
   //####################### PUT #######################
-  updateFields.title = "Title edited";
   test("/edit/:id editar publicaciones por id", async ({ page }) => {
+    const updateFields = {
+      ...newPublication,
+    };
+    updateFields.title = "Title edited";
+
     const responseID = await page.request.put(`/publications/edit/${id_publication}`, {
       data: updateFields,
     });

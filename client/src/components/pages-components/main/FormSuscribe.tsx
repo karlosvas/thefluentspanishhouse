@@ -114,6 +114,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
                 name="consentEmails"
                 checked={newSubscriber.consentEmails}
                 onChange={(e) => handleInputChange(e, setNewSubscriber)}
+                required
               />
               I give my consent to receive informational emails terms and conditions.
             </label>
@@ -123,6 +124,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
                 name="acceptTerms"
                 checked={newSubscriber.acceptTerms}
                 onChange={(event) => handleInputChange(event, setNewSubscriber)}
+                required
               />{" "}
               I accept the{" "}
               <Link to="/info" target="_blank">
@@ -135,6 +137,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
                 name="acceptPrivacy"
                 checked={newSubscriber.acceptPrivacy}
                 onChange={(event) => handleInputChange(event, setNewSubscriber)}
+                required
               />{" "}
               I have read and accept the{" "}
               <Link to="/info" target="_blank">

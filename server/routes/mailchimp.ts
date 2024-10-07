@@ -18,7 +18,7 @@ const router = Router();
 
 // <--------------- GET --------------->
 // Obtener todos los miembros de una lista
-router.get("/getall/member", log, verifyIdToken, async (req: Request, res: Response) => {
+router.get("/getall/member", log, verifyIdToken, async (_req: Request, res: Response) => {
   mailchimp.lists
     .getListMembersInfo(listId)
     .then((response) => {
@@ -109,7 +109,7 @@ router.post("/add/batchcontact", log, verifyIdToken, async (req: Request, res: R
 });
 
 router.post("/add/interests", log, verifyIdToken, async (req: Request, res: Response) => {
-  const name: string = req.body;
+  const { name }: { name: string } = req.body;
 
   if (!groupId || !name) res.status(400).send("Category ID and interest name are required");
 
@@ -129,8 +129,8 @@ router.post("/add/interests", log, verifyIdToken, async (req: Request, res: Resp
 // <--------------- PUT --------------->
 // Actualizar el estado de un miembro de la lista
 router.put("/updatecontact/status/:email", log, verifyIdToken, async (req: Request, res: Response) => {
-  const email: string = req.params.email;
-  const status: Status = req.body;
+  const { email } = req.params;
+  const { status }: { status: Status } = req.body;
 
   if (!validateEmail(email)) res.status(400).send("Email inválido");
 
@@ -149,8 +149,8 @@ router.put("/updatecontact/status/:email", log, verifyIdToken, async (req: Reque
 
 // Añadir el tag de un miembro de la lista
 router.put("/updatecontact/tag/:email", log, verifyIdToken, async (req: Request, res: Response) => {
-  const email: string = req.params.email;
-  const tag: OptionsChampTag = req.body;
+  const { email } = req.params;
+  const { tag }: { tag: OptionsChampTag } = req.body;
 
   if (!validateEmail(email)) return res.status(400).send("Email inválido");
 
@@ -171,7 +171,7 @@ router.put("/updatecontact/tag/:email", log, verifyIdToken, async (req: Request,
 // Eliminar un miembro de la lista
 router.delete("/del/user/:email", log, verifyIdToken, async (req: Request, res: Response) => {
   // Obtenemos el email del usuario a eliminar desde la URL
-  const email = req.params.email;
+  const { email } = req.params;
   const subscriberHash = crypto.createHash("md5").update(email).digest("hex");
 
   // Verificamos que el email sea válido
@@ -191,7 +191,7 @@ router.delete("/del/user/:email", log, verifyIdToken, async (req: Request, res: 
 router.delete("/del/tag/:email", log, verifyIdToken, async (req: Request, res: Response) => {
   // Obtenemos el email del usuario a eliminar desde la URL
   const { email } = req.params;
-  const tag: OptionsChampTag = req.body;
+  const { tag }: { tag: OptionsChampTag } = req.body;
 
   // Verificamos que el email sea válido
   if (!validateEmail(email)) return res.status(400).send("Invalid email");
@@ -211,11 +211,11 @@ router.delete("/del/tag/:email", log, verifyIdToken, async (req: Request, res: R
 });
 
 // Eliminar un interes de una categoria
-router.delete("/del/interests/:idCategoty", log, verifyIdToken, async (req: Request, res: Response) => {
-  const { idCategoty } = req.params;
+router.delete("/del/interests/:id", log, verifyIdToken, async (req: Request, res: Response) => {
+  const { id } = req.params;
 
   try {
-    await deleteInterestCategory(idCategoty);
+    await deleteInterestCategory(id);
     res.status(204).end();
   } catch (error: ErrorAxios | unknown) {
     if (isErrorAxios(error)) {

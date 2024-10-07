@@ -1,6 +1,5 @@
 import { test, expect } from "@playwright/test";
-import dotenv from "dotenv";
-dotenv.config();
+import { Types } from "mongoose";
 //####################### GET #######################
 test("/last obtener la última publicacion", async ({ page }) => {
     const responseLast = await page.goto(`/publications/last`);
@@ -18,9 +17,10 @@ test.describe.serial("Comment tests", () => {
     //####################### POST #######################
     let id_publication;
     const newPublication = {
-        title: "Title",
-        subtitle: "Subtitle",
-        content: "Content",
+        _id: new Types.ObjectId(),
+        title: "Test",
+        subtitle: "Test",
+        content: "Test",
         base64_img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABjElEQVR42mNkAAYy",
         currentPage: 1,
     };
@@ -31,6 +31,7 @@ test.describe.serial("Comment tests", () => {
         expect(responseNewPublication?.status()).toBe(201);
         const data = await responseNewPublication?.json();
         expect(data).toBeDefined();
+        // La .id cambia en el servidor, por lo que se debe cambiar
         id_publication = data._id;
     });
     //####################### GET #######################
@@ -40,12 +41,12 @@ test.describe.serial("Comment tests", () => {
         const data = await responseID?.json();
         expect(data).toBeDefined();
     });
-    const updateFields = {
-        ...newPublication,
-    };
     //####################### PUT #######################
-    updateFields.title = "Title edited";
     test("/edit/:id editar publicaciones por id", async ({ page }) => {
+        const updateFields = {
+            ...newPublication,
+        };
+        updateFields.title = "Title edited";
         const responseID = await page.request.put(`/publications/edit/${id_publication}`, {
             data: updateFields,
         });

@@ -1,21 +1,20 @@
 import { test, expect } from "@playwright/test";
-import dotenv from "dotenv";
-dotenv.config();
 //####################### GET #######################
+test("/getall/member obtener todos los miembros de una lista", async ({ page }) => {
+    const responseMembersList = await page.goto(`mailchimp/getall/member`);
+    expect(responseMembersList?.status()).toBe(200);
+    const data = await responseMembersList?.json();
+    expect(data).toBeDefined();
+});
+test("/groupscategory obtener todos los grupos de categorias", async ({ page }) => {
+    const responseMember = await page.goto(`/mailchimp/groupscategory`);
+    expect(responseMember?.status()).toBe(200);
+    const data = await responseMember?.json();
+    expect(data).toBeDefined();
+});
 test.describe.serial("Mailchimp tests", () => {
     const testEmail = "testing@gmail.com";
-    test("/getall/member obtener todos los miembros de una lista", async ({ page }) => {
-        const responseMembersList = await page.goto(`mailchimp/getall/member`);
-        expect(responseMembersList?.status()).toBe(200);
-        const data = await responseMembersList?.json();
-        expect(data).toBeDefined();
-    });
-    test("/groupscategory obtener todos los grupos de categorias", async ({ page }) => {
-        const responseMember = await page.goto(`/mailchimp/groupscategory`);
-        expect(responseMember?.status()).toBe(200);
-        const data = await responseMember?.json();
-        expect(data).toBeDefined();
-    });
+    // Intereses del grupo actual (Pensado para un unico grupo)
     let group;
     test("/get/interests obtener los intereses de un grupo de categorias", async ({ page }) => {
         const responseMember = await page.goto(`/mailchimp/get/interests`);
@@ -25,19 +24,19 @@ test.describe.serial("Mailchimp tests", () => {
         group = data;
     });
     //####################### POST #######################
+    const member = {
+        email_address: `${testEmail}`,
+        status: "transactional",
+        email_type: "html",
+        merge_fields: {
+            FNAME: "testing",
+            LNAME: "testinglastname",
+        },
+        interests: {},
+        tags: [],
+        status_if_new: "transactional",
+    };
     test("/add/member añadir un miembro", async ({ page }) => {
-        const member = {
-            email_address: `${testEmail}`,
-            status: "transactional",
-            email_type: "html",
-            merge_fields: {
-                FNAME: "testing",
-                LNAME: "testinglastname",
-            },
-            interests: {},
-            tags: [],
-            status_if_new: "transactional",
-        };
         let responseNewMember = await page.request.post(`mailchimp/add/member`, {
             data: member,
         });
@@ -60,32 +59,11 @@ test.describe.serial("Mailchimp tests", () => {
     });
     //####################### POST #######################
     test("/add/batchcontact añadir varios miembros a la lista (opcional)", async ({ page }) => {
-        const members = [
-            {
-                email_address: "testing1@gmail.com",
-                status: "transactional",
-                email_type: "html",
-                merge_fields: {
-                    FNAME: "testing1",
-                    LNAME: "testing1lastname",
-                },
-                interests: {},
-                tags: [],
-                status_if_new: "transactional",
-            },
-            {
-                email_address: "testing2@gmail.com",
-                status: "transactional",
-                email_type: "html",
-                merge_fields: {
-                    FNAME: "testing2",
-                    LNAME: "testing2lastname",
-                },
-                interests: {},
-                tags: [],
-                status_if_new: "transactional",
-            },
-        ];
+        const copyMember1 = { ...member };
+        copyMember1.email_address = "testing1@gmail.com";
+        const copyMember2 = { ...member };
+        copyMember2.email_address = "testing2@gmail.com";
+        const members = [copyMember1, copyMember2];
         const responseNewMembers = await page.request.post(`/mailchimp/add/batchcontact`, {
             data: members,
         });
@@ -96,30 +74,23 @@ test.describe.serial("Mailchimp tests", () => {
     test("/add/interests añadir intereses", async ({ page }) => {
         const name = "testing";
         const responseNewInterests = await page.request.post(`mailchimp/add/interests`, {
-            data: name,
-            headers: {
-                "Content-Type": "text/plain",
-            },
+            data: { name },
         });
         const data = await responseNewInterests?.json();
-        const status = responseNewInterests?.status();
-        if (data.detail && data.detail.includes(`Cannot add "${name}" because it already exists on the list.`)) {
+        if (data.detail && data.detail == `Cannot add "${name}" because it already exists on the list.`) {
             // Si el interés ya existe, no se puede añadir
             expect(data.detail).toContain("because it already exists on the list");
         }
         else {
-            // La api de mailchimp no devuelbe nada
-            expect(status).toBe(201);
+            // La API de mailchimp no devuelbe nada
+            expect(responseNewInterests?.status()).toBe(201);
         }
     });
     //####################### PUT #######################
-    test("/updatecontact/status/:email editar esatdo de un usuario por email", async ({ page }) => {
+    test("/updatecontact/status/:email editar estado de un usuario por email", async ({ page }) => {
         const status = "transactional";
         const responseStatus = await page.request.put(`/mailchimp/updatecontact/status/${testEmail}`, {
-            data: status,
-            headers: {
-                "Content-Type": "text/plain",
-            },
+            data: { status },
         });
         expect(responseStatus?.status()).toBe(200);
         const data = await responseStatus?.json();
@@ -128,17 +99,14 @@ test.describe.serial("Mailchimp tests", () => {
     test("/updatecontact/tag/:email editar tag de un usuario por email", async ({ page }) => {
         const tag = "FREE_CLASS";
         const responseTag = await page.request.put(`/mailchimp/updatecontact/tag/${testEmail}`, {
-            data: tag,
-            headers: {
-                "Content-Type": "text/plain",
-            },
+            data: { tag },
         });
         expect(responseTag?.status()).toBe(200);
         const data = await responseTag?.json();
         expect(data).toBeDefined();
     });
     //####################### DELETE #######################
-    test("/del/interests/:idCategoty eliminar intereses de una categoria", async ({ page }) => {
+    test("/del/interests/:id eliminar intereses de una categoria", async ({ page }) => {
         // Verificamos si existe el interes de testing y obtenemos su id
         let id_testing = "";
         for (let i = 0; i < group.total_items; i++) {
@@ -148,21 +116,15 @@ test.describe.serial("Mailchimp tests", () => {
                 break;
             }
         }
-        if (id_testing != "") {
-            const responseInterests = await page.request.delete(`/mailchimp/del/interests/${id_testing}`);
-            expect(responseInterests?.status()).toBe(204);
-        }
-        else {
-            expect(id_testing).toBe("");
-        }
+        if (id_testing == "")
+            console.warn("Dont exist the interest testing");
+        const responseInterests = await page.request.delete(`/mailchimp/del/interests/${id_testing}`);
+        expect(responseInterests?.status()).toBe(204);
     });
     test("/del/tag/:email eliminar tag de un miembro", async ({ page }) => {
         const tag = "FREE_CLASS";
         const responseDelTag = await page.request.delete(`/mailchimp/del/tag/${testEmail}`, {
-            data: tag,
-            headers: {
-                "Content-Type": "text/plain",
-            },
+            data: { tag },
         });
         expect(responseDelTag?.status()).toBe(204);
     });

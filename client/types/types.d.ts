@@ -105,7 +105,7 @@ export interface LikesProps {
 }
 
 export interface Comment {
-  _id: ObjectId;
+  _id: Types.ObjectId;
   pattern_id: string;
   owner: {
     uid: string;
@@ -207,10 +207,14 @@ export interface Member {
   email_address: string;
   status: Status;
   email_type: "html" | "text";
-  merge_fields?: {
+  merge_fields: {
+    FNAME: string;
+    LNAME: string;
     [key: string]: string;
   };
-  interests: Record<string, boolean>[];
+  interests?: {
+    [key: string]: boolean;
+  };
   tags: OptionsChampTag[];
   status_if_new: Status;
   update_existing?: boolean;

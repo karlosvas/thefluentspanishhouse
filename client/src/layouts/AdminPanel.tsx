@@ -155,10 +155,10 @@ const AdminPanel = () => {
         </figure>
         <figure className="close-panel">
           <svg viewBox="0 0 61 61" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_3_2)">
+            <g clipPath="url(#clip0_3_2)">
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M42.9614 30.8987L60.9614 46.6487L48.9613 57.1487L30.9614 41.3987L12.9614 57.1487L0.961395 46.6487L18.9613 30.8987L0.961395 15.1487L12.9614 4.64874L30.9614 20.3987L48.9613 4.64874L60.9614 15.1487L42.9614 30.8987Z"
                 fill="black"
               />

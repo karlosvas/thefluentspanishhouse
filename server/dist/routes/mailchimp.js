@@ -7,7 +7,7 @@ import { isErrorAxios } from "../utilities/axios-utils.js";
 const router = Router();
 // <--------------- GET --------------->
 // Obtener todos los miembros de una lista
-router.get("/getall/member", log, verifyIdToken, async (req, res) => {
+router.get("/getall/member", log, verifyIdToken, async (_req, res) => {
     mailchimp.lists
         .getListMembersInfo(listId)
         .then((response) => {
@@ -89,7 +89,7 @@ router.post("/add/batchcontact", log, verifyIdToken, async (req, res) => {
     });
 });
 router.post("/add/interests", log, verifyIdToken, async (req, res) => {
-    const name = req.body;
+    const { name } = req.body;
     if (!groupId || !name)
         res.status(400).send("Category ID and interest name are required");
     // Añadir el nuevo interés
@@ -109,8 +109,8 @@ router.post("/add/interests", log, verifyIdToken, async (req, res) => {
 // <--------------- PUT --------------->
 // Actualizar el estado de un miembro de la lista
 router.put("/updatecontact/status/:email", log, verifyIdToken, async (req, res) => {
-    const email = req.params.email;
-    const status = req.body;
+    const { email } = req.params;
+    const { status } = req.body;
     if (!validateEmail(email))
         res.status(400).send("Email inválido");
     const subscriberHash = crypto.createHash("md5").update(email.toLowerCase()).digest("hex");
@@ -126,8 +126,8 @@ router.put("/updatecontact/status/:email", log, verifyIdToken, async (req, res) 
 });
 // Añadir el tag de un miembro de la lista
 router.put("/updatecontact/tag/:email", log, verifyIdToken, async (req, res) => {
-    const email = req.params.email;
-    const tag = req.body;
+    const { email } = req.params;
+    const { tag } = req.body;
     if (!validateEmail(email))
         return res.status(400).send("Email inválido");
     const subscriberHash = crypto.createHash("md5").update(email).digest("hex");
@@ -145,7 +145,7 @@ router.put("/updatecontact/tag/:email", log, verifyIdToken, async (req, res) => 
 // Eliminar un miembro de la lista
 router.delete("/del/user/:email", log, verifyIdToken, async (req, res) => {
     // Obtenemos el email del usuario a eliminar desde la URL
-    const email = req.params.email;
+    const { email } = req.params;
     const subscriberHash = crypto.createHash("md5").update(email).digest("hex");
     // Verificamos que el email sea válido
     if (!validateEmail(email))
@@ -163,7 +163,7 @@ router.delete("/del/user/:email", log, verifyIdToken, async (req, res) => {
 router.delete("/del/tag/:email", log, verifyIdToken, async (req, res) => {
     // Obtenemos el email del usuario a eliminar desde la URL
     const { email } = req.params;
-    const tag = req.body;
+    const { tag } = req.body;
     // Verificamos que el email sea válido
     if (!validateEmail(email))
         return res.status(400).send("Invalid email");
@@ -180,10 +180,10 @@ router.delete("/del/tag/:email", log, verifyIdToken, async (req, res) => {
     });
 });
 // Eliminar un interes de una categoria
-router.delete("/del/interests/:idCategoty", log, verifyIdToken, async (req, res) => {
-    const { idCategoty } = req.params;
+router.delete("/del/interests/:id", log, verifyIdToken, async (req, res) => {
+    const { id } = req.params;
     try {
-        await deleteInterestCategory(idCategoty);
+        await deleteInterestCategory(id);
         res.status(204).end();
     }
     catch (error) {
