@@ -67,3 +67,17 @@ export function errorMailchimp(error: ErrorResponseHelper) {
 
   return { messageError, status };
 }
+
+// Recisar si estaba enteriormente en localstorage
+export function getTheme() {
+  const darkorligth = localStorage.getItem("theme");
+  return darkorligth || "light";
+}
+
+export const toggleThemeSVG = (theme: string, setTheme: Dispatch<SetStateAction<string>>) => {
+  setTheme(theme === "light" ? "dark" : "light");
+};
+
+export function getAdmin(user: User | null) {
+  return import.meta.env.VITE_ADMINS.split(",").includes(user?.email?.split("@")[0]);
+}

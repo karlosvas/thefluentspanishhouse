@@ -104,6 +104,11 @@ export interface LikesProps {
   userId: string;
 }
 
+export interface ThemeContextType {
+  theme: string;
+  setTheme: React.Dispatch<React.SetStateAction<string>>;
+}
+
 export interface Comment {
   _id: Types.ObjectId;
   pattern_id: string;
@@ -117,6 +122,14 @@ export interface Comment {
   likes: number;
   likedBy: string[];
   answers: Comment[];
+}
+
+export interface UserContextType {
+  user: User | null;
+}
+
+export interface ThemeContextType {
+  theme: string;
 }
 
 export interface CommentOptionsProps {

@@ -32,7 +32,7 @@ async function addInterestToCategory(interestCategoryId, interestName) {
                 password: mailchimpKey,
             },
         });
-        return response;
+        return response.data;
     }
     catch (error) {
         if (axios.isAxiosError(error) && error.response) {
@@ -45,7 +45,6 @@ async function addInterestToCategory(interestCategoryId, interestName) {
 }
 async function deleteInterestCategory(interestCategoryId) {
     const url = `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${listId}/interest-categories/${groupId}/interests/${interestCategoryId}`;
-    // const url = https://${dc}.api.mailchimp.com/3.0/lists/{list_id}/interest-categories/{interest_category_id}/interests/{interest_id}
     try {
         // El user puede ser cualquier string, no importa
         const response = await axios.delete(url, {
@@ -54,12 +53,12 @@ async function deleteInterestCategory(interestCategoryId) {
                 password: mailchimpKey,
             },
         });
-        console.log(response);
+        console.log(response.data);
         return response;
     }
     catch (error) {
+        console.log(error);
         if (axios.isAxiosError(error) && error.response) {
-            console.log(error);
             throw { status: error.response.status, message: error.response.data };
         }
         else {

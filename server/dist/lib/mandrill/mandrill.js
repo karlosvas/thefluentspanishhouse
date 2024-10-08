@@ -24,8 +24,8 @@ export async function submitNote(email_user, username, subject, note) {
         },
     };
     try {
-        const response = await mandrill.messages.send({ message });
-        return response;
+        if (process.env.NODE_ENV === "production")
+            return await mandrill.messages.send({ message });
     }
     catch (error) {
         console.error("Error sending email", error);

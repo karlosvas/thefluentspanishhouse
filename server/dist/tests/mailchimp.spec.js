@@ -71,6 +71,8 @@ test.describe.serial("Mailchimp tests", () => {
         const data = await responseNewMembers?.json();
         expect(data).toBeDefined();
     });
+    // Id del interes creado en el test
+    let idInterest = "";
     test("/add/interests añadir intereses", async ({ page }) => {
         const name = "testing";
         const responseNewInterests = await page.request.post(`mailchimp/add/interests`, {
@@ -78,12 +80,18 @@ test.describe.serial("Mailchimp tests", () => {
         });
         const data = await responseNewInterests?.json();
         if (data.detail && data.detail == `Cannot add "${name}" because it already exists on the list.`) {
-            // Si el interés ya existe, no se puede añadir
-            expect(data.detail).toContain("because it already exists on the list");
+            // Si el interés ya existe, no se puede añadir asique lo buscamos
+            const responseAllInterests = await page.request.get(`/mailchimp/get/interests`);
+            const dataInterest = await responseAllInterests?.json();
+            const element = dataInterest.interests.find((element) => element.name == name);
+            if (element)
+                idInterest = element.id;
+            expect(responseAllInterests?.status()).toBe(200);
         }
         else {
-            // La API de mailchimp no devuelbe nada
             expect(responseNewInterests?.status()).toBe(201);
+            const data = await responseNewInterests?.json();
+            idInterest = data.id;
         }
     });
     //####################### PUT #######################
@@ -108,18 +116,12 @@ test.describe.serial("Mailchimp tests", () => {
     //####################### DELETE #######################
     test("/del/interests/:id eliminar intereses de una categoria", async ({ page }) => {
         // Verificamos si existe el interes de testing y obtenemos su id
-        let id_testing = "";
-        for (let i = 0; i < group.total_items; i++) {
-            const { name, id } = group.interests[i];
-            if (name == "testing") {
-                id_testing = id;
-                break;
-            }
-        }
-        if (id_testing == "")
+        if (idInterest == "")
             console.warn("Dont exist the interest testing");
-        const responseInterests = await page.request.delete(`/mailchimp/del/interests/${id_testing}`);
-        expect(responseInterests?.status()).toBe(204);
+        else {
+            const responseInterests = await page.request.delete(`/mailchimp/del/interests/${idInterest}`);
+            expect(responseInterests?.status()).toBe(204);
+        }
     });
     test("/del/tag/:email eliminar tag de un miembro", async ({ page }) => {
         const tag = "FREE_CLASS";

@@ -115,8 +115,8 @@ router.post("/add/interests", log, verifyIdToken, async (req: Request, res: Resp
 
   // Añadir el nuevo interés
   try {
-    await addInterestToCategory(groupId, name);
-    res.status(201).json({ message: "Interest added successfully" });
+    const response = await addInterestToCategory(groupId, name);
+    res.status(201).json(response);
   } catch (error: ErrorAxios | unknown) {
     if (isErrorAxios(error)) {
       res.status(error.status).json(error.message);
@@ -218,11 +218,8 @@ router.delete("/del/interests/:id", log, verifyIdToken, async (req: Request, res
     await deleteInterestCategory(id);
     res.status(204).end();
   } catch (error: ErrorAxios | unknown) {
-    if (isErrorAxios(error)) {
-      res.status(error.status).json(error.message);
-    } else {
-      res.status(500).json(error);
-    }
+    if (isErrorAxios(error)) res.status(error.status).json(error.message);
+    else res.status(500).json(error);
   }
 });
 

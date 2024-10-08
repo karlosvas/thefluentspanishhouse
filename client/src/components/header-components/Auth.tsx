@@ -28,6 +28,7 @@ const Auth = () => {
   const typeLoginRegisterRef = useRef<HTMLHeadingElement>(null);
   // Actual user
   const user = useContext(UserContext);
+
   // Inputs del formulario
   const [ID, setID] = useState({
     username: "",

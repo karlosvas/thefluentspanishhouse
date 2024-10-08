@@ -37,7 +37,7 @@ async function addInterestToCategory(interestCategoryId: string, interestName: s
         password: mailchimpKey as string,
       },
     });
-    return response;
+    return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       throw { status: error.response.status, message: error.response.data };
@@ -49,7 +49,6 @@ async function addInterestToCategory(interestCategoryId: string, interestName: s
 
 async function deleteInterestCategory(interestCategoryId: string) {
   const url = `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${listId}/interest-categories/${groupId}/interests/${interestCategoryId}`;
-  // const url = https://${dc}.api.mailchimp.com/3.0/lists/{list_id}/interest-categories/{interest_category_id}/interests/{interest_id}
 
   try {
     // El user puede ser cualquier string, no importa
@@ -59,11 +58,11 @@ async function deleteInterestCategory(interestCategoryId: string) {
         password: mailchimpKey as string,
       },
     });
-    console.log(response);
+    console.log(response.data);
     return response;
   } catch (error) {
+    console.log(error);
     if (axios.isAxiosError(error) && error.response) {
-      console.log(error);
       throw { status: error.response.status, message: error.response.data };
     } else {
       throw { status: 500, message: "Unexpected error occurred" };

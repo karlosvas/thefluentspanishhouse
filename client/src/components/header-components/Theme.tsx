@@ -1,37 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { SingleThemeProps } from "types/types";
 import "@/styles/reusables/theme.css";
+import { ThemeContext } from "@/App";
+import { toggleThemeSVG } from "@/utilities/utilities";
 
 export const Theme: React.FC<SingleThemeProps> = ({ children }) => {
-  // Estados del tema actual
-  const [theme, setTheme] = useState<string>(getTheme());
+  // Estado del team actual del conetxto de la APP
+  const context = useContext(ThemeContext);
 
-  // Recisar si estaba enteriormente en localstorage
-  function getTheme() {
-    const darkorligth = localStorage.getItem("theme");
-    return darkorligth || "light";
-  }
+  if (!context) throw new Error("ThemeContext must be used within a ThemeProvider");
 
-  const toggleThemeSVG = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
-
-  // Cambiar el tema en localstorage cada vez que se cambie
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) setTheme(savedTheme);
-    else setTheme("light");
-  }, [setTheme]);
-
-  // Cambiar el tema en el DOM cada vez que se cambie
-  useEffect(() => {
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+  // Extrae el tema y la función para cambiar el tema del contexto
+  const { theme, setTheme } = context;
 
   return (
-    <div onClick={toggleThemeSVG} className="menu-section">
+    <div onClick={() => toggleThemeSVG(theme, setTheme)} className="menu-section">
       {children}
       {theme === "light" ? (
         <svg
