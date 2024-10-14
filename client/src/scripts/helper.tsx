@@ -3,12 +3,8 @@ import { type ErrorResponseHelper } from "types/types";
 type FetchResponse = unknown | Blob | FormData | string | ErrorResponseHelper;
 
 const Helper = () => {
-  const customFetch = async (
-    endpoint: string,
-    options: RequestInit = {}
-  ): Promise<FetchResponse> => {
-    const token =
-      localStorage.getItem("token") || import.meta.env.VITE_DEFAULT_TOKEN;
+  const customFetch = async (endpoint: string, options: RequestInit = {}): Promise<FetchResponse> => {
+    const token = localStorage.getItem("token") || import.meta.env.VITE_DEFAULT_TOKEN;
 
     const defaultHeader = {
       accept: "application/json",
@@ -19,10 +15,7 @@ const Helper = () => {
     options.signal = options.signal || new AbortController().signal;
     options.method = options.method || "GET";
     options.headers = { ...defaultHeader, ...options.headers };
-    options.body =
-      options.body && typeof options.body === "object"
-        ? JSON.stringify(options.body)
-        : options.body;
+    options.body = options.body && typeof options.body === "object" ? JSON.stringify(options.body) : options.body;
 
     return fetch(endpoint, options)
       .then((res) => {
@@ -62,7 +55,6 @@ const Helper = () => {
         }
       })
       .catch((error) => {
-        console.error(error);
         throw error;
       });
   };

@@ -129,7 +129,7 @@ test.describe.serial("Mailchimp tests", () => {
   });
 
   test("/updatecontact/tag/:email editar tag de un usuario por email", async ({ page }) => {
-    const tag: OptionsChampTag = "FREE_CLASS";
+    const tag: OptionsChampTag = "GROUP_CLASS";
     const responseTag = await page.request.put(`/mailchimp/updatecontact/tag/${testEmail}`, {
       data: { tag },
     });
@@ -150,7 +150,7 @@ test.describe.serial("Mailchimp tests", () => {
   });
 
   test("/del/tag/:email eliminar tag de un miembro", async ({ page }) => {
-    const tag: OptionsChampTag = "FREE_CLASS";
+    const tag: OptionsChampTag = "GROUP_CLASS";
     const responseDelTag = await page.request.delete(`/mailchimp/del/tag/${testEmail}`, {
       data: { tag },
     });
@@ -158,11 +158,11 @@ test.describe.serial("Mailchimp tests", () => {
   });
 
   test("/del/user/:email eliminar usuarios", async ({ page }) => {
-    const responseUser = await page.request.delete(`/mailchimp/del/user/${testEmail}`);
+    const responseUser = await page.request.delete(`/mailchimp/del/member/${testEmail}`);
     expect(responseUser?.status()).toBe(204);
-    const responseUser1 = await page.request.delete(`/mailchimp/del/user/testing1@gmail.com`);
+    const responseUser1 = await page.request.delete(`/mailchimp/del/member/testing1@gmail.com`);
     expect(responseUser1?.status()).toBe(204);
-    const responseUser2 = await page.request.delete(`/mailchimp/del/user/testing2@gmail.com`);
+    const responseUser2 = await page.request.delete(`/mailchimp/del/member/testing2@gmail.com`);
     expect(responseUser2?.status()).toBe(204);
   });
 });

@@ -1,13 +1,15 @@
 import PlaceholderImg from "@/components/reusable/PlaceholderImg";
 import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import "@/styles/main-newsettler.css";
 import toast from "react-hot-toast";
 import Button from "@/components/reusable/Button";
-import { getInterests, submitSubscriptionMailchimp } from "@/scripts/render-data";
-import { type Member, type NesletterType } from "types/types";
+import { fetchGetUidByEmail, getInterests, submitSubscriptionMailchimp } from "@/scripts/render-data";
 import { handleInputChange } from "@/utilities/utilities";
 import MultiSelectTag from "@/components/reusable/MultiSelectTag";
+import { isValidEmail } from "@/utilities/validateEmail";
+import { OptionsChampTag, type Member, type NesletterType } from "types/types";
+import "@/styles/main-newsettler.css";
+import { getUserDB } from "@/scripts/firebase-db";
 
 const Newsletter = () => {
   // Estado del formulario de suscripción
@@ -33,10 +35,19 @@ const Newsletter = () => {
     setSubscribed(true);
 
     // Verificando que todos los campos estén llenos
-    for (const value of Object.keys(form)) {
-      if (value === "date" || value === "preferences") continue;
+    for (const [key, value] of Object.entries(form)) {
+      if (key === "date" || key === "preferences") continue;
+
+      console.log("key", key);
+      console.log("value", value);
+
       if (value === "") {
         toast.error("Please fill all the fields");
+        return;
+      }
+
+      if (key === "email" && !isValidEmail(form.email)) {
+        toast.error("Email is not valid");
         return;
       }
     }
@@ -58,13 +69,24 @@ const Newsletter = () => {
       const group = await getInterests();
       let actualPreference = 0;
 
-      for (let i = 0; i < group.total_items; i++) {
+      for (let i = 0; i < group.interests.length; i++) {
         const { name, id } = group.interests[i];
         if (name === form.preferences[actualPreference]) {
           interests[id] = true;
           actualPreference++;
         } else interests[id] = false;
       }
+    }
+
+    // Tags de mailchimp
+    let tags: OptionsChampTag[] = [];
+
+    const uuidFB = await fetchGetUidByEmail("vasimok472@skrank.com");
+    const uid = uuidFB?.uid;
+
+    if (uid) {
+      const userFB = await getUserDB(uid);
+      if (userFB !== null && userFB.class) tags = userFB.class;
     }
 
     // Creamos el objeto de miembro
@@ -77,7 +99,7 @@ const Newsletter = () => {
         LNAME: form.surnames,
       },
       interests,
-      tags: [],
+      tags,
       status_if_new: "pending",
     };
 
@@ -85,7 +107,7 @@ const Newsletter = () => {
     if (isFormattedBirthdayValid) member.merge_fields.BIRTHDAY = formattedBirthday;
 
     // Enviando la suscripción a la API de Mailchimp
-    submitSubscriptionMailchimp(member);
+    await submitSubscriptionMailchimp(member);
 
     // Detener el loading toast en caso de error
     toast.dismiss();

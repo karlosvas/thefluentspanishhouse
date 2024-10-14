@@ -2,6 +2,8 @@ import { url_api } from "@/constants/global";
 import Helper from "./helper";
 import toast from "react-hot-toast";
 import { FormEvent } from "react";
+import { errorMailchimp } from "@/utilities/utilities";
+import { isErrorResponseHelper } from "@/utilities/utilities-types";
 import {
   type PublicationCardType,
   type Comment,
@@ -9,10 +11,8 @@ import {
   type Member,
   type InterestCategoryResponse,
   type InterestResponse,
-  SubscriberType,
+  type SubscriberType,
 } from "types/types";
-import { errorMailchimp, getTag } from "@/utilities/utilities";
-import { isErrorResponseHelper } from "@/utilities/utilities-types";
 
 const helper = Helper();
 
@@ -74,7 +74,15 @@ export const getMailchimpUser = async (email: string) => {
   try {
     return await helper.get(`${url_api}/mailchimp/getone/member/${email}`);
   } catch (error) {
-    isErrorResponseHelper(error) ? errorMailchimp(error) : toast.error("An expeted error ocurred");
+    isErrorResponseHelper(error) && errorMailchimp(error);
+  }
+};
+
+export const fetchGetUidByEmail = async (email: string): Promise<{ uid: string } | undefined> => {
+  try {
+    return (await helper.get(`${url_api}/firebase/user/${email}`)) as { uid: string };
+  } catch (error) {
+    console.error("Error al obtener datos:", error);
   }
 };
 
@@ -124,11 +132,13 @@ export const subscribeNewsletter = async (email: string) => {
 
 ///////////////////////////// EMAILS /////////////////////////////
 export const sendEmailNewClass = async (newSubscriber: SubscriberType) => {
-  helper
-    .post(`${url_api}/mandrill/newstudent`, {
+  try {
+    helper.post(`${url_api}/mandrill/newstudent`, {
       body: JSON.stringify(newSubscriber),
-    })
-    .catch((error) => isErrorResponseHelper(error) && errorMailchimp(error));
+    });
+  } catch (error) {
+    isErrorResponseHelper(error) && errorMailchimp(error);
+  }
 };
 
 export const submitNote = async (newNote: NoteType) => {
@@ -174,8 +184,6 @@ export const editComment = async (id: string, textEdit: string) => {
 };
 
 export const submitSubscriptionMailchimp = async (member: Member) => {
-  if (!url_api) throw new Error("URL API no inicializada");
-
   helper
     .post(`${url_api}/mailchimp/add/member`, {
       body: JSON.stringify(member),
@@ -186,33 +194,14 @@ export const submitSubscriptionMailchimp = async (member: Member) => {
     .catch((error) => (isErrorResponseHelper(error) ? errorMailchimp(error) : toast.error("An expeted error ocurred")));
 };
 
-export const updateTagsMailchimp = async (mailchimpUser: Member, buttonName: string, handleChange: () => void) => {
+export const updateTagsMailchimp = async (mailchimpUser: Member, tag: string, handleChange: () => void) => {
   const email = mailchimpUser.email_address;
-  const tag = getTag(buttonName);
 
   helper
     .put(`${url_api}/mailchimp/updatecontact/tag/${email}`, {
       body: JSON.stringify({ tag }),
     })
-    .then(() => {
-      if (mailchimpUser.merge_fields) {
-        toast.dismiss();
-        toast(
-          <span>
-            <b>
-              {mailchimpUser.merge_fields.FNAME} {mailchimpUser.merge_fields.LNAME}
-            </b>{" "}
-            are you in the class of <br />
-            <b>{buttonName}</b>, we are glad that you want to repeat the experience.
-          </span>,
-          {
-            icon: "🔥",
-            duration: 5000,
-          }
-        );
-      }
-      handleChange();
-    })
+    .then(() => handleChange())
     .catch((error) => (isErrorResponseHelper(error) ? errorMailchimp(error) : toast.error("An expeted error ocurred")));
 };
 

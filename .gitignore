@@ -30,3 +30,4 @@ client/dist
 # Petitions
 *.http
 .vercel
+peticiones

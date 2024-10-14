@@ -34,10 +34,7 @@ const Prices = () => {
             <ul>
               <li>A sample free 1-hour class for new students</li>
               <li>Private English lessons for two people at the same level</li>
-              <li>
-                Enjoy the benefits of individual classes combined with the
-                dynamic interaction of a group class
-              </li>
+              <li>Enjoy the benefits of individual classes combined with the dynamic interaction of a group class</li>
               <li>Access to exclusive online content</li>
               <li>And out-of-class communication with the teacher.</li>
             </ul>

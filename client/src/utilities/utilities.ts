@@ -55,13 +55,12 @@ export function errorMailchimp(error: ErrorResponseHelper) {
   const messageError = error.message?.detail;
   const status = error.status;
 
-  console.log(error.message);
-
   if (messageError?.includes("permanently deleted")) {
     toast.error("This user is permanently deleted from Mailchimp, please contact with the support team.");
   } else if (titleMessage == "Member Exists") {
     toast("This user already exists in Mailchimp, We will try to offer better service ", {
       icon: "🙈",
+      duration: 10000,
     });
   }
 

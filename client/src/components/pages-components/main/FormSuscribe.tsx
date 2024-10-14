@@ -4,12 +4,13 @@ import Buuton from "@/components/reusable/Button";
 import { getMailchimpUser, sendEmailNewClass, updateTagsMailchimp } from "@/scripts/render-data";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
-import { type FormSuscriberProps, type SubscriberType } from "types/types";
 import { getTag, handleInputChange } from "@/utilities/utilities";
-import { saveUser } from "@/scripts/firebase-db";
+import { saveUserAndAddTag } from "@/scripts/firebase-db";
 import { UserContext } from "@/App";
 import toast from "react-hot-toast";
 import { isMember } from "@/utilities/utilities-types";
+import { isValidEmail } from "@/utilities/validateEmail";
+import { type FormSuscriberProps, type SubscriberType } from "types/types";
 
 const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChange, buttonName }) => {
   // Estado para saber si se ha enviado el formulario o si se esta procesando
@@ -30,40 +31,55 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
   // Envio de formulario
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Button name es la clase selecionada
+
+    // Añadimos la clase seleionada al usuario
     if (buttonName === undefined) return;
+    newSubscriber.class = getTag(buttonName);
+
+    if (isValidEmail(newSubscriber.email)) {
+      toast.error("Email is not valid");
+      return;
+    }
 
     // Comienzo del proceso de suscripción
     setSuscribe(true);
     toast.loading("Aiming for classes...");
 
-    // Obtenemos el usuario de Mailchimp
+    // // Obtenemos el usuario de Mailchimp
     const mailchimpUser = await getMailchimpUser(newSubscriber.email);
 
     if (mailchimpUser && isMember(mailchimpUser)) {
-      // El usuario se ha encontrado por lo que solo cambiamos su nuevo tag
-      await updateTagsMailchimp(mailchimpUser, buttonName, handleSusribeChange);
+      // El usuario se ha encontrado por lo que solo cambiamos su nuevo tag, succes o error se maneja en la función
+      await updateTagsMailchimp(mailchimpUser, newSubscriber.class, handleSusribeChange);
+      // Falta funcionalidad ???? añadir tag en firebase a usuarios de mailchimp
+      // await saveUserAndAddTag(user.uid, buttonName, newSubscriber);
     } else {
-      // El usuario no se ha encontrado por lo que lo creamos en firebase database y le añadimos el tag,
-      // para que posterirormente cuando se suscriba podamos recuperarlo
-      if (user && user.uid) saveUser(user?.uid, buttonName);
-      toast.dismiss();
-      toast.success(
-        <span>
-          <b>
-            {newSubscriber.name} {newSubscriber.lastname}
-          </b>{" "}
-          you have been successfully subscribed to the course
-        </span>,
-        {
-          duration: 5000,
-        }
-      );
+      // El usuario no se ha encontrado
 
-      // Le añadimos el tag al usuario
-      newSubscriber.class = getTag(buttonName);
-      // Enviamos el email al administrador para que sepa que hay un nuevo suscriptor
-      await sendEmailNewClass(newSubscriber);
+      if (!user) {
+        toast.dismiss();
+        toast.error("Do you need Sing In to subscribe to the course");
+        setSuscribe(false);
+        return;
+      }
+
+      if (user.email !== newSubscriber.email) {
+        toast.dismiss();
+        toast.error(`The email does not match the user logged in, please log in with ${user.email}`);
+        setSuscribe(false);
+        return;
+      }
+
+      try {
+        // Creamos o actualizados en FirebaseDB para añadirle el tag, y que posterirormente
+        // cuando se suscriba poder recuperarlo.
+        await saveUserAndAddTag(user.uid, newSubscriber.class, newSubscriber);
+        // Enviamos el email al administrador para que sepa que hay un nuevo suscriptor
+        await sendEmailNewClass(newSubscriber);
+      } catch (error) {
+        toast.dismiss();
+        toast.error("Unexpected error, please try again");
+      }
     }
 
     // Cerramos el formulario

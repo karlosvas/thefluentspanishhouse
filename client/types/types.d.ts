@@ -53,9 +53,10 @@ export interface SubscriberType {
   name: string;
   lastname: string;
   email: string;
-  consentEmails: false;
-  acceptTerms: false;
-  acceptPrivacy: false;
+  class: OptionsChampTag | "";
+  consentEmails: boolean;
+  acceptTerms: boolean;
+  acceptPrivacy: boolean;
   [key: string]: unknown;
 }
 
@@ -252,7 +253,7 @@ export interface ErrorResponseHelper {
   message?: ErrorChamp;
 }
 
-type OptionsChampTag = "GROUP_CLASS" | "PRIVATE_CLASS" | "FREE_CLASS";
+type OptionsChampTag = "GROUP_CLASS" | "PRIVATE_CLASS";
 interface TagMailchamp {
   name: OptionsChampTag;
   status: "active" | "inactive";
