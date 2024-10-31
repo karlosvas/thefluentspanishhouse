@@ -4,15 +4,16 @@ import { handleChangeModal } from "@/scripts/modal";
 import { useEffect, useState } from "react";
 import { getPublications } from "@/scripts/render-data";
 import { type PublicationCardType } from "types/types";
-import "@/styles/main-blog.css";
 import { Helmet } from "react-helmet-async";
 import PaginationReactBoostrap from "@/components/pages-components/blog/Pagination";
 import { useParams } from "react-router";
+import "@/styles/main-blog.css";
 
 const Blog = () => {
+  // Muestra el modal de publicación(ShowModalPost) y cierra el modal de publicación(closing)
   const [showModalPost, setShowModalPost] = useState(false);
-  const [cardsBlog, setCardsBlog] = useState<PublicationCardType[]>([]);
   const [closing, setClosing] = useState(false);
+  const [cardsBlog, setCardsBlog] = useState<PublicationCardType[]>([]);
   const [loading, setLoading] = useState(false);
 
   const { page } = useParams<{ page: string }>();
@@ -35,8 +36,8 @@ const Blog = () => {
   };
 
   useEffect(() => {
-    if (page) fetchPublications(page);
-  }, [page]);
+    if (page && cardsBlog.length == 0) fetchPublications(page);
+  }, [page, cardsBlog.length]);
 
   return (
     <>
@@ -48,7 +49,7 @@ const Blog = () => {
         />
       </Helmet>
       <main className="main-blog">
-        {/* Abre o cierra el modal de publicación */}
+        {/* Modal de publicación */}
         {showModalPost && (
           <FormPublication
             closing={closing}
@@ -57,12 +58,14 @@ const Blog = () => {
             setCardsBlog={setCardsBlog}
           />
         )}
+        {/* Cards de publicaciones */}
         <CardsPublicationBlog
           cardsBlog={cardsBlog}
           handlePublicationChange={handlePublicationChange}
           setCardsBlog={setCardsBlog}
           loading={loading}
         />
+        {/* Paginación de las publicaciones */}
         {cardsBlog.length > 0 && (
           <PaginationReactBoostrap page={page} cardsBlog={cardsBlog} />
         )}

@@ -3,26 +3,29 @@ import toast from "react-hot-toast";
 import { getPublications, postPublication } from "@/scripts/render-data";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
-import "@/styles/uploadfiles.css";
 import { useNavigate, useParams } from "react-router";
 import { MAX_PUBLICATIONS_PER_PAGE } from "@/constants/global";
+import Button from "@/components/reusable/Button";
 import {
   type PublicationCardType,
   type FormPublicationProps,
 } from "types/types";
-import Button from "@/components/reusable/Button";
+import "@/styles/uploadfiles.css";
 
 const FormPublication: React.FC<FormPublicationProps> = ({
   closing,
   handleChange,
   cardsBlog,
 }) => {
+  // Estado de error (error), estado de la vista previa de la imagen (imagePreview)
   const [error, setError] = useState("");
   const [imagePreview, setImagePreview] = useState<string>("");
 
+  // Ultima pagina de publicaciones
   const lastPage =
     cardsBlog.length > 0 ? cardsBlog[cardsBlog.length - 1].currentPage : 1;
 
+  // Estado de la nueva publicación (newPublication)
   const [newPublication, setNewPublication] = useState<PublicationCardType>({
     _id: "",
     title: "",
@@ -32,9 +35,11 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     currentPage: lastPage,
   });
 
+  // Parametro de la URL que indica la pagina actual (page)
   const { page } = useParams<{ page: string }>();
   if (page) newPublication.currentPage = parseInt(page);
 
+  // Redimensionar la imagen (resizeImage)
   const resizeImage = (
     file: File,
     maxWidth: number,
@@ -75,6 +80,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     });
   };
 
+  // Manejar el cambio de archivo (handleFileChange)
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -100,6 +106,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     }
   };
 
+  // Manejar el cambio de entrada (handleInputChange)
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -112,6 +119,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     }
   };
 
+  // Manejar el arrastre (handleDrop)
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
@@ -136,49 +144,48 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     }
   };
 
+  // Manejar el arrastre sobre (handleDragOver)
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
 
+  // Verificar si es un tipo de tarjeta de publicación (isPublicationCardType)
+  function isPublicationCardType(obj: unknown): obj is PublicationCardType {
+    return (
+      typeof obj === 'object' &&
+      obj !== null &&
+      typeof (obj as PublicationCardType)._id === 'string' &&
+      typeof (obj as PublicationCardType).title === 'string' &&
+      typeof (obj as PublicationCardType).subtitle === 'string' &&
+      typeof (obj as PublicationCardType).content === 'string' &&
+      typeof (obj as PublicationCardType).base64_img === 'string' &&
+      typeof (obj as PublicationCardType).currentPage === 'number'
+    );
+  }
+
+  // Función de React para navegar entre rutas (navigate)
   const navigate = useNavigate();
+  // Estado de suscripción al evento, oseqa si esta enviandose la informacion (suscribe)
   const [suscribe, setSuscribe] = useState(false);
+
+
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // Nos suscribimos al evento, enviando informacion
     setSuscribe(true);
-    const fileInput = document.getElementById(
-      "fileInput"
-    ) as HTMLInputElement | null;
 
-    if (fileInput) {
-      // Verifica si se ha seleccionado un archivo
-      if (!newPublication.title) {
-        setError("Please enter a title");
-        return;
-      } else if (!newPublication.subtitle) {
-        setError("Please enter a subtitle");
-        return;
-      } else if (!newPublication.content) {
-        setError("Please enter content for the post");
-        return;
-      } else if (!fileInput.files?.[0]) {
-        setError("Please select a file.");
-        return;
+    // Verificar que esten todos los campos completos
+    const hasEmptyField = Object.entries(newPublication).some(([key, value]) => {
+      if (value === "" && key !== "_id") {
+        key = key === "base64_img" ? "image" : key;
+        setError(`Please complete the ${key} field`);
+        setSuscribe(false);
+        return true;
       }
-    }
+      return false;
+    });
 
-    
- function isPublicationCardType(obj: unknown): obj is PublicationCardType {
-  return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    typeof (obj as PublicationCardType)._id === 'string' &&
-    typeof (obj as PublicationCardType).title === 'string' &&
-    typeof (obj as PublicationCardType).subtitle === 'string' &&
-    typeof (obj as PublicationCardType).content === 'string' &&
-    typeof (obj as PublicationCardType).base64_img === 'string' &&
-    typeof (obj as PublicationCardType).currentPage === 'number'
-  );
-}
+    if (hasEmptyField) return;
 
     try {
       if (cardsBlog.length < MAX_PUBLICATIONS_PER_PAGE) {
@@ -267,7 +274,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
                   )}
                 </label>
               </div>
-              {error && <p>{error}</p>}
+              {error && <p style={{ color: 'red', fontWeight: 'semibold' }}>{error}</p>}
             </li>
             <Button id="submit-post" type="submit" suscribe={suscribe}>
               Submit

@@ -3,15 +3,15 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import CardPlaceholder from "./CardPlaceholder";
 import Button from "@/components/reusable/Button";
 import { UserContext } from "@/App";
-import { CardsPublicationBlogProps, PublicationCardType } from "types/types";
 import ButtonClose from "@/components/reusable/ButtonClose";
 import {
   delatePublication,
   putCommentPublication,
 } from "@/scripts/render-data";
 import toast from "react-hot-toast";
-import "@/styles/reusables/edit.css";
 import Backdrop from "@/components/reusable/Backdrop";
+import { type CardsPublicationBlogProps, type PublicationCardType } from "types/types";
+import "@/styles/reusables/edit.css";
 
 const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
   cardsBlog,
@@ -19,12 +19,39 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
   setCardsBlog,
   loading,
 }) => {
+  // Estado de la publicación (editPublication)
+  const [editPublication, seteditPublication] = useState<PublicationCardType>({
+    _id: "",
+    title: "",
+    subtitle: "",
+    content: "",
+    base64_img: "",
+    currentPage: 0,
+  });
+
+  // Referencia al botón de upload (uploadRef), contexto de usuario, usuario actual (user)
   const uploadRef = useRef<HTMLButtonElement | null>(null);
   const user = useContext(UserContext);
+  // Estado de las imagenes cargadas (loadedImages)
   const [loadedImages, setLoadedImages] = useState<boolean[]>(
     new Array(cardsBlog.length).fill(false)
   );
 
+  // Verificar si el usuario es admin, si tiene email, buscarlo en la lista de admins del .env
+  const admin = user?.email ? import.meta.env.VITE_ADMINS.split(",").includes(user.email.split("@")[0] as string) : false;
+
+  // Parametro de la URL que indica la pagina actual (page), función para navegar entre rutas (navigate)
+  const { page } = useParams<{ page: string }>();
+  const navigate = useNavigate();
+
+  // Estado del modal de para mostrar la publicación (showModalEditPublication)
+  const [showModalEditPublication, setShowModalEditPublication] =
+  useState(false);
+
+  // Estado para cerrar el modal (closing)
+  const [closing] = useState(false);
+
+  // Manejar la carga de imagenes
   const handleImageLoad = (index: number) => {
     setLoadedImages((prevLoadedImages) => {
       const newLoadedImages = [...prevLoadedImages];
@@ -33,19 +60,12 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
     });
   };
 
-  const admin =
-    user?.email === "carlosvassan@gmail.com" ||
-    user?.email === "mar411geca@gmail.com";
-
-  const { page } = useParams<{ page: string }>();
-  const navigate = useNavigate();
-
+  // Manejar la eliminación de una publicación
   const handleDeletePublication = async (id: string) => {
     try {
       await delatePublication(id);
       if (cardsBlog.length === 1) {
         let actualPage: number = page ? parseInt(page) : 1;
-        console.log("actualPage", actualPage);
         navigate(`/blog/${--actualPage}`);
       }
       setCardsBlog((prevCardsBlog) =>
@@ -57,23 +77,13 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
     }
   };
 
-  const [showModalEditPublication, setShowModalEditPublication] =
-    useState(false);
-
+  // Manejar el cambio de publicación
   const handleChangePublication = (publication?: PublicationCardType) => {
     if (publication) seteditPublication(publication);
     setShowModalEditPublication(!showModalEditPublication);
   };
 
-  const [editPublication, seteditPublication] = useState<PublicationCardType>({
-    _id: "",
-    title: "",
-    subtitle: "",
-    content: "",
-    base64_img: "",
-    currentPage: 0,
-  });
-
+  // Manejar el cambio de publicación  // Revisar cambio a utilities
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -86,8 +96,7 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
     }
   };
 
-  const [closing] = useState(false);
-
+  // Editar una publicación ya existente
   const editCommentPublication = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
@@ -123,6 +132,7 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
           No posts available...
         </h1>
       )}
+      {/* Muestra el modal de edición de publicación */}
       {showModalEditPublication && (
         <>
           <div className="upload-publication modal-edit">
@@ -216,7 +226,7 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
         </div>
       ))}
 
-      {/* Renderiza el botón solo para usuarios específicos */}
+      {/* Renderiza el botón solo para usuarios específicos los admins */}
       {admin && !showModalEditPublication && (
         <>
           <Button event={handlePublicationChange} id="upload" ref={uploadRef}>
