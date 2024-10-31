@@ -36,6 +36,10 @@
   color: var(--primary-black);
 }
 
+.upload-publication li{
+  font-weight: 500;
+}
+
 .upload-publication h3 {
   color: var(--primary-black);
   margin-top: 10px;

@@ -13,7 +13,7 @@ import Backdrop from "@/components/reusable/Backdrop";
 import { type CardsPublicationBlogProps, type PublicationCardType } from "types/types";
 import "@/styles/reusables/edit.css";
 
-const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
+const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
   cardsBlog,
   handlePublicationChange,
   setCardsBlog,
@@ -28,6 +28,9 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
     base64_img: "",
     currentPage: 0,
   });
+  const [error, setError] = useState("");
+    // Estado de suscripción al evento, oseqa si esta enviandose la informacion (suscribe)
+    const [suscribe, setSuscribe] = useState(false);
 
   // Referencia al botón de upload (uploadRef), contexto de usuario, usuario actual (user)
   const uploadRef = useRef<HTMLButtonElement | null>(null);
@@ -101,6 +104,20 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
+
+    setSuscribe(true);
+    const hasEmptyField = Object.entries(editPublication).some(([key, value]) => {
+      if (value === "" && key !== "_id") {
+        key = key === "base64_img" ? "image" : key;
+        setError(`Please complete the ${key} field`);
+        setSuscribe(false);
+        return true;
+      }
+      return false;
+    });
+
+    if (hasEmptyField) return;
+
     try {
       await putCommentPublication(editPublication, editPublication._id);
       setCardsBlog(
@@ -114,6 +131,8 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
       toast.error("Error to edit post");
     }
     setShowModalEditPublication(false);
+    setError("");
+    setSuscribe(false);
   };
 
   return (
@@ -167,7 +186,8 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
                     cols={50}
                   />
                 </li>
-                <Button type="submit">Edit</Button>
+              {error && <p style={{ color: 'red' }}>{error}</p>}
+              <Button type="submit" suscribe={suscribe}>Edit</Button>
               </ul>
             </form>
           </div>
@@ -253,4 +273,4 @@ const CardsPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
   );
 };
 
-export default CardsPublicationBlog;
+export default CardPublicationBlog;

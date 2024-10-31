@@ -31,25 +31,20 @@
   min-width: 600px;
   input {
     margin: 20px 0;
+    font-weight: normal;
   }
   textarea {
     margin: 20px 0;
     all: unset;
     white-space: pre-wrap;
     border: 1px solid #ddd;
+    font-weight: normal;
   }
-}
-
-.modal-edit {
-  min-width: 600px;
-  input {
-    margin: 20px 0;
-  }
-  textarea {
-    margin: 20px 0;
-    all: unset;
-    white-space: pre-wrap;
-    border: 1px solid #ddd;
+  p{
+    font-weight: 500;
+    text-align: center;
+    display: block;
+    width: 100%;
   }
 }
 

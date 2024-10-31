@@ -1,4 +1,4 @@
-import CardsPublicationBlog from "@/components/pages-components/blog/CardsPublicationBlog";
+import CardPublicationBlog from "@/components/pages-components/blog/CardPublicationBlog";
 import FormPublication from "@/components/pages-components/blog/FormPublication";
 import { handleChangeModal } from "@/scripts/modal";
 import { useEffect, useState } from "react";
@@ -59,7 +59,7 @@ const Blog = () => {
           />
         )}
         {/* Cards de publicaciones */}
-        <CardsPublicationBlog
+        <CardPublicationBlog
           cardsBlog={cardsBlog}
           handlePublicationChange={handlePublicationChange}
           setCardsBlog={setCardsBlog}
