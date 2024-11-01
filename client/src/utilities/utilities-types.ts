@@ -86,21 +86,23 @@ export function isCommentArray(obj: unknown): obj is Comment[] {
 }
 
 // Función de tipo guardia para verificar si un objeto es de tipo Comment
-export function isComment(obj: unknown): obj is Comment {
+export const isComment = (obj: unknown): obj is Comment => {
+  if (typeof obj !== 'object' || obj === null) return false;
+
+  const comment = obj as Comment;
   return (
-    typeof obj === "object" &&
-    obj !== null &&
-    typeof (obj as Comment)._id === "string" &&
-    typeof (obj as Comment).pattern_id === "string" &&
-    typeof (obj as Comment).owner === "object" &&
-    (obj as Comment).owner !== null &&
-    typeof (obj as Comment).owner.uid === "string" &&
-    typeof (obj as Comment).owner.displayName === "string" &&
-    typeof (obj as Comment).owner.email === "string" &&
-    typeof (obj as Comment).owner.photoURL === "string" &&
-    typeof (obj as Comment).data === "string" &&
-    typeof (obj as Comment).likes === "number" &&
-    Array.isArray((obj as Comment).likedBy) &&
-    Array.isArray((obj as Comment).answers)
+    comment._id === 'string' &&
+    typeof comment.pattern_id === 'string' &&
+    comment.owner &&
+    typeof comment.owner.uid === 'string' &&
+    typeof comment.owner.displayName === 'string' &&
+    typeof comment.owner.email === 'string' &&
+    typeof comment.owner.photoURL === 'string' &&
+    typeof comment.data === 'string' &&
+    typeof comment.likes === 'number' &&
+    Array.isArray(comment.likedBy) &&
+    comment.likedBy.every((id: unknown) => typeof id === 'string') &&
+    Array.isArray(comment.answers) &&
+    comment.answers.every((answer: unknown) => isComment(answer))
   );
-}
+};

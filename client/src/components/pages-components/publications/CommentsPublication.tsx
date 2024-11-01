@@ -4,9 +4,9 @@ import CommentCard from "@/components/pages-components/publications/CommentCard"
 import { getCommentsByID, postComment } from "@/scripts/render-data";
 import { UserContext } from "@/App";
 import { type Comment } from "types/types";
-import "@/styles/comments.css";
 import toast from "react-hot-toast";
 import { isCommentArray } from "@/utilities/utilities-types";
+import "@/styles/comments.css";
 
 const CommentsPublication = () => {
   // Estado de los comentarios actuales, y del Text Area
@@ -77,10 +77,8 @@ const CommentsPublication = () => {
   return (
     <div className="comments">
       <h3>User Comments</h3>
-
       <form onSubmit={handleSubmit}>
         <textarea ref={newCommentRef} placeholder="Write your comment..." rows={4} cols={50} />
-        <br />
         <button type="submit">Submit Comment</button>
       </form>
       <div className="old-comments">
@@ -90,7 +88,7 @@ const CommentsPublication = () => {
         ) : (
           <>
             {comments.map((comment) => (
-              <ul key={comment._id}>
+              <ul key={comment._id} className="ul-comments">
                 <CommentCard
                   comment={comment}
                   user={user}

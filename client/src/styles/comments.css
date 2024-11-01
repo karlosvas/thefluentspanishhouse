@@ -3,21 +3,33 @@
   padding: 20px 0;
   padding-left: 25%;
   background-color: var(--secondary-white);
-
   u h3 {
     padding-left: 10px;
   }
-  textarea {
-    background-color: var(--primary-white);
-    border: 1px solid #ddd;
-    resize: none;
-    color: var(--primary-black);
-    padding: 10px;
-  }
+
   form {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
+    width: calc(20vw + 200px);
+    padding-left: 0;
+    padding-right: 0;
     textarea {
-      width: 300px;
+      background-color: var(--primary-white);
+      color: var(--primary-black);
+      resize: none;
+      padding: 10px;
+      border: none;
+      outline: 1px solid rgb(87, 100, 218);
+      border-radius: 5px;
+      width: 95%;
+      margin-left: 8px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    button {
+      width: 96%;
+      color: var(--secondary-white);
     }
   }
   .state-thread {
@@ -25,27 +37,112 @@
     margin-left: 15%;
     padding-top: 10px;
   }
-  ul {
-    padding-left: 10px;
+  .ul-comments {
     border-top: 1px solid #ddd;
     width: 60vw;
+    padding: 0;
+
     li {
-      margin: 0;
       padding: 25px 0;
       list-style: none;
       width: 100%;
-      padding-right: 20px;
       position: relative;
 
-      section {
-        position: relative;
-        strong {
-          max-width: 170px;
-          display: inline-block;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          white-space: nowrap;
+      .comments-wrapper {
+        display: flex;
+        place-content: center;
+        flex-direction: column;
+
+        .comments-content {
           width: 100%;
+          overflow: hidden;
+          textarea {
+            all: unset;
+            padding: 10px;
+            width: 100%;
+            background-color: transparent;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            hyphens: auto;
+            overflow: hidden;
+            resize: none;
+          }
+
+          .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+          }
+
+          .edit-btn {
+            padding: 5px 10px;
+            align-self: flex-end;
+            margin-bottom: 10px;
+            margin-right: -10px;
+          }
+
+          #options {
+            position: absolute;
+            top: 5px;
+            right: -5px;
+            width: 30px;
+            height: 30px;
+            transition: all 0.5s ease;
+
+            .modal-content {
+              position: absolute;
+              right: -50px;
+              top: -5px;
+              font-size: 13px;
+              color: var(--primary-black);
+              width: fit-content;
+              height: fit-content;
+              background: white;
+              border-radius: 3px;
+              box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+              font-weight: 500;
+              z-index: 1;
+              background-color: var(--primary-white);
+              ul {
+                width: 100%;
+                border-top: none;
+                padding: 0;
+                li {
+                  width: 100%;
+                  border-top: 1px solid #ddd;
+                  padding: 0;
+                  padding: 2px 10px;
+                }
+              }
+            }
+            .modal-content:hover {
+              cursor: pointer;
+            }
+            .modal-content.edit {
+              flex-direction: row;
+              align-items: center;
+              right: 400%;
+              button {
+                padding: 3px 10px;
+                border-radius: 3px;
+              }
+            }
+          }
+        }
+        .comments-user {
+          section {
+            strong {
+              max-width: 170px;
+              display: inline-block;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+              width: 100%;
+            }
+          }
         }
       }
       #likes {
@@ -82,73 +179,6 @@
           display: none;
         }
       }
-
-      .comments-content {
-        padding-right: 50px;
-        width: 100%;
-
-        .modal-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          height: 100vh;
-          width: 100vw;
-        }
-
-        p {
-          width: 100%;
-          overflow-wrap: break-word;
-          hyphens: auto;
-          overflow: hidden;
-        }
-
-        #options {
-          position: relative;
-          top: -17px;
-          right: -80px;
-          width: 30px;
-          height: 30px;
-          transition: all 0.5s ease;
-
-          .modal-content {
-            font-size: 13px;
-            color: var(--primary-black);
-            right: 0;
-            top: -5px;
-            width: fit-content;
-            height: fit-content;
-            background: white;
-            border-radius: 3px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            font-weight: 500;
-            z-index: 1;
-            background-color: var(--primary-white);
-            ul {
-              width: 100%;
-              border-top: none;
-              padding: 0;
-              li {
-                width: 100%;
-                border-top: 1px solid #ddd;
-                padding: 0;
-                padding: 2px 10px;
-              }
-            }
-          }
-          .modal-content:hover {
-            cursor: pointer;
-          }
-          .modal-content.edit {
-            flex-direction: row;
-            align-items: center;
-            right: 400%;
-            button {
-              padding: 3px 10px;
-              border-radius: 3px;
-            }
-          }
-        }
-      }
     }
 
     .response-comment {
@@ -157,21 +187,19 @@
       width: 80%;
       border-radius: 10px;
       margin-top: 10px;
-      input {
-        width: 30vw;
-        background-color: transparent;
-        border: none;
-        border-bottom: 1px solid #ddd;
-        color: var(--primary-black);
+      textarea {
+        border-radius: 3px;
+        margin-left: 5px;
+        width: 100%;
       }
       button {
-        margin-left: 20px;
         padding: 5px;
         font-size: small;
         border-radius: 5px;
-        background-color: transparent;
-        border: 1px solid var(--primary-black);
+        background-color: var(--primary-white);
+        outline: 1px solid var(--primary-blue);
         color: var(--primary-black);
+        width: 100%;
       }
     }
     li:hover {
@@ -259,34 +287,29 @@
 /* Moviles */
 @media only screen and (width <= 767px) {
   .comments {
-    padding-left: 10px;
-    ul li .comments-content {
-      p {
-        margin-bottom: 35px;
-      }
-      #options {
-        position: relative;
-        top: -17px;
-        right: -25px;
-        width: 30px;
-        height: 30px;
-        transition: all 0.5s ease;
-        .modal-content {
-          right: 20px;
-        }
-      }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0;
+    padding-bottom: 20px;
+    h3 {
+      padding-top: 20px;
     }
     ul {
-      width: 90vw;
       li {
-        width: 100%;
-        section {
-          strong {
-            max-width: 20vw;
-          }
-        }
         .comments-content {
           padding: 0;
+          #options {
+            top: -17px;
+            right: -25px;
+            width: 30px;
+            height: 30px;
+            transition: all 0.5s ease;
+            .modal-content {
+              right: 20px;
+            }
+          }
         }
       }
     }

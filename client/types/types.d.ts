@@ -6,6 +6,24 @@ declare global {
   }
 }
 
+export interface OptionsCommentProps {
+  comment: Comment;
+  setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
+  comments: Comment[];
+  responseComment: React.RefObject<HTMLTextAreaElement>;
+  setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  isEdit: boolean;
+}
+
+
+export interface ResponseProps {
+  user: User;
+  setIsResponse: React.Dispatch<React.SetStateAction<boolean>>;
+  childs: Comment[];
+  setChilds: React.Dispatch<React.SetStateAction<Comment[]>>;
+  comment: Comment;
+}
+
 export interface CardsPublicationBlogProps {
   cardsBlog: PublicationCardType[];
   setCardsBlog: React.Dispatch<React.SetStateAction<PublicationCardType[]>>;

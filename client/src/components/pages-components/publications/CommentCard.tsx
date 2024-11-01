@@ -1,13 +1,14 @@
 import toast from "react-hot-toast";
-import { useEffect, useRef, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import { getChildsComment, postChildrenComment } from "@/scripts/render-data";
-import ImgUser from "@/components/svg-component/ImgUser";
-import Likes from "@/components/svg-component/Likes";
+import { getChildsComment } from "@/scripts/render-data";
 import OptionsComment from "@/components/svg-component/OptionsComment";
 import ReplyToComment from "@/components/svg-component/ReplyToComment";
-import { type CommentCardProps, type Comment } from "types/types";
 import { isCommentArray } from "@/utilities/utilities-types";
+import { type CommentCardProps, type Comment } from "types/types";
+import ImgUser from "@/components/svg-component/ImgUser";
+import Likes from "@/components/svg-component/Likes";
+import Response from "@/components/pages-components/publications/Response";
 
 // Se renderiza cada comentario individualmente
 const CommentCard: React.FC<CommentCardProps> = ({
@@ -19,52 +20,24 @@ const CommentCard: React.FC<CommentCardProps> = ({
   comments,
   depth,
 }) => {
+  // Manejar cuando se esta respondiendo a un comentario (isResponse)
   const [isResponse, setIsResponse] = useState(false);
+  // Estado para saber si se esta editando un comentario (isEdit)
+  const [isEdit, setIsEdit] = useState(false);
+  // Estado de los comentarios hijos del actual comentario (childs)
   const [childs, setChilds] = useState<Comment[]>([]);
+  // Estado para saber si se ha mostrado el mensaje de cerrar el hilo (hasShownCloseTread)
   const [hasShownCloseTread, setHasShownCloseTread] = useState(false);
-  const responseComment = useRef<HTMLInputElement>(null);
+ // Estado del texto del comentario
+ const [commentText, setCommentText] = useState(comment.data);
 
-  const handleSubmitChildren = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Creamos un nuevo comentario
-    if (
-      responseComment.current &&
-      responseComment.current.value.trim() !== "" &&
-      user &&
-      user.uid &&
-      user.displayName &&
-      user.email
-    ) {
-      const newCommentData: Comment = {
-        _id: "",
-        pattern_id: comment._id,
-        owner: {
-          uid: user.uid,
-          displayName: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL || "",
-        },
-        data: responseComment.current.value,
-        likes: 0,
-        likedBy: [],
-        answers: [],
-      };
-      // Limpiamos el input y lo cerramos
-      responseComment.current.value = "";
-      setIsResponse(false);
-      try {
-        const newComment = await postChildrenComment(newCommentData, comment._id);
-        const updatedComments = [newComment, ...childs];
-        if (isCommentArray(updatedComments)) setChilds(updatedComments);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    } else toast.error("Do you need login to comment");
-  };
+  // Referencia al input de respuesta
+  const responseComment = useRef<HTMLTextAreaElement>(null);
 
   // Hook para navegar
   const navigate = useNavigate();
 
+  // Obtener los comentarios hijos
   async function fetchChildComments(id: string) {
     try {
       const result = await getChildsComment(id);
@@ -85,31 +58,50 @@ const CommentCard: React.FC<CommentCardProps> = ({
     }
   }, [comment, navigate]);
 
+
+  const handleCommentChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+    setCommentText(e.target.value);
+    adjustTextareaHeight();
+  };
+
+  const adjustTextareaHeight = () => {
+    if (responseComment.current) {
+      responseComment.current.style.height = 'auto';
+      responseComment.current.style.height = `${responseComment.current.scrollHeight}px`;
+    }
+  };
+
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [commentText]);
+
+  useEffect(() => {
+    if (responseComment.current) {
+      adjustTextareaHeight();
+    }
+  }, []);
+
   return (
     <>
       <li className={`depth-${depth}`}>
-        <div className="comment">
-          <ImgUser photoURL={comment.owner.photoURL} />
-          <section>
-            <strong>{comment.owner.displayName}</strong>
-            {comment.owner.email && <small>{comment.owner.email.slice(0, comment.owner.email.indexOf("@"))}</small>}
-          </section>
+        <div className="comments-wrapper">
+          <div className="comments-user">
+            <ImgUser photoURL={comment.owner.photoURL} />
+            <section>
+              <strong>{comment.owner.displayName}</strong>
+              {comment.owner.email && <small>{comment.owner.email.slice(0, comment.owner.email.indexOf("@"))}</small>}
+            </section>
+          </div>
           <div className="comments-content">
-            <p>{comment.data}</p>
-            <OptionsComment id={comment._id} comment={comment} setComments={setComments} comments={comments} />
+            <textarea ref={responseComment} value={commentText}  onChange={handleCommentChange} disabled={!isEdit}/>
+            <OptionsComment comment={comment} setComments={setComments} comments={comments} responseComment={responseComment} setIsEdit={setIsEdit} isEdit={isEdit}/>
           </div>
           <ReplyToComment user={user} isResponse={isResponse} setIsResponse={setIsResponse} />
           <Likes comment={comment} />
         </div>
       </li>
       {isResponse && user && (
-        <div className="response-comment">
-          <ImgUser photoURL={user?.photoURL} />
-          <form onSubmit={handleSubmitChildren}>
-            <input type="text" ref={responseComment} placeholder="Text here..." />
-            <button type="submit">Enviar</button>
-          </form>
-        </div>
+        <Response user={user} setIsResponse={setIsResponse} childs={childs} setChilds={setChilds} comment={comment}/>
       )}
       {childs.length > 0 &&
         (depth < 3 || openTread ? (
