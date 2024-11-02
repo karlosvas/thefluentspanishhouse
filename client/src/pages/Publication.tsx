@@ -9,9 +9,11 @@ import { isPublicationCardType } from "@/utilities/utilities-types";
 import "@/styles/main-publication.css";
 
 const Publication = () => {
+  // Publicacion actual (publication), estado de carga de la imagen (imageLoading)
   const [publication, setPublication] = useState<PublicationCardType>();
   const [imageLoading, setImageLoading] = useState<boolean>(false);
 
+  // Parametro de la URL que indica el id de la publicación (id), hook para navegar entre rutas (navigate)
   const { id } = useParams<RouteParams>();
   const navigate = useNavigate();
 
@@ -40,7 +42,7 @@ const Publication = () => {
       <main className="publication-main">
         {publication ? (
           <div className="publication">
-            <h2>{publication.title}</h2>
+            <h1>{publication.title}</h1>
             <figure>
               <img
                 className="img-publication"

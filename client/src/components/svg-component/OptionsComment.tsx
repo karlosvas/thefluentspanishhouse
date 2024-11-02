@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Button from "../reusable/Button";
 import { isComment } from "@/utilities/utilities-types";
-import { type OptionsCommentProps} from "types/types";
+import { type OptionsCommentProps } from "types/types";
 
 const OptionsComment: React.FC<OptionsCommentProps> = ({
   comment,
@@ -18,7 +18,7 @@ const OptionsComment: React.FC<OptionsCommentProps> = ({
   const [showModal, setShowModal] = useState(false);
   // Usuario actual
   const user = useContext(UserContext);
-  
+
   // Manejar el borrado de un comentario
   const handleDelete = async () => {
     if (user && user.uid === comment.owner.uid) {
@@ -66,30 +66,37 @@ const OptionsComment: React.FC<OptionsCommentProps> = ({
 
   // Enviar el comentario editado
   const submitEdit = async () => {
-    if (user && user.uid === comment.owner.uid) {
+    if (user && user.uid === comment.owner.uid && responseComment.current) {
       try {
-        const updatedComment = await editComment(comment._id, "");
-        
+        const updatedComment = await editComment(
+          comment._id,
+          responseComment.current.value
+        );
+
         if (isComment(updatedComment))
-          setComments(comments.map((comment) => comment._id === updatedComment._id ? updatedComment : comment));
-        
+          setComments(
+            comments.map((comment) =>
+              comment._id === updatedComment._id ? updatedComment : comment
+            )
+          );
+
         toast.success("Comment edited successfully");
-        
-        } catch (error) {
-          console.error("Error to submit post", error);
-          toast.error("Error to delete comment");
+      } catch (error) {
+        console.error("Error to submit post", error);
+        toast.error("Error to delete comment");
       }
     } else {
       toast.error("You can't delete this comment, is not yours");
     }
-  }
+  };
 
-  
   return (
     <>
-      {isEdit && 
-        <Button className="edit-btn" event={submitEdit}>Edit</Button>
-      }
+      {isEdit && (
+        <Button className="edit-btn" event={submitEdit}>
+          Edit
+        </Button>
+      )}
       {/* Si se esta mostrando y se hace click fuera del modal, se cierra el modal */}
       {showModal && (
         <div className="modal-overlay" onClick={handleClickOutside}>
@@ -97,7 +104,7 @@ const OptionsComment: React.FC<OptionsCommentProps> = ({
         </div>
       )}
       <div id="options">
-      <svg
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
           height="20"

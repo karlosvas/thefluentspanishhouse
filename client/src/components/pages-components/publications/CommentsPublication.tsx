@@ -50,7 +50,12 @@ const CommentsPublication = () => {
       // Limpiar el text area
       newCommentRef.current.value = "";
       // Enviar el comentario
-      await postComment(newCommentData);
+      const response = await postComment(newCommentData);
+      if (response)
+        toast("Comment posted!", {
+          icon: "✉️",
+        });
+
       // Si se ha enviado correctamente, añadirlo a la lista de comentarios
       const updatedComments = await getCommentsByID(id);
       if (isCommentArray(updatedComments)) {
@@ -78,7 +83,12 @@ const CommentsPublication = () => {
     <div className="comments">
       <h3>User Comments</h3>
       <form onSubmit={handleSubmit}>
-        <textarea ref={newCommentRef} placeholder="Write your comment..." rows={4} cols={50} />
+        <textarea
+          ref={newCommentRef}
+          placeholder="Write your comment..."
+          rows={4}
+          cols={50}
+        />
         <button type="submit">Submit Comment</button>
       </form>
       <div className="old-comments">

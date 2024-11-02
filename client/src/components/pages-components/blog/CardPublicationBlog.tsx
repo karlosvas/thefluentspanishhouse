@@ -10,8 +10,12 @@ import {
 } from "@/scripts/render-data";
 import toast from "react-hot-toast";
 import Backdrop from "@/components/reusable/Backdrop";
-import { type CardsPublicationBlogProps, type PublicationCardType } from "types/types";
+import {
+  type CardsPublicationBlogProps,
+  type PublicationCardType,
+} from "types/types";
 import "@/styles/reusables/edit.css";
+import { getAdmin } from "@/utilities/utilities";
 
 const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
   cardsBlog,
@@ -29,8 +33,8 @@ const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
     currentPage: 0,
   });
   const [error, setError] = useState("");
-    // Estado de suscripción al evento, oseqa si esta enviandose la informacion (suscribe)
-    const [suscribe, setSuscribe] = useState(false);
+  // Estado de suscripción al evento, oseqa si esta enviandose la informacion (suscribe)
+  const [suscribe, setSuscribe] = useState(false);
 
   // Referencia al botón de upload (uploadRef), contexto de usuario, usuario actual (user)
   const uploadRef = useRef<HTMLButtonElement | null>(null);
@@ -41,7 +45,7 @@ const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
   );
 
   // Verificar si el usuario es admin, si tiene email, buscarlo en la lista de admins del .env
-  const admin = user?.email ? import.meta.env.VITE_ADMINS.split(",").includes(user.email.split("@")[0] as string) : false;
+  const admin = getAdmin(user);
 
   // Parametro de la URL que indica la pagina actual (page), función para navegar entre rutas (navigate)
   const { page } = useParams<{ page: string }>();
@@ -49,7 +53,7 @@ const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
 
   // Estado del modal de para mostrar la publicación (showModalEditPublication)
   const [showModalEditPublication, setShowModalEditPublication] =
-  useState(false);
+    useState(false);
 
   // Estado para cerrar el modal (closing)
   const [closing] = useState(false);
@@ -106,15 +110,17 @@ const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
     e.preventDefault();
 
     setSuscribe(true);
-    const hasEmptyField = Object.entries(editPublication).some(([key, value]) => {
-      if (value === "" && key !== "_id") {
-        key = key === "base64_img" ? "image" : key;
-        setError(`Please complete the ${key} field`);
-        setSuscribe(false);
-        return true;
+    const hasEmptyField = Object.entries(editPublication).some(
+      ([key, value]) => {
+        if (value === "" && key !== "_id") {
+          key = key === "base64_img" ? "image" : key;
+          setError(`Please complete the ${key} field`);
+          setSuscribe(false);
+          return true;
+        }
+        return false;
       }
-      return false;
-    });
+    );
 
     if (hasEmptyField) return;
 
@@ -186,8 +192,10 @@ const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
                     cols={50}
                   />
                 </li>
-              {error && <p style={{ color: 'red' }}>{error}</p>}
-              <Button type="submit" suscribe={suscribe}>Edit</Button>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                <Button type="submit" suscribe={suscribe}>
+                  Edit
+                </Button>
               </ul>
             </form>
           </div>

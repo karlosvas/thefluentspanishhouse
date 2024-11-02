@@ -6,35 +6,42 @@ import { getPublications } from "@/scripts/render-data";
 import { type PublicationCardType } from "types/types";
 import { Helmet } from "react-helmet-async";
 import PaginationReactBoostrap from "@/components/pages-components/blog/Pagination";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import "@/styles/main-blog.css";
 
 const Blog = () => {
-  // Muestra el modal de publicación(ShowModalPost) y cierra el modal de publicación(closing)
+  // Muestra el modal de publicación(showModalPost) y cierra el modal de publicación(closing)
   const [showModalPost, setShowModalPost] = useState(false);
   const [closing, setClosing] = useState(false);
+  // Publicaciones del blog (cardsBlog), y estado de carga(loading)
   const [cardsBlog, setCardsBlog] = useState<PublicationCardType[]>([]);
   const [loading, setLoading] = useState(false);
 
+  // Obtiene la página actual por parámetro
   const { page } = useParams<{ page: string }>();
+  // Hook para navegar
+  const navigate = useNavigate();
 
+  // Mnejar el cambio de publicación
   const handlePublicationChange = () => {
     handleChangeModal(showModalPost, setClosing, setShowModalPost);
   };
 
+  // Obtener las publicaciones
   const fetchPublications = async (page: string) => {
     try {
       const publications = await getPublications(page);
-      if(Array.isArray(publications))
-        publications.reverse();
+      if (Array.isArray(publications)) publications.reverse();
       setCardsBlog(publications as PublicationCardType[]);
     } catch (error) {
       console.error("Error loading publications:", error);
+      navigate("/404");
     } finally {
       setLoading(true);
     }
   };
 
+  // Cargar las publicaciones
   useEffect(() => {
     if (page && cardsBlog.length == 0) fetchPublications(page);
   }, [page, cardsBlog.length]);
