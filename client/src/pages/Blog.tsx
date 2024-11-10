@@ -31,8 +31,11 @@ const Blog = () => {
   const fetchPublications = async (page: string) => {
     try {
       const publications = await getPublications(page);
-      if (Array.isArray(publications)) publications.reverse();
-      setCardsBlog(publications as PublicationCardType[]);
+      if (Array.isArray(publications)) {
+        publications.reverse();
+        setCardsBlog(publications as PublicationCardType[]);
+        if (publications.length == 0 && page != "1") navigate("/blog/1");
+      }
     } catch (error) {
       console.error("Error loading publications:", error);
       navigate("/404");

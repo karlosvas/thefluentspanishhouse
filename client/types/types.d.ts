@@ -333,3 +333,7 @@ export interface Option {
   label: string;
   selected: boolean;
 }
+
+export type LastPublicationResponse = {
+  currentPage: number;
+};
