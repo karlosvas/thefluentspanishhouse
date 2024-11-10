@@ -38,9 +38,7 @@ function ControlledCarousel() {
         id="carrousel"
       >
         <Carousel.Item interval={5000}>
-          <div
-            className="content-caption"
-          >
+          <div className="content-caption">
             <Carousel.Caption className="caption">
               <h3>Joan Penn</h3>
               <p>
@@ -53,9 +51,7 @@ function ControlledCarousel() {
           </div>
         </Carousel.Item>
         <Carousel.Item interval={5000}>
-          <div
-            className="content-caption"
-          >
+          <div className="content-caption">
             <Carousel.Caption className="caption">
               <h3>Red Salas</h3>
               <p>
@@ -67,10 +63,9 @@ function ControlledCarousel() {
           </div>
         </Carousel.Item>
         <Carousel.Item interval={5000}>
-          <div
-            className="w-100 content-caption"
-          >
+          <div className="w-100 content-caption">
             <Carousel.Caption className="caption">
+              <h3>Aryn Ruiz</h3>
               <p>
                 Marta is an excellent teacher! Her classes are engaging,
                 challenging, and practical for gaining speaking skills, in
@@ -82,10 +77,9 @@ function ControlledCarousel() {
           </div>
         </Carousel.Item>
         <Carousel.Item interval={5000}>
-          <div
-            className="w-100 content-caption"
-          >
+          <div className="w-100 content-caption">
             <Carousel.Caption className="caption">
+              <h3>Conie Latas</h3>
               <p>
                 Marta is excelent! I thoroughly enjoyed her as a tutor and look
                 forward to future lessons.

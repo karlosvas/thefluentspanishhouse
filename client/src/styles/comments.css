@@ -68,6 +68,7 @@
             hyphens: auto;
             overflow: hidden;
             resize: none;
+            box-sizing: border-box;
           }
 
           .modal-overlay {
@@ -213,7 +214,7 @@
         width: 14px;
         height: 15px;
         background: var(--primary-white);
-        z-index: 1; /* Asegúrate de que esté por encima del borde */
+        z-index: 1;
       }
 
       button::before {

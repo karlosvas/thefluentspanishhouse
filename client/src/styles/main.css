@@ -301,7 +301,7 @@
         .banner {
           position: relative;
           z-index: 10;
-          height: 30vh;
+          height: 40vh;
           border-radius: 0;
         }
         figcaption {
@@ -310,6 +310,9 @@
             sans-serif;
           width: 100%;
           font-size: medium;
+          strong {
+            font-size: medium;
+          }
         }
       }
     }

@@ -28,8 +28,8 @@ const CommentCard: React.FC<CommentCardProps> = ({
   const [childs, setChilds] = useState<Comment[]>([]);
   // Estado para saber si se ha mostrado el mensaje de cerrar el hilo (hasShownCloseTread)
   const [hasShownCloseTread, setHasShownCloseTread] = useState(false);
- // Estado del texto del comentario
- const [commentText, setCommentText] = useState(comment.data);
+  // Estado del texto del comentario
+  const [commentText, setCommentText] = useState(comment.data);
 
   // Referencia al input de respuesta
   const responseComment = useRef<HTMLTextAreaElement>(null);
@@ -58,15 +58,16 @@ const CommentCard: React.FC<CommentCardProps> = ({
     }
   }, [comment, navigate]);
 
-
-  const handleCommentChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+  const handleCommentChange = (e: {
+    target: { value: SetStateAction<string> };
+  }) => {
     setCommentText(e.target.value);
     adjustTextareaHeight();
   };
 
   const adjustTextareaHeight = () => {
     if (responseComment.current) {
-      responseComment.current.style.height = 'auto';
+      responseComment.current.style.height = "auto";
       responseComment.current.style.height = `${responseComment.current.scrollHeight}px`;
     }
   };
@@ -89,19 +90,48 @@ const CommentCard: React.FC<CommentCardProps> = ({
             <ImgUser photoURL={comment.owner.photoURL} />
             <section>
               <strong>{comment.owner.displayName}</strong>
-              {comment.owner.email && <small>{comment.owner.email.slice(0, comment.owner.email.indexOf("@"))}</small>}
+              {comment.owner.email && (
+                <small>
+                  {comment.owner.email.slice(
+                    0,
+                    comment.owner.email.indexOf("@")
+                  )}
+                </small>
+              )}
             </section>
           </div>
           <div className="comments-content">
-            <textarea ref={responseComment} value={commentText}  onChange={handleCommentChange} disabled={!isEdit}/>
-            <OptionsComment comment={comment} setComments={setComments} comments={comments} responseComment={responseComment} setIsEdit={setIsEdit} isEdit={isEdit}/>
+            <textarea
+              ref={responseComment}
+              value={commentText}
+              onChange={handleCommentChange}
+              disabled={!isEdit}
+            />
+            <OptionsComment
+              comment={comment}
+              setComments={setComments}
+              comments={comments}
+              responseComment={responseComment}
+              setIsEdit={setIsEdit}
+              isEdit={isEdit}
+            />
           </div>
-          <ReplyToComment user={user} isResponse={isResponse} setIsResponse={setIsResponse} />
+          <ReplyToComment
+            user={user}
+            isResponse={isResponse}
+            setIsResponse={setIsResponse}
+          />
           <Likes comment={comment} />
         </div>
       </li>
       {isResponse && user && (
-        <Response user={user} setIsResponse={setIsResponse} childs={childs} setChilds={setChilds} comment={comment}/>
+        <Response
+          user={user}
+          setIsResponse={setIsResponse}
+          childs={childs}
+          setChilds={setChilds}
+          comment={comment}
+        />
       )}
       {childs.length > 0 &&
         (depth < 3 || openTread ? (
