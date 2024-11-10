@@ -301,7 +301,7 @@
         .banner {
           position: relative;
           z-index: 10;
-          height: 40vh;
+          height: 45vh;
           border-radius: 0;
         }
         figcaption {

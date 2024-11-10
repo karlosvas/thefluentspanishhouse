@@ -78,5 +78,5 @@ export const toggleThemeSVG = (theme: string, setTheme: Dispatch<SetStateAction<
 };
 
 export function getAdmin(user: User | null) {
-  return import.meta.env.VITE_ADMINS_DEV.split(",").includes(user?.email?.split("@")[0]);
+  return import.meta.env.VITE_ADMINS.split(",").includes(user?.email?.split("@")[0]);
 }

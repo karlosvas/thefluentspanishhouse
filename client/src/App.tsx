@@ -10,7 +10,12 @@ import Footer from "@/layouts/Footer";
 import { createContext, useEffect, useState } from "react";
 import Newsetler from "@/pages/Newsletter";
 import CallbackVerify from "@/pages/CallbackVerify";
-import { getAuth, onAuthStateChanged, onIdTokenChanged, User } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  onIdTokenChanged,
+  User,
+} from "firebase/auth";
 import Contact from "@/pages/Contact";
 import { Toaster } from "react-hot-toast";
 import Main from "./pages/Main";
@@ -132,7 +137,9 @@ const App = () => {
               {/* Maneja rutas no encontradas */}
               <Route path="*" element={<Navigate to="/404" />} />
             </Routes>
-            {getAdmin(user) && <AdminPanel />}
+            {getAdmin(user) && user?.email == "carlosvassan@gmail.com" && (
+              <AdminPanel />
+            )}
             {!shouldHideHeaderFooter && <Footer />}
             <Toaster position="bottom-right" />
           </HelmetProvider>
