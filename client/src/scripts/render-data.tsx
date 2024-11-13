@@ -89,7 +89,8 @@ export const fetchGetUidByEmail = async (
       uid: string;
     };
   } catch (error) {
-    console.error("Error al obtener datos:", error);
+    // El usuario no existe en la base de datos algo normal ya que puede no haberse inscrito a una clase y querer entrar en la new
+    return;
   }
 };
 
@@ -135,6 +136,8 @@ export const postPublication = async (
 
 export const subscribeNewsletter = async (email: string) => {
   try {
+    console.log("petición", `${url_api}/mailchamp/newsletter`);
+    console.log(url_api);
     await helper.post(`${url_api}/mailchamp/newsletter`, {
       body: JSON.stringify({ email }),
     });

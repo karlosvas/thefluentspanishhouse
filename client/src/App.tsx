@@ -24,6 +24,7 @@ import AdminPanel from "./layouts/AdminPanel";
 import Theme from "./components/header-components/Theme";
 import { getAdmin, getTheme } from "./utilities/utilities";
 import { type ThemeContextType } from "types/types";
+import { initializeUrls } from "./constants/global";
 
 // Define los tipos de los contextos
 export const UserContext = createContext<User | null>(null);
@@ -85,6 +86,7 @@ const App = () => {
         localStorage.removeItem("token");
         setUser(null);
       }
+      await initializeUrls();
       setLoading(true);
     });
 

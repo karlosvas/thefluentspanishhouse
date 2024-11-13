@@ -4,7 +4,11 @@ import toast from "react-hot-toast";
 import { OptionsChampTag, SubscriberType } from "types/types";
 
 // Función para guardar un usuario
-export async function saveUserAndAddTag(userId: string, newClass: string, newSubscriber: SubscriberType) {
+export async function saveUserAndAddTag(
+  userId: string,
+  newClass: string,
+  newSubscriber: SubscriberType
+) {
   // Crea una referencia a la ruta donde guardarás los datos del usuario
   const userRef = ref(dbFirebase, "usuarios/" + userId);
 
@@ -43,7 +47,11 @@ export async function saveUserAndAddTag(userId: string, newClass: string, newSub
 }
 
 // Función para agregar una clase a un usuario existente
-function addClass(userId: string, newClass: string, newSubscriber: SubscriberType) {
+function addClass(
+  userId: string,
+  newClass: string,
+  newSubscriber: SubscriberType
+) {
   // Referencia al usuario en la base de datos
   const userRef = ref(dbFirebase, "usuarios/" + userId);
 
@@ -84,10 +92,13 @@ function addClass(userId: string, newClass: string, newSubscriber: SubscriberTyp
         } else {
           toast.dismiss();
           // Verificamos si esta suscrito a esa misma clase
-          toast("This user already exists in a class, we will try to offer a better service.", {
-            icon: "🙈",
-            duration: 10000,
-          });
+          toast(
+            "This user already exists in a class, we will try to offer a better service.",
+            {
+              icon: "🙈",
+              duration: 10000,
+            }
+          );
         }
       } else {
         console.error("The user does not exist in the database");
@@ -114,7 +125,9 @@ export async function getUserDB(userId: string) {
 }
 
 // Función para obtener los tags de usuarios de la DB
-export const getUserClass = async (userId: string): Promise<OptionsChampTag[] | null> => {
+export const getUserClass = async (
+  userId: string
+): Promise<OptionsChampTag[] | null> => {
   const userRef = ref(dbFirebase, `users/${userId}`);
 
   try {
