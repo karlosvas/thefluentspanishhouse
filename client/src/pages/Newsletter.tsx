@@ -184,7 +184,7 @@ const Newsletter = () => {
       <main className="main-newsletter">
         <section className="info-section">
           <article className="info-article">
-            <PlaceholderImg src="img/cafe.webp" alt="Cafe" className="img-nw" />
+            <PlaceholderImg src="img/cafe" alt="Cafe" className="img-nw" />
             <div className="info-content">
               <h3>Free Spanish Learning Resources</h3>
               <p>
@@ -218,7 +218,7 @@ const Newsletter = () => {
         <section className="freecontent-section">
           <article className="freecontent-article">
             <PlaceholderImg
-              src="img/reunion.webp"
+              src="img/reunion"
               className="img-nw"
               alt="Cafe"
             />

@@ -38,6 +38,7 @@ const initializeUrls = async () => {
       : `http://localhost:5173`;
 };
 
+export const versionSmall = ["img/perfil-main"];
 const MAX_PUBLICATIONS_PER_PAGE = 6;
 
 export { url_api, url_client, MAX_PUBLICATIONS_PER_PAGE, initializeUrls };

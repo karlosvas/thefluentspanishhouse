@@ -7,23 +7,21 @@
     <link rel="canonical" href="https://thefluentspanishhouse.vercel.app/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <title>The Fluent Spanish House</title>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
   </head>
   <body>
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAA1R3eULw-muNS8T" data-size="invisible"></div>
     <div id="root"></div>
   </body>
   <!-- React Script -->
   <script type="module" src="/src/Index.tsx"></script>
-  <script id="mcjs">
-    !(function (c, h, i, m, p) {
-      (m = c.createElement(h)),
-        (p = c.getElementsByTagName(h)[0]),
-        (m.async = 1),
-        (m.src = i),
-        p.parentNode.insertBefore(m, p);
-    })(
-      document,
-      "script",
-      "https://chimpstatic.com/mcjs-connected/js/users/f7935ca15719c2730014aaf2e/9275e8c2804ab2c2ba5d2a2b6.js"
-    );
+  <!-- Inicializar Turnstile Invisible -->
+  <script type="module">
+    document.addEventListener("DOMContentLoaded", function () {
+      turnstile.render(".cf-turnstile", {
+        sitekey: "0x4AAAAAAA1R3eULw-muNS8T",
+        size: "invisible",
+      });
+    });
   </script>
 </html>

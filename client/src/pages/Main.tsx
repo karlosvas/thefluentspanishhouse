@@ -20,7 +20,7 @@ const Main = () => {
           <h1 id="title">The Fluent Spanish House</h1>
 
           <PlaceholderImg
-            src="img/perfil-main.webp"
+            src="img/perfil-main"
             className="banner"
             alt="Banner with inspiring images, sevillana dance"
           >

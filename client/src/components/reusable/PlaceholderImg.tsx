@@ -1,3 +1,4 @@
+import { versionSmall } from "@/constants/global";
 import { useState } from "react";
 import { Placeholder } from "react-bootstrap";
 import { PlaceholderProps } from "types/types";
@@ -19,6 +20,10 @@ const PlaceholderImg: React.FC<PlaceholderProps> = ({
     setImgLoaded(false);
   };
 
+  const srcSet: string = versionSmall.includes(src)
+  ? `${src}-sm.webp 750w, ${src}.webp 1024w`
+  : `${src}.webp 1024w`;
+
   return (
     <>
       <figure>
@@ -31,7 +36,9 @@ const PlaceholderImg: React.FC<PlaceholderProps> = ({
         )}
         <img
           className={className}
-          src={src}
+          src={`${src}.webp`}
+          srcSet={srcSet}
+          sizes="(max-width: 750px) 750px, 1024px"
           alt={alt}
           aria-label={areaLabel}
           onLoad={handleLoad}

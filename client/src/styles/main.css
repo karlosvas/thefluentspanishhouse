@@ -12,10 +12,12 @@
     #title {
       text-shadow: 0 3px 3px var(--primary-blue);
       color: var(--primary-blue);
-      text-wrap: pretty;
       margin-bottom: 100px;
       font-size: 60px;
       font-weight: 600;
+      white-space: normal;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
     strong {
       font-size: 22px;
