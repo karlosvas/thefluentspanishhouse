@@ -10,11 +10,7 @@ import net from "net";
 async function inicializeApp() {
     const app = express();
     // Origenes permitidos
-    const allowedOrigins = [
-        "https://thefluentspanishhouse.com",
-        "http://localhost:5173",
-        process.env.URL_WEB_TEST
-    ];
+    const allowedOrigins = ["https://thefluentspanishhouse.com", "http://localhost:5173", process.env.URL_WEB_TEST];
     // Configuración global de CORS
     app.use(cors({
         origin: function (origin, callback) {
@@ -59,7 +55,7 @@ async function inicializeApp() {
         }
     });
     // Si es development y preview asignamos el puerto disponible a partir de 8080
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== "production") {
         const PORT_BACKEND = 8080;
         // Creamos una funcion flecha que devuelbe una promesa
         const checkPort = (port) => {
@@ -69,8 +65,8 @@ async function inicializeApp() {
                 // Intentar escuchar en el puerto
                 server.listen(port);
                 // Verificamos si el puerto esta en uso si lo esta devuleve false, si ocurre un error lo rechaza
-                server.once('error', (err) => {
-                    if (err.code === 'EADDRINUSE') {
+                server.once("error", (err) => {
+                    if (err.code === "EADDRINUSE") {
                         resolve(false);
                     }
                     else {
@@ -78,7 +74,7 @@ async function inicializeApp() {
                     }
                 });
                 // Si el puerto esta libre lo cerramos y resolvemos la promesa
-                server.once('listening', () => {
+                server.once("listening", () => {
                     server.close();
                     resolve(true);
                 });
@@ -104,6 +100,12 @@ async function inicializeApp() {
         };
         startServer(PORT_BACKEND).catch((error) => {
             console.error("Error starting the server:", error);
+        });
+    }
+    else {
+        const PORT_BACKEND = 8080;
+        app.listen(PORT_BACKEND, () => {
+            console.log(`Server runing: http://localhost:${PORT_BACKEND}`);
         });
     }
 }

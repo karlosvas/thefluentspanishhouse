@@ -12,11 +12,7 @@ import admin from "../lib/firebase/firebase-config.js";
 async function inicializeApp() {
   const app = express();
   // Origenes permitidos
-  const allowedOrigins = [
-    "https://thefluentspanishhouse.com",
-    "http://localhost:5173",
-    process.env.URL_WEB_TEST
-  ];
+  const allowedOrigins = ["https://thefluentspanishhouse.com", "http://localhost:5173", process.env.URL_WEB_TEST];
   // Configuración global de CORS
   app.use(
     cors({
@@ -32,7 +28,7 @@ async function inicializeApp() {
       credentials: true,
     })
   );
-  
+
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ limit: "10mb", extended: true }));
   app.use(express.json());
@@ -65,32 +61,32 @@ async function inicializeApp() {
   });
 
   // Si es development y preview asignamos el puerto disponible a partir de 8080
-  if (process.env.NODE_ENV !== 'production') {
-    const PORT_BACKEND =  8080;
+  if (process.env.NODE_ENV !== "production") {
+    const PORT_BACKEND = 8080;
     // Creamos una funcion flecha que devuelbe una promesa
-    const checkPort = (port: number) : Promise<boolean> => {
+    const checkPort = (port: number): Promise<boolean> => {
       return new Promise((resolve, reject) => {
         // Creamos un servidor con net nativo de (NodeJS)
         const server = net.createServer();
-         // Intentar escuchar en el puerto
+        // Intentar escuchar en el puerto
         server.listen(port);
 
         // Verificamos si el puerto esta en uso si lo esta devuleve false, si ocurre un error lo rechaza
-        server.once('error', (err: any) => {
-          if (err.code === 'EADDRINUSE') {
+        server.once("error", (err: any) => {
+          if (err.code === "EADDRINUSE") {
             resolve(false);
           } else {
             reject(err);
           }
         });
         // Si el puerto esta libre lo cerramos y resolvemos la promesa
-        server.once('listening', () => {
+        server.once("listening", () => {
           server.close();
           resolve(true);
         });
       });
     };
-  
+
     const startServer = async (port: number) => {
       // Encontramos un puerto libre de [8080, 8090]
       if (port > 8090) {
@@ -108,9 +104,14 @@ async function inicializeApp() {
         startServer(port + 1);
       }
     };
-  
+
     startServer(PORT_BACKEND).catch((error) => {
       console.error("Error starting the server:", error);
+    });
+  } else {
+    const PORT_BACKEND = 8080;
+    app.listen(PORT_BACKEND, () => {
+      console.log(`Server runing: http://localhost:${PORT_BACKEND}`);
     });
   }
 }

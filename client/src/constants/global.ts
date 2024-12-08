@@ -1,7 +1,7 @@
 const env = import.meta.env.VITE_VERCEL_ENV;
 
 const getLocalhostUrl = async (): Promise<string> => {
-  if (env !== 'production' && env !== 'preview') {
+  if (env !== "production" && env !== "preview") {
     for (let i = 0; i <= 10; i++) {
       const url = `http://localhost:808${i}`;
       try {
@@ -16,7 +16,7 @@ const getLocalhostUrl = async (): Promise<string> => {
     }
   }
   // Valor por defecto si no se encuentra ningún puerto disponible
-  return 'http://localhost:8080'; 
+  return "http://localhost:8080";
 };
 
 let url_api: string;
@@ -38,7 +38,6 @@ const initializeUrls = async () => {
       : `http://localhost:5173`;
 };
 
-export const versionSmall = ["img/perfil-main"];
 const MAX_PUBLICATIONS_PER_PAGE = 6;
 
 export { url_api, url_client, MAX_PUBLICATIONS_PER_PAGE, initializeUrls };

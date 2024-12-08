@@ -18,10 +18,14 @@
   <!-- Inicializar Turnstile Invisible -->
   <script type="module">
     document.addEventListener("DOMContentLoaded", function () {
-      turnstile.render(".cf-turnstile", {
-        sitekey: "0x4AAAAAAA1R3eULw-muNS8T",
-        size: "invisible",
-      });
+      if (typeof turnstile !== "undefined") {
+        turnstile.render(".cf-turnstile", {
+          sitekey: "0x4AAAAAAA1R3eULw-muNS8T",
+          size: "invisible",
+        });
+      } else {
+        console.error("Cloudflare Turnstile script not loaded.");
+      }
     });
   </script>
 </html>
