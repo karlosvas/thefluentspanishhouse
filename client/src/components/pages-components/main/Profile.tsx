@@ -21,18 +21,27 @@ const Profile = () => {
         <h1 id="title">The Fluent Spanish House</h1>
 
         <PlaceholderImg src={src} className="banner" alt="Banner with inspiring images, sevillana dance">
-          <strong>
+          <strong className="introduction">
             Hi, my name is Marta.
             <br /> I’m a Spanish teacher from Spain and I help English speakers become fluent in Spanish. <br />
+            I’ve been where you are. I know the struggle of learning a new language. <br />
           </strong>
           <br />
-          Before becoming a language teacher, I studied English for many years. <br /> I spent most of my time filling
-          in gaps in exercise books, reading, and writing. <br /> After quite a few years, I still struggled to say two
-          words in a row, and I felt embarrassed to speak English. <br /> What holds many students back from speaking
-          fluently? <br />
-          That’s why we have been prioritizing incorrectly for many years. <br /> We use languages to connect with
-          others through speech. <br /> So, understanding and mastering basic grammar is our top priority. <br /> If you
-          need to change your language learning approach significantly, I can help you.
+          Before becoming a Spanish teacher, I spent years studying English the “traditional” way: filling in countless
+          textbook exercises, reading long passages, and writing essays. Yet, after all that effort, I still couldn’t
+          string together a simple sentence in honest conversations. I was frustrated and embarrassed, unable to keep up
+          with native speakers
+          <br />
+          So, what was holding me back? The problem was prioritization.
+          <br />
+          We often spend years focusing on the wrong things, neglecting essential skills. Language is about connecting
+          with people, not just memorizing rules. My real progress came when I learned to{" "}
+          <strong>prioritize understanding and mastering basic structures</strong>, the building blocks of fluency.
+          <br />
+          As a teacher, I use that experience to guide my students. I know firsthand what it’s like to feel stuck and
+          see the approach that can make a real difference. If you’re ready to change how you learn Spanish and start
+          making progress, I’m here to help.
+          <br />
         </PlaceholderImg>
         <div className="backgroundBanner"></div>
       </article>

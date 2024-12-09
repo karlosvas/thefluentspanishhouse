@@ -9,6 +9,7 @@
     padding: 10vh 30px 35vh 30px;
     text-align: center;
     width: 100vw;
+
     #title {
       text-shadow: 0 3px 3px var(--primary-blue);
       color: var(--primary-blue);
@@ -19,7 +20,8 @@
       overflow-wrap: break-word;
       word-break: break-word;
     }
-    strong {
+
+    .introduction {
       font-size: 22px;
       text-align: center;
       font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

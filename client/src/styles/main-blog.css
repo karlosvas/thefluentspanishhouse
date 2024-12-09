@@ -37,7 +37,6 @@
         .img-container {
           height: 200px;
           width: 100%;
-          /* Mirar si sobra este position relative */
           position: relative;
           overflow: hidden;
           img {
@@ -47,6 +46,7 @@
             height: 100%;
             width: calc(100% - 15px);
             object-fit: cover;
+            object-position: top;
             transition: transform 0.25s ease-in-out;
           }
         }

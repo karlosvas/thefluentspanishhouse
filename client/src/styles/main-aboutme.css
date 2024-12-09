@@ -34,6 +34,11 @@
     padding-bottom: 200px;
 
     article {
+      ul {
+        text-align: start;
+        width: 80%;
+        margin: auto;
+      }
       .img-aboutme {
         animation: reveal linear both;
         animation-timeline: view();
