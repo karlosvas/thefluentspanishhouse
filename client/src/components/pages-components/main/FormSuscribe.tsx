@@ -36,7 +36,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
     if (buttonName === undefined) return;
     newSubscriber.class = getTag(buttonName);
 
-    if (isValidEmail(newSubscriber.email)) {
+    if (!isValidEmail(newSubscriber.email)) {
       toast.error("Email is not valid");
       return;
     }

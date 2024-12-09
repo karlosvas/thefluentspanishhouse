@@ -19,7 +19,7 @@ const AboutMe = () => {
           <article>
             <PlaceholderImg
               className="img-aboutme"
-              src="/img/perfil-aboutme.webp"
+              src="/img/about"
               alt="Decoración de libros y cafe en un escritorio"
               areaLabel="Imagen decorativa de un escritorio con libros y café"
             >

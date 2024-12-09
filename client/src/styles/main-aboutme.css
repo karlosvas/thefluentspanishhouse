@@ -99,7 +99,10 @@
       }
       .img-aboutme {
         margin-top: 10px;
-        height: 27vh;
+        height: auto;
+        width: 100vw;
+        max-width: 100vw;
+        object-fit: cover;
       }
       p,
       figure > figcaption {

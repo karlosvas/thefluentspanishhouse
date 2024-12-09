@@ -29,12 +29,7 @@
 
 .circle {
   border-radius: 50%;
-  background: linear-gradient(
-    135deg,
-    transparent 20%,
-    #232f9781,
-    var(--primary-blue)
-  );
+  background: linear-gradient(135deg, transparent 20%, #232f9781, var(--primary-blue));
   position: absolute;
 }
 
@@ -266,10 +261,10 @@ textarea.input {
   position: absolute;
   width: 360px;
   height: 360px;
-  background-color: #fafafa;
   border-radius: 50%;
   top: calc(50% - 180px);
   left: calc(50% - 180px);
+  background-color: var(--primary-white);
 }
 
 .square {
