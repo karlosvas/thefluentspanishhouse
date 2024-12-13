@@ -46,7 +46,7 @@ const Prices = () => {
           <div className="card-pracing">
             <h3>One-to-one classes</h3>
             <div className="price-classes ">
-              <h1>Since 22€</h1>
+              <h1>Since 20€</h1>
               <small>/ hour</small>
             </div>
             <ul>
