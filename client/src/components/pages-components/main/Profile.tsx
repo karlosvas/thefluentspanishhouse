@@ -32,7 +32,7 @@ const Profile = () => {
           string together a simple sentence in honest conversations. I was frustrated and embarrassed, unable to keep up
           with native speakers
           <br />
-          So, what was holding me back? The problem was prioritization.
+          So, what was holding me back?
           <br />
           We often spend years focusing on the wrong things, neglecting essential skills. Language is about connecting
           with people, not just memorizing rules. My real progress came when I learned to{" "}

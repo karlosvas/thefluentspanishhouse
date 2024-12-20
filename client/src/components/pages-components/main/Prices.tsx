@@ -28,12 +28,12 @@ const Prices = () => {
           <div className="card-pracing">
             <h3>Group classes</h3>
             <div className="price-classes">
-              <h1>Since 15€</h1>
+              <h1>From 15€</h1>
               <small>/ hour</small>
             </div>
             <ul>
               <li>A sample free 1-hour class for new students</li>
-              <li>Private English lessons for two people at the same level</li>
+              <li>Private Spanish lessons. for two people at the same level</li>
               <li>Enjoy the benefits of individual classes combined with the dynamic interaction of a group class</li>
               <li>Access to exclusive online content</li>
               <li>And out-of-class communication with the teacher.</li>
@@ -46,7 +46,7 @@ const Prices = () => {
           <div className="card-pracing">
             <h3>One-to-one classes</h3>
             <div className="price-classes ">
-              <h1>Since 20€</h1>
+              <h1>From 20€</h1>
               <small>/ hour</small>
             </div>
             <ul>

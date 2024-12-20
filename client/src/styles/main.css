@@ -240,8 +240,22 @@
             flex-direction: column;
             font-size: 18px;
             h3 {
+              padding-top: 10px;
               font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial;
               font-weight: 600;
+              z-index: 1;
+            }
+            p {
+              position: relative;
+              max-height: 12em;
+              overflow: hidden;
+              line-height: 1.5em;
+              width: 100%;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              line-height: 1.5em;
+              z-index: 0;
+              white-space: normal;
             }
           }
         }

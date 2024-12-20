@@ -3,11 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import toast from "react-hot-toast";
 import Button from "@/components/reusable/Button";
-import {
-  fetchGetUidByEmail,
-  getInterests,
-  submitSubscriptionMailchimp,
-} from "@/scripts/render-data";
+import { fetchGetUidByEmail, getInterests, submitSubscriptionMailchimp } from "@/scripts/render-data";
 import { handleInputChange } from "@/utilities/utilities";
 import MultiSelectTag from "@/components/reusable/MultiSelectTag";
 import { isValidEmail } from "@/utilities/validateEmail";
@@ -105,8 +101,7 @@ const Newsletter = () => {
 
     // Vericamos si es un valor nulish ("", null, undefined, 0, false, NAN)
     const isFormattedBirthdayValid: boolean = !!formattedBirthday;
-    if (isFormattedBirthdayValid)
-      member.merge_fields.BIRTHDAY = formattedBirthday;
+    if (isFormattedBirthdayValid) member.merge_fields.BIRTHDAY = formattedBirthday;
 
     // Detener el loading toast
     toast.dismiss();
@@ -137,10 +132,7 @@ const Newsletter = () => {
 
   const isMultiSelectTagInitialized = useRef(false);
   useEffect(() => {
-    if (
-      location.pathname === "/newsletter" &&
-      !isMultiSelectTagInitialized.current
-    ) {
+    if (location.pathname === "/newsletter" && !isMultiSelectTagInitialized.current) {
       MultiSelectTag("preferences", {
         rounded: true,
         shadow: false,
@@ -151,9 +143,7 @@ const Newsletter = () => {
           bgColor: "rgb(173, 216, 230)",
         },
         onChange: function (values) {
-          const preferencesValues = values.map(
-            (preference: Record<string, string>) => preference.value
-          );
+          const preferencesValues = values.map((preference: Record<string, string>) => preference.value);
           setForm((prev) => ({ ...prev, preferences: preferencesValues }));
         },
       });
@@ -165,10 +155,7 @@ const Newsletter = () => {
 
   // Verificando si hay preferencias seleccionadas
   useEffect(
-    () =>
-      form.preferences && form.preferences.length > 0
-        ? setActive(true)
-        : setActive(false),
+    () => (form.preferences && form.preferences.length > 0 ? setActive(true) : setActive(false)),
     [form.preferences]
   );
 
@@ -188,11 +175,9 @@ const Newsletter = () => {
             <div className="info-content">
               <h3>Free Spanish Learning Resources</h3>
               <p>
-                Are you eager to improve your Spanish skills? Download our free
-                resources packed with essential vocabulary, grammar tips, and
-                practice exercises. Perfect for beginners and advanced learners
-                alike! Click the button below to get your free Spanish lessons
-                and start your journey to fluency today!
+                Are you eager to improve your Spanish skills? Download our free resources packed with essential
+                vocabulary, grammar tips, and practice exercises. Perfect for beginners and advanced learners alike!
+                Click the button below to get your free Spanish lessons and start your journey to fluency today!
               </p>
             </div>
           </article>
@@ -200,13 +185,10 @@ const Newsletter = () => {
             <div className="info-content">
               <section>
                 <h3>Do you want all benefits?</h3>
-                <h4>Get now is Free</h4>
                 <p>
-                  Enhance your Spanish learning with our free guide! This
-                  resource includes practical exercises, key phrases, and tips
-                  to boost your confidence in speaking Spanish. Ideal for all
-                  levels. Download now and take the next step in mastering the
-                  language!
+                  Enhance your Spanish learning with our free guide! This resource includes practical exercises, key
+                  phrases, and tips to boost your confidence in speaking Spanish. Ideal for all levels. Download now and
+                  take the next step in mastering the language!
                 </p>
               </section>
               <a href="#formulario" onClick={handleScroll}>
@@ -217,11 +199,7 @@ const Newsletter = () => {
         </section>
         <section className="freecontent-section">
           <article className="freecontent-article">
-            <PlaceholderImg
-              src="img/reunion"
-              className="img-nw"
-              alt="Cafe"
-            />
+            <PlaceholderImg src="img/reunion" className="img-nw" alt="Cafe" />
 
             <div className="freecontent-content">
               <form id="formulario" onSubmit={onSubmit}>
@@ -234,42 +212,19 @@ const Newsletter = () => {
                     placeholder=" "
                     onChange={(e) => handleInputChange(e, setForm)}
                   />
-                  <label
-                    htmlFor="name"
-                    className={subscribed && form.name === "" ? "required" : ""}
-                  >
+                  <label htmlFor="name" className={subscribed && form.name === "" ? "required" : ""}>
                     Name
                   </label>
                 </div>
                 <div className="form-group">
-                  <input
-                    type="text"
-                    name="surnames"
-                    placeholder=" "
-                    onChange={(e) => handleInputChange(e, setForm)}
-                  />
-                  <label
-                    htmlFor="surnames"
-                    className={
-                      subscribed && form.surnames === "" ? "required" : ""
-                    }
-                  >
+                  <input type="text" name="surnames" placeholder=" " onChange={(e) => handleInputChange(e, setForm)} />
+                  <label htmlFor="surnames" className={subscribed && form.surnames === "" ? "required" : ""}>
                     Lastname
                   </label>
                 </div>
                 <div className="form-group">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder=" "
-                    onChange={(e) => handleInputChange(e, setForm)}
-                  />
-                  <label
-                    htmlFor="email"
-                    className={
-                      subscribed && form.email === "" ? "required" : ""
-                    }
-                  >
+                  <input type="email" name="email" placeholder=" " onChange={(e) => handleInputChange(e, setForm)} />
+                  <label htmlFor="email" className={subscribed && form.email === "" ? "required" : ""}>
                     Email
                   </label>
                 </div>
@@ -309,12 +264,8 @@ const Newsletter = () => {
                     checked={form.privacy}
                     onChange={(e) => handleInputChange(e, setForm)}
                   />
-                  <label
-                    htmlFor="privacy"
-                    className={subscribed && !form.privacy ? "required" : ""}
-                  >
-                    I have read and accept the{" "}
-                    <a href="/info">privacy policy</a> and{" "}
+                  <label htmlFor="privacy" className={subscribed && !form.privacy ? "required" : ""}>
+                    I have read and accept the <a href="/info">privacy policy</a> and{" "}
                     <a href="/info">terms and conditions</a>
                   </label>
                 </div>
@@ -325,12 +276,8 @@ const Newsletter = () => {
                     checked={form.newsletter}
                     onChange={(e) => handleInputChange(e, setForm)}
                   />
-                  <label
-                    htmlFor="newsletter"
-                    className={subscribed && !form.newsletter ? "required" : ""}
-                  >
-                    I want to receive the newsletter and commercial information
-                    from The Fluent Spanish House
+                  <label htmlFor="newsletter" className={subscribed && !form.newsletter ? "required" : ""}>
+                    I want to receive the newsletter and commercial information from The Fluent Spanish House
                   </label>
                 </div>
                 <div className="checkbox-group">
@@ -340,10 +287,7 @@ const Newsletter = () => {
                     checked={form.mailchimp}
                     onChange={(e) => handleInputChange(e, setForm)}
                   />
-                  <label
-                    htmlFor="mailchimp"
-                    className={subscribed && !form.mailchimp ? "required" : ""}
-                  >
+                  <label htmlFor="mailchimp" className={subscribed && !form.mailchimp ? "required" : ""}>
                     I accept that my data will be processed by{" "}
                     <a href="https://mailchimp.com/legal/" target="_blank">
                       Mailchimp

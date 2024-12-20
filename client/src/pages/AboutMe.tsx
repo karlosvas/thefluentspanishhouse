@@ -27,8 +27,8 @@ const AboutMe = () => {
               three historical events: <br />
               <br />
               <ul>
-                <li>The marriage of the Catholic Monarchs in 1462,</li>
-                <li>Miguel de Cervantes's writing of the first part of his well-known book Don Quijote here</li>
+                <li>The marriage of the Catholic Monarchs in 1462.</li>
+                <li>Miguel de Cervantes's writing of the first part of his well-known book Don Quijote here.</li>
                 <li>The death of Cristobal Colon in 1506.</li>
               </ul>
               <br />
@@ -62,7 +62,7 @@ const AboutMe = () => {
               I have been a freelance Spanish teacher since 2018, specializing in one-to-one and two-student sessions
               for English speakers.
               <br />
-              With over 1,000 hours of teaching experience, I have guided students from A1 to B2 levels.
+              With over 1,000 hours of teaching experience, I have guided students from A1 to C1 levels.
               <br />
               My advanced proficiency in English allows me to explain the nuances between both languages, making the
               learning process smoother and more effective for my students.
