@@ -43,7 +43,7 @@ export interface Comment {
 }
 
 export interface NoteType {
-  email_user: string | undefined;
+  email_user: string;
   username: string;
   subject: string;
   note: string;

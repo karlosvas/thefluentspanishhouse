@@ -12,12 +12,7 @@ readdirSync(PATH_ROUTER).forEach((file) => {
   const fileClean = cleanExtension(file);
   const fileExtension = path.extname(file);
 
-  if (
-    fileClean !== "routes" &&
-    (fileExtension === ".js" || fileExtension === ".ts") &&
-    !file.endsWith(".js.map") &&
-    !file.endsWith(".ts.map")
-  ) {
+  if (fileClean !== "routes" && (fileExtension === ".js" || fileExtension === ".ts") && !file.endsWith(".map")) {
     const modulePath = path.join(PATH_ROUTER, `${fileClean}${fileExtension}`);
     const moduleURL = pathToFileURL(modulePath).href;
 

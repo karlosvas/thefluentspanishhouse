@@ -1,10 +1,11 @@
 import { type Request, type Response, Router } from "express";
 import { modelComment } from "../src/mongodb/models.js";
 import { isValidObjectId, Types } from "mongoose";
-import { submitEmailComment } from "../lib/mandrill/mandrill.js";
+import { submitEmailComment } from "../lib/resend/resend.js";
 import { deleteCommentAndChildren } from "../utilities/delete-logic.js";
 import { handleServerError } from "../utilities/errorHandle.js";
 import { verifyIdToken, log } from "../middelware/token-logs.js";
+import { NoteType } from "types/types.js";
 
 const router = Router();
 
@@ -58,8 +59,14 @@ router.post("/new", log, verifyIdToken, async (req, res) => {
     const newComment = new modelComment(newCommentData);
     newComment.save();
 
+    const note: NoteType = {
+      subject: `${newComment.owner.displayName} has sent a comment`,
+      username: newComment.owner.displayName,
+      note: newComment.data,
+      email_user: newComment.owner.email,
+    };
     // Avisamos al administrador de la web del nuevo comentario
-    await submitEmailComment(newComment.owner.email, newComment.owner.displayName, newComment.data, originUrl);
+    await submitEmailComment(note, originUrl);
 
     res.status(201).json(newComment);
   } catch (error) {
@@ -81,7 +88,13 @@ router.post("/children/:id", log, verifyIdToken, async (req: Request, res: Respo
     newComment.save();
 
     // Avisamos al administrador de la web del nuevo comentario
-    await submitEmailComment(newComment.owner.email, newComment.owner.displayName, newComment.data, originUrl);
+    const note: NoteType = {
+      subject: `${newComment.owner.displayName} has sent a comment`,
+      username: newComment.owner.displayName,
+      note: newComment.data,
+      email_user: newComment.owner.email,
+    };
+    await submitEmailComment(note, originUrl);
 
     // Agregar el nuevo comentario al array de comentarios del comentario padre
     const parentComment = await modelComment.findById(id);
@@ -118,8 +131,19 @@ router.put("/likes", log, verifyIdToken, async (req: Request, res: Response) => 
     } else {
       comment.likedBy && comment.likedBy.push(uid_user_firebase);
       comment.likes += 1;
+
+      // Implemetaacion futura añadir correo al administrador por likes
+      // const note: NoteType = {
+      //   subject: `${comment.owner.displayName} has received a like`,
+      //   username: comment.owner.displayName,
+      //   note: comment.data,
+      //   email_user: comment.owner.email,
+      // };
+
+      // console.log("note", note);
       // Avisamos al administrador de la web del nuevo like
-      await submitEmailComment(comment.owner.email, comment.owner.displayName, comment.data, originUrl);
+      // const res = await submitEmailComment(note, originUrl);
+      console.log("res", res);
     }
 
     const updatedComment = await comment.save();

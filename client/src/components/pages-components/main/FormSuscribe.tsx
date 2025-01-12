@@ -5,7 +5,7 @@ import { getMailchimpUser, sendEmailNewClass, updateTagsMailchimp } from "@/scri
 import ButtonClose from "@/components/reusable/ButtonClose";
 import Backdrop from "@/components/reusable/Backdrop";
 import { getTag, handleInputChange } from "@/utilities/utilities";
-import { saveUserAndAddTag } from "@/scripts/firebase-db";
+import { saveUser } from "@/scripts/firebase-db";
 import { UserContext } from "@/App";
 import toast from "react-hot-toast";
 import { isMember } from "@/utilities/utilities-types";
@@ -38,6 +38,7 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
 
     if (!isValidEmail(newSubscriber.email)) {
       toast.error("Email is not valid");
+      console.error("Email is not valid");
       return;
     }
 
@@ -48,39 +49,23 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
     // // Obtenemos el usuario de Mailchimp
     const mailchimpUser = await getMailchimpUser(newSubscriber.email);
 
-    if (mailchimpUser && isMember(mailchimpUser)) {
-      // El usuario se ha encontrado por lo que solo cambiamos su nuevo tag, succes o error se maneja en la función
-      await updateTagsMailchimp(mailchimpUser, newSubscriber.class, handleSusribeChange);
-      // Falta funcionalidad ???? añadir tag en firebase a usuarios de mailchimp
-      // await saveUserAndAddTag(user.uid, buttonName, newSubscriber);
+    // Guardamos el usuario en Firebase
+    if (user) {
+      await saveUser(user.uid, newSubscriber);
     } else {
-      // El usuario no se ha encontrado
-
-      if (!user) {
-        toast.dismiss();
-        toast.error("Do you need Sing In to subscribe to the course");
-        setSuscribe(false);
-        return;
-      }
-
-      if (user.email !== newSubscriber.email) {
-        toast.dismiss();
-        toast.error(`The email does not match the user logged in, please log in with ${user.email}`);
-        setSuscribe(false);
-        return;
-      }
-
-      try {
-        // Creamos o actualizados en FirebaseDB para añadirle el tag, y que posterirormente
-        // cuando se suscriba poder recuperarlo.
-        await saveUserAndAddTag(user.uid, newSubscriber.class, newSubscriber);
-        // Enviamos el email al administrador para que sepa que hay un nuevo suscriptor
-        await sendEmailNewClass(newSubscriber);
-      } catch (error) {
-        toast.dismiss();
-        toast.error("Unexpected error, please try again");
-      }
+      toast.dismiss();
+      toast.error("Do you need Sing In to subscribe to the course");
+      setSuscribe(false);
+      return;
     }
+
+    // El usuario se ha encontrado en mailchimp por lo que actualizamos sus tags
+    if (mailchimpUser && isMember(mailchimpUser)) {
+      await updateTagsMailchimp(mailchimpUser, newSubscriber.class, handleSusribeChange);
+    }
+
+    // Enviamos el email al administrador para que sepa que hay un nuevo usuaruio inscrito a las clases
+    await sendEmailNewClass(newSubscriber);
 
     // Cerramos el formulario
     setSuscribe(false);

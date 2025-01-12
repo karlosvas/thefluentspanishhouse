@@ -12,6 +12,7 @@ dev
 dist-ssr
 client/dist
 *.local
+dist
 
 # Editor directories and files
 .vscode/*
