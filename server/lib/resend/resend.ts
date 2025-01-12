@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 ////////////////////////////////////////////////////////////////
-import { Message, NoteType, SubscriberType } from "types/types";
+import { NoteType, SubscriberType } from "types/types";
 import { Resend } from "resend";
 
 // Configurar el cliente de Mandrill

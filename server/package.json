@@ -4,14 +4,13 @@
   "type": "module",
   "main": "index.ts",
   "scripts": {
-    "start": "npm run build && node dist/index.js",
+    "start": "node public/src/index.js",
     "dev": "node --loader ts-node/esm src/index.js",
     "test": "npm run build && playwright test",
     "build": "tsc"
   },
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",
-    "@vercel/node": "^2.10.3",
     "axios": "^1.7.7",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
