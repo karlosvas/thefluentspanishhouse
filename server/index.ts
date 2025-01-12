@@ -1,12 +1,12 @@
 import dotenv from "dotenv";
 dotenv.config();
 ///////////////////////////////////////////
-import { connectDB } from "./mongodb/mongodb.js";
+import { connectDB } from "./src/mongodb/mongodb.js";
 import express from "express";
 import cors from "cors";
-import { router } from "../routes/routes.js";
+import { router } from "./routes/routes.js";
 import net from "net";
-import admin from "../lib/firebase/firebase-config.js";
+import admin from "./lib/firebase/firebase-config.js";
 
 // Extendemos el límite para que pueda almacenar imagenes en base64
 async function inicializeApp() {

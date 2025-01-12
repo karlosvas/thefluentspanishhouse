@@ -4,7 +4,7 @@
   "type": "module",
   "main": "index.ts",
   "scripts": {
-    "start": "npm run build && node dist/src/index.js",
+    "start": "npm run build && node dist/index.js",
     "dev": "node --loader ts-node/esm src/index.js",
     "test": "npm run build && playwright test",
     "build": "tsc"
