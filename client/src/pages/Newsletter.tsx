@@ -1,25 +1,29 @@
-import PlaceholderImg from "@/components/reusable/PlaceholderImg";
-import { useEffect, useRef, useState } from "react";
-import { Helmet } from "react-helmet-async";
-import toast from "react-hot-toast";
-import Button from "@/components/reusable/Button";
-import { fetchGetUidByEmail, getInterests, submitSubscriptionMailchimp } from "@/scripts/render-data";
-import { handleInputChange } from "@/utilities/utilities";
-import MultiSelectTag from "@/components/reusable/MultiSelectTag";
-import { isValidEmail } from "@/utilities/validateEmail";
-import { OptionsChampTag, type Member, type NesletterType } from "types/types";
-import { getUserDB } from "@/scripts/firebase-db";
-import "@/styles/main-newsettler.css";
+import PlaceholderImg from '@/components/reusable/PlaceholderImg';
+import { useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import toast from 'react-hot-toast';
+import Button from '@/components/reusable/Button';
+import {
+  fetchGetUidByEmail,
+  getInterests,
+  submitSubscriptionMailchimp,
+} from '@/scripts/render-data';
+import { handleInputChange } from '@/utilities/utilities';
+import MultiSelectTag from '@/components/reusable/MultiSelectTag';
+import { isValidEmail } from '@/utilities/validateEmail';
+import { OptionsChampTag, type Member, type NesletterType } from 'types/types';
+import { getUserDB } from '@/scripts/firebase-db';
+import '@/styles/main-newsettler.css';
 
 const Newsletter = () => {
   // Estado del formulario de suscripción
   const [subscribed, setSubscribed] = useState(false);
   // Estado del formulario de suscripción
   const [form, setForm] = useState<NesletterType>({
-    email: "",
-    name: "",
-    surnames: "",
-    birthday: "",
+    email: '',
+    name: '',
+    surnames: '',
+    birthday: '',
     preferences: [],
     privacy: false,
     newsletter: false,
@@ -34,28 +38,28 @@ const Newsletter = () => {
 
     // Verificando que todos los campos estén llenos
     for (const [key, value] of Object.entries(form)) {
-      if (key === "birthday" || key === "preferences") continue;
+      if (key === 'birthday' || key === 'preferences') continue;
 
-      if (value === "" || value === false) {
-        toast.error("Please fill all the fields");
+      if (value === '' || value === false) {
+        toast.error('Please fill all the fields');
         return;
       }
 
-      if (key === "email" && !isValidEmail(form.email)) {
-        toast.error("Email is not valid");
+      if (key === 'email' && !isValidEmail(form.email)) {
+        toast.error('Email is not valid');
         return;
       }
     }
 
     // Animacion de boton de suscripción, procesando suscripcion
     setSubscribed(true);
-    toast.loading("Processing your subscription...");
+    toast.loading('Processing your subscription...');
 
     // Si el campo de cumpleaños no está vacío, formateamos la fecha
-    let formattedBirthday = "";
+    let formattedBirthday = '';
     if (form.birthday) {
       // Formateando la fecha de nacimiento
-      const [, month, day] = form.birthday.split("-");
+      const [, month, day] = form.birthday.split('-');
       formattedBirthday = `${month}/${day}`;
     }
 
@@ -88,20 +92,21 @@ const Newsletter = () => {
     // Creamos el objeto de miembro
     const member: Member = {
       email_address: form.email,
-      status: "pending",
-      email_type: "html",
+      status: 'pending',
+      email_type: 'html',
       merge_fields: {
         FNAME: form.name,
         LNAME: form.surnames,
       },
       interests,
       tags,
-      status_if_new: "pending",
+      status_if_new: 'pending',
     };
 
     // Vericamos si es un valor nulish ("", null, undefined, 0, false, NAN)
     const isFormattedBirthdayValid: boolean = !!formattedBirthday;
-    if (isFormattedBirthdayValid) member.merge_fields.BIRTHDAY = formattedBirthday;
+    if (isFormattedBirthdayValid)
+      member.merge_fields.BIRTHDAY = formattedBirthday;
 
     // Detener el loading toast
     toast.dismiss();
@@ -115,7 +120,7 @@ const Newsletter = () => {
     e.preventDefault();
 
     // Obtenemos el ID del elemento al que se quiere hacer scroll
-    const targetId = e.currentTarget.getAttribute("href")?.substring(1);
+    const targetId = e.currentTarget.getAttribute('href')?.substring(1);
     const targetElement = targetId ? document.getElementById(targetId) : null;
 
     if (targetElement) {
@@ -125,37 +130,45 @@ const Newsletter = () => {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     }
   };
 
   const isMultiSelectTagInitialized = useRef(false);
   useEffect(() => {
-    if (location.pathname === "/newsletter" && !isMultiSelectTagInitialized.current) {
-      MultiSelectTag("preferences", {
+    if (
+      location.pathname === '/newsletter' &&
+      !isMultiSelectTagInitialized.current
+    ) {
+      MultiSelectTag('preferences', {
         rounded: true,
         shadow: false,
-        placeholder: "Search",
+        placeholder: 'Search',
         tagColor: {
-          textColor: "var(--primary-black)",
-          borderColor: "var(--primary-black)",
-          bgColor: "rgb(173, 216, 230)",
+          textColor: 'var(--primary-black)',
+          borderColor: 'var(--primary-black)',
+          bgColor: 'rgb(173, 216, 230)',
         },
         onChange: function (values) {
-          const preferencesValues = values.map((preference: Record<string, string>) => preference.value);
+          const preferencesValues = values.map(
+            (preference: Record<string, string>) => preference.value
+          );
           setForm((prev) => ({ ...prev, preferences: preferencesValues }));
         },
       });
       isMultiSelectTagInitialized.current = true; // Marcar como inicializado
-    } else if (location.pathname !== "/newsletter") {
+    } else if (location.pathname !== '/newsletter') {
       isMultiSelectTagInitialized.current = false; // Resetear la inicialización cuando se navega fuera de /newsletter
     }
   }, [location.pathname]);
 
   // Verificando si hay preferencias seleccionadas
   useEffect(
-    () => (form.preferences && form.preferences.length > 0 ? setActive(true) : setActive(false)),
+    () =>
+      form.preferences && form.preferences.length > 0
+        ? setActive(true)
+        : setActive(false),
     [form.preferences]
   );
 
@@ -175,9 +188,11 @@ const Newsletter = () => {
             <div className="info-content">
               <h3>Free Spanish Learning Resources</h3>
               <p>
-                Are you eager to improve your Spanish skills? Download our free resources packed with essential
-                vocabulary, grammar tips, and practice exercises. Perfect for beginners and advanced learners alike!
-                Click the button below to get your free Spanish lessons and start your journey to fluency today!
+                Are you eager to improve your Spanish skills? Download our free
+                resources packed with essential vocabulary, grammar tips, and
+                practice exercises. Perfect for beginners and advanced learners
+                alike! Click the button below to get your free Spanish lessons
+                and start your journey to fluency today!
               </p>
             </div>
           </article>
@@ -186,9 +201,11 @@ const Newsletter = () => {
               <section>
                 <h3>Do you want all benefits?</h3>
                 <p>
-                  Enhance your Spanish learning with our free guide! This resource includes practical exercises, key
-                  phrases, and tips to boost your confidence in speaking Spanish. Ideal for all levels. Download now and
-                  take the next step in mastering the language!
+                  Enhance your Spanish learning with our free guide! This
+                  resource includes practical exercises, key phrases, and tips
+                  to boost your confidence in speaking Spanish. Ideal for all
+                  levels. Download now and take the next step in mastering the
+                  language!
                 </p>
               </section>
               <a href="#formulario" onClick={handleScroll}>
@@ -212,19 +229,42 @@ const Newsletter = () => {
                     placeholder=" "
                     onChange={(e) => handleInputChange(e, setForm)}
                   />
-                  <label htmlFor="name" className={subscribed && form.name === "" ? "required" : ""}>
+                  <label
+                    htmlFor="name"
+                    className={subscribed && form.name === '' ? 'required' : ''}
+                  >
                     Name
                   </label>
                 </div>
                 <div className="form-group">
-                  <input type="text" name="surnames" placeholder=" " onChange={(e) => handleInputChange(e, setForm)} />
-                  <label htmlFor="surnames" className={subscribed && form.surnames === "" ? "required" : ""}>
+                  <input
+                    type="text"
+                    name="surnames"
+                    placeholder=" "
+                    onChange={(e) => handleInputChange(e, setForm)}
+                  />
+                  <label
+                    htmlFor="surnames"
+                    className={
+                      subscribed && form.surnames === '' ? 'required' : ''
+                    }
+                  >
                     Lastname
                   </label>
                 </div>
                 <div className="form-group">
-                  <input type="email" name="email" placeholder=" " onChange={(e) => handleInputChange(e, setForm)} />
-                  <label htmlFor="email" className={subscribed && form.email === "" ? "required" : ""}>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder=" "
+                    onChange={(e) => handleInputChange(e, setForm)}
+                  />
+                  <label
+                    htmlFor="email"
+                    className={
+                      subscribed && form.email === '' ? 'required' : ''
+                    }
+                  >
                     Email
                   </label>
                 </div>
@@ -236,15 +276,15 @@ const Newsletter = () => {
                     onChange={(e) => {
                       handleInputChange(e, setForm);
                       if (e.target.value) {
-                        e.target.classList.add("has-value");
+                        e.target.classList.add('has-value');
                       } else {
-                        e.target.classList.remove("has-value");
+                        e.target.classList.remove('has-value');
                       }
                     }}
                   />
                   <label htmlFor="birthday">Birthday</label>
                 </div>
-                <div className={`form-group-select ${active ? "active" : ""}`}>
+                <div className={`form-group-select ${active ? 'active' : ''}`}>
                   <label htmlFor="preferences">Preferences</label>
                   <select id="preferences" multiple>
                     <option value="grammar">Grammar</option>
@@ -264,8 +304,12 @@ const Newsletter = () => {
                     checked={form.privacy}
                     onChange={(e) => handleInputChange(e, setForm)}
                   />
-                  <label htmlFor="privacy" className={subscribed && !form.privacy ? "required" : ""}>
-                    I have read and accept the <a href="/info">privacy policy</a> and{" "}
+                  <label
+                    htmlFor="privacy"
+                    className={subscribed && !form.privacy ? 'required' : ''}
+                  >
+                    I have read and accept the{' '}
+                    <a href="/info">privacy policy</a> and{' '}
                     <a href="/info">terms and conditions</a>
                   </label>
                 </div>
@@ -276,8 +320,12 @@ const Newsletter = () => {
                     checked={form.newsletter}
                     onChange={(e) => handleInputChange(e, setForm)}
                   />
-                  <label htmlFor="newsletter" className={subscribed && !form.newsletter ? "required" : ""}>
-                    I want to receive the newsletter and commercial information from The Fluent Spanish House
+                  <label
+                    htmlFor="newsletter"
+                    className={subscribed && !form.newsletter ? 'required' : ''}
+                  >
+                    I want to receive the newsletter and commercial information
+                    from The Fluent Spanish House
                   </label>
                 </div>
                 <div className="checkbox-group">
@@ -287,8 +335,11 @@ const Newsletter = () => {
                     checked={form.mailchimp}
                     onChange={(e) => handleInputChange(e, setForm)}
                   />
-                  <label htmlFor="mailchimp" className={subscribed && !form.mailchimp ? "required" : ""}>
-                    I accept that my data will be processed by{" "}
+                  <label
+                    htmlFor="mailchimp"
+                    className={subscribed && !form.mailchimp ? 'required' : ''}
+                  >
+                    I accept that my data will be processed by{' '}
                     <a href="https://mailchimp.com/legal/" target="_blank">
                       Mailchimp
                     </a>

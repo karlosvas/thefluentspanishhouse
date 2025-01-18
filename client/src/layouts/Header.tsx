@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
-import Hamburger from "@/components/header-components/Hamburger";
-import Auth from "@/components/header-components/Auth";
-import Exit from "@/components/svg-component/Exit";
-import MainNav from "@/components/header-components/MainNav";
-import Theme from "@/components/header-components/Theme";
-import Settings from "@/components/svg-component/Settings";
-import "@/styles/layouts/header.css";
-import { Link } from "react-router-dom";
-import { handleClickNavigate } from "@/scripts/navigate";
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router';
+import Hamburger from '@/components/header-components/Hamburger';
+import Auth from '@/components/header-components/Auth';
+import Exit from '@/components/svg-component/Exit';
+import MainNav from '@/components/header-components/MainNav';
+import Theme from '@/components/header-components/Theme';
+import Settings from '@/components/svg-component/Settings';
+import '@/styles/layouts/header.css';
+import { Link } from 'react-router-dom';
+import { handleClickNavigate } from '@/scripts/navigate';
 
 const Header = () => {
   const [isShrunk, setIsShrunk] = useState<boolean>(false);
@@ -23,9 +23,9 @@ const Header = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -35,7 +35,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <header className={isShrunk ? "shrink" : ""}>
+    <header className={isShrunk ? 'shrink' : ''}>
       <div className="header-animation">
         <section id="sect">
           <div className="waves">
@@ -47,7 +47,7 @@ const Header = () => {
         </section>
         <div className="header">
           {window.innerWidth >= 766 ? (
-            <Link to="/" onClick={handleClickNavigate("/", navigate)}>
+            <Link to="/" onClick={handleClickNavigate('/', navigate)}>
               <img
                 src="/logos/logo.png"
                 alt="fluent spanish house logo"
@@ -61,7 +61,7 @@ const Header = () => {
             <MainNav />
           ) : (
             window.innerWidth <= 766 &&
-            location.pathname !== "/" && (
+            location.pathname !== '/' && (
               <Exit optionalClass="exit-publication" />
             )
           )}

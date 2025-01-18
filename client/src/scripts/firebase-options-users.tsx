@@ -6,10 +6,10 @@ import {
   updateProfile,
   User,
   verifyBeforeUpdateEmail,
-} from "firebase/auth";
-import toast from "react-hot-toast";
-import { NavigateFunction } from "react-router-dom";
-import { auth, showMessageErrorFirebase } from "./firebase-config";
+} from 'firebase/auth';
+import toast from 'react-hot-toast';
+import { NavigateFunction } from 'react-router-dom';
+import { auth, showMessageErrorFirebase } from './firebase-config';
 
 // Cambiar opciones de usuario
 export const changeOptionsUser = async (
@@ -19,28 +19,30 @@ export const changeOptionsUser = async (
 ): Promise<boolean> => {
   // Verificar si el usuario tiene el email verificado
   if (!user.emailVerified) {
-    toast.error("Do you need verify your email after change options");
+    toast.error('Do you need verify your email after change options');
     return false;
   }
 
   // Si el usuario tiene un proveedor de autenticación de email y contraseña
-  if (user.providerData.some((provider) => provider.providerId === "password")) {
-    toast.loading("Updating user...");
+  if (
+    user.providerData.some((provider) => provider.providerId === 'password')
+  ) {
+    toast.loading('Updating user...');
 
     const RAGEXEMAIL = /^[^@]+@gmail\.com$/;
     // Verificar si el comentario es un email
     if (RAGEXEMAIL.test(commentText)) {
       const newEmail: string = commentText;
       // Pasamos al usuario a la página de verificación
-      navigate("/verify", { state: { email: newEmail } });
+      navigate('/verify', { state: { email: newEmail } });
     } else {
       // Si el comentario no es un email, se actualiza el nombre de usuario
       const newUserName = commentText;
       toast.dismiss();
       try {
         await updateProfile(user, { displayName: newUserName });
-        navigate("/account");
-        toast.success("User updated successfully");
+        navigate('/account');
+        toast.success('User updated successfully');
         return true;
       } catch (error) {
         showMessageErrorFirebase(error);
@@ -78,31 +80,32 @@ export const changeOptionsUserEmail = async (
   // Mostramos un toast de que se envio el email de verificación
   toast(
     <span>
-      Doy you need verify your <strong>new email</strong>. Please check your email for the verification link.
+      Doy you need verify your <strong>new email</strong>. Please check your
+      email for the verification link.
     </span>,
     {
       duration: 10000,
-      icon: "🔔",
+      icon: '🔔',
     }
   );
   // Devolbemos a el usuario a la página de inicio
   setTimeout(() => {
-    navigate("/");
+    navigate('/');
   }, 10000);
 };
 
 export async function resetPassword(email: string, navigate: NavigateFunction) {
-  toast.loading("Sending...");
+  toast.loading('Sending...');
   sendPasswordResetEmail(auth, email)
     .then(() => {
       toast.dismiss();
-      toast("Check your email for the password reset link 📧", {
+      toast('Check your email for the password reset link 📧', {
         duration: 10000,
-        icon: "🔔",
+        icon: '🔔',
       });
       // Devolbemos a el usuario a la página de inicio
       setTimeout(() => {
-        navigate("/");
+        navigate('/');
       }, 10000);
     })
     .catch((error) => {
@@ -111,19 +114,23 @@ export async function resetPassword(email: string, navigate: NavigateFunction) {
     });
 }
 
-export async function delateUserFirebase(user: User, password: string, navigate: NavigateFunction) {
+export async function delateUserFirebase(
+  user: User,
+  password: string,
+  navigate: NavigateFunction
+) {
   try {
     // Reautenticar usuario para eliminarlo porque firebase lo requiere
     await reutenticateFirebase(user, password);
     // Eliminamos el usuario
     await deleteUser(user);
-    toast.success("User deleted successfully, We hope to see you back soon", {
+    toast.success('User deleted successfully, We hope to see you back soon', {
       duration: 10000,
-      icon: "❤️‍🩹",
+      icon: '❤️‍🩹',
     });
     // Devolbemos a el usuario a la página de inicio
     setTimeout(() => {
-      navigate("/");
+      navigate('/');
     }, 10000);
   } catch (error) {
     showMessageErrorFirebase(error);

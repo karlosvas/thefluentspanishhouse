@@ -1,0 +1,18 @@
+# Dependencies
+node_modules
+package-lock.json
+
+# Build directories
+dist
+build
+public
+
+# GitHub specific
+.github
+.git
+
+# Environment files
+.env*
+
+# Cache
+.cache

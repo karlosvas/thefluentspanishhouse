@@ -7,14 +7,12 @@
     "start": "vite",
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
     "@svgr/rollup": "^8.1.0",
     "bootstrap": "^5.3.3",
     "firebase": "^10.12.3",
-    "nodemailer": "^6.9.14",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
@@ -24,14 +22,12 @@
     "react-router-dom": "^6.24.1"
   },
   "devDependencies": {
+    "@firebase/app-types": "^0.9.3",
+    "@firebase/auth-types": "^0.12.3",
+    "@firebase/database-types": "^1.0.8",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.13.1",
-    "@typescript-eslint/parser": "^7.13.1",
     "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.7",
     "vite": "^5.3.3",
     "vite-plugin-env": "^1.0.1"
   }

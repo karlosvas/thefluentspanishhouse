@@ -1,12 +1,12 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import PlaceholderPublications from "@/components/pages-components/publications/PlaceholderPublication";
-import { getPublicationByID } from "@/scripts/render-data";
-import CommentsPublication from "@/components/pages-components/publications/CommentsPublication";
-import { Helmet } from "react-helmet-async";
-import { type PublicationCardType, type RouteParams } from "types/types";
-import { isPublicationCardType } from "@/utilities/utilities-types";
-import "@/styles/main-publication.css";
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import PlaceholderPublications from '@/components/pages-components/publications/PlaceholderPublication';
+import { getPublicationByID } from '@/scripts/render-data';
+import CommentsPublication from '@/components/pages-components/publications/CommentsPublication';
+import { Helmet } from 'react-helmet-async';
+import { type PublicationCardType, type RouteParams } from 'types/types';
+import { isPublicationCardType } from '@/utilities/utilities-types';
+import '@/styles/main-publication.css';
 
 const Publication = () => {
   // Publicacion actual (publication), estado de carga de la imagen (imageLoading)
@@ -25,9 +25,9 @@ const Publication = () => {
         })
         .catch((error) => {
           console.error(error);
-          navigate("/404");
+          navigate('/404');
         });
-    } else navigate("/404");
+    } else navigate('/404');
   }, [navigate, id]);
 
   return (
@@ -49,13 +49,13 @@ const Publication = () => {
                 src={publication.base64_img}
                 alt="Imagen de la publicación"
                 onLoad={() => setImageLoading(true)}
-                style={{ display: imageLoading ? "block" : "none" }}
+                style={{ display: imageLoading ? 'block' : 'none' }}
               />
             </figure>
             <strong>{publication.subtitle}</strong>
             <p
               dangerouslySetInnerHTML={{
-                __html: publication.content || "",
+                __html: publication.content || '',
               }}
             />
           </div>

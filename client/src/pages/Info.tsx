@@ -1,6 +1,6 @@
-import Footer from "@/layouts/Footer";
-import "@/styles/info.css";
-import { Helmet } from "react-helmet-async";
+import Footer from '@/layouts/Footer';
+import '@/styles/info.css';
+import { Helmet } from 'react-helmet-async';
 
 const Info = () => {
   return (
@@ -23,9 +23,9 @@ const Info = () => {
             possible schedule changes and provide the required information, as
             well as direct communication between students and the teacher. You
             can unsubscribe at any time through the link provided in our emails.
-            For more details on how we handle your data, please see our{" "}
+            For more details on how we handle your data, please see our{' '}
             <a href="#privacy">Privacy Policy.</a> Thank you for choosing The
-            Fluent Spanish House for your Spanish learning.{" "}
+            Fluent Spanish House for your Spanish learning.{' '}
           </p>
         </section>
         <section>
@@ -73,7 +73,7 @@ const Info = () => {
           <p>
             The content and code of this website are subject to the terms of the
             license specified in our LICENSE file. You can review the full
-            license in our{" "}
+            license in our{' '}
             <a
               href="https://github.com/karlosvas/thefluentspanishhouse/blob/main/LICENSE"
               target="_blank"

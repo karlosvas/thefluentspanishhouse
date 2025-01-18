@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
 
 @font-face {
-  font-family: "AlegreyaV";
-  src: url("/fonts/alegreya/AlegreyaSans-Medium.ttf") format("truetype");
+  font-family: 'AlegreyaV';
+  src: url('/fonts/alegreya/AlegreyaSans-Medium.ttf') format('truetype');
 }
 
 :root {
@@ -75,9 +75,13 @@ svg {
 html.light {
   background-color: var(--primary-white);
   color: var(--primary-black);
-  transition: background-color 0.3s ease, color 0.1s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.1s ease;
   header {
-    transition: background-color 0.3s ease, color 0.1s ease;
+    transition:
+      background-color 0.3s ease,
+      color 0.1s ease;
     nav > ul > li a {
       color: var(--primary-black);
     }
@@ -111,14 +115,18 @@ html.light {
 
 /* Estilos para tema oscuro */
 html.dark {
-  transition: background-color 0.3s ease, color 0.1s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.1s ease;
   header {
     #logo {
       filter: drop-shadow(0 -10px 1rem black);
     }
     color: var(--primary-white);
     background-color: var(--primary-black);
-    transition: background-color 0.3s ease, color 0.1s ease;
+    transition:
+      background-color 0.3s ease,
+      color 0.1s ease;
     nav > ul > li a {
       color: var(--primary-white);
     }
@@ -382,7 +390,7 @@ html.dark {
 }
 
 .card-img-placeholder::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;

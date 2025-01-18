@@ -1,17 +1,17 @@
-import { test, expect } from "@playwright/test";
-import { type NoteType, type SubscriberType } from "types/types";
+import { test, expect } from '@playwright/test';
+import { type NoteType, type SubscriberType } from 'types/types';
 
 //####################### POST #######################
-test("/note enviar email de la nota de contact", async ({ page }) => {
+test('/note enviar email de la nota de contact', async ({ page }) => {
   let newNote: NoteType = {
-    email_user: "carlosrvasquezsanchez@gmail.com",
-    username: "Test",
-    subject: "Test",
-    note: "Test",
+    email_user: 'carlosrvasquezsanchez@gmail.com',
+    username: 'Test',
+    subject: 'Test',
+    note: 'Test',
   };
 
   // Enviamos un email de la nota de contacto a admin
-  const responseNewComment = await page.request.post("/mandrill/note", {
+  const responseNewComment = await page.request.post('/mandrill/note', {
     data: newNote,
   });
 
@@ -20,19 +20,19 @@ test("/note enviar email de la nota de contact", async ({ page }) => {
   expect(data).toBeDefined();
 });
 
-test("/newstudent enviar email de neuvo estudiante", async ({ page }) => {
+test('/newstudent enviar email de neuvo estudiante', async ({ page }) => {
   let newSubcriber: SubscriberType = {
-    email: "carlosrvasquezsanchez@gmail.com",
-    name: "Test",
-    lastname: "Test",
-    class: "FREE_CLASS",
+    email: 'carlosrvasquezsanchez@gmail.com',
+    name: 'Test',
+    lastname: 'Test',
+    class: 'FREE_CLASS',
     consentEmails: true,
     acceptTerms: true,
     acceptPrivacy: true,
   };
 
   // Enviamos un email de la nota de nuevo estudiante a admin
-  const responseNewComment = await page.request.post("/mandrill/newstudent", {
+  const responseNewComment = await page.request.post('/mandrill/newstudent', {
     data: newSubcriber,
   });
 

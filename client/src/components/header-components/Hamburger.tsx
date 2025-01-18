@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
-import Profile from "./Profile";
-import MainNav from "./MainNav";
-import { handleScroll } from "@/scripts/modal";
-import { useLocation } from "react-router-dom";
-import Backdrop from "@/components/reusable/Backdrop";
-import { UserContext } from "@/App";
-import "@/styles/hamburger.css";
+import { useContext, useEffect, useState } from 'react';
+import Profile from './Profile';
+import MainNav from './MainNav';
+import { handleScroll } from '@/scripts/modal';
+import { useLocation } from 'react-router-dom';
+import Backdrop from '@/components/reusable/Backdrop';
+import { UserContext } from '@/App';
+import '@/styles/hamburger.css';
 
 const Hamburger = () => {
   const [showModal, setShowModal] = useState(false);
@@ -67,7 +67,7 @@ const Hamburger = () => {
         </svg>
         {(showModal || closing) && (
           <>
-            <div className={`menu-left ${closing ? "closing" : ""}`}>
+            <div className={`menu-left ${closing ? 'closing' : ''}`}>
               <Profile />
               <div className="config">
                 <MainNav />

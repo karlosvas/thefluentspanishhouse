@@ -1,4 +1,4 @@
-import admin from "firebase-admin";
+import admin from 'firebase-admin';
 
 // Función para obtener UID por correo electrónico
 export const getUidByEmail = async (email: string): Promise<string | null> => {
@@ -6,7 +6,7 @@ export const getUidByEmail = async (email: string): Promise<string | null> => {
     const userRecord = await admin.auth().getUserByEmail(email);
     return userRecord.uid;
   } catch (error) {
-    console.error("Error fetching user data:", error);
+    console.error('Error fetching user data:', error);
     return null;
   }
 };

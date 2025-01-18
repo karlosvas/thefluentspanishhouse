@@ -1,30 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/logos/logo.png" />
-    <meta name="google-site-verification" content="KoIjSkj0QJojJLaxWSdR2tVqUkQud4wTzee7cg__2rg" />
+    <meta
+      name="google-site-verification"
+      content="KoIjSkj0QJojJLaxWSdR2tVqUkQud4wTzee7cg__2rg"
+    />
     <link rel="canonical" href="https://thefluentspanishhouse.vercel.app/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
     <title>The Fluent Spanish House</title>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+      defer
+    ></script>
   </head>
   <body>
-    <div class="cf-turnstile" data-sitekey="0x4AAAAAAA1R3eULw-muNS8T" data-size="invisible"></div>
+    <div
+      class="cf-turnstile"
+      data-sitekey="0x4AAAAAAA1R3eULw-muNS8T"
+      data-size="invisible"
+    ></div>
     <div id="root"></div>
   </body>
   <!-- React Script -->
   <script type="module" src="/src/Index.tsx"></script>
   <!-- Inicializar Turnstile Invisible -->
   <script type="module">
-    document.addEventListener("DOMContentLoaded", function () {
-      if (typeof turnstile !== "undefined") {
-        turnstile.render(".cf-turnstile", {
-          sitekey: "0x4AAAAAAA1R3eULw-muNS8T",
-          size: "invisible",
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof turnstile !== 'undefined') {
+        turnstile.render('.cf-turnstile', {
+          sitekey: '0x4AAAAAAA1R3eULw-muNS8T',
+          size: 'invisible',
         });
       } else {
-        console.error("Cloudflare Turnstile script not loaded.");
+        console.error('Cloudflare Turnstile script not loaded.');
       }
     });
   </script>

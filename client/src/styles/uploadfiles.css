@@ -32,11 +32,13 @@
   transform: translate(-50%, -50%);
   z-index: 1001;
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    0 6px 20px rgba(0, 0, 0, 0.5);
   color: var(--primary-black);
 }
 
-.upload-publication li{
+.upload-publication li {
   font-weight: 500;
 }
 
@@ -93,7 +95,7 @@
   font-size: 14px;
 }
 
-.upload-publication form label input[type="checkbox"] {
+.upload-publication form label input[type='checkbox'] {
   margin-right: 5px;
 }
 
@@ -107,7 +109,7 @@
   text-align: center;
 }
 
-.upload-publication .custom-file-upload input[type="file"] {
+.upload-publication .custom-file-upload input[type='file'] {
   display: none;
 }
 

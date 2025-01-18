@@ -1,7 +1,7 @@
 #haboutme {
   font-weight: 600;
   font-size: 40px;
-  font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial;
+  font-family: 'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial;
   padding-bottom: 20px;
   margin-top: 50px;
 }
@@ -59,7 +59,7 @@
       animation-timeline: view();
       animation-range: entry 20% cover 30%;
       h2 {
-        font-family: "Roboto Slab", Inter, system-ui, Avenir, Helvetica, Arial;
+        font-family: 'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial;
         font-weight: 600;
         margin-top: 100px;
       }

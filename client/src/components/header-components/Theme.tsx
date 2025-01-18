@@ -1,22 +1,26 @@
-import { useContext } from "react";
-import { SingleThemeProps } from "types/types";
-import "@/styles/reusables/theme.css";
-import { ThemeContext } from "@/App";
-import { toggleThemeSVG } from "@/utilities/utilities";
+import { useContext } from 'react';
+import { SingleThemeProps } from 'types/types';
+import '@/styles/reusables/theme.css';
+import { ThemeContext } from '@/App';
+import { toggleThemeSVG } from '@/utilities/utilities';
 
 export const Theme: React.FC<SingleThemeProps> = ({ children }) => {
   // Estado del team actual del conetxto de la APP
   const context = useContext(ThemeContext);
 
-  if (!context) throw new Error("ThemeContext must be used within a ThemeProvider");
+  if (!context)
+    throw new Error('ThemeContext must be used within a ThemeProvider');
 
   // Extrae el tema y la función para cambiar el tema del contexto
   const { theme, setTheme } = context;
 
   return (
-    <div onClick={() => toggleThemeSVG(theme, setTheme)} className="menu-section">
+    <div
+      onClick={() => toggleThemeSVG(theme, setTheme)}
+      className="menu-section"
+    >
       {children}
-      {theme === "light" ? (
+      {theme === 'light' ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="#f0faff"

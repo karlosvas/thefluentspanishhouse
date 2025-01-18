@@ -1,10 +1,10 @@
-import { getProvider } from "@/scripts/firebase-config";
-import { resetPassword } from "@/scripts/firebase-options-users";
-import { User } from "firebase/auth";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import toast from "react-hot-toast";
-import { type NavigateFunction } from "react-router";
-import { type ErrorResponseHelper, type OptionsChampTag } from "types/types";
+import { getProvider } from '@/scripts/firebase-config';
+import { resetPassword } from '@/scripts/firebase-options-users';
+import { User } from 'firebase/auth';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import toast from 'react-hot-toast';
+import { type NavigateFunction } from 'react-router';
+import { type ErrorResponseHelper, type OptionsChampTag } from 'types/types';
 
 // Función para manejar el cambio en los formularios
 // Tipo objeto string: desconocido, donde el desconocido puede ser cualquier tipo de valor, el evento puede ser input o textarea, y el setter de react puede ser cualquier tipo de dato.
@@ -13,7 +13,7 @@ export const handleInputChange = <T extends Record<string, unknown>>(
   setterReact: Dispatch<SetStateAction<T>>
 ) => {
   const { name, value, type } = event.target;
-  if (type === "checkbox") {
+  if (type === 'checkbox') {
     const { checked } = event.target as HTMLInputElement;
     setterReact((prev) => ({
       ...prev,
@@ -28,25 +28,31 @@ export const handleInputChange = <T extends Record<string, unknown>>(
 };
 
 // Envio de correo para restablecer la contraseña
-export const forgotPasword = (user: User | null, navigate: NavigateFunction) => {
+export const forgotPasword = (
+  user: User | null,
+  navigate: NavigateFunction
+) => {
   if (user && user.email) {
     const currentProviderId = getProvider(user);
 
-    if (currentProviderId === "password") resetPassword(user.email, navigate);
+    if (currentProviderId === 'password') resetPassword(user.email, navigate);
     else {
-      toast(`Can not reset password for accounts authenticated with ${getProvider(user)}.`, {
-        duration: 10000,
-        icon: "🔔",
-      });
+      toast(
+        `Can not reset password for accounts authenticated with ${getProvider(user)}.`,
+        {
+          duration: 10000,
+          icon: '🔔',
+        }
+      );
     }
   } else {
-    navigate("/verify", { state: { reset: true } });
+    navigate('/verify', { state: { reset: true } });
   }
 };
 
 // Función para obtener el tipo de tag de mailchip
 export const getTag = (name: string): OptionsChampTag => {
-  return name === "Group classes" ? "GROUP_CLASS" : "PRIVATE_CLASS";
+  return name === 'Group classes' ? 'GROUP_CLASS' : 'PRIVATE_CLASS';
 };
 
 // Función para manejar los errores de mailchimp
@@ -55,13 +61,18 @@ export function errorMailchimp(error: ErrorResponseHelper) {
   const messageError = error.message?.detail;
   const status = error.status;
 
-  if (messageError?.includes("permanently deleted")) {
-    toast.error("This user is permanently deleted from Mailchimp, please contact with the support team.");
-  } else if (titleMessage == "Member Exists") {
-    toast("This user already exists in Mailchimp, We will try to offer better service ", {
-      icon: "🙈",
-      duration: 10000,
-    });
+  if (messageError?.includes('permanently deleted')) {
+    toast.error(
+      'This user is permanently deleted from Mailchimp, please contact with the support team.'
+    );
+  } else if (titleMessage == 'Member Exists') {
+    toast(
+      'This user already exists in Mailchimp, We will try to offer better service ',
+      {
+        icon: '🙈',
+        duration: 10000,
+      }
+    );
   }
 
   return { messageError, status };
@@ -69,14 +80,19 @@ export function errorMailchimp(error: ErrorResponseHelper) {
 
 // Recisar si estaba enteriormente en localstorage
 export function getTheme() {
-  const darkorligth = localStorage.getItem("theme");
-  return darkorligth || "light";
+  const darkorligth = localStorage.getItem('theme');
+  return darkorligth || 'light';
 }
 
-export const toggleThemeSVG = (theme: string, setTheme: Dispatch<SetStateAction<string>>) => {
-  setTheme(theme === "light" ? "dark" : "light");
+export const toggleThemeSVG = (
+  theme: string,
+  setTheme: Dispatch<SetStateAction<string>>
+) => {
+  setTheme(theme === 'light' ? 'dark' : 'light');
 };
 
 export function getAdmin(user: User | null) {
-  return import.meta.env.VITE_ADMINS.split(",").includes(user?.email?.split("@")[0]);
+  return import.meta.env.VITE_ADMINS.split(',').includes(
+    user?.email?.split('@')[0]
+  );
 }

@@ -8,9 +8,9 @@ import {
   sendEmailVerification,
   FacebookAuthProvider,
   User,
-} from "firebase/auth";
-import { toast } from "react-hot-toast";
-import { auth, showMessageErrorFirebase } from "./firebase-config";
+} from 'firebase/auth';
+import { toast } from 'react-hot-toast';
+import { auth, showMessageErrorFirebase } from './firebase-config';
 
 // Verificar si actualmente está logeado
 export const isLogged = () => {
@@ -59,14 +59,22 @@ export async function localSignin(email: string, password: string) {
 }
 
 // Registrarse en local
-export async function localRegister(email: string, password: string, username: string) {
+export async function localRegister(
+  email: string,
+  password: string,
+  username: string
+) {
   try {
     // Si esta logeado no se puede registrar
     if (isLogged()) {
-      toast.error("You are already logged in");
+      toast.error('You are already logged in');
       return;
     }
-    const { user } = await createUserWithEmailAndPassword(auth, email, password);
+    const { user } = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     // Actualizamos el perfil con el nombre de usuario
     await updateProfile(user, { displayName: username });
     // Si no esta verificado se le avisa enviando un correo
@@ -92,7 +100,7 @@ export async function signOutUser() {
         // Resuelve la promesa cuando se completa el signOut
         resolve();
         // El usuario se ha desconectado exitosamente
-        toast.success("User successfully disconnected");
+        toast.success('User successfully disconnected');
       })
       .catch((error) => {
         showMessageErrorFirebase(error);
@@ -108,7 +116,7 @@ const providerFacebook = new FacebookAuthProvider();
 export async function signInWithFacebook() {
   // Si esta logeado no se puede registrar
   if (isLogged()) {
-    toast.error("You are already logged in");
+    toast.error('You are already logged in');
     return;
   }
   // Nos logeamos con el proveedor de Facebook
@@ -127,22 +135,23 @@ export async function signInWithFacebook() {
 
 // Verificación del correo electrónico
 export const sendEmailVerificationFirebase = async (user: User) => {
-  toast.loading("Updating...");
+  toast.loading('Updating...');
   try {
     await sendEmailVerification(user);
     toast.dismiss();
     toast(
       <span>
-        Welcome <b>{user.displayName}</b>!, please verify your email by checking the verification link we sent 📧,
+        Welcome <b>{user.displayName}</b>!, please verify your email by checking
+        the verification link we sent 📧,
       </span>,
       {
         duration: 10000,
-        icon: "🔔",
+        icon: '🔔',
       }
     );
   } catch (error) {
     showMessageErrorFirebase(error);
     toast.dismiss();
-    toast.error("Error sending verification email");
+    toast.error('Error sending verification email');
   }
 };

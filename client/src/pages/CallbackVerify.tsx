@@ -3,27 +3,27 @@ import {
   NavigateFunction,
   useLocation,
   useNavigate,
-} from "react-router-dom";
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+} from 'react-router-dom';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import {
   changeOptionsUserEmail,
   delateUserFirebase,
   resetPassword,
-} from "@/scripts/firebase-options-users";
-import toast from "react-hot-toast";
-import ShowPassword from "@/components/reusable/ShowPassword";
-import { UserContext } from "@/App";
-import { showMessageErrorFirebase } from "@/scripts/firebase-config";
-import { Helmet } from "react-helmet-async";
+} from '@/scripts/firebase-options-users';
+import toast from 'react-hot-toast';
+import ShowPassword from '@/components/reusable/ShowPassword';
+import { UserContext } from '@/App';
+import { showMessageErrorFirebase } from '@/scripts/firebase-config';
+import { Helmet } from 'react-helmet-async';
 
 export const CallbackVerify = () => {
   // Repuesta del usuario
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState('');
   // Datos del formulario
   const [ID, setID] = useState({
-    username: "",
-    password: "",
-    email: "",
+    username: '',
+    password: '',
+    email: '',
   });
 
   // Navegar entre rutas
@@ -38,7 +38,7 @@ export const CallbackVerify = () => {
   // Enviar datos para verificar email
   async function submitDataVerifyEmail(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
-    if(user && email){
+    if (user && email) {
       try {
         // Si el usuario y el nuevo email existen se cambia el email
         if (user && email)
@@ -47,16 +47,18 @@ export const CallbackVerify = () => {
       } catch (error) {
         showMessageErrorFirebase(error);
       }
-    } else if(reset){
-      await resetPassword(response, navigate).catch((error) => showMessageErrorFirebase(error));
+    } else if (reset) {
+      await resetPassword(response, navigate).catch((error) =>
+        showMessageErrorFirebase(error)
+      );
     } else {
-      navigate("/404");
+      navigate('/404');
     }
   }
 
   async function submitDelateUser() {
-    if (response !== "DELETE ACCOUNT")
-      return toast.error("You must type DELETE ACCOUNT to proceed");
+    if (response !== 'DELETE ACCOUNT')
+      return toast.error('You must type DELETE ACCOUNT to proceed');
     try {
       // Si el usuario existe se elimina
       if (user) await delateUserFirebase(user, ID.password, navigate);
@@ -67,8 +69,8 @@ export const CallbackVerify = () => {
   }
 
   useEffect(() => {
-    if (!email && !reset) navigate("/404");
-  }, [email,reset, navigate]);
+    if (!email && !reset) navigate('/404');
+  }, [email, reset, navigate]);
 
   return (
     <>
@@ -127,7 +129,7 @@ export const CallbackVerify = () => {
               <button type="submit">Send</button>
             </form>
           </>
-        ):(
+        ) : (
           <>
             <section className="err-flex">
               <h1>Please enter your email to change to your password</h1>
@@ -135,15 +137,17 @@ export const CallbackVerify = () => {
             </section>
 
             <form onSubmit={submitDataVerifyEmail}>
-            <label htmlFor="username">
-                  Email
-                  <input
-                    type="text"
-                    value={response}
-                    onChange={(e) => setResponse(e.target.value)}
-                  />
-                </label>
-              <button type="submit" className="send-info">Send</button>
+              <label htmlFor="username">
+                Email
+                <input
+                  type="text"
+                  value={response}
+                  onChange={(e) => setResponse(e.target.value)}
+                />
+              </label>
+              <button type="submit" className="send-info">
+                Send
+              </button>
             </form>
           </>
         )}

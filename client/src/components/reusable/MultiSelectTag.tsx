@@ -1,5 +1,5 @@
-import "@/styles/multiselecttag.css";
-import { type MultiSelectTagOptions, type Option } from "types/types";
+import '@/styles/multiselecttag.css';
+import { type MultiSelectTagOptions, type Option } from 'types/types';
 
 // Author: Habib Mhamadi
 // Email: habibmhamadi@gmail.com
@@ -24,9 +24,9 @@ export default function MultiSelectTag(
 
   // Customize tag colors
   const tagColor = customs.tagColor || {};
-  tagColor.textColor = tagColor.textColor || "#FF5D29";
-  tagColor.borderColor = tagColor.borderColor || "#FF5D29";
-  tagColor.bgColor = tagColor.bgColor || "#FFE9E2";
+  tagColor.textColor = tagColor.textColor || '#FF5D29';
+  tagColor.borderColor = tagColor.borderColor || '#FF5D29';
+  tagColor.bgColor = tagColor.bgColor || '#FFE9E2';
 
   // Initialize DOM Parser
   const domParser = new DOMParser();
@@ -44,27 +44,27 @@ export default function MultiSelectTag(
 
     // Event listeners
     const toggleDrawer = () => {
-      if (drawer!.classList.contains("hidden")) {
+      if (drawer!.classList.contains('hidden')) {
         initOptions();
         enableItemSelection();
-        drawer!.classList.remove("hidden");
+        drawer!.classList.remove('hidden');
         input!.focus();
       } else {
-        drawer!.classList.add("hidden");
+        drawer!.classList.add('hidden');
       }
     };
 
-    button!.addEventListener("click", toggleDrawer);
-    inputContainer!.addEventListener("click", toggleDrawer);
+    button!.addEventListener('click', toggleDrawer);
+    inputContainer!.addEventListener('click', toggleDrawer);
 
-    input!.addEventListener("keyup", (e) => {
+    input!.addEventListener('keyup', (e) => {
       initOptions((e.target as HTMLInputElement).value);
       enableItemSelection();
     });
 
-    input!.addEventListener("keydown", (e) => {
+    input!.addEventListener('keydown', (e) => {
       if (
-        e.key === "Backspace" &&
+        e.key === 'Backspace' &&
         !(e.target as HTMLInputElement).value &&
         inputContainer!.childElementCount > 1
       ) {
@@ -79,14 +79,14 @@ export default function MultiSelectTag(
       }
     });
 
-    window.addEventListener("click", (e) => {
+    window.addEventListener('click', (e) => {
       if (!customSelectContainer!.contains(e.target as Node)) {
         if (
-          (e.target as HTMLElement).nodeName !== "LI" &&
-          (e.target as HTMLElement).getAttribute("class") !== "input_checkbox"
+          (e.target as HTMLElement).nodeName !== 'LI' &&
+          (e.target as HTMLElement).getAttribute('class') !== 'input_checkbox'
         ) {
           // hide the list option only if we click outside of it
-          drawer!.classList.add("hidden");
+          drawer!.classList.add('hidden');
         } else {
           // enable again the click on the list options
           enableItemSelection();
@@ -98,55 +98,55 @@ export default function MultiSelectTag(
   function createElements() {
     // Create custom elements
     options = getOptions();
-    element!.classList.add("hidden");
+    element!.classList.add('hidden');
 
     // .multi-select-tag
-    customSelectContainer = document.createElement("div");
-    customSelectContainer.classList.add("mult-select-tag");
+    customSelectContainer = document.createElement('div');
+    customSelectContainer.classList.add('mult-select-tag');
 
     // .container
-    wrapper = document.createElement("div");
-    wrapper.classList.add("wrapper");
+    wrapper = document.createElement('div');
+    wrapper.classList.add('wrapper');
 
     // body
-    body = document.createElement("div");
-    body.classList.add("body");
+    body = document.createElement('div');
+    body.classList.add('body');
     if (customs.shadow) {
-      body.classList.add("shadow");
+      body.classList.add('shadow');
     }
     if (customs.rounded) {
-      body.classList.add("rounded");
+      body.classList.add('rounded');
     }
 
     // .input-container
-    inputContainer = document.createElement("div");
-    inputContainer.classList.add("input-container");
+    inputContainer = document.createElement('div');
+    inputContainer.classList.add('input-container');
 
     // input
-    input = document.createElement("input");
-    input.classList.add("input");
-    input.placeholder = `${customs.placeholder || "Search..."}`;
+    input = document.createElement('input');
+    input.classList.add('input');
+    input.placeholder = `${customs.placeholder || 'Search...'}`;
 
-    inputBody = document.createElement("div");
-    inputBody.classList.add("input-body");
+    inputBody = document.createElement('div');
+    inputBody.classList.add('input-body');
     inputBody.append(input);
 
     body.append(inputContainer);
 
     // .btn-container
-    btnContainer = document.createElement("div");
-    btnContainer.classList.add("btn-container");
+    btnContainer = document.createElement('div');
+    btnContainer.classList.add('btn-container');
 
     // button
-    button = document.createElement("button");
-    button.type = "button";
+    button = document.createElement('button');
+    button.type = 'button';
     btnContainer.append(button);
 
     const icon = domParser.parseFromString(
       `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="18 15 12 21 6 15"></polyline>
             </svg>`,
-      "image/svg+xml"
+      'image/svg+xml'
     ).documentElement;
 
     button.append(icon);
@@ -154,16 +154,16 @@ export default function MultiSelectTag(
     body.append(btnContainer);
     wrapper.append(body);
 
-    drawer = document.createElement("div");
-    drawer.classList.add(...["drawer", "hidden"]);
+    drawer = document.createElement('div');
+    drawer.classList.add(...['drawer', 'hidden']);
     if (customs.shadow) {
-      drawer.classList.add("shadow");
+      drawer.classList.add('shadow');
     }
     if (customs.rounded) {
-      drawer.classList.add("rounded");
+      drawer.classList.add('rounded');
     }
     drawer.append(inputBody);
-    ul = document.createElement("ul");
+    ul = document.createElement('ul');
 
     drawer.appendChild(ul);
 
@@ -188,7 +188,7 @@ export default function MultiSelectTag(
   ) {
     // Create a <li> elmt in the drop-down list,
     // selected parameters tells if the checkbox need to be selected and the bg color changed
-    const li = document.createElement("li");
+    const li = document.createElement('li');
     li.innerHTML =
       "<input type='checkbox' style='margin:0 0.5em 0 0' class='input_checkbox'>"; // add the checkbox at the left of the <li>
     li.innerHTML += option.label;
@@ -205,13 +205,13 @@ export default function MultiSelectTag(
 
     // Change bg color and checking the checkbox
     if (selected) {
-      li.classList.toggle("selected");
+      li.classList.toggle('selected');
       checkbox.checked = true;
     }
   }
 
   function initOptions(val: string | null = null) {
-    ul!.innerHTML = "";
+    ul!.innerHTML = '';
     for (const option of options) {
       // if option already selected
       if (option.selected) {
@@ -227,14 +227,14 @@ export default function MultiSelectTag(
 
   function createTag(option: Option) {
     // Create and show selected item as tag
-    const itemDiv = document.createElement("div");
-    itemDiv.classList.add("item-container");
-    itemDiv.style.color = tagColor.textColor || "#2c7a7b";
-    itemDiv.style.borderColor = tagColor.borderColor || "#81e6d9";
-    itemDiv.style.background = tagColor.bgColor || "#e6fffa";
-    const itemLabel = document.createElement("div");
-    itemLabel.classList.add("item-label");
-    itemLabel.style.color = tagColor.textColor || "#2c7a7b";
+    const itemDiv = document.createElement('div');
+    itemDiv.classList.add('item-container');
+    itemDiv.style.color = tagColor.textColor || '#2c7a7b';
+    itemDiv.style.borderColor = tagColor.borderColor || '#81e6d9';
+    itemDiv.style.background = tagColor.bgColor || '#e6fffa';
+    const itemLabel = document.createElement('div');
+    itemLabel.classList.add('item-label');
+    itemLabel.style.color = tagColor.textColor || '#2c7a7b';
     itemLabel.innerHTML = option.label;
     itemLabel.dataset.value = option.value;
     const itemClose = domParser.parseFromString(
@@ -242,10 +242,10 @@ export default function MultiSelectTag(
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>`,
-      "image/svg+xml"
+      'image/svg+xml'
     ).documentElement;
 
-    itemClose.addEventListener("click", () => {
+    itemClose.addEventListener('click', () => {
       const unselectOption = options.find((op) => op.value == option.value);
       if (unselectOption) {
         unselectOption.selected = false;
@@ -263,20 +263,20 @@ export default function MultiSelectTag(
   function enableItemSelection() {
     // Add click listener to the list items
     for (const li of ul!.children) {
-      li.addEventListener("click", (e) => {
+      li.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const option = options.find((o) => o.value == target.dataset.value);
         if (option) {
           if (!option.selected) {
             // if the option is not selected, we select it
             option.selected = true;
-            input!.value = "";
+            input!.value = '';
             initOptions();
             setValues();
           } else {
             // if it's already selected, we deselect it
             option.selected = false;
-            input!.value = "";
+            input!.value = '';
             initOptions();
             setValues();
             removeTag(target.dataset.value!);
@@ -290,7 +290,7 @@ export default function MultiSelectTag(
     // If the item is already selected
     for (const child of inputContainer!.children) {
       if (
-        !child.classList.contains("input-body") &&
+        !child.classList.contains('input-body') &&
         (child.firstChild as HTMLElement).dataset.value == val
       ) {
         return true;
@@ -303,7 +303,7 @@ export default function MultiSelectTag(
     // Remove selected item
     for (const child of inputContainer!.children) {
       if (
-        !child.classList.contains("input-body") &&
+        !child.classList.contains('input-body') &&
         (child.firstChild as HTMLElement).dataset.value == val
       ) {
         inputContainer!.removeChild(child);
@@ -325,7 +325,7 @@ export default function MultiSelectTag(
     }
     if (
       fireEvent &&
-      Object.prototype.hasOwnProperty.call(customs, "onChange")
+      Object.prototype.hasOwnProperty.call(customs, 'onChange')
     ) {
       customs.onChange!(selected_values);
     }

@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState } from 'react';
 import {
   signInWithGoogle,
   signOutUser,
@@ -6,16 +6,16 @@ import {
   localRegister,
   localSignin,
   signInWithFacebook,
-} from "@/scripts/oauth2-0";
-import { toggleFormType } from "@/scripts/modal";
-import Button from "@/components/reusable/Button";
-import ShowPassword from "@/components/reusable/ShowPassword";
-import { UserContext } from "@/App";
-import ButtonClose from "@/components/reusable/ButtonClose";
-import Backdrop from "@/components/reusable/Backdrop";
-import "@/styles/modal-auth.css";
-import { NavigateFunction, useNavigate } from "react-router";
-import { forgotPasword, handleInputChange } from "@/utilities/utilities";
+} from '@/scripts/oauth2-0';
+import { toggleFormType } from '@/scripts/modal';
+import Button from '@/components/reusable/Button';
+import ShowPassword from '@/components/reusable/ShowPassword';
+import { UserContext } from '@/App';
+import ButtonClose from '@/components/reusable/ButtonClose';
+import Backdrop from '@/components/reusable/Backdrop';
+import '@/styles/modal-auth.css';
+import { NavigateFunction, useNavigate } from 'react-router';
+import { forgotPasword, handleInputChange } from '@/utilities/utilities';
 
 const Auth = () => {
   // Enseña o esconde el modal
@@ -23,7 +23,7 @@ const Auth = () => {
   // Animación de cierre
   const [closing, setClosing] = useState(false);
   // Tipo de formulario
-  const [formType, setFormType] = useState<"login" | "register">("login");
+  const [formType, setFormType] = useState<'login' | 'register'>('login');
   // Referenica al formulario
   const typeLoginRegisterRef = useRef<HTMLHeadingElement>(null);
   // Actual user
@@ -31,9 +31,9 @@ const Auth = () => {
 
   // Inputs del formulario
   const [ID, setID] = useState({
-    username: "",
-    password: "",
-    email: "",
+    username: '',
+    password: '',
+    email: '',
   });
   // Procesador de envio de formulario
   const [suscribe, setSuscribe] = useState(false);
@@ -44,25 +44,25 @@ const Auth = () => {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSuscribe(true);
-    const isRegister = typeLoginRegisterRef.current?.textContent === "Register";
+    const isRegister = typeLoginRegisterRef.current?.textContent === 'Register';
     if (isRegister) await localRegister(ID.email, ID.password, ID.username);
     else await localSignin(ID.email, ID.password);
     toggleFormType(showModal, setShowModal);
-    setID({ username: "", password: "", email: "" });
+    setID({ username: '', password: '', email: '' });
     setSuscribe(false);
   };
 
   // Autenticación con Google y Facebook
   const handleAuth = async (provider: string) => {
-    if (provider === "google") await signInWithGoogle();
-    else if (provider === "facebook") await signInWithFacebook();
+    if (provider === 'google') await signInWithGoogle();
+    else if (provider === 'facebook') await signInWithFacebook();
     toggleFormType(showModal, setShowModal);
   };
 
   // Mostrar el formulario de o desloguear
   const handleLoginOrLogout = async () => {
     if (isLogged()) await signOutUser();
-    else toggleFormType(showModal, setShowModal, "login", setFormType);
+    else toggleFormType(showModal, setShowModal, 'login', setFormType);
   };
 
   // Manejador de cambio de formulario
@@ -72,7 +72,7 @@ const Auth = () => {
       setTimeout(() => {
         toggleFormType(showModal, setShowModal);
         setClosing(false);
-        setID({ username: "", password: "", email: "" });
+        setID({ username: '', password: '', email: '' });
       }, 300);
     } else {
       toggleFormType(showModal, setShowModal);
@@ -82,18 +82,28 @@ const Auth = () => {
   return (
     <div className="auth">
       <Button id="sign-in" event={handleLoginOrLogout}>
-        {user ? "Logout" : "Sign In"}
+        {user ? 'Logout' : 'Sign In'}
       </Button>
-      <Button event={() => toggleFormType(showModal, setShowModal, "register", setFormType)} id="register">
+      <Button
+        event={() =>
+          toggleFormType(showModal, setShowModal, 'register', setFormType)
+        }
+        id="register"
+      >
         Register
       </Button>
       {showModal && (
         <>
-          <Backdrop handleSusribeChange={handleSusribeChange} closing={closing} />
-          <div className={"modal-auth"}>
+          <Backdrop
+            handleSusribeChange={handleSusribeChange}
+            closing={closing}
+          />
+          <div className={'modal-auth'}>
             <ButtonClose handleSusribeChange={handleSusribeChange} />
             <div className="modal-content">
-              <h1 ref={typeLoginRegisterRef}>{formType === "login" ? "Sign In" : "Register"}</h1>
+              <h1 ref={typeLoginRegisterRef}>
+                {formType === 'login' ? 'Sign In' : 'Register'}
+              </h1>
               <form onSubmit={handleFormSubmit} className="login-form">
                 <label>
                   Email
@@ -106,7 +116,7 @@ const Auth = () => {
                     required
                   />
                 </label>
-                {formType === "register" && (
+                {formType === 'register' && (
                   <label>
                     Username
                     <input
@@ -122,13 +132,18 @@ const Auth = () => {
                 <label>
                   <ShowPassword password={ID.password} setID={setID} />
                 </label>
-                <small onClick={() => forgotPasword(user, navigate)}>Forgot your password?</small>
+                <small onClick={() => forgotPasword(user, navigate)}>
+                  Forgot your password?
+                </small>
                 <Button type="submit" suscribe={suscribe}>
                   Submit
                 </Button>
               </form>
               <div className="providers-log">
-                <div className="googleAuth" onClick={() => handleAuth("google")}>
+                <div
+                  className="googleAuth"
+                  onClick={() => handleAuth('google')}
+                >
                   Continue with
                   <svg
                     className="providers"
@@ -155,7 +170,10 @@ const Auth = () => {
                     ></path>
                   </svg>
                 </div>
-                <div className="facebookAuth" onClick={() => handleAuth("facebook")}>
+                <div
+                  className="facebookAuth"
+                  onClick={() => handleAuth('facebook')}
+                >
                   Continue with
                   <svg
                     className="providers"
@@ -166,13 +184,22 @@ const Auth = () => {
                     height="30"
                     viewBox="0 0 100 100"
                   >
-                    <polygon fill="#4b4dff" points="79,78 18.126,78 18.126,19 78.622,19"></polygon>
+                    <polygon
+                      fill="#4b4dff"
+                      points="79,78 18.126,78 18.126,19 78.622,19"
+                    ></polygon>
                     <path
                       fill="#edf7f5"
                       d="M43.835,75.54h9.873V53.657h5.915l0.807-7.377h-6.722l0.009-4.139c0-1.975,0.19-3.019,3.009-3.019 H61v-7.348h-7.348c-7.263,0-9.816,3.655-9.816,9.807v4.699H40v7.377h3.835V75.54z"
                     ></path>
-                    <path fill="#4343bf" d="M82,81H15V16h67.052L82,81z M21,75h54.051l0.897-53H21V75z"></path>
-                    <polygon fill="#3abcf8" points="85,85 21,85 21,75 75,75 75,22 85,22"></polygon>
+                    <path
+                      fill="#4343bf"
+                      d="M82,81H15V16h67.052L82,81z M21,75h54.051l0.897-53H21V75z"
+                    ></path>
+                    <polygon
+                      fill="#3abcf8"
+                      points="85,85 21,85 21,75 75,75 75,22 85,22"
+                    ></polygon>
                   </svg>
                 </div>
               </div>

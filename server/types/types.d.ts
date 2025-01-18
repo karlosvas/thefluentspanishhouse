@@ -1,6 +1,6 @@
-import { type User } from "firebase/auth";
-import { type Status } from "@mailchimp/mailchimp_marketing";
-import { ObjectId } from "mongoose";
+import { type User } from 'firebase/auth';
+import { type Status } from '@mailchimp/mailchimp_marketing';
+import { ObjectId } from 'mongoose';
 
 export interface PublicationCardType {
   _id: Types.ObjectId;
@@ -61,7 +61,7 @@ export interface ConfigUser {
 export interface Member {
   email_address: string;
   status: Status;
-  email_type: "html" | "text";
+  email_type: 'html' | 'text';
   merge_fields: {
     FNAME: string;
     LNAME: string;
@@ -94,10 +94,10 @@ export interface ErrorResponseHelper {
   message?: ErrorChamp;
 }
 
-type OptionsChampTag = "GROUP_CLASS" | "PRIVATE_CLASS" | "FREE_CLASS";
+type OptionsChampTag = 'GROUP_CLASS' | 'PRIVATE_CLASS' | 'FREE_CLASS';
 interface TagMailchamp {
   name: OptionsChampTag;
-  status: "active" | "inactive";
+  status: 'active' | 'inactive';
 }
 
 interface Link {
@@ -145,12 +145,12 @@ export interface Message {
   to: [
     {
       email: string;
-      type: "to" | "cc" | "bcc";
-    }
+      type: 'to' | 'cc' | 'bcc';
+    },
   ];
   subject: string;
   html: string;
   headers?: {
-    "Reply-To": string;
+    'Reply-To': string;
   };
 }

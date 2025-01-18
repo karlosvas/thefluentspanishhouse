@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import Auth from "@/components/header-components/Auth";
-import ImgUser from "@/components/svg-component/ImgUser";
-import { UserContext } from "@/App";
-import "@/styles/profileicon.css";
+import { useContext } from 'react';
+import Auth from '@/components/header-components/Auth';
+import ImgUser from '@/components/svg-component/ImgUser';
+import { UserContext } from '@/App';
+import '@/styles/profileicon.css';
 
 const Profile = () => {
   const user = useContext(UserContext);
@@ -12,7 +12,7 @@ const Profile = () => {
       <div className="profile">
         {user &&
           (window.innerWidth <= 766 ||
-            window.location.pathname === "/account") && (
+            window.location.pathname === '/account') && (
             <>
               <ImgUser photoURL={user?.photoURL} />
               <div className="username">

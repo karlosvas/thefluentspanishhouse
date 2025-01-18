@@ -1,5 +1,5 @@
-import toast from "react-hot-toast";
-import { type CommentOptionsProps } from "types/types";
+import toast from 'react-hot-toast';
+import { type CommentOptionsProps } from 'types/types';
 
 const ReplyToComment: React.FC<CommentOptionsProps> = ({
   user,
@@ -8,7 +8,7 @@ const ReplyToComment: React.FC<CommentOptionsProps> = ({
 }) => {
   const handleResponse = () => {
     if (user) setIsResponse(!isResponse);
-    else toast.error("Do you need login to comment");
+    else toast.error('Do you need login to comment');
   };
 
   return (

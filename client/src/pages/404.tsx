@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
-import toast from "react-hot-toast";
-import "@/styles/layouts/404.css";
-import { Helmet } from "react-helmet-async";
+import { Link } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import toast from 'react-hot-toast';
+import '@/styles/layouts/404.css';
+import { Helmet } from 'react-helmet-async';
 
 export const Error = () => {
   const errorShownRef = useRef(false);
@@ -10,7 +10,7 @@ export const Error = () => {
   useEffect(() => {
     if (!errorShownRef.current) {
       errorShownRef.current = true;
-      toast.error("Error al cargar la página");
+      toast.error('Error al cargar la página');
     }
   }, []);
 

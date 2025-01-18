@@ -1,12 +1,12 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import CommentCard from "@/components/pages-components/publications/CommentCard";
-import { getCommentsByID, postComment } from "@/scripts/render-data";
-import { UserContext } from "@/App";
-import { type Comment } from "types/types";
-import toast from "react-hot-toast";
-import { isCommentArray } from "@/utilities/utilities-types";
-import "@/styles/comments.css";
+import { useContext, useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import CommentCard from '@/components/pages-components/publications/CommentCard';
+import { getCommentsByID, postComment } from '@/scripts/render-data';
+import { UserContext } from '@/App';
+import { type Comment } from 'types/types';
+import toast from 'react-hot-toast';
+import { isCommentArray } from '@/utilities/utilities-types';
+import '@/styles/comments.css';
 
 const CommentsPublication = () => {
   // Estado de los comentarios actuales, y del Text Area
@@ -25,7 +25,7 @@ const CommentsPublication = () => {
     event.preventDefault();
     if (
       newCommentRef.current &&
-      newCommentRef.current.value.trim() !== "" &&
+      newCommentRef.current.value.trim() !== '' &&
       id &&
       user &&
       user.uid &&
@@ -34,13 +34,13 @@ const CommentsPublication = () => {
     ) {
       // Crear el nuevo comentario
       const newCommentData: Comment = {
-        _id: "",
+        _id: '',
         pattern_id: id,
         owner: {
           uid: user.uid,
           displayName: user.displayName,
           email: user.email,
-          photoURL: user.photoURL || "",
+          photoURL: user.photoURL || '',
         },
         data: newCommentRef.current.value,
         likes: 0,
@@ -48,12 +48,12 @@ const CommentsPublication = () => {
         answers: [],
       };
       // Limpiar el text area
-      newCommentRef.current.value = "";
+      newCommentRef.current.value = '';
       // Enviar el comentario
       const response = await postComment(newCommentData);
       if (response)
-        toast("Comment posted!", {
-          icon: "✉️",
+        toast('Comment posted!', {
+          icon: '✉️',
         });
 
       // Si se ha enviado correctamente, añadirlo a la lista de comentarios
@@ -62,7 +62,7 @@ const CommentsPublication = () => {
         updatedComments.reverse();
         setComments(updatedComments);
       }
-    } else toast.error("Do you need login to comment");
+    } else toast.error('Do you need login to comment');
   };
 
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ const CommentsPublication = () => {
           setComments(result);
         }
       });
-    else navigate("/404");
+    else navigate('/404');
   }, [id, navigate]);
 
   return (

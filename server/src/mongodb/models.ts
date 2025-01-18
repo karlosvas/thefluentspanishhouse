@@ -1,5 +1,5 @@
-import { Schema, model, Document } from "mongoose";
-import { Comment, PublicationCardType } from "../../types/types";
+import { Schema, model, Document } from 'mongoose';
+import { Comment, PublicationCardType } from '../../types/types';
 
 const commentSchema = new Schema<Comment>({
   _id: { type: Schema.Types.ObjectId, required: true },
@@ -14,13 +14,13 @@ const commentSchema = new Schema<Comment>({
   likes: { type: Number, required: true },
   likedBy: { type: [String], required: true, default: [] },
   answers: {
-    type: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+    type: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     required: true,
     default: [],
   },
 });
 
-export const modelComment = model("Comment", commentSchema, "comments");
+export const modelComment = model('Comment', commentSchema, 'comments');
 
 const publicationBlogSchema = new Schema<PublicationCardType>({
   _id: { type: Schema.Types.ObjectId, required: true },
@@ -32,7 +32,7 @@ const publicationBlogSchema = new Schema<PublicationCardType>({
 });
 
 export const modelPublication = model(
-  "PublicationBlog",
+  'PublicationBlog',
   publicationBlogSchema,
-  "publications"
+  'publications'
 );

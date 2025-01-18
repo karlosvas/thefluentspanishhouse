@@ -1,14 +1,14 @@
-import toast from "react-hot-toast";
-import { SetStateAction, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router";
-import { getChildsComment } from "@/scripts/render-data";
-import OptionsComment from "@/components/svg-component/OptionsComment";
-import ReplyToComment from "@/components/svg-component/ReplyToComment";
-import { isCommentArray } from "@/utilities/utilities-types";
-import { type CommentCardProps, type Comment } from "types/types";
-import ImgUser from "@/components/svg-component/ImgUser";
-import Likes from "@/components/svg-component/Likes";
-import Response from "@/components/pages-components/publications/Response";
+import toast from 'react-hot-toast';
+import { SetStateAction, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { getChildsComment } from '@/scripts/render-data';
+import OptionsComment from '@/components/svg-component/OptionsComment';
+import ReplyToComment from '@/components/svg-component/ReplyToComment';
+import { isCommentArray } from '@/utilities/utilities-types';
+import { type CommentCardProps, type Comment } from 'types/types';
+import ImgUser from '@/components/svg-component/ImgUser';
+import Likes from '@/components/svg-component/Likes';
+import Response from '@/components/pages-components/publications/Response';
 
 // Se renderiza cada comentario individualmente
 const CommentCard: React.FC<CommentCardProps> = ({
@@ -43,8 +43,8 @@ const CommentCard: React.FC<CommentCardProps> = ({
       const result = await getChildsComment(id);
       if (isCommentArray(result)) setChilds(result.reverse());
     } catch (error) {
-      console.error("Error al obtener datos:", error);
-      toast.error("Error al obtener datos");
+      console.error('Error al obtener datos:', error);
+      toast.error('Error al obtener datos');
     }
   }
 
@@ -54,7 +54,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
     if (comment.answers.length > 0) {
       const id = comment._id;
       if (id) fetchChildComments(id);
-      else navigate("/404");
+      else navigate('/404');
     }
   }, [comment, navigate]);
 
@@ -67,7 +67,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
 
   const adjustTextareaHeight = () => {
     if (responseComment.current) {
-      responseComment.current.style.height = "auto";
+      responseComment.current.style.height = 'auto';
       responseComment.current.style.height = `${responseComment.current.scrollHeight}px`;
     }
   };
@@ -94,7 +94,7 @@ const CommentCard: React.FC<CommentCardProps> = ({
                 <small>
                   {comment.owner.email.slice(
                     0,
-                    comment.owner.email.indexOf("@")
+                    comment.owner.email.indexOf('@')
                   )}
                 </small>
               )}

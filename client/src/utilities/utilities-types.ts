@@ -3,45 +3,45 @@ import {
   type ErrorResponseHelper,
   type Member,
   type Comment,
-} from "types/types";
+} from 'types/types';
 
 // Función de tipo guardia para verificar si un objeto es de tipo ErrorResponseHelper
 export function isErrorResponseHelper(
   error: unknown
 ): error is ErrorResponseHelper {
   return (
-    typeof error === "object" &&
+    typeof error === 'object' &&
     error !== null &&
-    "err" in error &&
-    "status" in error &&
-    "statusText" in error
+    'err' in error &&
+    'status' in error &&
+    'statusText' in error
   );
 }
 
 // Función de tipo guardia para verificar si un objeto es de tipo Member
 export const isMember = (obj: unknown): obj is Member => {
-  if (typeof obj !== "object" || obj === null) return false;
+  if (typeof obj !== 'object' || obj === null) return false;
 
   const member = obj as Member;
   const statusOptions = [
-    "subscribed",
-    "unsubscribed",
-    "cleaned",
-    "pending",
-    "transactional",
+    'subscribed',
+    'unsubscribed',
+    'cleaned',
+    'pending',
+    'transactional',
   ];
 
   return (
-    typeof member.email_address === "string" &&
+    typeof member.email_address === 'string' &&
     statusOptions.includes(member.status) &&
-    ["html", "text"].includes(member.email_type) &&
+    ['html', 'text'].includes(member.email_type) &&
     (member.merge_fields === undefined ||
-      typeof member.merge_fields === "object") &&
+      typeof member.merge_fields === 'object') &&
     (member.tags === undefined || Array.isArray(member.tags)) &&
     (member.status_if_new === undefined ||
       statusOptions.includes(member.status_if_new)) &&
     (member.update_existing === undefined ||
-      typeof member.update_existing === "boolean")
+      typeof member.update_existing === 'boolean')
   );
 };
 
@@ -50,14 +50,14 @@ export function isPublicationCardType(
   obj: unknown
 ): obj is PublicationCardType {
   return (
-    typeof obj === "object" &&
+    typeof obj === 'object' &&
     obj !== null &&
-    typeof (obj as PublicationCardType)._id === "string" &&
-    typeof (obj as PublicationCardType).title === "string" &&
-    typeof (obj as PublicationCardType).subtitle === "string" &&
-    typeof (obj as PublicationCardType).content === "string" &&
-    typeof (obj as PublicationCardType).base64_img === "string" &&
-    typeof (obj as PublicationCardType).currentPage === "number"
+    typeof (obj as PublicationCardType)._id === 'string' &&
+    typeof (obj as PublicationCardType).title === 'string' &&
+    typeof (obj as PublicationCardType).subtitle === 'string' &&
+    typeof (obj as PublicationCardType).content === 'string' &&
+    typeof (obj as PublicationCardType).base64_img === 'string' &&
+    typeof (obj as PublicationCardType).currentPage === 'number'
   );
 }
 
@@ -67,18 +67,18 @@ export function isCommentArray(obj: unknown): obj is Comment[] {
     Array.isArray(obj) &&
     obj.every(
       (item) =>
-        typeof item === "object" &&
+        typeof item === 'object' &&
         item !== null &&
-        typeof item._id === "string" &&
-        typeof item.pattern_id === "string" &&
-        typeof item.owner === "object" &&
+        typeof item._id === 'string' &&
+        typeof item.pattern_id === 'string' &&
+        typeof item.owner === 'object' &&
         item.owner !== null &&
-        typeof item.owner.uid === "string" &&
-        typeof item.owner.displayName === "string" &&
-        typeof item.owner.email === "string" &&
-        typeof item.owner.photoURL === "string" &&
-        typeof item.data === "string" &&
-        typeof item.likes === "number" &&
+        typeof item.owner.uid === 'string' &&
+        typeof item.owner.displayName === 'string' &&
+        typeof item.owner.email === 'string' &&
+        typeof item.owner.photoURL === 'string' &&
+        typeof item.data === 'string' &&
+        typeof item.likes === 'number' &&
         Array.isArray(item.likedBy) &&
         Array.isArray(item.answers)
     )

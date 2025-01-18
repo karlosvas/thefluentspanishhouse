@@ -29,7 +29,12 @@
 
 .circle {
   border-radius: 50%;
-  background: linear-gradient(135deg, transparent 20%, #232f9781, var(--primary-blue));
+  background: linear-gradient(
+    135deg,
+    transparent 20%,
+    #232f9781,
+    var(--primary-blue)
+  );
   position: absolute;
 }
 
@@ -48,7 +53,7 @@
 }
 
 .contact-form:before {
-  content: "";
+  content: '';
   position: absolute;
   width: 26px;
   height: 26px;
@@ -154,7 +159,7 @@ textarea.input {
 
 .input-container span:before,
 .input-container span:after {
-  content: "";
+  content: '';
   position: absolute;
   width: 10%;
   opacity: 0;
@@ -257,7 +262,7 @@ textarea.input {
 }
 
 .big-circle:after {
-  content: "";
+  content: '';
   position: absolute;
   width: 360px;
   height: 360px;

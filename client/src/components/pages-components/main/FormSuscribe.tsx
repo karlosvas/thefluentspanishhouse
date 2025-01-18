@@ -1,26 +1,34 @@
-import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import Buuton from "@/components/reusable/Button";
-import { getMailchimpUser, sendEmailNewClass, updateTagsMailchimp } from "@/scripts/render-data";
-import ButtonClose from "@/components/reusable/ButtonClose";
-import Backdrop from "@/components/reusable/Backdrop";
-import { getTag, handleInputChange } from "@/utilities/utilities";
-import { saveUser } from "@/scripts/firebase-db";
-import { UserContext } from "@/App";
-import toast from "react-hot-toast";
-import { isMember } from "@/utilities/utilities-types";
-import { isValidEmail } from "@/utilities/validateEmail";
-import { type FormSuscriberProps, type SubscriberType } from "types/types";
+import { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
+import Buuton from '@/components/reusable/Button';
+import {
+  getMailchimpUser,
+  sendEmailNewClass,
+  updateTagsMailchimp,
+} from '@/scripts/render-data';
+import ButtonClose from '@/components/reusable/ButtonClose';
+import Backdrop from '@/components/reusable/Backdrop';
+import { getTag, handleInputChange } from '@/utilities/utilities';
+import { saveUser } from '@/scripts/firebase-db';
+import { UserContext } from '@/App';
+import toast from 'react-hot-toast';
+import { isMember } from '@/utilities/utilities-types';
+import { isValidEmail } from '@/utilities/validateEmail';
+import { type FormSuscriberProps, type SubscriberType } from 'types/types';
 
-const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChange, buttonName }) => {
+const FormSuscribe: React.FC<FormSuscriberProps> = ({
+  closing,
+  handleSusribeChange,
+  buttonName,
+}) => {
   // Estado para saber si se ha enviado el formulario o si se esta procesando
   const [suscribe, setSuscribe] = useState(false);
   // Inputs del formulario
   const [newSubscriber, setNewSubscriber] = useState<SubscriberType>({
-    name: "",
-    lastname: "",
-    email: "",
-    class: "",
+    name: '',
+    lastname: '',
+    email: '',
+    class: '',
     consentEmails: false,
     acceptTerms: false,
     acceptPrivacy: false,
@@ -37,14 +45,14 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
     newSubscriber.class = getTag(buttonName);
 
     if (!isValidEmail(newSubscriber.email)) {
-      toast.error("Email is not valid");
-      console.error("Email is not valid");
+      toast.error('Email is not valid');
+      console.error('Email is not valid');
       return;
     }
 
     // Comienzo del proceso de suscripción
     setSuscribe(true);
-    toast.loading("Aiming for classes...");
+    toast.loading('Aiming for classes...');
 
     // // Obtenemos el usuario de Mailchimp
     const mailchimpUser = await getMailchimpUser(newSubscriber.email);
@@ -54,14 +62,18 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
       await saveUser(user.uid, newSubscriber);
     } else {
       toast.dismiss();
-      toast.error("Do you need Sing In to subscribe to the course");
+      toast.error('Do you need Sing In to subscribe to the course');
       setSuscribe(false);
       return;
     }
 
     // El usuario se ha encontrado en mailchimp por lo que actualizamos sus tags
     if (mailchimpUser && isMember(mailchimpUser)) {
-      await updateTagsMailchimp(mailchimpUser, newSubscriber.class, handleSusribeChange);
+      await updateTagsMailchimp(
+        mailchimpUser,
+        newSubscriber.class,
+        handleSusribeChange
+      );
     }
 
     // Enviamos el email al administrador para que sepa que hay un nuevo usuaruio inscrito a las clases
@@ -117,7 +129,8 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
                 onChange={(e) => handleInputChange(e, setNewSubscriber)}
                 required
               />
-              I give my consent to receive informational emails terms and conditions.
+              I give my consent to receive informational emails terms and
+              conditions.
             </label>
             <label>
               <input
@@ -126,8 +139,8 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
                 checked={newSubscriber.acceptTerms}
                 onChange={(event) => handleInputChange(event, setNewSubscriber)}
                 required
-              />{" "}
-              I accept the{" "}
+              />{' '}
+              I accept the{' '}
               <Link to="/info" target="_blank">
                 terms and conditions.
               </Link>
@@ -139,8 +152,8 @@ const FormSuscribe: React.FC<FormSuscriberProps> = ({ closing, handleSusribeChan
                 checked={newSubscriber.acceptPrivacy}
                 onChange={(event) => handleInputChange(event, setNewSubscriber)}
                 required
-              />{" "}
-              I have read and accept the{" "}
+              />{' '}
+              I have read and accept the{' '}
               <Link to="/info" target="_blank">
                 privacity policity.
               </Link>

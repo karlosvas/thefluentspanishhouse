@@ -1,10 +1,10 @@
-import { UserContext } from "@/App";
-import { deleteComment, editComment } from "@/scripts/render-data";
-import { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import Button from "../reusable/Button";
-import { isComment } from "@/utilities/utilities-types";
-import { type OptionsCommentProps } from "types/types";
+import { UserContext } from '@/App';
+import { deleteComment, editComment } from '@/scripts/render-data';
+import { useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import Button from '../reusable/Button';
+import { isComment } from '@/utilities/utilities-types';
+import { type OptionsCommentProps } from 'types/types';
 
 const OptionsComment: React.FC<OptionsCommentProps> = ({
   comment,
@@ -25,10 +25,10 @@ const OptionsComment: React.FC<OptionsCommentProps> = ({
       try {
         await deleteComment(comment._id);
         setComments(comments.filter((v) => v._id !== comment._id));
-        toast.success("Comment deleted successfully");
+        toast.success('Comment deleted successfully');
       } catch (error) {
-        console.error("Error to submit post", error);
-        toast.error("Error to delete comment");
+        console.error('Error to submit post', error);
+        toast.error('Error to delete comment');
       }
       setShowModal(false);
     } else {
@@ -80,10 +80,10 @@ const OptionsComment: React.FC<OptionsCommentProps> = ({
             )
           );
 
-        toast.success("Comment edited successfully");
+        toast.success('Comment edited successfully');
       } catch (error) {
-        console.error("Error to submit post", error);
-        toast.error("Error to delete comment");
+        console.error('Error to submit post', error);
+        toast.error('Error to delete comment');
       }
     } else {
       toast.error("You can't delete this comment, is not yours");
@@ -100,7 +100,7 @@ const OptionsComment: React.FC<OptionsCommentProps> = ({
       {/* Si se esta mostrando y se hace click fuera del modal, se cierra el modal */}
       {showModal && (
         <div className="modal-overlay" onClick={handleClickOutside}>
-          {""}
+          {''}
         </div>
       )}
       <div id="options">

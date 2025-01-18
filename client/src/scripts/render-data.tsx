@@ -1,9 +1,9 @@
-import { url_api } from "@/constants/global";
-import Helper from "./helper";
-import toast from "react-hot-toast";
-import { FormEvent } from "react";
-import { errorMailchimp } from "@/utilities/utilities";
-import { isErrorResponseHelper } from "@/utilities/utilities-types";
+import { url_api } from '@/constants/global';
+import Helper from './helper';
+import toast from 'react-hot-toast';
+import { FormEvent } from 'react';
+import { errorMailchimp } from '@/utilities/utilities';
+import { isErrorResponseHelper } from '@/utilities/utilities-types';
 import {
   type PublicationCardType,
   type Comment,
@@ -12,7 +12,7 @@ import {
   type InterestCategoryResponse,
   type InterestResponse,
   type SubscriberType,
-} from "types/types";
+} from 'types/types';
 
 const helper = Helper();
 
@@ -22,7 +22,7 @@ export const getUrlTest = async () => {
     return await helper.get(`${import.meta.env.VITE_URL_API}/api/test`);
   } catch (error) {
     console.error(
-      "Error al hacer fetch para obtener la URL de los test desde el cliente",
+      'Error al hacer fetch para obtener la URL de los test desde el cliente',
       error
     );
     throw error;
@@ -33,7 +33,7 @@ export const getCommentsByID = async (id: string) => {
   try {
     return await helper.get(`${url_api}/comments/${id}`);
   } catch (error) {
-    console.error("Error al obtener datos:", error);
+    console.error('Error al obtener datos:', error);
     throw error;
   }
 };
@@ -43,7 +43,7 @@ export const getChildsComment = async (id: string) => {
     const data = await helper.get(`${url_api}/comments/${id}`);
     return data;
   } catch (error) {
-    console.error("Error al obtener datos:", error);
+    console.error('Error al obtener datos:', error);
     throw error;
   }
 };
@@ -53,7 +53,7 @@ export const getPublicationByID = async (id: string) => {
     const publication = await helper.get(`${url_api}/publications/${id}`);
     return publication;
   } catch (error) {
-    console.error("Error al obtener datos:", error);
+    console.error('Error al obtener datos:', error);
   }
 };
 
@@ -61,7 +61,7 @@ export const getPublications = async (page: string) => {
   try {
     return await helper.get(`${url_api}/publications/page/${page}`);
   } catch (error) {
-    console.error("Error al obtener datos:", error);
+    console.error('Error al obtener datos:', error);
   }
 };
 
@@ -69,7 +69,7 @@ export const getLastPublication = async () => {
   try {
     return await helper.get(`${url_api}/publications/last`);
   } catch (error) {
-    throw new Error("Error al obtener la última publicación");
+    throw new Error('Error al obtener la última publicación');
   }
 };
 
@@ -102,7 +102,7 @@ export const postComment = async (newCommentData: Comment) => {
       body: JSON.stringify({ newCommentData, originUrl }),
     });
   } catch (error) {
-    console.error("Error al enviar el comentario:", error);
+    console.error('Error al enviar el comentario:', error);
   }
 };
 
@@ -116,7 +116,7 @@ export const postChildrenComment = async (
       body: JSON.stringify({ newCommentData, originUrl }),
     });
   } catch (error) {
-    console.error("Error al enviar el comentario:", error);
+    console.error('Error al enviar el comentario:', error);
   }
 };
 
@@ -130,19 +130,19 @@ export const postPublication = async (
       body: JSON.stringify(newPublication),
     });
   } catch (error) {
-    console.error("Error al enviar el post:", error);
+    console.error('Error al enviar el post:', error);
   }
 };
 
 export const subscribeNewsletter = async (email: string) => {
   try {
-    console.log("petición", `${url_api}/mailchamp/newsletter`);
+    console.log('petición', `${url_api}/mailchamp/newsletter`);
     console.log(url_api);
     await helper.post(`${url_api}/mailchamp/newsletter`, {
       body: JSON.stringify({ email }),
     });
   } catch (error) {
-    console.error("Error to submit post", error);
+    console.error('Error to submit post', error);
   }
 };
 
@@ -162,9 +162,9 @@ export const submitNote = async (newNote: NoteType) => {
     const response = await helper.post(`${url_api}/mandrill/note`, {
       body: JSON.stringify(newNote),
     });
-    if (response) toast.success("The email has been sent successfully");
+    if (response) toast.success('The email has been sent successfully');
   } catch (error) {
-    console.error("Error to submit post", error);
+    console.error('Error to submit post', error);
   }
 };
 
@@ -179,7 +179,7 @@ export const updateLikes = async (
       body: JSON.stringify({ uid_user_firebase, _id, likes }),
     });
   } catch (error) {
-    console.error("Error to submit post", error);
+    console.error('Error to submit post', error);
   }
 };
 
@@ -192,7 +192,7 @@ export const putCommentPublication = async (
       body: JSON.stringify(editPublication),
     });
   } catch (error) {
-    console.error("Error to submit post", error);
+    console.error('Error to submit post', error);
   }
 };
 
@@ -202,7 +202,7 @@ export const editComment = async (id: string, textEdit: string) => {
       body: JSON.stringify({ textEdit }),
     });
   } catch (error) {
-    console.error("Error to submit post", error);
+    console.error('Error to submit post', error);
   }
 };
 
@@ -212,12 +212,12 @@ export const submitSubscriptionMailchimp = async (member: Member) => {
       body: JSON.stringify(member),
     })
     .then(() => {
-      toast.success("You have been successfully subscribed to the newsletter");
+      toast.success('You have been successfully subscribed to the newsletter');
     })
     .catch((error) =>
       isErrorResponseHelper(error)
         ? errorMailchimp(error)
-        : toast.error("An expeted error ocurred")
+        : toast.error('An expeted error ocurred')
     );
 };
 
@@ -236,7 +236,7 @@ export const updateTagsMailchimp = async (
     .catch((error) =>
       isErrorResponseHelper(error)
         ? errorMailchimp(error)
-        : toast.error("An expeted error ocurred")
+        : toast.error('An expeted error ocurred')
     );
 };
 
@@ -244,20 +244,20 @@ export const updateTagsMailchimp = async (
 export const delatePublication = async (id: string) => {
   await helper
     .del(`${url_api}/publications/del/${id}`)
-    .catch((error) => console.error("Error to delete publication", error));
+    .catch((error) => console.error('Error to delete publication', error));
 };
 
 export const deleteComment = async (id: string) => {
-  console.log("id", id);
+  console.log('id', id);
   await helper
     .del(`${url_api}/comments/del/${id}`)
-    .catch((error) => console.error("Error to delete publication", error));
+    .catch((error) => console.error('Error to delete publication', error));
 };
 
 export const deleteUserChamp = async (email: string) => {
   await helper
     .del(`${url_api}/user/del/${email}`)
-    .catch((error) => console.error("Error to delete user", error));
+    .catch((error) => console.error('Error to delete user', error));
 };
 
 export const delateTagCahmp = async (email: string, tag: string) => {
@@ -265,7 +265,7 @@ export const delateTagCahmp = async (email: string, tag: string) => {
     .del(`${url_api}/tag/del/${email}`, {
       body: JSON.stringify({ tag }),
     })
-    .catch((error) => console.error("Error to delete tag", error));
+    .catch((error) => console.error('Error to delete tag', error));
 };
 
 export const getFirstInterestCategory =
@@ -274,7 +274,7 @@ export const getFirstInterestCategory =
       const data = await helper.get(`${url_api}/mailchimp/category`);
       return data as InterestCategoryResponse;
     } catch (error) {
-      console.error("Error to get interest category", error);
+      console.error('Error to get interest category', error);
       throw error;
     }
   };
@@ -284,7 +284,7 @@ export const getInterests = async (): Promise<InterestResponse> => {
     const data = await helper.get(`${url_api}/mailchimp/get/interests`);
     return data as InterestResponse;
   } catch (error) {
-    console.error("Error to get interest category", error);
+    console.error('Error to get interest category', error);
     throw error;
   }
 };

@@ -1,14 +1,14 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
 ////////////////////////////////////
-import admin from "firebase-admin";
+import admin from 'firebase-admin';
 
 // Importa el archivo de credenciales de Firebase Admin
 const serviceAccount = {
   type: process.env.FIREBASE_TYPE,
   project_id: process.env.FIREBASE_PROJECT_ID,
   private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
-  private_key: (process.env.FIREBASE_PRIVATE_KEY || "").replace(/\\n/g, "\n"),
+  private_key: (process.env.FIREBASE_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
   client_email: process.env.FIREBASE_CLIENT_EMAIL,
   client_id: process.env.FIREBASE_CLIENT_ID,
   auth_uri: process.env.FIREBASE_AUTH_URI,
@@ -24,19 +24,19 @@ if (!admin.apps.length) {
       credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
       databaseURL: process.env.FIREBASE_DB,
     });
-    console.log("Firebase Admin initialized successfully");
+    console.log('Firebase Admin initialized successfully');
     // Verifica si se puede conectar a Firebase Auth
     admin
       .auth()
       .listUsers(1)
       .then(() => {
-        console.log("Successfully connected to Firebase Auth");
+        console.log('Successfully connected to Firebase Auth');
       })
       .catch((error) => {
-        console.error("Error connecting to Firebase Auth:", error);
+        console.error('Error connecting to Firebase Auth:', error);
       });
   } catch (error) {
-    console.error("Error initializing Firebase Admin:", error);
+    console.error('Error initializing Firebase Admin:', error);
   }
 }
 

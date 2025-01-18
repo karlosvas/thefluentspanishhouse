@@ -1,6 +1,6 @@
-import { useNavigate, Link } from "react-router-dom";
-import { handleScroll } from "@/scripts/modal";
-import { type ChildrenType, type OptionalClass } from "types/types";
+import { useNavigate, Link } from 'react-router-dom';
+import { handleScroll } from '@/scripts/modal';
+import { type ChildrenType, type OptionalClass } from 'types/types';
 
 const Exit: React.FC<ChildrenType & OptionalClass> = ({
   children,

@@ -1,6 +1,6 @@
-import { useContext } from "react";
-import { UserContext } from "@/App";
-import { type EditType } from "types/types";
+import { useContext } from 'react';
+import { UserContext } from '@/App';
+import { type EditType } from 'types/types';
 
 const Edit: React.FC<EditType> = ({ event, index, state }) => {
   const user = useContext(UserContext);
@@ -21,7 +21,11 @@ const Edit: React.FC<EditType> = ({ event, index, state }) => {
             event(index);
           }}
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m4.5 12.75 6 6 9-13.5"
+          />
         </svg>
       ) : (
         <svg

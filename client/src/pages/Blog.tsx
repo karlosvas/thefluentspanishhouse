@@ -1,13 +1,13 @@
-import CardPublicationBlog from "@/components/pages-components/blog/CardPublicationBlog";
-import FormPublication from "@/components/pages-components/blog/FormPublication";
-import { handleChangeModal } from "@/scripts/modal";
-import { useEffect, useState } from "react";
-import { getPublications } from "@/scripts/render-data";
-import { type PublicationCardType } from "types/types";
-import { Helmet } from "react-helmet-async";
-import PaginationReactBoostrap from "@/components/pages-components/blog/Pagination";
-import { useNavigate, useParams } from "react-router";
-import "@/styles/main-blog.css";
+import CardPublicationBlog from '@/components/pages-components/blog/CardPublicationBlog';
+import FormPublication from '@/components/pages-components/blog/FormPublication';
+import { handleChangeModal } from '@/scripts/modal';
+import { useEffect, useState } from 'react';
+import { getPublications } from '@/scripts/render-data';
+import { type PublicationCardType } from 'types/types';
+import { Helmet } from 'react-helmet-async';
+import PaginationReactBoostrap from '@/components/pages-components/blog/Pagination';
+import { useNavigate, useParams } from 'react-router';
+import '@/styles/main-blog.css';
 
 const Blog = () => {
   // Muestra el modal de publicación(showModalPost) y cierra el modal de publicación(closing)
@@ -34,11 +34,11 @@ const Blog = () => {
       if (Array.isArray(publications)) {
         publications.reverse();
         setCardsBlog(publications as PublicationCardType[]);
-        if (publications.length == 0 && page != "1") navigate("/blog/1");
+        if (publications.length == 0 && page != '1') navigate('/blog/1');
       }
     } catch (error) {
-      console.error("Error loading publications:", error);
-      navigate("/404");
+      console.error('Error loading publications:', error);
+      navigate('/404');
     } finally {
       setLoading(true);
     }

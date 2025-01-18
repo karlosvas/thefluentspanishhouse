@@ -1,8 +1,8 @@
-import { Response, Request, NextFunction } from "express";
-import admin from "../lib/firebase/firebase-config.js";
+import { Response, Request, NextFunction } from 'express';
+import admin from '../lib/firebase/firebase-config.js';
 
 // Declara el módulo para extender la interfaz Request
-declare module "express-serve-static-core" {
+declare module 'express-serve-static-core' {
   interface Request {
     user?: admin.auth.DecodedIdToken;
   }
@@ -22,11 +22,11 @@ export async function verifyIdToken(
   // Validación de autenticación
   const authHeader = req.headers.authorization;
 
-  if (!authHeader || !authHeader.startsWith("Bearer "))
-    return res.status(401).json({ message: "Unauthorized" });
+  if (!authHeader || !authHeader.startsWith('Bearer '))
+    return res.status(401).json({ message: 'Unauthorized' });
 
   // Extrae el token de Firebase del encabezado de autorización, eliminadno el prefijo "Bearer "
-  const token = authHeader.split(" ")[1];
+  const token = authHeader.split(' ')[1];
 
   // Validación de token autorizado proporcionado por el cliente
   if (token === process.env.DEFAULT_TOKEN) return next();
@@ -37,7 +37,7 @@ export async function verifyIdToken(
     req.user = decodedToken; // Añade el usuario decodificado a la solicitud
     next();
   } catch (error) {
-    console.log("Error verifying Firebase ID token:", error);
-    return res.status(401).json({ message: "Unauthorized", error });
+    console.log('Error verifying Firebase ID token:', error);
+    return res.status(401).json({ message: 'Unauthorized', error });
   }
 }

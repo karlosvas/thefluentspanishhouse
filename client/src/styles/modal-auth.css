@@ -54,14 +54,16 @@
       -webkit-transition: -webkit-transform 0.2s;
       transition: -webkit-transform 0.2s;
       transition: transform 0.2s;
-      transition: transform 0.2s, -webkit-transform 0.2s;
+      transition:
+        transform 0.2s,
+        -webkit-transform 0.2s;
       transition: border 0.3s;
     }
     .inputs:focus {
       border-color: #09abc3;
     }
 
-    button[type="submit"] {
+    button[type='submit'] {
       background-color: var(--primary-blue);
       padding: 5px;
       border-radius: 5px;
@@ -132,7 +134,7 @@
           margin-right: 20px;
         }
       }
-      button[type="submit"] {
+      button[type='submit'] {
         width: 290px;
         margin: 50px auto 10px auto;
       }

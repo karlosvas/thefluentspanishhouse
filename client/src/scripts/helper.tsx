@@ -1,21 +1,28 @@
-import { type ErrorResponseHelper } from "types/types";
+import { type ErrorResponseHelper } from 'types/types';
 
 type FetchResponse = unknown | Blob | FormData | string | ErrorResponseHelper;
 
 const Helper = () => {
-  const customFetch = async (endpoint: string, options: RequestInit = {}): Promise<FetchResponse> => {
-    const token = localStorage.getItem("token") || import.meta.env.VITE_DEFAULT_TOKEN;
+  const customFetch = async (
+    endpoint: string,
+    options: RequestInit = {}
+  ): Promise<FetchResponse> => {
+    const token =
+      localStorage.getItem('token') || import.meta.env.VITE_DEFAULT_TOKEN;
 
     const defaultHeader = {
-      accept: "application/json",
-      "Content-Type": "application/json",
+      accept: 'application/json',
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     };
 
     options.signal = options.signal || new AbortController().signal;
-    options.method = options.method || "GET";
+    options.method = options.method || 'GET';
     options.headers = { ...defaultHeader, ...options.headers };
-    options.body = options.body && typeof options.body === "object" ? JSON.stringify(options.body) : options.body;
+    options.body =
+      options.body && typeof options.body === 'object'
+        ? JSON.stringify(options.body)
+        : options.body;
 
     return fetch(endpoint, options)
       .then((res) => {
@@ -29,22 +36,22 @@ const Helper = () => {
             }
             throw {
               err: true,
-              status: res.status || "00",
-              statusText: res.statusText || "Ocurrió un Error personalizado",
+              status: res.status || '00',
+              statusText: res.statusText || 'Ocurrió un Error personalizado',
               message,
             } as ErrorResponseHelper;
           });
         }
-        const contentType = res.headers.get("content-type");
+        const contentType = res.headers.get('content-type');
 
         if (contentType) {
-          if (contentType.includes("application/json")) {
+          if (contentType.includes('application/json')) {
             return res.json();
-          } else if (contentType.includes("application/octet-stream")) {
+          } else if (contentType.includes('application/octet-stream')) {
             return res.blob();
           } else if (
-            contentType.includes("multipart/form-data") ||
-            contentType.includes("application/x-www-form-urlencoded")
+            contentType.includes('multipart/form-data') ||
+            contentType.includes('application/x-www-form-urlencoded')
           ) {
             return res.formData();
           } else {
@@ -64,17 +71,17 @@ const Helper = () => {
   };
 
   const post = async (url: string, options: RequestInit = {}) => {
-    options.method = "POST";
+    options.method = 'POST';
     return await customFetch(url, options);
   };
 
   const put = async (url: string, options: RequestInit = {}) => {
-    options.method = "PUT";
+    options.method = 'PUT';
     return await customFetch(url, options);
   };
 
   const del = async (url: string, options: RequestInit = {}) => {
-    options.method = "DELETE";
+    options.method = 'DELETE';
     return await customFetch(url, options);
   };
 

@@ -1,24 +1,26 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import Button from "@/components/reusable/Button";
-import { submitNote } from "@/scripts/render-data";
-import toast from "react-hot-toast";
-import { UserContext } from "@/App";
-import { type NoteType } from "types/types";
-import "@/styles/main-contact.css";
-import { Helmet } from "react-helmet-async";
+import { useContext, useEffect, useRef, useState } from 'react';
+import Button from '@/components/reusable/Button';
+import { submitNote } from '@/scripts/render-data';
+import toast from 'react-hot-toast';
+import { UserContext } from '@/App';
+import { type NoteType } from 'types/types';
+import '@/styles/main-contact.css';
+import { Helmet } from 'react-helmet-async';
 
 const ContactForm = () => {
   const [suscribe, setSuscribe] = useState<boolean>(false);
   const user = useContext(UserContext);
 
   const [newNote, setNewNote] = useState<NoteType>({
-    email_user: user?.email || "",
-    username: "",
-    subject: "",
-    note: "",
+    email_user: user?.email || '',
+    username: '',
+    subject: '',
+    note: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setNewNote((prevNote) => ({
       ...prevNote,
@@ -26,12 +28,14 @@ const ContactForm = () => {
     }));
   };
 
-  const inputRefs = useRef<(HTMLInputElement | HTMLTextAreaElement | null)[]>([]);
+  const inputRefs = useRef<(HTMLInputElement | HTMLTextAreaElement | null)[]>(
+    []
+  );
 
   const onSubmitNote = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!user) {
-      toast.error("You must log in");
+      toast.error('You must log in');
       return;
     }
     setSuscribe(true);
@@ -39,9 +43,9 @@ const ContactForm = () => {
     await submitNote(newNote);
     setNewNote({
       email_user: user.email,
-      username: "",
-      subject: "",
-      note: "",
+      username: '',
+      subject: '',
+      note: '',
     } as NoteType);
 
     setSuscribe(false);
@@ -51,29 +55,29 @@ const ContactForm = () => {
     const focusFunc: EventListener = (e) => {
       const target = e.target as HTMLInputElement | HTMLTextAreaElement;
       const parent = target.parentNode as HTMLElement;
-      parent.classList.add("focus");
+      parent.classList.add('focus');
     };
 
     const blurFunc: EventListener = (e) => {
       const target = e.target as HTMLInputElement | HTMLTextAreaElement;
       const parent = target.parentNode as HTMLElement;
-      if (target.value === "") parent.classList.remove("focus");
+      if (target.value === '') parent.classList.remove('focus');
     };
 
     const currentInputRefs = inputRefs.current;
 
     currentInputRefs.forEach((input) => {
       if (input) {
-        input.addEventListener("focus", focusFunc);
-        input.addEventListener("blur", blurFunc);
+        input.addEventListener('focus', focusFunc);
+        input.addEventListener('blur', blurFunc);
       }
     });
 
     return () => {
       currentInputRefs.forEach((input) => {
         if (input) {
-          input.removeEventListener("focus", focusFunc);
-          input.removeEventListener("blur", blurFunc);
+          input.removeEventListener('focus', focusFunc);
+          input.removeEventListener('blur', blurFunc);
         }
       });
     };
@@ -118,14 +122,26 @@ const ContactForm = () => {
               <div className="social-media">
                 <p>Connect with us :</p>
                 <div className="social-icons">
-                  <a href="https://www.facebook.com/thefluentspanishhouse/" target="_blank" title="Facebook">
+                  <a
+                    href="https://www.facebook.com/thefluentspanishhouse/"
+                    target="_blank"
+                    title="Facebook"
+                  >
                     <i className="fab fa-facebook-f">F</i>
                   </a>
 
-                  <a href="https://www.instagram.com/thefluentspanishhouse/" target="_blank" title="Intagram">
+                  <a
+                    href="https://www.instagram.com/thefluentspanishhouse/"
+                    target="_blank"
+                    title="Intagram"
+                  >
                     <i className="fab fa-github">I</i>
                   </a>
-                  <a href="https://github.com/karlosvas/thefluentspanishhouse" target="_blank" title="Github">
+                  <a
+                    href="https://github.com/karlosvas/thefluentspanishhouse"
+                    target="_blank"
+                    title="Github"
+                  >
                     <i className="fab fa-github">&lt;/&gt;</i>
                   </a>
                 </div>

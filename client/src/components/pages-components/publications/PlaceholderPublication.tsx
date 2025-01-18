@@ -1,4 +1,4 @@
-import Placeholder from "react-bootstrap/Placeholder";
+import Placeholder from 'react-bootstrap/Placeholder';
 
 const PlaceholderPublications = ({ imgClass }: { imgClass: string }) => {
   return (

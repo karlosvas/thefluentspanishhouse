@@ -1,21 +1,21 @@
-import { useContext, useRef, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import CardPlaceholder from "./CardPlaceholder";
-import Button from "@/components/reusable/Button";
-import { UserContext } from "@/App";
-import ButtonClose from "@/components/reusable/ButtonClose";
+import { useContext, useRef, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import CardPlaceholder from './CardPlaceholder';
+import Button from '@/components/reusable/Button';
+import { UserContext } from '@/App';
+import ButtonClose from '@/components/reusable/ButtonClose';
 import {
   delatePublication,
   putCommentPublication,
-} from "@/scripts/render-data";
-import toast from "react-hot-toast";
-import Backdrop from "@/components/reusable/Backdrop";
+} from '@/scripts/render-data';
+import toast from 'react-hot-toast';
+import Backdrop from '@/components/reusable/Backdrop';
 import {
   type CardsPublicationBlogProps,
   type PublicationCardType,
-} from "types/types";
-import "@/styles/reusables/edit.css";
-import { getAdmin } from "@/utilities/utilities";
+} from 'types/types';
+import '@/styles/reusables/edit.css';
+import { getAdmin } from '@/utilities/utilities';
 
 const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
   cardsBlog,
@@ -25,14 +25,14 @@ const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
 }) => {
   // Estado de la publicación (editPublication)
   const [editPublication, seteditPublication] = useState<PublicationCardType>({
-    _id: "",
-    title: "",
-    subtitle: "",
-    content: "",
-    base64_img: "",
+    _id: '',
+    title: '',
+    subtitle: '',
+    content: '',
+    base64_img: '',
     currentPage: 0,
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   // Estado de suscripción al evento, oseqa si esta enviandose la informacion (suscribe)
   const [suscribe, setSuscribe] = useState(false);
 
@@ -78,9 +78,9 @@ const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
       setCardsBlog((prevCardsBlog) =>
         prevCardsBlog.filter((publication) => publication._id !== id)
       );
-      toast.success("Post deleted successfully");
+      toast.success('Post deleted successfully');
     } catch (error) {
-      console.error("Error al eliminar post:", error);
+      console.error('Error al eliminar post:', error);
     }
   };
 
@@ -95,8 +95,8 @@ const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    if (name === "content") {
-      const formattedContent = value.replace(/\n/g, "<br>");
+    if (name === 'content') {
+      const formattedContent = value.replace(/\n/g, '<br>');
       seteditPublication({ ...editPublication, [name]: formattedContent });
     } else {
       seteditPublication({ ...editPublication, [name]: value });
@@ -112,8 +112,8 @@ const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
     setSuscribe(true);
     const hasEmptyField = Object.entries(editPublication).some(
       ([key, value]) => {
-        if (value === "" && key !== "_id") {
-          key = key === "base64_img" ? "image" : key;
+        if (value === '' && key !== '_id') {
+          key = key === 'base64_img' ? 'image' : key;
           setError(`Please complete the ${key} field`);
           setSuscribe(false);
           return true;
@@ -131,13 +131,13 @@ const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
           card._id === editPublication._id ? editPublication : card
         )
       );
-      toast.success("Post edited successfully");
+      toast.success('Post edited successfully');
     } catch (error) {
-      console.error("Error to edit post", error);
-      toast.error("Error to edit post");
+      console.error('Error to edit post', error);
+      toast.error('Error to edit post');
     }
     setShowModalEditPublication(false);
-    setError("");
+    setError('');
     setSuscribe(false);
   };
 
@@ -146,12 +146,12 @@ const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
       {loading && cardsBlog.length === 0 && (
         <h1
           style={{
-            position: "absolute",
-            top: "35%",
-            right: "0",
-            fontSize: "30px",
-            width: "100%",
-            textAlign: "center",
+            position: 'absolute',
+            top: '35%',
+            right: '0',
+            fontSize: '30px',
+            width: '100%',
+            textAlign: 'center',
           }}
         >
           No posts available...
@@ -186,13 +186,13 @@ const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
                   <br />
                   <textarea
                     name="content"
-                    value={editPublication.content.replace(/<br>/g, "\n")}
+                    value={editPublication.content.replace(/<br>/g, '\n')}
                     onChange={handleInputChange}
                     rows={4}
                     cols={50}
                   />
                 </li>
-                {error && <p style={{ color: "red" }}>{error}</p>}
+                {error && <p style={{ color: 'red' }}>{error}</p>}
                 <Button type="submit" suscribe={suscribe}>
                   Edit
                 </Button>

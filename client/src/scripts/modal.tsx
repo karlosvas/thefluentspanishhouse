@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from 'react';
 
 export function toggleModal(
   showModal: boolean,
@@ -10,15 +10,15 @@ export function toggleModal(
 export const toggleFormType = (
   showModal: boolean,
   setShowModal: Dispatch<SetStateAction<boolean>>,
-  type?: "login" | "register",
-  setFormType?: Dispatch<SetStateAction<"login" | "register">>
+  type?: 'login' | 'register',
+  setFormType?: Dispatch<SetStateAction<'login' | 'register'>>
 ) => {
   if (type && setFormType) setFormType(type);
   toggleModal(showModal, setShowModal);
 };
 
 export const handleScroll = (showModal: boolean) => {
-  document.body.style.overflowY = showModal ? "hidden" : "auto";
+  document.body.style.overflowY = showModal ? 'hidden' : 'auto';
 };
 
 export const handleChangeModal = (

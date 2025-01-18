@@ -1,5 +1,8 @@
-import { type ErrorAxios } from "../types/types";
+import { type ErrorAxios } from '../types/types';
 
 export function isErrorAxios(error: any): error is ErrorAxios {
-  return (error as ErrorAxios).status !== undefined && (error as ErrorAxios).message !== undefined;
+  return (
+    (error as ErrorAxios).status !== undefined &&
+    (error as ErrorAxios).message !== undefined
+  );
 }

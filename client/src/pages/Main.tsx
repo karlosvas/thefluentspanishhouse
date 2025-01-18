@@ -1,8 +1,8 @@
-import Carrousel from "@/components/pages-components/main/Carrousel";
-import Prices from "@/components/pages-components/main/Prices";
-import { Helmet } from "react-helmet-async";
-import "@/styles/main.css";
-import Profile from "../components/pages-components/main/Profile";
+import Carrousel from '@/components/pages-components/main/Carrousel';
+import Prices from '@/components/pages-components/main/Prices';
+import { Helmet } from 'react-helmet-async';
+import '@/styles/main.css';
+import Profile from '../components/pages-components/main/Profile';
 
 const Main = () => {
   return (

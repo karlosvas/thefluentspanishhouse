@@ -1,7 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
-import { handleClickNavigate } from "@/scripts/navigate";
-import Settings from "../svg-component/Settings";
-import Theme from "./Theme";
+import { Link, useNavigate } from 'react-router-dom';
+import { handleClickNavigate } from '@/scripts/navigate';
+import Settings from '../svg-component/Settings';
+import Theme from './Theme';
 
 const MainNav = () => {
   const navigate = useNavigate();
@@ -10,19 +10,19 @@ const MainNav = () => {
     <nav>
       <ul>
         <li>
-          <Link to="/" onClick={handleClickNavigate("/", navigate)}>
+          <Link to="/" onClick={handleClickNavigate('/', navigate)}>
             Home
           </Link>
         </li>
         <li>
-          <Link to="/blog/1" onClick={handleClickNavigate("/blog", navigate)}>
+          <Link to="/blog/1" onClick={handleClickNavigate('/blog', navigate)}>
             Blog
           </Link>
         </li>
         <li>
           <Link
             to="/aboutme"
-            onClick={handleClickNavigate("/aboutme", navigate)}
+            onClick={handleClickNavigate('/aboutme', navigate)}
           >
             About me
           </Link>
@@ -30,7 +30,7 @@ const MainNav = () => {
         <li>
           <Link
             to="/newsletter"
-            onClick={handleClickNavigate("/newsletter", navigate)}
+            onClick={handleClickNavigate('/newsletter', navigate)}
           >
             Newsletter
           </Link>
@@ -38,7 +38,7 @@ const MainNav = () => {
         <li>
           <Link
             to="/contact"
-            onClick={handleClickNavigate("/contact", navigate)}
+            onClick={handleClickNavigate('/contact', navigate)}
           >
             Contact
           </Link>

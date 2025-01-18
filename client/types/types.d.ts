@@ -1,4 +1,4 @@
-import { type User } from "firebase/auth";
+import { type User } from 'firebase/auth';
 
 declare global {
   interface Window {
@@ -14,7 +14,6 @@ export interface OptionsCommentProps {
   setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
   isEdit: boolean;
 }
-
 
 export interface ResponseProps {
   user: User;
@@ -49,7 +48,7 @@ export interface PaginationProps {
 
 export interface ButtonProps {
   id?: string;
-  type?: "submit";
+  type?: 'submit';
   ref?: React.Ref<HTMLButtonElement>;
   event?: () => void;
   ref?: React.Ref<HTMLButtonElement>;
@@ -71,7 +70,7 @@ export interface SubscriberType {
   name: string;
   lastname: string;
   email: string;
-  class: OptionsChampTag | "";
+  class: OptionsChampTag | '';
   consentEmails: boolean;
   acceptTerms: boolean;
   acceptPrivacy: boolean;
@@ -233,12 +232,12 @@ export interface EditType {
 
 // Maichampp Types
 
-type Status = "subscribed" | "unsubscribed" | "cleaned" | "pending";
+type Status = 'subscribed' | 'unsubscribed' | 'cleaned' | 'pending';
 
 export interface Member {
   email_address: string;
   status: Status;
-  email_type: "html" | "text";
+  email_type: 'html' | 'text';
   merge_fields: {
     FNAME: string;
     LNAME: string;
@@ -271,10 +270,10 @@ export interface ErrorResponseHelper {
   message?: ErrorChamp;
 }
 
-type OptionsChampTag = "GROUP_CLASS" | "PRIVATE_CLASS";
+type OptionsChampTag = 'GROUP_CLASS' | 'PRIVATE_CLASS';
 interface TagMailchamp {
   name: OptionsChampTag;
-  status: "active" | "inactive";
+  status: 'active' | 'inactive';
 }
 
 interface Link {

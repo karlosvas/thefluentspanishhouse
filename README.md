@@ -22,7 +22,6 @@ Class prices vary depending on the type and duration. Here's a breakdown:
 - **Individual Classes: €21**
 
 - **Group Classes: €15**
-  
 - **Free Beginner Classes with Test Included: €0**
 
 ## Contact
@@ -42,14 +41,20 @@ Follow me on my social media to stay updated with the latest news and promotions
 ## Contributions
 
 If you have any suggestions or want to contribute to the development of this website, feel free to fork and send a pull request. ❤️  
-Or if you find any bugs or issues, report them via an Issue. 🪲  
+Or if you find any bugs or issues, report them via an Issue. 🪲
+
+**Before submitting a PR, please ensure your code is properly formatted using Prettier:**
+
+1. Check formatting: `npm run format`
+2. Fix formatting issues: `npm run format:fix`
+
 Thank you in advance.
 
 ## License
 
 This project is under the MIT License. For more details, see the [LICENSE](LICENSE) file.  
 [Terms and Conditions](https://thefluentspanishhouse.vercel.app/info)  
-[Privacy Policy](https://thefluentspanishhouse.vercel.app/info)  
+[Privacy Policy](https://thefluentspanishhouse.vercel.app/info)
 
 ---
 

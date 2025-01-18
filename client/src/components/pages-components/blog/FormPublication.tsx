@@ -1,16 +1,16 @@
-import { useState } from "react";
-import toast from "react-hot-toast";
-import { getPublications, postPublication } from "@/scripts/render-data";
-import ButtonClose from "@/components/reusable/ButtonClose";
-import Backdrop from "@/components/reusable/Backdrop";
-import { useNavigate, useParams } from "react-router";
-import { MAX_PUBLICATIONS_PER_PAGE } from "@/constants/global";
-import Button from "@/components/reusable/Button";
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { getPublications, postPublication } from '@/scripts/render-data';
+import ButtonClose from '@/components/reusable/ButtonClose';
+import Backdrop from '@/components/reusable/Backdrop';
+import { useNavigate, useParams } from 'react-router';
+import { MAX_PUBLICATIONS_PER_PAGE } from '@/constants/global';
+import Button from '@/components/reusable/Button';
 import {
   type PublicationCardType,
   type FormPublicationProps,
-} from "types/types";
-import "@/styles/uploadfiles.css";
+} from 'types/types';
+import '@/styles/uploadfiles.css';
 
 const FormPublication: React.FC<FormPublicationProps> = ({
   closing,
@@ -18,8 +18,8 @@ const FormPublication: React.FC<FormPublicationProps> = ({
   cardsBlog,
 }) => {
   // Estado de error (error), estado de la vista previa de la imagen (imagePreview)
-  const [error, setError] = useState("");
-  const [imagePreview, setImagePreview] = useState<string>("");
+  const [error, setError] = useState('');
+  const [imagePreview, setImagePreview] = useState<string>('');
 
   // Ultima pagina de publicaciones
   const lastPage =
@@ -27,11 +27,11 @@ const FormPublication: React.FC<FormPublicationProps> = ({
 
   // Estado de la nueva publicación (newPublication)
   const [newPublication, setNewPublication] = useState<PublicationCardType>({
-    _id: "",
-    title: "",
-    subtitle: "",
-    content: "",
-    base64_img: "",
+    _id: '',
+    title: '',
+    subtitle: '',
+    content: '',
+    base64_img: '',
     currentPage: lastPage,
   });
 
@@ -50,10 +50,10 @@ const FormPublication: React.FC<FormPublicationProps> = ({
       reader.onload = () => {
         const img = new Image();
         img.onload = () => {
-          const canvas = document.createElement("canvas");
-          const ctx = canvas.getContext("2d");
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
           if (!ctx) {
-            reject(new Error("No se pudo obtener el contexto del canvas"));
+            reject(new Error('No se pudo obtener el contexto del canvas'));
             return;
           }
           let width = img.width;
@@ -69,7 +69,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
           canvas.width = width;
           canvas.height = height;
           ctx.drawImage(img, 0, 0, width, height);
-          const dataUrl = canvas.toDataURL("image/jpeg", 1);
+          const dataUrl = canvas.toDataURL('image/jpeg', 1);
           resolve(dataUrl);
         };
         img.onerror = reject;
@@ -85,11 +85,11 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0];
-    if (file && !file.type.startsWith("image/")) {
-      setError("Por favor, selecciona un archivo de imagen.");
-      event.target.value = "";
+    if (file && !file.type.startsWith('image/')) {
+      setError('Por favor, selecciona un archivo de imagen.');
+      event.target.value = '';
     } else {
-      setError("");
+      setError('');
       if (file) {
         try {
           const resizedBase64Image = await resizeImage(file, 800, 600);
@@ -99,7 +99,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
           }));
           setImagePreview(resizedBase64Image);
         } catch (error) {
-          setError("Error al redimensionar la imagen.");
+          setError('Error al redimensionar la imagen.');
           console.error(error);
         }
       }
@@ -111,8 +111,8 @@ const FormPublication: React.FC<FormPublicationProps> = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    if (name === "content") {
-      const formattedContent = value.replace(/\n/g, "<br>");
+    if (name === 'content') {
+      const formattedContent = value.replace(/\n/g, '<br>');
       setNewPublication({ ...newPublication, [name]: formattedContent });
     } else {
       setNewPublication({ ...newPublication, [name]: value });
@@ -123,11 +123,11 @@ const FormPublication: React.FC<FormPublicationProps> = ({
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
-    if (file && !file.type.startsWith("image/")) {
-      setError("Please select an image file");
-      toast.error("Please select an image file");
+    if (file && !file.type.startsWith('image/')) {
+      setError('Please select an image file');
+      toast.error('Please select an image file');
     } else {
-      setError("");
+      setError('');
       if (file) {
         try {
           const resizedBase64Image = await resizeImage(file, 800, 600);
@@ -137,7 +137,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
           }));
           setImagePreview(resizedBase64Image);
         } catch (error) {
-          setError("Error al redimensionar la imagen.");
+          setError('Error al redimensionar la imagen.');
           console.error(error);
         }
       }
@@ -168,30 +168,30 @@ const FormPublication: React.FC<FormPublicationProps> = ({
   // Estado de suscripción al evento, oseqa si esta enviandose la informacion (suscribe)
   const [suscribe, setSuscribe] = useState(false);
 
-
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Nos suscribimos al evento, enviando informacion
     setSuscribe(true);
 
     // Verificar que esten todos los campos completos
-    const hasEmptyField = Object.entries(newPublication).some(([key, value]) => {
-      if (value === "" && key !== "_id") {
-        key = key === "base64_img" ? "image" : key;
-        setError(`Please complete the ${key} field`);
-        setSuscribe(false);
-        return true;
+    const hasEmptyField = Object.entries(newPublication).some(
+      ([key, value]) => {
+        if (value === '' && key !== '_id') {
+          key = key === 'base64_img' ? 'image' : key;
+          setError(`Please complete the ${key} field`);
+          setSuscribe(false);
+          return true;
+        }
+        return false;
       }
-      return false;
-    });
+    );
 
     if (hasEmptyField) return;
 
     try {
       if (cardsBlog.length < MAX_PUBLICATIONS_PER_PAGE) {
         const newCard = await postPublication(event, newPublication);
-        if(isPublicationCardType(newCard))
-          cardsBlog.push(newCard);
+        if (isPublicationCardType(newCard)) cardsBlog.push(newCard);
       } else {
         // Desde la pagina uno buscamos cual es la siguiente pagina donde hay menos de 6 publicaciones para insertar contenido
         let actualPage = 1;
@@ -202,9 +202,8 @@ const FormPublication: React.FC<FormPublicationProps> = ({
         ) {
           actualPage++;
           const data = await getPublications(actualPage.toString());
-          if(Array.isArray(data))
-            arrayPublications = data;
-          
+          if (Array.isArray(data)) arrayPublications = data;
+
           if (actualPage == 10) break;
         }
         const updatedPublication = {
@@ -215,7 +214,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
         navigate(`/blog/${actualPage}`);
       }
     } catch (error) {
-      console.error("Error al enviar el post:", error);
+      console.error('Error al enviar el post:', error);
     }
     handleChange();
     setTimeout(() => {
@@ -225,7 +224,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
 
   return (
     <>
-      <div className={"upload-publication"}>
+      <div className={'upload-publication'}>
         <ButtonClose handleSusribeChange={handleChange} />
         <h3>New Publication</h3>
         <form onSubmit={onSubmit}>
@@ -253,7 +252,7 @@ const FormPublication: React.FC<FormPublicationProps> = ({
               <br />
               <textarea
                 name="content"
-                value={newPublication.content.replace(/<br>/g, "\n")}
+                value={newPublication.content.replace(/<br>/g, '\n')}
                 onChange={handleInputChange}
                 rows={4}
                 cols={50}
@@ -274,7 +273,9 @@ const FormPublication: React.FC<FormPublicationProps> = ({
                   )}
                 </label>
               </div>
-              {error && <p style={{ color: 'red', fontWeight: 'semibold' }}>{error}</p>}
+              {error && (
+                <p style={{ color: 'red', fontWeight: 'semibold' }}>{error}</p>
+              )}
             </li>
             <Button id="submit-post" type="submit" suscribe={suscribe}>
               Submit

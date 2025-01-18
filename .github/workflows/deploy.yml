@@ -6,77 +6,72 @@ on:
       - main
 
 jobs:
-  deploy-frontend:
+  build-frontend:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: "21.2.0"
-
-      - name: Install Vercel CLI
-        run: npm install -g vercel@latest
-
-      - name: List files in client directory
-        run: ls -la ./client
-
-      - name: Link and pull Vercel project for frontend
-        run: |
-          vercel link --yes --project ${{ secrets.FRONTEND_PROJECT_ID }} --scope ${{ secrets.VERCEL_TEAM }} --token=${{ secrets.VERCEL_TOKEN }}
-          vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-        working-directory: ./client
-
       - name: Install frontend dependencies
         run: npm install
         working-directory: ./client
-
       - name: Build frontend
         run: npm run build
         working-directory: ./client
+      - name: Upload frontend build
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-build
+          path: ./client/dist
 
-      - name: Deploy frontend to Vercel
-        run: vercel --token ${{ secrets.VERCEL_TOKEN }}
-        working-directory: ./client
-
-  deploy-backend:
+  build-backend:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: "21.2.0"
-
-      - name: Install Vercel CLI
-        run: npm install -g vercel@latest
-
-      - name: List files in server directory
-        run: ls -la ./server
-
-      - name: Link and pull Vercel project for backend
-        run: |
-          vercel link --yes --project ${{ secrets.BACKEND_PROJECT_ID }} --scope ${{ secrets.VERCEL_TEAM }} --token=${{ secrets.VERCEL_TOKEN }}
-            vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-        working-directory: ./server
-
       - name: Install backend dependencies
         run: npm install
         working-directory: ./server
-
       - name: Build backend
         run: npm run build
         working-directory: ./server
+      - name: Upload backend build
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend-build
+          path: ./server/public
 
-      - name: List files in server directory after build
-        run: ls -la ./server/public
+  deploy-both:
+    needs: [build-frontend, build-backend]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+      
+      # Frontend deployment
+      - name: Download frontend build
+        uses: actions/download-artifact@v3
+        with:
+          name: frontend-build
+          path: ./client/dist
+      - name: Deploy frontend
+        run: |
+          vercel link --yes --project ${{ secrets.FRONTEND_PROJECT_ID }} --scope ${{ secrets.VERCEL_TEAM }} --token=${{ secrets.VERCEL_TOKEN }}
+          vercel --token ${{ secrets.VERCEL_TOKEN }}
+        working-directory: ./client
 
-      - name: Deploy backend to Vercel
-        run: vercel --token ${{ secrets.VERCEL_TOKEN }}
+      # Backend deployment
+      - name: Download backend build
+        uses: actions/download-artifact@v3
+        with:
+          name: backend-build
+          path: ./server/public
+      - name: Deploy backend
+        run: |
+          vercel link --yes --project ${{ secrets.BACKEND_PROJECT_ID }} --scope ${{ secrets.VERCEL_TEAM }} --token=${{ secrets.VERCEL_TOKEN }}
+          vercel --token ${{ secrets.VERCEL_TOKEN }}
         working-directory: ./server

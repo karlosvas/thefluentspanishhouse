@@ -1,18 +1,18 @@
-import { forwardRef } from "react";
-import { type ButtonProps } from "types/types";
+import { forwardRef } from 'react';
+import { type ButtonProps } from 'types/types';
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   { children, event, id, type, suscribe, className },
   ref
 ) {
   let buttonStyle: React.CSSProperties = {
-    borderRadius: "3px",
+    borderRadius: '3px',
   };
 
-  if (type == "submit" && suscribe !== undefined) {
+  if (type == 'submit' && suscribe !== undefined) {
     buttonStyle = {
       ...buttonStyle,
-      backgroundColor: suscribe ? "#000080" : "var(--primary-blue)",
+      backgroundColor: suscribe ? '#000080' : 'var(--primary-blue)',
     };
   }
   return (
