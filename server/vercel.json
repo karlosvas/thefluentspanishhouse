@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "name": "thefluenspanishhouse-server",
+  "builds": [
+    {
+      "src": "public/src/index.js",
+      "use": "@vercel/node",
+      "config": {
+        "outputDirectory": "public"
+      }
+    }
+  ],
+
+  "routes": [{ "src": "/(.*)", "dest": "public/src/index.js" }]
+}

@@ -43,7 +43,6 @@ peticiones
 
 # Vercel
 .vercel
-vercel.json
 
 # Testing
 /test-results/

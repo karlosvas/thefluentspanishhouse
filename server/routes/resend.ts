@@ -29,8 +29,6 @@ router.post('/note', log, verifyIdToken, async (req, res) => {
 // Avisamos de que se a suscrito un nuevo estudiante a una clase
 router.post('/newstudent', log, verifyIdToken, async (req, res) => {
   const newSubcriber: SubscriberType = req.body;
-
-  console.log(newSubcriber);
   if (
     !newSubcriber.email ||
     !newSubcriber.name ||
@@ -38,8 +36,6 @@ router.post('/newstudent', log, verifyIdToken, async (req, res) => {
     !newSubcriber.class
   )
     return res.status(400).send({ message: 'Missing required fields' });
-
-  console.log('Enviando email');
   submitEmailStudent(newSubcriber)
     .then((response) =>
       res.status(201).json({ message: 'Email sent successfully', response })
