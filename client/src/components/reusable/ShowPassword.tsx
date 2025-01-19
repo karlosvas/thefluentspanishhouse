@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { type ShowPasswordProps } from 'types/types';
-import '../../styles/show-password.css';
 import { handleInputChange } from '@/utilities/utilities';
+import '../../styles/show-password.css';
 
 const ShowPassword: React.FC<ShowPasswordProps> = ({ password, setID }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);

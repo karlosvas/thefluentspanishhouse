@@ -13,9 +13,9 @@ import ShowPassword from '@/components/reusable/ShowPassword';
 import { UserContext } from '@/App';
 import ButtonClose from '@/components/reusable/ButtonClose';
 import Backdrop from '@/components/reusable/Backdrop';
-import '@/styles/modal-auth.css';
 import { NavigateFunction, useNavigate } from 'react-router';
 import { forgotPasword, handleInputChange } from '@/utilities/utilities';
+import '@/styles/modal-auth.css';
 
 const Auth = () => {
   // Enseña o esconde el modal

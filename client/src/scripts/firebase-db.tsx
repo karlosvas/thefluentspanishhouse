@@ -21,7 +21,7 @@ export async function saveUser(userId: string, newSubscriber: SubscriberType) {
         const userData = {
           id: userId,
           email: newSubscriber.email,
-          class: [newSubscriber.class],
+          class: [],
         };
 
         // Guardamos los datos del usuario
@@ -51,6 +51,8 @@ function addTag(userId: string, newSubscriber: SubscriberType) {
       if (snapshot.exists()) {
         const userData = snapshot.val();
         const currentClasses = userData.class || [];
+
+        console.log('currentClasses:', currentClasses);
 
         // Verificamos que la clase no esté duplicada
         if (!currentClasses.includes(newSubscriber.class)) {

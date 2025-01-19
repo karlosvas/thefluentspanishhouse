@@ -6,6 +6,10 @@ import { UserContext } from '@/App';
 import { type NoteType } from 'types/types';
 import '@/styles/main-contact.css';
 import { Helmet } from 'react-helmet-async';
+import EmailIcon from '@/assets/svg/email.svg';
+import Location from '@/assets/svg/location.svg';
+import Phone from '@/assets/svg/phone.svg';
+import InstagramSVG from '@/assets/svg/instagram.svg';
 
 const ContactForm = () => {
   const [suscribe, setSuscribe] = useState<boolean>(false);
@@ -106,15 +110,15 @@ const ContactForm = () => {
 
               <div className="info">
                 <div className="information">
-                  <img src="img/location.webp" className="icon" alt="" />
+                  <Location />
                   <p>Around the world</p>
                 </div>
                 <div className="information">
-                  <img src="img/email.webp" className="icon" alt="" />
+                  <EmailIcon />
                   <p>mar411geca@gmail.com</p>
                 </div>
                 <div className="information">
-                  <img src="img/phone.webp" className="icon" alt="" />
+                  <Phone />
                   <p>+34 617286125</p>
                 </div>
               </div>
@@ -127,7 +131,12 @@ const ContactForm = () => {
                     target="_blank"
                     title="Facebook"
                   >
-                    <i className="fab fa-facebook-f">F</i>
+                    <i
+                      className="fab fa-facebook-f"
+                      style={{ fontSize: '22px' }}
+                    >
+                      F
+                    </i>
                   </a>
 
                   <a
@@ -135,7 +144,9 @@ const ContactForm = () => {
                     target="_blank"
                     title="Intagram"
                   >
-                    <i className="fab fa-github">I</i>
+                    <i className="fab fa-github">
+                      <InstagramSVG />
+                    </i>
                   </a>
                   <a
                     href="https://github.com/karlosvas/thefluentspanishhouse"

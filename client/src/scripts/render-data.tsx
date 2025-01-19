@@ -149,7 +149,7 @@ export const subscribeNewsletter = async (email: string) => {
 ///////////////////////////// EMAILS /////////////////////////////
 export const sendEmailNewClass = async (newSubscriber: SubscriberType) => {
   try {
-    helper.post(`${url_api}/mandrill/newstudent`, {
+    helper.post(`${url_api}/resend/newstudent`, {
       body: JSON.stringify(newSubscriber),
     });
   } catch (error) {
@@ -159,7 +159,7 @@ export const sendEmailNewClass = async (newSubscriber: SubscriberType) => {
 
 export const submitNote = async (newNote: NoteType) => {
   try {
-    const response = await helper.post(`${url_api}/mandrill/note`, {
+    const response = await helper.post(`${url_api}/resend/note`, {
       body: JSON.stringify(newNote),
     });
     if (response) toast.success('The email has been sent successfully');
