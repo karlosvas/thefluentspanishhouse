@@ -48,7 +48,7 @@ export async function submitEmailStudent(newstudent: SubscriberType) {
       html: `<html>
         <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; padding: 20px;">
           <div style="background-color: #fff; padding: 20px; max-width: 1000px; margin: 20px auto; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-            <h1 style="text-align: center; color: #2a8cff;">The Fuent Spanish House</h1>
+            <h1 style="text-align: center; color: #2a8cff;">TheFuentSpanishHouse</h1>
             <h3 style="text-align: center; color: #2a8cff;">New Student Request</h3>
             <p style="font-size: 16px; line-height: 1.6;">The user <b style="color: #2a8cff;">${newstudent.name} ${newstudent.lastname}</b> with email <b style="color: #2a8cff;">${newstudent.email}</b> wants to be a new student:</p>
             <p style="font-size: 16px; line-height: 1.6;">They would like to sign up for <b style="color: #2a8cff;">${newstudent.class}</b>.</p>
@@ -73,7 +73,7 @@ export async function submitEmailComment(note: NoteType, originUrl: string) {
       html: `<html>
         <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; padding: 20px;">
           <div style="background-color: #fff; padding: 20px; max-width: 1000px; margin: 20px auto; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-               <h1 style="text-align: center; color: #2a8cff;">The Fuent Spanish House</h1>
+               <h1 style="text-align: center; color: #2a8cff;">TheFuentSpanishHouse</h1>
             <h3 style="text-align: center; color: #2a8cff;">New Message from ${note.username}</h3>
             <p style="font-size: 16px; line-height: 1.6;">The user <strong style="color: #2a8cff;">${note.username} ${note.email_user}</strong> says:</p>
             <p style="font-size: 16px; line-height: 1.6; background-color: #f9f9f9; padding: 10px; border-left: 4px solid #2a8cff; margin-top: 10px;">${note.note}</p>

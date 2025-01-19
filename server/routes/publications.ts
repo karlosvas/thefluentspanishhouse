@@ -77,7 +77,6 @@ router.get('/:id', log, verifyIdToken, async (req: Request, res: Response) => {
 // Añadir nuevas publicaciones
 router.post('/new', log, verifyIdToken, async (req: Request, res: Response) => {
   const newPublication: PublicationCardType = req.body;
-
   try {
     // Validaciones
     if (

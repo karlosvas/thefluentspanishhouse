@@ -18,7 +18,8 @@
     "react-helmet-async": "^2.0.5",
     "react-hot-toast": "^2.4.1",
     "react-router": "^6.24.1",
-    "react-router-dom": "^6.24.1"
+    "react-router-dom": "^6.24.1",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@firebase/app-types": "^0.9.3",

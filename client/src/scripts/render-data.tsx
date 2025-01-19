@@ -13,6 +13,7 @@ import {
   type InterestResponse,
   type SubscriberType,
 } from 'types/types';
+import { User } from 'firebase/auth';
 
 const helper = Helper();
 
@@ -83,14 +84,13 @@ export const getMailchimpUser = async (email: string) => {
 
 export const fetchGetUidByEmail = async (
   email: string
-): Promise<{ uid: string } | undefined> => {
+): Promise<{ uid: string } | null> => {
   try {
-    return (await helper.get(`${url_api}/firebase/user/${email}`)) as {
-      uid: string;
-    };
+    const uuid = await helper.get(`${url_api}/firebase/user/${email}`);
+    return uuid as { uid: string };
   } catch (error) {
     // El usuario no existe en la base de datos algo normal ya que puede no haberse inscrito a una clase y querer entrar en la new
-    return;
+    return null;
   }
 };
 

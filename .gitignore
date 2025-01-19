@@ -52,3 +52,6 @@ peticiones
 
 # TypeScript cache
 *.tsbuildinfo
+
+# Documents
+.pdf

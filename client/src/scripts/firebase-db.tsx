@@ -101,7 +101,7 @@ function addTag(userId: string, newSubscriber: SubscriberType) {
 }
 
 // Función para obtener un usuario de la DB
-export async function getUserDB(userId: string) {
+export async function getUserDB(userId: string): Promise<any> {
   const userRef = ref(dbFirebase, 'usuarios/' + userId);
 
   // Si el usuario existe, obtenemos sus datos
@@ -110,8 +110,8 @@ export async function getUserDB(userId: string) {
       if (snapshot.exists()) return snapshot.val();
       else return null;
     })
-    .catch((error) => {
-      console.error('Error al obtener los datos del usuario:', error);
+    .catch(() => {
+      return null;
     });
 }
 

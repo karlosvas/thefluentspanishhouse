@@ -29,6 +29,7 @@ const Newsletter = () => {
     newsletter: false,
     mailchimp: false,
   });
+  const leadmanagment = useRef(true);
 
   const [active, setActive] = useState(false);
 
@@ -81,14 +82,17 @@ const Newsletter = () => {
     // Tags de mailchimp
     let tags: OptionsChampTag[] = [];
 
-    // Obtenemos el UID de Firebase
-    const uuidFB = await fetchGetUidByEmail(form.email);
+    // Obtenemos el UID de Firebase aurthentication
+    const uuidFB: { uid: string } | null = await fetchGetUidByEmail(form.email);
+
+    // Si existe el usuario en Firebase autentication
     if (uuidFB && uuidFB?.uid) {
-      // Actualizamos las tags del usuario por si ya tiene una clase asignada por apuntarse a cursos con anterioridad
+      // Obtenemos el usuario de firebase database
       const userFB = await getUserDB(uuidFB.uid);
+
+      // Si el usuario tiene angun tag le asignamos el tag al usuario de mailchimp
       if (userFB !== null && userFB.class) tags = userFB.class;
     }
-
     // Creamos el objeto de miembro
     const member: Member = {
       email_address: form.email,
@@ -113,6 +117,16 @@ const Newsletter = () => {
 
     // Enviando la suscripción a la API de Mailchimp
     await submitSubscriptionMailchimp(member);
+
+    // Descargar lead managment
+    if (leadmanagment.current) {
+      const link = document.createElement('a');
+      link.href = '/pdf/lead-managment-tfsh.pdf';
+      link.download = 'lead-managment-tfsh.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   };
 
   // Función para manejar el scroll del boton de download de la página
@@ -128,6 +142,20 @@ const Newsletter = () => {
       const elementPosition = targetElement.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
 
+      toast(
+        <span>
+          It is necessary to <b>subscribe to the newsletter before</b>
+        </span>,
+        {
+          duration: 10000,
+          icon: 'ℹ️',
+          style: {
+            outline: '2px solid var(--primary-blue)',
+          },
+        }
+      );
+
+      leadmanagment.current = true;
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth',
@@ -309,8 +337,13 @@ const Newsletter = () => {
                     className={subscribed && !form.privacy ? 'required' : ''}
                   >
                     I have read and accept the{' '}
-                    <a href="/info">privacy policy</a> and{' '}
-                    <a href="/info">terms and conditions</a>
+                    <a href="/info" target="_blank">
+                      privacy policy
+                    </a>{' '}
+                    and{' '}
+                    <a href="/info" target="_blank">
+                      terms and conditions
+                    </a>
                   </label>
                 </div>
                 <div className="checkbox-group">

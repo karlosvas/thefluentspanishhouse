@@ -1,12 +1,12 @@
 import CardPublicationBlog from '@/components/pages-components/blog/CardPublicationBlog';
 import FormPublication from '@/components/pages-components/blog/FormPublication';
 import { handleChangeModal } from '@/scripts/modal';
-import { useEffect, useState } from 'react';
-import { getPublications } from '@/scripts/render-data';
-import { type PublicationCardType } from 'types/types';
-import { Helmet } from 'react-helmet-async';
 import PaginationReactBoostrap from '@/components/pages-components/blog/Pagination';
+import { useEffect, useRef, useState } from 'react';
+import { getPublications } from '@/scripts/render-data';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router';
+import { type PublicationCardType } from 'types/types';
 import '@/styles/main-blog.css';
 
 const Blog = () => {
@@ -44,10 +44,19 @@ const Blog = () => {
     }
   };
 
-  // Cargar las publicaciones
+  // Añadir referencia de carga para evitar doble carga
+  const isInitialMount = useRef(true);
+  const prevPage = useRef(page);
+
   useEffect(() => {
-    if (page && cardsBlog.length == 0) fetchPublications(page);
-  }, [page, cardsBlog.length]);
+    if (isInitialMount.current && page) {
+      fetchPublications(page);
+      isInitialMount.current = false;
+    } else if (prevPage.current !== page && page) {
+      fetchPublications(page);
+    }
+    prevPage.current = page;
+  }, [page]);
 
   return (
     <>
