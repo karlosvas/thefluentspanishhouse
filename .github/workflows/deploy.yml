@@ -7,10 +7,10 @@ on:
 
 jobs:
   build-frontend:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "21.2.0"
       - name: Install frontend dependencies
@@ -20,16 +20,16 @@ jobs:
         run: npm run build
         working-directory: ./client
       - name: Upload frontend build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: frontend-build
           path: ./client/dist
 
   build-backend:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "21.2.0"
       - name: Install backend dependencies
@@ -39,22 +39,56 @@ jobs:
         run: npm run build
         working-directory: ./server
       - name: Upload backend build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: backend-build
           path: ./server/public
 
-  deploy-both:
+  test-backend:
     needs: [build-frontend, build-backend]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+    # Backend build
+    - name: Download backend build
+      uses: actions/download-artifact@v4
+      with:
+        name: backend-build
+        path: ./server/public
+
+    # Obtenemos un puerto aleatorio en env.PORT
+    - name: Obtain a random port in environment variable
+      run: |
+        npm install get-port-sync
+        PORT=$(node -e "console.log(require('get-port-sync')())")
+        echo "PORT=$PORT" >> $GITHUB_ENV
+      working-directory: ./server
+
+    # Instalamos dependencias
+    - name: Install backend dependencies
+      run: |
+        npm install
+        npx playwright install --with-deps
+      working-directory: ./server
+
+    # Ejecutamos los test para asegurarnos que todo está en orden
+    - name: Run Playwright tests
+      run: npm run test
+      working-directory: ./server
+      env:
+        PORT: ${{ env.PORT }}
+
+  # Desplegamos en vercel
+  deploy-both:
+    needs: [test-backend]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
       
       # Frontend deployment
       - name: Download frontend build
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: frontend-build
           path: ./client/dist
@@ -63,33 +97,6 @@ jobs:
           vercel link --yes --project ${{ secrets.FRONTEND_PROJECT_ID }} --scope ${{ secrets.VERCEL_TEAM }} --token=${{ secrets.VERCEL_TOKEN }}
           vercel --token ${{ secrets.VERCEL_TOKEN }}
         working-directory: ./client
-
-      # Backend deployment
-      - name: Download backend build
-        uses: actions/download-artifact@v3
-        with:
-          name: backend-build
-          path: ./server/public
-
-      # Obtenemos un puerto aleatorio en env.PORT
-      - name: Start server
-        run: |
-          PORT=$(node -e "console.log(require('get-port-sync')())")
-          echo "PORT=$PORT" >> $GITHUB_ENV
-        working-directory: ./server
-      
-        # Instalamos dependencias
-      - name: Install backend dependencies
-        run: |
-          npm install
-          npx playwright install --with-deps
-        working-directory: ./server
-
-      # Ejecutamos los test para asegurarnos que todo está en orden
-      - name: Run Playwright tests
-        run: npm run test
-        env:
-          PORT: ${{ env.PORT }}
       
       # Desplegamos en vercel
       - name: Deploy backend

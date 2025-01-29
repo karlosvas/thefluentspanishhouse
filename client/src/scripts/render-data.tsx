@@ -13,7 +13,6 @@ import {
   type InterestResponse,
   type SubscriberType,
 } from 'types/types';
-import { User } from 'firebase/auth';
 
 const helper = Helper();
 
