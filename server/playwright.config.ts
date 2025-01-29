@@ -4,7 +4,7 @@ dotenv.config();
 
 export default defineConfig({
   // Look for test files in the "tests" directory, relative to this configuration file.
-  testDir: 'dist/tests',
+  testDir: 'public/tests',
 
   // Run all tests in parallel.
   fullyParallel: true,
@@ -43,7 +43,7 @@ export default defineConfig({
   // Run your local dev server before starting the tests.
   webServer: {
     command: 'npm run start',
-    url: 'http://127.0.0.1:8080',
+    url: `http://127.0.0.1:${process.env.PORT}`,
     reuseExistingServer: !process.env.CI,
   },
 });

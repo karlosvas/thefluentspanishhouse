@@ -70,6 +70,28 @@ jobs:
         with:
           name: backend-build
           path: ./server/public
+
+      # Obtenemos un puerto aleatorio en env.PORT
+      - name: Start server
+        run: |
+          PORT=$(node -e "console.log(require('get-port-sync')())")
+          echo "PORT=$PORT" >> $GITHUB_ENV
+        working-directory: ./server
+      
+        # Instalamos dependencias
+      - name: Install backend dependencies
+        run: |
+          npm install
+          npx playwright install --with-deps
+        working-directory: ./server
+
+      # Ejecutamos los test para asegurarnos que todo está en orden
+      - name: Run Playwright tests
+        run: npm run test
+        env:
+          PORT: ${{ env.PORT }}
+      
+      # Desplegamos en vercel
       - name: Deploy backend
         run: |
           vercel link --yes --project ${{ secrets.BACKEND_PROJECT_ID }} --scope ${{ secrets.VERCEL_TEAM }} --token=${{ secrets.VERCEL_TOKEN }}

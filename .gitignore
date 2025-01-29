@@ -55,3 +55,7 @@ peticiones
 
 # Documents
 .pdf
+
+#test
+playwright-report
+test-results

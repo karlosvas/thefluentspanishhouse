@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
 import { Types } from 'mongoose';
-import { ObjectId } from 'mongoose';
 import { type Comment, type PublicationCardType } from 'types/types';
 dotenv.config();
 
@@ -14,6 +13,7 @@ test('/comments/all obtener todos los comentarios', async ({ page }) => {
   expect(allComments).toBeDefined();
 });
 
+// Secuencia de pruebas para comentarios
 test.describe.serial('Comment tests', () => {
   let createdCommentId: string = '';
   let originUrl = 'https://thefluentspanishhouse.com/publication/';

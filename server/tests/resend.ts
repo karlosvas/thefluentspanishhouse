@@ -11,7 +11,7 @@ test('/note enviar email de la nota de contact', async ({ page }) => {
   };
 
   // Enviamos un email de la nota de contacto a admin
-  const responseNewComment = await page.request.post('/mandrill/note', {
+  const responseNewComment = await page.request.post('/resend/note', {
     data: newNote,
   });
 
@@ -32,7 +32,7 @@ test('/newstudent enviar email de neuvo estudiante', async ({ page }) => {
   };
 
   // Enviamos un email de la nota de nuevo estudiante a admin
-  const responseNewComment = await page.request.post('/mandrill/newstudent', {
+  const responseNewComment = await page.request.post('/resend/newstudent', {
     data: newSubcriber,
   });
 

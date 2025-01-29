@@ -13,8 +13,8 @@ async function inicializeApp() {
   const app = express();
   // Origenes permitidos
   const allowedOrigins = [
-    'https://thefluentspanishhouse.com',
-    'http://localhost:5173',
+    process.env.URL_WEB,
+    /^http:\/\/localhost(:\d+)?$/,
     process.env.URL_WEB_TEST,
   ];
   // Configuración global de CORS
