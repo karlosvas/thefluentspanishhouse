@@ -13,9 +13,9 @@ async function inicializeApp() {
   const app = express();
   // Origenes permitidos
   const allowedOrigins = [
-    process.env.URL_WEB,
+    'https://thefluentspanishhouse.com',
+    'https://thefluentspanishhouse-client-git-testing-karlosvas-projects.com',
     /^http:\/\/localhost(:\d+)?$/,
-    process.env.URL_WEB_TEST,
   ];
   // Configuración global de CORS
   app.use(

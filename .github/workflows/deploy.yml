@@ -48,34 +48,47 @@ jobs:
     needs: [build-frontend, build-backend]
     runs-on: ubuntu-22.04
     steps:
-    # Backend build
-    - name: Download backend build
-      uses: actions/download-artifact@v4
-      with:
-        name: backend-build
-        path: ./server/public
+      - uses: actions/checkout@v4 
 
-    # Obtenemos un puerto aleatorio en env.PORT
-    - name: Obtain a random port in environment variable
-      run: |
-        npm install get-port-sync
-        PORT=$(node -e "console.log(require('get-port-sync')())")
-        echo "PORT=$PORT" >> $GITHUB_ENV
-      working-directory: ./server
+      # Backend build
+      - name: Download backend build
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-build
+          path: ./server/public
 
-    # Instalamos dependencias
-    - name: Install backend dependencies
-      run: |
-        npm install
-        npx playwright install --with-deps
-      working-directory: ./server
+      # Instalamos dependencias
+      - name: Install backend dependencies
+        run: |
+          npm install
+          npx playwright install --with-deps
+        working-directory: ./server
 
-    # Ejecutamos los test para asegurarnos que todo está en orden
-    - name: Run Playwright tests
-      run: npm run test
-      working-directory: ./server
-      env:
-        PORT: ${{ env.PORT }}
+      # Ejecutamos los test para asegurarnos que todo está en orden
+      - name: Run Playwright tests
+        run: npm run test
+        working-directory: ./server
+        env:
+          MONGO_DB_FLUENT: ${{ secrets.MONGO_DB_FLUENT }}
+          PORT: ${{ secrets.PORT }}
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+          MAILCHIMP_SERVER_PREFIX: ${{ secrets.MAILCHIMP_SERVER_PREFIX }}
+          MAILCHIMP_LIST_ID: ${{ secrets.MAILCHIMP_LIST_ID }}
+          MAILCHIMP_GROUP_ID: ${{ secrets.MAILCHIMP_GROUP_ID }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ADMIN_GMAIL: ${{ secrets.ADMIN_GMAIL }}
+          DEFAULT_TOKEN: ${{ secrets.DEFAULT_TOKEN }}
+          FIREBASE_TYPE: ${{ secrets.FIREBASE_TYPE }}
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_PRIVATE_KEY_ID: ${{ secrets.FIREBASE_PRIVATE_KEY_ID }}
+          FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
+          FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
+          FIREBASE_CLIENT_ID: ${{ secrets.FIREBASE_CLIENT_ID }}
+          FIREBASE_AUTH_URI: ${{ secrets.FIREBASE_AUTH_URI }}
+          FIREBASE_TOKEN_URI: ${{ secrets.FIREBASE_TOKEN_URI }}
+          FIREBASE_AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.FIREBASE_AUTH_PROVIDER_X509_CERT_URL }}
+          FIREBASE_CLIENT_X509_CERT_URL: ${{ secrets.FIREBASE_CLIENT_X509_CERT_URL }}
+          FIREBASE_DB: ${{ secrets.FIREBASE_DB }}
 
   # Desplegamos en vercel
   deploy-both:
