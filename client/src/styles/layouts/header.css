@@ -5,6 +5,7 @@ header {
   width: 100%;
   z-index: 500;
   box-sizing: border-box;
+
   .header-animation {
     height: 10vh;
     transition: height 0.3s ease;
@@ -16,13 +17,11 @@ header {
       display: flex;
       justify-content: space-around;
       align-items: center;
-      user-select: none;
 
       #logo {
         height: 70px;
         width: 60px;
         border-radius: 3px;
-        margin-left: 5vw;
         filter: drop-shadow(0 0 0.5rem var(--primary-blue));
       }
 
@@ -41,6 +40,7 @@ header {
         align-items: center;
         transition: all 0.25s;
         height: 6vh;
+        min-width: fit-content;
       }
 
       li:hover {
@@ -91,6 +91,7 @@ header {
         #sign-in {
           border: 2px solid transparent;
           transition: all 0.3s;
+          min-width: 80px;
         }
       }
       .nav-icons {
@@ -170,10 +171,16 @@ header.shrink {
 }
 
 /* Portátil and tablet */
-@media only screen and (width <= 1200px) and (width > 766px) {
+@media only screen and (width <= 900px) and (width > 766px) {
   header .header-animation .header {
     #logo {
       margin-left: 10px;
+    }
+    nav > ul {
+      padding: 0;
+      li > a {
+        font-size: medium;
+      }
     }
   }
 }

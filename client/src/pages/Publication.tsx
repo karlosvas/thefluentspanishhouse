@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import PlaceholderPublications from '@/components/pages-components/publications/PlaceholderPublication';
-import { getPublicationByID } from '@/scripts/render-data';
+import { getPublicationByID } from '@/services/render-data';
 import CommentsPublication from '@/components/pages-components/publications/CommentsPublication';
 import { Helmet } from 'react-helmet-async';
 import { type PublicationCardType, type RouteParams } from 'types/types';
-import { isPublicationCardType } from '@/utilities/utilities-types';
+import { isPublicationCardType } from '@/utils/utilities-types';
 import '@/styles/main-publication.css';
 
 const Publication = () => {

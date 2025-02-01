@@ -1,5 +1,5 @@
-import { getProvider } from '@/scripts/firebase-config';
-import { resetPassword } from '@/scripts/firebase-options-users';
+import { getProvider } from '@/services/firebase-config';
+import { resetPassword } from '@/services/firebase-options-users';
 import { User } from 'firebase/auth';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';

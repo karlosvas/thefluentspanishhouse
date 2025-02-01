@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { handleClickNavigate } from '@/scripts/navigate';
+import { handleClickNavigate } from '@/utils/navigate';
 import Settings from '../svg-component/Settings';
 import Theme from './Theme';
 

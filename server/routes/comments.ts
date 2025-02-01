@@ -1,7 +1,7 @@
 import { type Request, type Response, Router } from 'express';
 import { modelComment } from '../src/mongodb/models.js';
 import { isValidObjectId, Types } from 'mongoose';
-import { submitEmailComment } from '../lib/resend/resend.js';
+import { submitEmailComment, submitLikeComment } from '../lib/resend/resend.js';
 import { deleteCommentAndChildren } from '../utilities/delete-logic.js';
 import { handleServerError } from '../utilities/errorHandle.js';
 import { verifyIdToken, log } from '../middelware/token-logs.js';
@@ -65,6 +65,7 @@ router.post('/new', log, verifyIdToken, async (req, res) => {
       note: newComment.data,
       email_user: newComment.owner.email,
     };
+
     // Avisamos al administrador de la web del nuevo comentario
     await submitEmailComment(note, originUrl);
 
@@ -143,17 +144,15 @@ router.put(
         comment.likes += 1;
 
         // Implemetaacion futura añadir correo al administrador por likes
-        // const note: NoteType = {
-        //   subject: `${comment.owner.displayName} has received a like`,
-        //   username: comment.owner.displayName,
-        //   note: comment.data,
-        //   email_user: comment.owner.email,
-        // };
+        const note: NoteType = {
+          subject: `${comment.owner.displayName} has received a like`,
+          username: comment.owner.displayName,
+          note: comment.data,
+          email_user: comment.owner.email,
+        };
 
-        // console.log("note", note);
         // Avisamos al administrador de la web del nuevo like
-        // const res = await submitEmailComment(note, originUrl);
-        console.log('res', res);
+        await submitLikeComment(note, originUrl);
       }
 
       const updatedComment = await comment.save();

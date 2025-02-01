@@ -1,5 +1,5 @@
 import { useNavigate, Link } from 'react-router-dom';
-import { handleScroll } from '@/scripts/modal';
+import { handleScroll } from '@/utils/modal';
 import { type ChildrenType, type OptionalClass } from 'types/types';
 import ExitSVG from '@/assets/svg/exit.svg';
 

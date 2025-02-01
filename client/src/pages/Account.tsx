@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router';
 import toast from 'react-hot-toast';
 import { UserContext } from '@/App';
 import Button from '@/components/reusable/Button';
-import { getProvider } from '@/scripts/firebase-config';
+import { getProvider } from '@/services/firebase-config';
 import '@/styles/main-account.css';
 import { Helmet } from 'react-helmet-async';
-import { forgotPasword, handleInputChange } from '@/utilities/utilities';
-import { changeOptionsUser } from '@/scripts/firebase-options-users';
-import { sendEmailVerificationFirebase } from '@/scripts/oauth2-0';
+import { forgotPasword, handleInputChange } from '@/utils/utilities';
+import { changeOptionsUser } from '@/services/firebase-options-users';
+import { sendEmailVerificationFirebase } from '@/services/oauth2-0';
 
 const Account = () => {
   // Navegación de React Router

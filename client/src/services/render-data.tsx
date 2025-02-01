@@ -2,8 +2,8 @@ import { url_api } from '@/constants/global';
 import Helper from './helper';
 import toast from 'react-hot-toast';
 import { FormEvent } from 'react';
-import { errorMailchimp } from '@/utilities/utilities';
-import { isErrorResponseHelper } from '@/utilities/utilities-types';
+import { errorMailchimp } from '@/utils/utilities';
+import { isErrorResponseHelper } from '@/utils/utilities-types';
 import {
   type PublicationCardType,
   type Comment,
@@ -19,7 +19,7 @@ const helper = Helper();
 ///////////////////////////// GET /////////////////////////////
 export const getUrlTest = async () => {
   try {
-    return await helper.get(`${import.meta.env.VITE_URL_API}/api/test`);
+    return await helper.get(`${url_api}/api/test`);
   } catch (error) {
     console.error(
       'Error al hacer fetch para obtener la URL de los test desde el cliente',

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { type ShowPasswordProps } from 'types/types';
-import { handleInputChange } from '@/utilities/utilities';
+import { handleInputChange } from '@/utils/utilities';
 import '../../styles/show-password.css';
 
 const ShowPassword: React.FC<ShowPasswordProps> = ({ password, setID }) => {

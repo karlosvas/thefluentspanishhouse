@@ -1,7 +1,7 @@
 import Button from '@/components/reusable/Button';
 import ImgUser from '@/components/svg-component/ImgUser';
-import { postChildrenComment } from '@/scripts/render-data';
-import { isCommentArray } from '@/utilities/utilities-types';
+import { postChildrenComment } from '@/services/render-data';
+import { isCommentArray } from '@/utils/utilities-types';
 import { useRef } from 'react';
 import toast from 'react-hot-toast';
 import { type ResponseProps, type Comment } from 'types/types';

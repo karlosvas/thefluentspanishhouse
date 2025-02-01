@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import Button from '@/components/reusable/Button';
-import { submitNote } from '@/scripts/render-data';
+import { submitNote } from '@/services/render-data';
 import toast from 'react-hot-toast';
 import { UserContext } from '@/App';
 import { type NoteType } from 'types/types';

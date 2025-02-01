@@ -1,9 +1,9 @@
 import { UserContext } from '@/App';
-import { deleteComment, editComment } from '@/scripts/render-data';
+import { deleteComment, editComment } from '@/services/render-data';
 import { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import Button from '../reusable/Button';
-import { isComment } from '@/utilities/utilities-types';
+import { isComment } from '@/utils/utilities-types';
 import OtionsComentSVG from '@/assets//svg/options-coment.svg';
 import { type OptionsCommentProps } from 'types/types';
 

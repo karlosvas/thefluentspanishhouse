@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { SingleThemeProps } from 'types/types';
 import '@/styles/reusables/theme.css';
 import { ThemeContext } from '@/App';
-import { toggleThemeSVG } from '@/utilities/utilities';
+import { toggleThemeSVG } from '@/utils/utilities';
 
 export const Theme: React.FC<SingleThemeProps> = ({ children }) => {
   // Estado del team actual del conetxto de la APP

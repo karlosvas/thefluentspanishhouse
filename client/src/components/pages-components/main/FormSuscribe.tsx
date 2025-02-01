@@ -5,15 +5,15 @@ import {
   getMailchimpUser,
   sendEmailNewClass,
   updateTagsMailchimp,
-} from '@/scripts/render-data';
+} from '@/services/render-data';
 import ButtonClose from '@/components/reusable/ButtonClose';
 import Backdrop from '@/components/reusable/Backdrop';
-import { getTag, handleInputChange } from '@/utilities/utilities';
-import { saveUser } from '@/scripts/firebase-db';
+import { getTag, handleInputChange } from '@/utils/utilities';
+import { saveUser } from '@/services/firebase-db';
 import { UserContext } from '@/App';
 import toast from 'react-hot-toast';
-import { isMember } from '@/utilities/utilities-types';
-import { isValidEmail } from '@/utilities/validateEmail';
+import { isMember } from '@/utils/utilities-types';
+import { isValidEmail } from '@/utils/validateEmail';
 import { type FormSuscriberProps, type SubscriberType } from 'types/types';
 
 const FormSuscribe: React.FC<FormSuscriberProps> = ({

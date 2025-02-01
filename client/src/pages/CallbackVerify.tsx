@@ -9,11 +9,11 @@ import {
   changeOptionsUserEmail,
   delateUserFirebase,
   resetPassword,
-} from '@/scripts/firebase-options-users';
+} from '@/services/firebase-options-users';
 import toast from 'react-hot-toast';
 import ShowPassword from '@/components/reusable/ShowPassword';
 import { UserContext } from '@/App';
-import { showMessageErrorFirebase } from '@/scripts/firebase-config';
+import { showMessageErrorFirebase } from '@/services/firebase-config';
 import { Helmet } from 'react-helmet-async';
 
 export const CallbackVerify = () => {

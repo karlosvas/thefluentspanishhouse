@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { getPublications, postPublication } from '@/scripts/render-data';
+import { getPublications, postPublication } from '@/services/render-data';
 import ButtonClose from '@/components/reusable/ButtonClose';
 import Backdrop from '@/components/reusable/Backdrop';
 import { useNavigate, useParams } from 'react-router';

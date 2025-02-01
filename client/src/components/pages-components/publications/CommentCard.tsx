@@ -1,10 +1,10 @@
 import toast from 'react-hot-toast';
 import { SetStateAction, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { getChildsComment } from '@/scripts/render-data';
+import { getChildsComment } from '@/services/render-data';
 import OptionsComment from '@/components/svg-component/OptionsComment';
 import ReplyToComment from '@/components/svg-component/ReplyToComment';
-import { isCommentArray } from '@/utilities/utilities-types';
+import { isCommentArray } from '@/utils/utilities-types';
 import { type CommentCardProps, type Comment } from 'types/types';
 import ImgUser from '@/components/svg-component/ImgUser';
 import Likes from '@/components/svg-component/Likes';

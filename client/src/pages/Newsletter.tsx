@@ -7,12 +7,12 @@ import {
   fetchGetUidByEmail,
   getInterests,
   submitSubscriptionMailchimp,
-} from '@/scripts/render-data';
-import { handleInputChange } from '@/utilities/utilities';
+} from '@/services/render-data';
+import { handleInputChange } from '@/utils/utilities';
 import MultiSelectTag from '@/components/reusable/MultiSelectTag';
-import { isValidEmail } from '@/utilities/validateEmail';
+import { isValidEmail } from '@/utils/validateEmail';
 import { OptionsChampTag, type Member, type NesletterType } from 'types/types';
-import { getUserDB } from '@/scripts/firebase-db';
+import { getUserDB } from '@/services/firebase-db';
 import '@/styles/main-newsettler.css';
 
 const Newsletter = () => {
@@ -29,45 +29,43 @@ const Newsletter = () => {
     newsletter: false,
     mailchimp: false,
   });
+  // Archivo de reaglo para descargar
   const leadmanagment = useRef(true);
-
+  // Preferencias selecionadas o no
   const [active, setActive] = useState(false);
 
   // Función para enviar el formulario de suscripción
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Verificando que todos los campos estén llenos
+    // Verificando que todos los campos estén completos, cumpleaños y preferencias opcionales
     for (const [key, value] of Object.entries(form)) {
       if (key === 'birthday' || key === 'preferences') continue;
-
       if (value === '' || value === false) {
         toast.error('Please fill all the fields');
         return;
       }
-
       if (key === 'email' && !isValidEmail(form.email)) {
         toast.error('Email is not valid');
         return;
       }
     }
 
-    // Animacion de boton de suscripción, procesando suscripcion
+    // Animación de boton de suscripción, procesando suscripcion
     setSubscribed(true);
     toast.loading('Processing your subscription...');
 
-    // Si el campo de cumpleaños no está vacío, formateamos la fecha
+    // Si el campo de cumpleaños no está vacío, formateamos la fecha de nacimiento
     let formattedBirthday = '';
     if (form.birthday) {
-      // Formateando la fecha de nacimiento
       const [, month, day] = form.birthday.split('-');
       formattedBirthday = `${month}/${day}`;
     }
 
     // Si el campo de preferencias no está vacío, creamos un objeto con los intereses
     const interests: Record<string, boolean> = {};
+    // Obtenemos los intereses del grupo solo si se han seleccionado preferencias
     if (form.preferences) {
-      // Obtenemos los intereses del grupo, actualmente solo se utiliza una categoría
       const group = await getInterests();
       let actualPreference = 0;
       for (let i = 0; i < group.interests.length; i++) {
@@ -85,14 +83,13 @@ const Newsletter = () => {
     // Obtenemos el UID de Firebase aurthentication
     const uuidFB: { uid: string } | null = await fetchGetUidByEmail(form.email);
 
-    // Si existe el usuario en Firebase autentication
+    // Si existe el usuario en Firebase autentication obtenemos el usuario
     if (uuidFB && uuidFB?.uid) {
-      // Obtenemos el usuario de firebase database
       const userFB = await getUserDB(uuidFB.uid);
-
       // Si el usuario tiene angun tag le asignamos el tag al usuario de mailchimp
       if (userFB !== null && userFB.class) tags = userFB.class;
     }
+
     // Creamos el objeto de miembro
     const member: Member = {
       email_address: form.email,
@@ -107,7 +104,7 @@ const Newsletter = () => {
       status_if_new: 'pending',
     };
 
-    // Vericamos si es un valor nulish ("", null, undefined, 0, false, NAN)
+    // Vericamos si es un valor nulish = ("", null, undefined, 0, false, NAN)
     const isFormattedBirthdayValid: boolean = !!formattedBirthday;
     if (isFormattedBirthdayValid)
       member.merge_fields.BIRTHDAY = formattedBirthday;

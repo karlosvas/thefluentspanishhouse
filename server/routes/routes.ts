@@ -8,6 +8,7 @@ const PATH_ROUTER = __dirname;
 const cleanExtension = (file: string) => file.split('.')[0];
 const router = Router();
 
+// Lee todos los archivos en el directorio de rutas para cargarlos y construir el modulo en el controlador
 readdirSync(PATH_ROUTER).forEach((file) => {
   const fileClean = cleanExtension(file);
   const fileExtension = path.extname(file);
@@ -36,4 +37,5 @@ readdirSync(PATH_ROUTER).forEach((file) => {
   }
 });
 
+// Exporta el enrutador para que pueda ser usado en otras partes de la aplicación
 export { router };

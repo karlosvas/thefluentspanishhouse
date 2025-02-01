@@ -1,11 +1,11 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import CommentCard from '@/components/pages-components/publications/CommentCard';
-import { getCommentsByID, postComment } from '@/scripts/render-data';
+import { getCommentsByID, postComment } from '@/services/render-data';
 import { UserContext } from '@/App';
 import { type Comment } from 'types/types';
 import toast from 'react-hot-toast';
-import { isCommentArray } from '@/utilities/utilities-types';
+import { isCommentArray } from '@/utils/utilities-types';
 import '@/styles/comments.css';
 
 const CommentsPublication = () => {

@@ -8,7 +8,7 @@ import Theme from '@/components/header-components/Theme';
 import Settings from '@/components/svg-component/Settings';
 import '@/styles/layouts/header.css';
 import { Link } from 'react-router-dom';
-import { handleClickNavigate } from '@/scripts/navigate';
+import { handleClickNavigate } from '@/utils/navigate';
 
 const Header = () => {
   const [isShrunk, setIsShrunk] = useState<boolean>(false);

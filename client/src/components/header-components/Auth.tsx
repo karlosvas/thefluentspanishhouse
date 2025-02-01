@@ -6,15 +6,15 @@ import {
   localRegister,
   localSignin,
   signInWithFacebook,
-} from '@/scripts/oauth2-0';
-import { toggleFormType } from '@/scripts/modal';
+} from '@/services/oauth2-0';
+import { toggleFormType } from '@/utils/modal';
 import Button from '@/components/reusable/Button';
 import ShowPassword from '@/components/reusable/ShowPassword';
 import { UserContext } from '@/App';
 import ButtonClose from '@/components/reusable/ButtonClose';
 import Backdrop from '@/components/reusable/Backdrop';
 import { NavigateFunction, useNavigate } from 'react-router';
-import { forgotPasword, handleInputChange } from '@/utilities/utilities';
+import { forgotPasword, handleInputChange } from '@/utils/utilities';
 import '@/styles/modal-auth.css';
 
 const Auth = () => {

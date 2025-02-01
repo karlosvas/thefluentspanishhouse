@@ -22,7 +22,7 @@ import Main from './pages/Main';
 import { HelmetProvider } from 'react-helmet-async';
 import AdminPanel from './layouts/AdminPanel';
 import Theme from './components/header-components/Theme';
-import { getAdmin, getTheme } from './utilities/utilities';
+import { getAdmin, getTheme } from './utils/utilities';
 import { type ThemeContextType } from 'types/types';
 import { initializeUrls } from './constants/global';
 
@@ -118,6 +118,7 @@ const App = () => {
       <UserContext.Provider value={user}>
         <ThemeContext.Provider value={{ theme, setTheme }}>
           <HelmetProvider>
+            {/* Si no se renderiza en su lugar se muestra el icono de cambiar thema */}
             {!shouldHideHeaderFooter ? (
               <Header />
             ) : (

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { isLogged } from '@/scripts/oauth2-0';
+import { isLogged } from '@/services/oauth2-0';
 import SettingsSVG from '@/assets/svg/settings.svg';
 import toast from 'react-hot-toast';
 

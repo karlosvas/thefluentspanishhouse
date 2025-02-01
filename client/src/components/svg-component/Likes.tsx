@@ -1,5 +1,5 @@
 import { UserContext } from '@/App';
-import { updateLikes } from '@/scripts/render-data';
+import { updateLikes } from '@/services/render-data';
 import { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { type Comment } from 'types/types';

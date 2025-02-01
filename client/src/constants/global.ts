@@ -1,5 +1,6 @@
 const env = import.meta.env.VITE_VERCEL_ENV;
 
+// Obteniendo la URL de localhost
 const getLocalhostUrl = async (): Promise<string> => {
   if (env !== 'production' && env !== 'preview') {
     for (let i = 0; i <= 10; i++) {
@@ -19,22 +20,22 @@ const getLocalhostUrl = async (): Promise<string> => {
   return 'http://localhost:8080';
 };
 
+// Inicializando las URLs de la API y el cliente
 let url_api: string;
 let url_client: string;
-
 const initializeUrls = async () => {
   url_api =
     env === 'production'
-      ? import.meta.env.VITE_URL_API
+      ? 'https://api.thefluentspanishhouse.com/'
       : env === 'preview'
-        ? import.meta.env.VITE_URL_API_TEST
+        ? 'https://api.thefluentspanishhouse-server-git-testing-karlosvas-projects.com/'
         : await getLocalhostUrl();
 
   url_client =
     env === 'production'
-      ? import.meta.env.VITE_URL_CLIENT
+      ? 'https://thefluentspanishhouse.com/'
       : env === 'preview'
-        ? import.meta.env.VITE_URL_CLIENT_TEST
+        ? 'https://thefluentspanishhouse-server-git-testing-karlosvas-projects.com/'
         : `http://localhost:5173`;
 };
 

@@ -6,7 +6,7 @@ import {
   type PaginationProps,
 } from 'types/types';
 import { useEffect, useState } from 'react';
-import { getLastPublication } from '@/scripts/render-data';
+import { getLastPublication } from '@/services/render-data';
 
 export const PaginationReactBoostrap: React.FC<PaginationProps> = ({
   page,

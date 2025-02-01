@@ -7,7 +7,7 @@ import ButtonClose from '@/components/reusable/ButtonClose';
 import {
   delatePublication,
   putCommentPublication,
-} from '@/scripts/render-data';
+} from '@/services/render-data';
 import toast from 'react-hot-toast';
 import Backdrop from '@/components/reusable/Backdrop';
 import {
@@ -15,7 +15,7 @@ import {
   type PublicationCardType,
 } from 'types/types';
 import '@/styles/reusables/edit.css';
-import { getAdmin } from '@/utilities/utilities';
+import { getAdmin } from '@/utils/utilities';
 
 const CardPublicationBlog: React.FC<CardsPublicationBlogProps> = ({
   cardsBlog,

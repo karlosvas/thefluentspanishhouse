@@ -1,9 +1,9 @@
 import CardPublicationBlog from '@/components/pages-components/blog/CardPublicationBlog';
 import FormPublication from '@/components/pages-components/blog/FormPublication';
-import { handleChangeModal } from '@/scripts/modal';
+import { handleChangeModal } from '@/utils/modal';
 import PaginationReactBoostrap from '@/components/pages-components/blog/Pagination';
 import { useEffect, useRef, useState } from 'react';
-import { getPublications } from '@/scripts/render-data';
+import { getPublications } from '@/services/render-data';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router';
 import { type PublicationCardType } from 'types/types';
