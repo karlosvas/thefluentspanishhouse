@@ -4,9 +4,9 @@ dotenv.config();
 import { connectDB } from './mongodb/mongodb.js';
 import express from 'express';
 import cors from 'cors';
-import { router } from '../routes/routes.js';
-import admin from '../lib/firebase/firebase-config.js';
+import router from '../routes/routes.js';
 import { startServer } from './utils.js';
+import admin from '../lib/firebase/firebase-config.js';
 
 // Extendemos el límite para que pueda almacenar imagenes en base64
 async function inicializeApp() {
@@ -17,22 +17,23 @@ async function inicializeApp() {
     'https://thefluentspanishhouse-client-git-testing-karlosvas-projects.com',
     /^http:\/\/localhost(:\d+)?$/,
   ];
+
   // Configuración global de CORS
   app.use(
     cors({
       origin: function (origin, callback) {
-        if (
-          !origin ||
-          allowedOrigins.some((allowedOrigin) =>
-            allowedOrigin instanceof RegExp
-              ? allowedOrigin.test(origin)
-              : allowedOrigin === origin
-          )
-        ) {
-          callback(null, true);
-        } else {
-          callback(new Error('Not allowed by CORS'));
-        }
+        // Si no hay origen (ej: misma origen) o es una solicitud local
+        if (!origin) return callback(null, true);
+        // Verifica si el origen comienza con las URLs permitidas
+        const isAllowedDomain = allowedOrigins.some((allowed) => {
+          if (allowed instanceof RegExp) {
+            return allowed.test(origin);
+          }
+          return origin.startsWith(allowed);
+        });
+
+        if (isAllowedDomain) return callback(null, true);
+        callback(new Error('Not allowed by CORS'));
       },
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],

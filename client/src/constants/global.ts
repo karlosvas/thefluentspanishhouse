@@ -26,16 +26,16 @@ let url_client: string;
 const initializeUrls = async () => {
   url_api =
     env === 'production'
-      ? 'https://api.thefluentspanishhouse.com/'
+      ? 'https://api.thefluentspanishhouse.com'
       : env === 'preview'
-        ? 'https://api.thefluentspanishhouse-server-git-testing-karlosvas-projects.com/'
+        ? 'https://api.thefluentspanishhouse-server-git-testing-karlosvas-projects.com'
         : await getLocalhostUrl();
 
   url_client =
     env === 'production'
-      ? 'https://thefluentspanishhouse.com/'
+      ? 'https://thefluentspanishhouse.com'
       : env === 'preview'
-        ? 'https://thefluentspanishhouse-server-git-testing-karlosvas-projects.com/'
+        ? 'https://thefluentspanishhouse-server-git-testing-karlosvas-projects.com'
         : `http://localhost:5173`;
 };
 

@@ -16,7 +16,7 @@ import { getUserDB } from '@/services/firebase-db';
 import '@/styles/main-newsettler.css';
 
 const Newsletter = () => {
-  // Estado del formulario de suscripción
+  // Estado del formulario de suscripción, para mostrar el icono de requerido
   const [subscribed, setSubscribed] = useState(false);
   // Estado del formulario de suscripción
   const [form, setForm] = useState<NesletterType>({
@@ -37,6 +37,7 @@ const Newsletter = () => {
   // Función para enviar el formulario de suscripción
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubscribed(true);
 
     // Verificando que todos los campos estén completos, cumpleaños y preferencias opcionales
     for (const [key, value] of Object.entries(form)) {
@@ -52,7 +53,6 @@ const Newsletter = () => {
     }
 
     // Animación de boton de suscripción, procesando suscripcion
-    setSubscribed(true);
     toast.loading('Processing your subscription...');
 
     // Si el campo de cumpleaños no está vacío, formateamos la fecha de nacimiento
@@ -114,6 +114,18 @@ const Newsletter = () => {
 
     // Enviando la suscripción a la API de Mailchimp
     await submitSubscriptionMailchimp(member);
+
+    setForm({
+      email: '',
+      name: '',
+      surnames: '',
+      birthday: '',
+      preferences: [],
+      privacy: false,
+      newsletter: false,
+      mailchimp: false,
+    });
+    setSubscribed(false);
 
     // Descargar lead managment
     if (leadmanagment.current) {

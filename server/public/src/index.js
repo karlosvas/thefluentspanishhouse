@@ -4,26 +4,33 @@ dotenv.config();
 import { connectDB } from './mongodb/mongodb.js';
 import express from 'express';
 import cors from 'cors';
-import { router } from '../routes/routes.js';
-import net from 'net';
+import router from '../routes/routes.js';
+import { startServer } from './utils.js';
 // Extendemos el límite para que pueda almacenar imagenes en base64
 async function inicializeApp() {
     const app = express();
     // Origenes permitidos
     const allowedOrigins = [
-        process.env.URL_WEB,
+        'https://thefluentspanishhouse.com',
+        'https://thefluentspanishhouse-client-git-testing-karlosvas-projects.com',
         /^http:\/\/localhost(:\d+)?$/,
-        process.env.URL_WEB_TEST,
     ];
     // Configuración global de CORS
     app.use(cors({
         origin: function (origin, callback) {
-            if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-                callback(null, true);
-            }
-            else {
-                callback(new Error('Not allowed by CORS'));
-            }
+            // Si no hay origen (ej: misma origen) o es una solicitud local
+            if (!origin)
+                return callback(null, true);
+            // Verifica si el origen comienza con las URLs permitidas
+            const isAllowedDomain = allowedOrigins.some((allowed) => {
+                if (allowed instanceof RegExp) {
+                    return allowed.test(origin);
+                }
+                return origin.startsWith(allowed);
+            });
+            if (isAllowedDomain)
+                return callback(null, true);
+            callback(new Error('Not allowed by CORS'));
         },
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization'],
@@ -41,7 +48,7 @@ async function inicializeApp() {
         throw new Error('Error connecting to the database');
     }
     // Enpoint de bienvenida
-    app.get('/', (req, res) => {
+    app.get('/', (_req, res) => {
         res.send('Welcome to thefluentespnaishouse server');
     });
     // Rutas de la aplicación
@@ -52,7 +59,7 @@ async function inicializeApp() {
             const previewUrl = process.env.VERCEL_URL;
             if (!previewUrl)
                 throw new Error('VERCEL_URL no está definida');
-            res.send(previewUrl);
+            res.json({ url: previewUrl });
         }
         catch (error) {
             res
@@ -61,58 +68,13 @@ async function inicializeApp() {
         }
     });
     // Si es development y preview asignamos el puerto disponible a partir de 8080
+    const PORT_BACKEND = process.env.PORT || 8080;
     if (process.env.NODE_ENV !== 'production') {
-        const PORT_BACKEND = 8080;
-        // Creamos una funcion flecha que devuelbe una promesa
-        const checkPort = (port) => {
-            return new Promise((resolve, reject) => {
-                // Creamos un servidor con net nativo de (NodeJS)
-                const server = net.createServer();
-                // Intentar escuchar en el puerto
-                server.listen(port);
-                // Verificamos si el puerto esta en uso si lo esta devuleve false, si ocurre un error lo rechaza
-                server.once('error', (err) => {
-                    if (err.code === 'EADDRINUSE') {
-                        resolve(false);
-                    }
-                    else {
-                        reject(err);
-                    }
-                });
-                // Si el puerto esta libre lo cerramos y resolvemos la promesa
-                server.once('listening', () => {
-                    server.close();
-                    resolve(true);
-                });
-            });
-        };
-        const startServer = async (port) => {
-            // Encontramos un puerto libre de [8080, 8090]
-            if (port > 8090) {
-                console.log('No ports available');
-                return;
-            }
-            // Encontra un puerto libre y se lo asigna al servidor, si no encuentra uno libre lo asigna al siguiente
-            const isPortFree = await checkPort(port);
-            if (isPortFree) {
-                app.listen(port, () => {
-                    console.log(`Server running: http://localhost:${port}`);
-                });
-            }
-            else {
-                console.log(`Port ${port} is in use, please choose another port.`);
-                startServer(port + 1);
-            }
-        };
-        startServer(PORT_BACKEND).catch((error) => {
-            console.error('Error starting the server:', error);
-        });
+        // Creamos el servidor en el puerto disponible entre el 8080 y el 9000
+        startServer(8080, app).catch((error) => console.error('Error starting the server:', error));
     }
     else {
-        const PORT_BACKEND = 8080;
-        app.listen(PORT_BACKEND, () => {
-            console.log(`Server runing: http://localhost:${PORT_BACKEND}`);
-        });
+        app.listen(PORT_BACKEND, () => console.log(`Server running: http://localhost:${PORT_BACKEND}`));
     }
 }
 inicializeApp().catch((error) => {

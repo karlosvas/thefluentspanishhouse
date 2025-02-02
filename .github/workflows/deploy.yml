@@ -61,7 +61,7 @@ jobs:
       - name: Install backend dependencies
         run: |
           npm install
-          npx playwright install --with-deps
+          npx playwright install --with-deps > /dev/null 2>&1
         working-directory: ./server
 
       # Ejecutamos los test para asegurarnos que todo está en orden
