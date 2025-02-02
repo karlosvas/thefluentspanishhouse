@@ -24,8 +24,8 @@ const AboutMe = () => {
               areaLabel="Imagen decorativa de un escritorio con libros y café"
             >
               I was born and raised in Valladolid, two hundred kilometers from
-              Madrid. My city is renowned chiefly for three historical events:{' '}
-              <br />
+              Madrid. <br />
+              My city is renowned chiefly for three historical events: <br />
               <br />
               <ul>
                 <li>The marriage of the Catholic Monarchs in 1462.</li>

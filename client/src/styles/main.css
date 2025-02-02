@@ -40,7 +40,7 @@
       align-items: center;
       flex-direction: row-reverse;
       .banner {
-        height: 50vh;
+        height: 60vh;
         border-radius: 3px;
         object-fit: contain;
         object-position: bottom;
