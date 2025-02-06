@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
+import '@/styles/main-carrousel.css';
 
 function ControlledCarousel() {
   const [index, setIndex] = useState(0);

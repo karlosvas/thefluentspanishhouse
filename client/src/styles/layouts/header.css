@@ -5,9 +5,11 @@ header {
   width: 100%;
   z-index: 500;
   box-sizing: border-box;
+  height: 10vh;
+  min-height: 60px;
 
   .header-animation {
-    height: 10vh;
+    height: 100%;
     transition: height 0.3s ease;
 
     .header {
@@ -120,11 +122,13 @@ header {
 header #sect {
   position: absolute;
   top: 0;
+  height: 10vh;
+  min-height: 70px;
   .waves {
+    height: 100%;
     transition: height 0.3s ease;
     position: relative;
     opacity: 0.7;
-    height: 10vh;
     .wave {
       position: absolute;
       left: 0;

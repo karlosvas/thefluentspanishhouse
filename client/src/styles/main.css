@@ -210,64 +210,6 @@
       }
     }
   }
-  .main-reviews {
-    animation: reveal linear both;
-    animation-timeline: view();
-    animation-range: entry 20% cover 30%;
-    padding-bottom: 100px;
-    h2 {
-      font-family: 'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial,
-        sans-serif;
-      text-align: center;
-      padding: 20px 40px;
-      font-weight: 600;
-    }
-    .main-carrousel {
-      background-color: var(--secondary-white);
-      width: 100vw;
-      height: 40vh;
-      #carrousel {
-        width: 40vw;
-        height: 100%;
-        margin: 0 auto;
-        position: relative;
-        .content-caption {
-          height: 40vh;
-          border-radius: 5px;
-          .caption {
-            width: 60%;
-            height: 100%;
-            margin: auto;
-            margin-bottom: 0px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            font-size: 18px;
-            h3 {
-              padding-top: 10px;
-              font-family: 'Roboto Slab', Inter, system-ui, Avenir, Helvetica,
-                Arial;
-              font-weight: 600;
-              z-index: 1;
-            }
-            p {
-              position: relative;
-              max-height: 12em;
-              overflow: hidden;
-              line-height: 1.5em;
-              width: 100%;
-              display: -webkit-box;
-              -webkit-box-orient: vertical;
-              line-height: 1.5em;
-              z-index: 0;
-              white-space: normal;
-            }
-          }
-        }
-      }
-    }
-  }
 }
 
 /* Portátiles and Tablets */
@@ -279,16 +221,6 @@
     .main-content {
       .planta.rigth {
         right: -10%;
-      }
-    }
-    .main-reviews .main-carrousel {
-      #carrousel {
-        width: 70vw;
-        .content-caption {
-          .caption {
-            top: 35%;
-          }
-        }
       }
     }
   }
@@ -360,20 +292,6 @@
           min-height: 0;
           border-top: 1px solid #ddd;
           box-shadow: none;
-        }
-      }
-    }
-    .main-reviews .main-carrousel {
-      #carrousel {
-        width: 100vw;
-        .content-caption {
-          .caption {
-            width: 70%;
-            padding: 10px 0;
-            p {
-              font-size: 15px;
-            }
-          }
         }
       }
     }
