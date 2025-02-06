@@ -49,7 +49,7 @@ const Prices = () => {
           <div className="card-pracing">
             <h3>One-to-one classes</h3>
             <div className="price-classes ">
-              <h1>From 20€</h1>
+              <h1>From 21€</h1>
               <small>/ hour</small>
             </div>
             <ul>

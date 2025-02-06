@@ -23,8 +23,14 @@ const Likes = ({ comment }: { comment: Comment }) => {
       setLikes(likes + 1);
     }
 
-    if (uid_user_firebase)
-      await updateLikes(uid_user_firebase, comment._id, likes);
+    if (uid_user_firebase && user.email)
+      await updateLikes(
+        uid_user_firebase,
+        comment._id,
+        likes,
+        window.location.href,
+        user.email
+      );
 
     setIsActiveLike(!isActiveLike);
   };

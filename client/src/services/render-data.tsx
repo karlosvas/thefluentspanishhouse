@@ -171,11 +171,19 @@ export const submitNote = async (newNote: NoteType) => {
 export const updateLikes = async (
   uid_user_firebase: string,
   _id: string,
-  likes: number
+  likes: number,
+  originUrl: string,
+  like_from: string
 ) => {
   try {
     await helper.put(`${url_api}/comments/likes`, {
-      body: JSON.stringify({ uid_user_firebase, _id, likes }),
+      body: JSON.stringify({
+        uid_user_firebase,
+        _id,
+        likes,
+        originUrl,
+        like_from,
+      }),
     });
   } catch (error) {
     console.error('Error to submit post', error);

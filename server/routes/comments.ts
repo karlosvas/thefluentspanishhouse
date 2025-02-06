@@ -125,7 +125,7 @@ router.put(
   log,
   verifyIdToken,
   async (req: Request, res: Response) => {
-    const { uid_user_firebase, _id, likes, originUrl } = req.body;
+    const { uid_user_firebase, _id, likes, originUrl, like_from } = req.body;
     if (likes === undefined || likes === null || !uid_user_firebase || !_id)
       return res.status(400).json({ error: 'Los campos son requeridos' });
 
@@ -152,7 +152,7 @@ router.put(
         };
 
         // Avisamos al administrador de la web del nuevo like
-        await submitLikeComment(note, originUrl);
+        await submitLikeComment(note, originUrl, like_from);
       }
 
       const updatedComment = await comment.save();
