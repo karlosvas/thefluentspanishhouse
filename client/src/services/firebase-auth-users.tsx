@@ -10,6 +10,7 @@ import {
 import toast from 'react-hot-toast';
 import { NavigateFunction } from 'react-router-dom';
 import { auth, showMessageErrorFirebase } from './firebase-config';
+import { isValidEmail } from '@/utils/validations';
 
 // Cambiar opciones de usuario
 export const changeOptionsUser = async (
@@ -29,9 +30,8 @@ export const changeOptionsUser = async (
   ) {
     toast.loading('Updating user...');
 
-    const RAGEXEMAIL = /^[^@]+@gmail\.com$/;
     // Verificar si el comentario es un email
-    if (RAGEXEMAIL.test(commentText)) {
+    if (isValidEmail(commentText)) {
       const newEmail: string = commentText;
       // Pasamos al usuario a la página de verificación
       navigate('/verify', { state: { email: newEmail } });

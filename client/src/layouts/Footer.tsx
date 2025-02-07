@@ -53,7 +53,7 @@ function Footer() {
             The Fluent Spanish House
           </a>
         </section>
-        <section>© 2024 The Fluent Spanish House</section>
+        <section>© 2025 The Fluent Spanish House</section>
         {window.innerWidth >= 766 && (
           <section>
             <nav>

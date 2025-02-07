@@ -3,7 +3,6 @@ import {
   browserLocalPersistence,
   getAuth,
   setPersistence,
-  User,
 } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 import toast from 'react-hot-toast';
@@ -19,8 +18,8 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
+// Creamos la configuracion de Firebase
 export default firebaseConfig;
-
 const firebaseApp = initializeApp(firebaseConfig);
 export const auth = getAuth(firebaseApp);
 export const dbFirebase = getDatabase(firebaseApp);
@@ -36,24 +35,6 @@ export const setupAuthPersistence = async () => {
     );
   }
 };
-
-// Obtiene el proveedor de autenticación del usuario actual
-export function getProvider(user: User) {
-  const providerId = user.providerData[0].providerId;
-  let providerName = '';
-  switch (providerId) {
-    case 'google.com':
-      providerName = 'Google';
-      break;
-    case 'facebook.com':
-      providerName = 'Facebook';
-      break;
-    default:
-      providerName = providerId;
-      break;
-  }
-  return providerName;
-}
 
 // Muestra un mensaje de error de Firebase
 export const showMessageErrorFirebase = (error: unknown) => {

@@ -1,20 +1,25 @@
-import { type ErrorResponseHelper } from 'types/types';
+import { type FetchResponse, type ErrorResponseHelper } from 'types/types';
 
-type FetchResponse = unknown | Blob | FormData | string | ErrorResponseHelper;
-
+// Función para manejar las peticiones a la API
 const Helper = () => {
+  // Fetch personalizado
   const customFetch = async (
     endpoint: string,
     options: RequestInit = {}
   ): Promise<FetchResponse> => {
+    // Obtenemos el token de la sesión o el token por defecto si no hay sesión del usuario
     const token =
       localStorage.getItem('token') || import.meta.env.VITE_DEFAULT_TOKEN;
 
+    // Cabeceras por defecto
     const defaultHeader = {
       accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     };
+
+    // Opciones de la petición, por defecto en caso de no haber opciones
+    // Si no hay señal, creamos una nueva señal de aborto
 
     options.signal = options.signal || new AbortController().signal;
     options.method = options.method || 'GET';
@@ -25,25 +30,28 @@ const Helper = () => {
         : options.body;
 
     return fetch(endpoint, options)
-      .then((res) => {
+      .then(async (res) => {
+        // Si la respuesta no es correcta, lanzamos un error
         if (!res.ok) {
-          return res.text().then((text) => {
-            let message;
-            try {
-              message = JSON.parse(text);
-            } catch (parseError) {
-              message = { message: text };
-            }
-            throw {
-              err: true,
-              status: res.status || '00',
-              statusText: res.statusText || 'Ocurrió un Error personalizado',
-              message,
-            } as ErrorResponseHelper;
-          });
+          // Obtenemos el mensaje de error si no es posible, mostramos un mensaje por defecto
+          const text = await res.text();
+          let message;
+          try {
+            message = JSON.parse(text);
+          } catch (parseError) {
+            message = { message: text };
+          }
+          // Lanzamos el error
+          throw {
+            err: true,
+            status: res.status || '00',
+            statusText: res.statusText || 'Ocurrió un Error personalizado',
+            message,
+          } as ErrorResponseHelper;
         }
-        const contentType = res.headers.get('content-type');
 
+        // Obtenemos el tipo de contenido de la respuesta
+        const contentType = res.headers.get('content-type');
         if (contentType) {
           if (contentType.includes('application/json')) {
             return res.json();
@@ -62,10 +70,14 @@ const Helper = () => {
         }
       })
       .catch((error) => {
+        error.name === 'AbortError'
+          ? console.log('Fetch abortado')
+          : console.error('Error en la petición fetch', error);
         throw error;
       });
   };
 
+  // Métodos de petición
   const get = async (url: string, options: RequestInit = {}) => {
     return await customFetch(url, options);
   };

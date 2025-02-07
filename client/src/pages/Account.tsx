@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router';
 import toast from 'react-hot-toast';
 import { UserContext } from '@/App';
 import Button from '@/components/reusable/Button';
-import { getProvider } from '@/services/firebase-config';
+import { getProvider } from '@/utils/utilities';
 import '@/styles/main-account.css';
 import { Helmet } from 'react-helmet-async';
 import { forgotPasword, handleInputChange } from '@/utils/utilities';
 import { changeOptionsUser } from '@/services/firebase-options-users';
 import { sendEmailVerificationFirebase } from '@/services/oauth2-0';
+import { isPasswordProvider } from '@/utils/validations';
 
 const Account = () => {
   // Navegación de React Router
@@ -31,11 +32,12 @@ const Account = () => {
   // Manejar el evento de los SVG
   const handleSVG = (index: number) => {
     // Si el usuario no está autenticado con contraseña, no puede cambiar la configuración de la cuenta
-    if (
-      user?.providerData.some((provider) => provider.providerId !== 'password')
-    ) {
+    if (user && !isPasswordProvider(user)) {
       toast.error(
-        `The user authenticated with ${getProvider(user)} cannot change the account settings of some options`
+        `The user authenticated with ${getProvider(user)} cannot change the account settings of some options.`,
+        {
+          duration: 10000,
+        }
       );
       return;
     }
@@ -94,7 +96,8 @@ const Account = () => {
   };
 
   // Si el usuario existe, mostramos la interfaz de usuario, si no redirigimos al usuario a la página de errores
-  if (user) {
+  if (!user) navigate('/404');
+  else {
     return (
       <>
         <Helmet>
@@ -153,27 +156,6 @@ const Account = () => {
                     state={svgState[1]}
                   />
                 </li>
-                {/* <li>
-              Phone
-              <input
-                type="text"
-                name="phone"
-                value={configUser.phone}
-                onChange={handleInputChange}
-                disabled={!svgState[2]}
-                style={{
-                  backgroundColor: svgState[2]
-                    ? "transparent"
-                    : "rgba(128, 128, 128, 0.5)",
-                    }}
-              />
-              <Edit
-                commentText={configUser.phone}
-                event={manejarClickSVG}
-                index={2}
-                state={svgState[2]}
-                />
-                </li> */}
               </ul>
               <div className="action-btn">
                 <Button
@@ -242,8 +224,6 @@ const Account = () => {
         </main>
       </>
     );
-  } else {
-    navigate('/404');
   }
 };
 

@@ -142,6 +142,13 @@ export interface Comment {
   answers: Comment[];
 }
 
+export type FetchResponse =
+  | unknown
+  | Blob
+  | FormData
+  | string
+  | ErrorResponseHelper;
+
 export interface UserContextType {
   user: User | null;
 }

@@ -1,10 +1,10 @@
-import { getProvider } from '@/services/firebase-config';
 import { resetPassword } from '@/services/firebase-options-users';
 import { User } from 'firebase/auth';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
 import { type NavigateFunction } from 'react-router';
 import { type ErrorResponseHelper, type OptionsChampTag } from 'types/types';
+import { isPasswordProvider } from './validations';
 
 // Función para manejar el cambio en los formularios
 // Tipo objeto string: desconocido, donde el desconocido puede ser cualquier tipo de valor, el evento puede ser input o textarea, y el setter de react puede ser cualquier tipo de dato.
@@ -33,15 +33,12 @@ export const forgotPasword = (
   navigate: NavigateFunction
 ) => {
   if (user && user.email) {
-    const currentProviderId = getProvider(user);
-
-    if (currentProviderId === 'password') resetPassword(user.email, navigate);
+    if (isPasswordProvider(user)) resetPassword(user.email, navigate);
     else {
-      toast(
+      toast.error(
         `Can not reset password for accounts authenticated with ${getProvider(user)}.`,
         {
           duration: 10000,
-          icon: '🔔',
         }
       );
     }
@@ -95,4 +92,22 @@ export function getAdmin(user: User | null) {
   return import.meta.env.VITE_ADMINS.split(',').includes(
     user?.email?.split('@')[0]
   );
+}
+
+// Obtiene el proveedor de autenticación del usuario actual
+export function getProvider(user: User) {
+  const providerId = user.providerData[0].providerId;
+  let providerName = '';
+  switch (providerId) {
+    case 'google.com':
+      providerName = 'Google';
+      break;
+    case 'facebook.com':
+      providerName = 'Facebook';
+      break;
+    default:
+      providerName = providerId;
+      break;
+  }
+  return providerName;
 }

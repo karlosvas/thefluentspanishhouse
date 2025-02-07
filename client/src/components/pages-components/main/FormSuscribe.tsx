@@ -13,7 +13,7 @@ import { saveUser } from '@/services/firebase-db';
 import { UserContext } from '@/App';
 import toast from 'react-hot-toast';
 import { isMember } from '@/utils/utilities-types';
-import { isValidEmail } from '@/utils/validateEmail';
+import { isValidEmail } from '@/utils/validations';
 import { type FormSuscriberProps, type SubscriberType } from 'types/types';
 
 const FormSuscribe: React.FC<FormSuscriberProps> = ({

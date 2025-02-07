@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node public/src/index.js",
     "dev": "node --loader ts-node/esm src/index.js",
-    "test": "npm run build && playwright test",
+    "test": "playwright test",
+    "dev:test": "npm run build && playwright test",
     "build": "tsc"
   },
   "dependencies": {

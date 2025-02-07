@@ -10,7 +10,7 @@ import {
 } from '@/services/render-data';
 import { handleInputChange } from '@/utils/utilities';
 import MultiSelectTag from '@/components/reusable/MultiSelectTag';
-import { isValidEmail } from '@/utils/validateEmail';
+import { isValidEmail } from '@/utils/validations';
 import { OptionsChampTag, type Member, type NesletterType } from 'types/types';
 import { getUserDB } from '@/services/firebase-db';
 import '@/styles/main-newsettler.css';

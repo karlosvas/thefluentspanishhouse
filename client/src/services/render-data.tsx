@@ -135,8 +135,6 @@ export const postPublication = async (
 
 export const subscribeNewsletter = async (email: string) => {
   try {
-    console.log('petición', `${url_api}/mailchamp/newsletter`);
-    console.log(url_api);
     await helper.post(`${url_api}/mailchamp/newsletter`, {
       body: JSON.stringify({ email }),
     });
@@ -255,7 +253,6 @@ export const delatePublication = async (id: string) => {
 };
 
 export const deleteComment = async (id: string) => {
-  console.log('id', id);
   await helper
     .del(`${url_api}/comments/del/${id}`)
     .catch((error) => console.error('Error to delete publication', error));

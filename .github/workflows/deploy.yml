@@ -6,6 +6,7 @@ on:
       - main
 
 jobs:
+  # Construimos el frontend y lo subimos a los artifacts
   build-frontend:
     runs-on: ubuntu-22.04
     steps:
@@ -25,6 +26,7 @@ jobs:
           name: frontend-build
           path: ./client/dist
 
+  # Construimos el backend y lo subimos a los artifacts
   build-backend:
     runs-on: ubuntu-22.04
     steps:
@@ -44,6 +46,7 @@ jobs:
           name: backend-build
           path: ./server/public
 
+  # Ejecutamos los tests de Playwright en el backend
   test-backend:
     needs: [build-frontend, build-backend]
     runs-on: ubuntu-22.04
