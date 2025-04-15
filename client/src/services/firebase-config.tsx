@@ -37,11 +37,7 @@ export const setupAuthPersistence = async () => {
 };
 
 // Muestra un mensaje de error de Firebase
-export const showMessageErrorFirebase = (error: unknown) => {
-  if (!(error instanceof FirebaseError)) {
-    toast.error(`An unexpected error occurred: ${error}`);
-    return;
-  }
+export const showMessageErrorFirebase = (error: FirebaseError) => {
   switch (error.code) {
     case 'auth/email-already-in-use':
       toast.error('The email address is already in use by another account.');
@@ -132,9 +128,6 @@ export const showMessageErrorFirebase = (error: unknown) => {
       break;
     case 'auth/internal-error':
       toast.error('An internal error has occurred. Please try again.');
-      break;
-    default:
-      toast.error(`An unexpected error occurred: ${error.message}`);
       break;
   }
 };

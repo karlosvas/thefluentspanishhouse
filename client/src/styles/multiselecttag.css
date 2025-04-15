@@ -29,8 +29,8 @@
     align-items: center;
     position: relative;
     --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --tw-shadow-color: 0 1px 3px 0 var(--tw-shadow-color),
-      0 1px 2px -1px var(--tw-shadow-color);
+    --tw-shadow-color:
+      0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
     --border-color: rgb(75, 75, 75);
     font-family: Verdana, sans-serif;
   }
@@ -132,6 +132,7 @@
     margin: 0.2rem;
     font-weight: 500;
     border: 1px solid rgb(51, 100, 236) !important;
+    background-color: transparent !important;
     border-radius: 9999px;
   }
   .mult-select-tag .item-label {
@@ -158,8 +159,9 @@
     display: none;
   }
   .mult-select-tag .shadow {
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-      var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    box-shadow:
+      var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+      var(--tw-shadow);
   }
   .mult-select-tag .rounded {
     border-radius: 0.375rem;

@@ -69,7 +69,7 @@ const Profile = () => {
           alt="Image of decorative plants right"
         />
         <div className="achievements-section">
-          <h2>What you can achive with my assitence?</h2>
+          <h2>What can you achieve with my assistance?</h2>
           <ul>
             <li>
               <h4>An effective focus on the top priorities:</h4>

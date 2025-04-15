@@ -11,6 +11,7 @@ import {
 } from 'firebase/auth';
 import { toast } from 'react-hot-toast';
 import { auth, showMessageErrorFirebase } from './firebase-config';
+import { FirebaseError } from 'firebase/app';
 
 // Verificar si actualmente está logeado
 export const isLogged = () => {
@@ -53,8 +54,8 @@ export async function localSignin(email: string, password: string) {
     } else {
       await sendEmailVerificationFirebase(user);
     }
-  } catch (error) {
-    showMessageErrorFirebase(error);
+  } catch (error: unknown) {
+    if (error instanceof FirebaseError) showMessageErrorFirebase(error);
   }
 }
 
@@ -87,8 +88,8 @@ export async function localRegister(
     } else {
       await sendEmailVerificationFirebase(user);
     }
-  } catch (error) {
-    showMessageErrorFirebase(error);
+  } catch (error: unknown) {
+    if (error instanceof FirebaseError) showMessageErrorFirebase(error);
   }
 }
 
@@ -149,8 +150,8 @@ export const sendEmailVerificationFirebase = async (user: User) => {
         icon: '🔔',
       }
     );
-  } catch (error) {
-    showMessageErrorFirebase(error);
+  } catch (error: unknown) {
+    if (error instanceof FirebaseError) showMessageErrorFirebase(error);
     toast.dismiss();
     toast.error('Error sending verification email');
   }

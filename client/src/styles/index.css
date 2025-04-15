@@ -189,7 +189,6 @@ html.dark {
             }
           }
           .item-container {
-            background-color: var(--primary-black) !important;
             color: var(--primary-white) !important;
           }
 

@@ -87,8 +87,9 @@
         text-align: center;
 
         h1 {
-          font-family: 'Roboto Slab', Inter, system-ui, Avenir, Helvetica,
-            Arial, sans-serif;
+          font-family:
+            'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial,
+            sans-serif;
           margin-bottom: 50px;
           font-weight: bold;
         }

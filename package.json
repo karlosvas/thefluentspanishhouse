@@ -2,6 +2,10 @@
   "name": "thefluentspanishhouse",
   "version": "1.0.0",
   "description": "Welcome to the official website of Marta, your trusted Spanish teacher. Here you'll find all the necessary information about her classes, prices, and teaching methods.  \r **Official URL: https://thefluentspanishhouse.com**",
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
     "format": "prettier --check .",
