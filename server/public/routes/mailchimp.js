@@ -42,9 +42,11 @@ router.get('/groupscategory', log, verifyIdToken, async (req, res) => {
     });
 });
 // Obtener el grupo de los intereses especificos
-router.get('/get/interests', log, verifyIdToken, async (req, res) => {
-    if (!groupId)
-        return res.status(400).send('groupID is required');
+router.get('/get/interests', log, verifyIdToken, async (_req, res) => {
+    if (!groupId) {
+        res.status(400).send('groupID is required');
+        return;
+    }
     mailchimp.lists
         .listInterestCategoryInterests(listId, groupId)
         .then((response) => {
@@ -86,8 +88,10 @@ router.post('/add/batchcontact', log, verifyIdToken, async (req, res) => {
 // Añadir el nuevo interés
 router.post('/add/interests', log, verifyIdToken, async (req, res) => {
     const { name } = req.body;
-    if (!groupId || !name)
+    if (!groupId || !name) {
         res.status(400).send('Category ID and interest name are required');
+        return;
+    }
     try {
         const response = await addInterestToCategory(groupId, name);
         res.status(201).json(response);

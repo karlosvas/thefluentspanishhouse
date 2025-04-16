@@ -1,18 +1,5 @@
 import { test, expect } from '@playwright/test';
 import { Types } from 'mongoose';
-//####################### GET #######################
-test('/last obtener la última publicacion', async ({ page }) => {
-    const responseLast = await page.goto(`/publications/last`);
-    expect(responseLast?.status()).toBe(200);
-    const data = await responseLast?.json();
-    expect(data).toBeDefined();
-});
-test('/page/:page obtener publicaciones por página', async ({ page }) => {
-    const responseLast = await page.goto(`/publications/page/1`);
-    expect(responseLast?.status()).toBe(200);
-    const data = await responseLast?.json();
-    expect(data).toBeDefined();
-});
 test.describe.serial('Comment tests', () => {
     //####################### POST #######################
     let id_publication;
@@ -39,6 +26,18 @@ test.describe.serial('Comment tests', () => {
         const responseID = await page.goto(`/publications/${id_publication}`);
         expect(responseID?.status()).toBe(200);
         const data = await responseID?.json();
+        expect(data).toBeDefined();
+    });
+    test('/last obtener la última publicacion', async ({ page }) => {
+        const responseLast = await page.goto(`/publications/last`);
+        expect(responseLast?.status()).toBe(200);
+        const data = await responseLast?.json();
+        expect(data).toBeDefined();
+    });
+    test('/page/:page obtener publicaciones por página', async ({ page }) => {
+        const responseLast = await page.goto(`/publications/page/1`);
+        expect(responseLast?.status()).toBe(200);
+        const data = await responseLast?.json();
         expect(data).toBeDefined();
     });
     //####################### PUT #######################

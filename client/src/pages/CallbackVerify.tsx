@@ -15,6 +15,7 @@ import ShowPassword from '@/components/reusable/ShowPassword';
 import { UserContext } from '@/App';
 import { showMessageErrorFirebase } from '@/services/firebase-config';
 import { Helmet } from 'react-helmet-async';
+import { FirebaseError } from 'firebase/app';
 
 export const CallbackVerify = () => {
   // Repuesta del usuario
@@ -45,7 +46,7 @@ export const CallbackVerify = () => {
           await changeOptionsUserEmail(ID.password, navigate, email, user);
         else throw new Error();
       } catch (error) {
-        showMessageErrorFirebase(error);
+        if (error instanceof FirebaseError) showMessageErrorFirebase(error);
       }
     } else if (reset) {
       await resetPassword(response, navigate).catch((error) =>
@@ -64,7 +65,7 @@ export const CallbackVerify = () => {
       if (user) await delateUserFirebase(user, ID.password, navigate);
       else throw new Error();
     } catch (error) {
-      showMessageErrorFirebase(error);
+      if (error instanceof FirebaseError) showMessageErrorFirebase(error);
     }
   }
 

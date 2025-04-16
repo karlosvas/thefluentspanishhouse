@@ -10,7 +10,7 @@ export interface OptionsCommentProps {
   comment: Comment;
   setComments: React.Dispatch<React.SetStateAction<Comment[]>>;
   comments: Comment[];
-  responseComment: React.RefObject<HTMLTextAreaElement>;
+  responseComment: React.RefObject<HTMLTextAreaElement | null>;
   setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
   isEdit: boolean;
 }

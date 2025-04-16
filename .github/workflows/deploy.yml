@@ -6,14 +6,13 @@ on:
       - main
 
 jobs:
-  # Construimos el frontend y lo subimos a los artifacts
   build-frontend:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "21.2.0"
+          node-version: "22"
       - name: Install frontend dependencies
         run: npm install
         working-directory: ./client
@@ -25,15 +24,14 @@ jobs:
         with:
           name: frontend-build
           path: ./client/dist
-
-  # Construimos el backend y lo subimos a los artifacts
+      
   build-backend:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "21.2.0"
+          node-version: "22"
       - name: Install backend dependencies
         run: npm install
         working-directory: ./server
@@ -46,28 +44,20 @@ jobs:
           name: backend-build
           path: ./server/public
 
-  # Ejecutamos los tests de Playwright en el backend
   test-backend:
     needs: [build-frontend, build-backend]
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4 
-
-      # Backend build
-      - name: Download backend build
-        uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          name: backend-build
-          path: ./server/public
-
-      # Instalamos dependencias
-      - name: Install backend dependencies
-        run: |
-          npm install
-          npx playwright install --with-deps > /dev/null 2>&1
+          node-version: "22"
+      - name: Install Playwright Browsers
+        run: npx playwright install
         working-directory: ./server
-
-      # Ejecutamos los test para asegurarnos que todo está en orden
+      - name: Install backend dependencies
+        run: npm install
+        working-directory: ./server
       - name: Run Playwright tests
         run: npm run test
         working-directory: ./server
@@ -93,28 +83,35 @@ jobs:
           FIREBASE_CLIENT_X509_CERT_URL: ${{ secrets.FIREBASE_CLIENT_X509_CERT_URL }}
           FIREBASE_DB: ${{ secrets.FIREBASE_DB }}
 
-  # Desplegamos en vercel
   deploy-both:
     needs: [test-backend]
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
-      
-      # Frontend deployment
       - name: Download frontend build
         uses: actions/download-artifact@v4
         with:
           name: frontend-build
           path: ./client/dist
+      # Frontend deployment
       - name: Deploy frontend
         run: |
           vercel link --yes --project ${{ secrets.FRONTEND_PROJECT_ID }} --scope ${{ secrets.VERCEL_TEAM }} --token=${{ secrets.VERCEL_TOKEN }}
+          ls -la
           vercel --token ${{ secrets.VERCEL_TOKEN }}
         working-directory: ./client
-      
-      # Desplegamos en vercel
+
+      - name: Download backend build
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-build
+          path: ./server/public
+      # Backend deployment
       - name: Deploy backend
         run: |
           vercel link --yes --project ${{ secrets.BACKEND_PROJECT_ID }} --scope ${{ secrets.VERCEL_TEAM }} --token=${{ secrets.VERCEL_TOKEN }}

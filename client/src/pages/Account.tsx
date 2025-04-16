@@ -10,7 +10,7 @@ import '@/styles/main-account.css';
 import { Helmet } from 'react-helmet-async';
 import { forgotPasword, handleInputChange } from '@/utils/utilities';
 import { changeOptionsUser } from '@/services/firebase-options-users';
-import { sendEmailVerificationFirebase } from '@/services/oauth2-0';
+import { sendEmailVerificationFirebase } from '@/services/firebase-auth-users';
 import { isPasswordProvider } from '@/utils/validations';
 
 const Account = () => {

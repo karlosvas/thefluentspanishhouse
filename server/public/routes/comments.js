@@ -8,8 +8,7 @@ import { verifyIdToken, log } from '../middelware/token-logs.js';
 const router = Router();
 // <--------------- GET --------------->
 // Obtener todos los comentarios
-router.get('/all', log, verifyIdToken, async (req, res) => {
-    // El id es el id del comentario padre (parent_id)
+router.get('/all', log, verifyIdToken, async (_req, res) => {
     try {
         // Buscar el comentario padre y obtener sus hijos
         const comments = await modelComment.find().select('data');
@@ -106,13 +105,17 @@ router.post('/children/:id', log, verifyIdToken, async (req, res) => {
 // <--------------- PUT --------------->
 // Actualizar likes de comentarios
 router.put('/likes', log, verifyIdToken, async (req, res) => {
-    const { uid_user_firebase, _id, likes, originUrl } = req.body;
-    if (likes === undefined || likes === null || !uid_user_firebase || !_id)
-        return res.status(400).json({ error: 'Los campos son requeridos' });
+    const { uid_user_firebase, _id, likes, originUrl, like_from } = req.body;
+    if (likes === undefined || likes === null || !uid_user_firebase || !_id) {
+        res.status(400).json({ error: 'Los campos son requeridos' });
+        return;
+    }
     try {
         const comment = await modelComment.findById(_id);
-        if (!comment)
-            return res.status(404).json({ error: 'Comentario no encontrado' });
+        if (!comment) {
+            res.status(404).json({ error: 'Comentario no encontrado' });
+            return;
+        }
         if (comment.likedBy && comment.likedBy.includes(uid_user_firebase)) {
             const index = comment.likedBy.indexOf(uid_user_firebase);
             comment.likedBy.splice(index, 1);
@@ -129,7 +132,7 @@ router.put('/likes', log, verifyIdToken, async (req, res) => {
                 email_user: comment.owner.email,
             };
             // Avisamos al administrador de la web del nuevo like
-            await submitLikeComment(note, originUrl);
+            await submitLikeComment(note, originUrl, like_from);
         }
         const updatedComment = await comment.save();
         res.status(200).json(updatedComment);
@@ -142,12 +145,16 @@ router.put('/likes', log, verifyIdToken, async (req, res) => {
 router.put('/edit/:id', log, verifyIdToken, async (req, res) => {
     const { id } = req.params;
     const { textEdit } = req.body;
-    if (!textEdit)
-        return res.status(400).json({ message: 'Missing content' });
+    if (!textEdit) {
+        res.status(400).json({ message: 'Missing content' });
+        return;
+    }
     try {
         const comment = await modelComment.findById(id);
-        if (!comment)
-            return res.status(404).json({ message: 'Comment not found' });
+        if (!comment) {
+            res.status(404).json({ message: 'Comment not found' });
+            return;
+        }
         comment.data = textEdit;
         await comment.save();
         res.status(200).json(comment);
@@ -160,12 +167,16 @@ router.put('/edit/:id', log, verifyIdToken, async (req, res) => {
 // Eliminar comentarios
 router.delete('/del/:id', log, verifyIdToken, async (req, res) => {
     const { id } = req.params;
-    if (!isValidObjectId(id))
-        return res.status(400).json({ message: 'Invalid publication ID' });
+    if (!isValidObjectId(id)) {
+        res.status(400).json({ message: 'Invalid publication ID' });
+        return;
+    }
     try {
         const fatherComment = await modelComment.findById(id);
-        if (!fatherComment)
-            return res.status(404).json({ message: 'Comment not found' });
+        if (!fatherComment) {
+            res.status(404).json({ message: 'Comment not found' });
+            return;
+        }
         // Elimina los hijos del comentario
         if (fatherComment.answers && fatherComment.answers.length > 0)
             await deleteCommentAndChildren(fatherComment.answers);

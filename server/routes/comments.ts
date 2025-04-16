@@ -11,8 +11,7 @@ const router = Router();
 
 // <--------------- GET --------------->
 // Obtener todos los comentarios
-router.get('/all', log, verifyIdToken, async (req, res) => {
-  // El id es el id del comentario padre (parent_id)
+router.get('/all', log, verifyIdToken, async (_req, res): Promise<void> => {
   try {
     // Buscar el comentario padre y obtener sus hijos
     const comments = await modelComment.find().select('data');
@@ -23,21 +22,26 @@ router.get('/all', log, verifyIdToken, async (req, res) => {
 });
 
 // Obtener los hijos de un comentario
-router.get('/children/:id', log, verifyIdToken, async (req, res) => {
-  // El id es el id del comentario padre (parent_id)
-  const { id } = req.params;
-  try {
-    // Buscar el comentario padre y obtener sus hijos
-    const comments = await modelComment.findById(id).populate('answers');
-    if (!comments) throw new Error('Comments not found');
-    res.status(200).json(comments.answers);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al obtener los comentarios' });
+router.get(
+  '/children/:id',
+  log,
+  verifyIdToken,
+  async (req, res): Promise<void> => {
+    // El id es el id del comentario padre (parent_id)
+    const { id } = req.params;
+    try {
+      // Buscar el comentario padre y obtener sus hijos
+      const comments = await modelComment.findById(id).populate('answers');
+      if (!comments) throw new Error('Comments not found');
+      res.status(200).json(comments.answers);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener los comentarios' });
+    }
   }
-});
+);
 
 // Carga de comentarios al entrar en una publicación
-router.get('/:id', log, verifyIdToken, async (req, res) => {
+router.get('/:id', log, verifyIdToken, async (req, res): Promise<void> => {
   const { id } = req.params;
   try {
     const parentComments = await modelComment.find({ pattern_id: id });
@@ -49,7 +53,7 @@ router.get('/:id', log, verifyIdToken, async (req, res) => {
 
 // <--------------- POST --------------->
 // Agregar comentarios
-router.post('/new', log, verifyIdToken, async (req, res) => {
+router.post('/new', log, verifyIdToken, async (req, res): Promise<void> => {
   const { newCommentData, originUrl } = req.body;
 
   try {
@@ -81,7 +85,7 @@ router.post(
   '/children/:id',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
     const { newCommentData, originUrl } = req.body;
 
@@ -124,16 +128,20 @@ router.put(
   '/likes',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const { uid_user_firebase, _id, likes, originUrl, like_from } = req.body;
-    if (likes === undefined || likes === null || !uid_user_firebase || !_id)
-      return res.status(400).json({ error: 'Los campos son requeridos' });
+    if (likes === undefined || likes === null || !uid_user_firebase || !_id) {
+      res.status(400).json({ error: 'Los campos son requeridos' });
+      return;
+    }
 
     try {
       const comment = await modelComment.findById(_id);
 
-      if (!comment)
-        return res.status(404).json({ error: 'Comentario no encontrado' });
+      if (!comment) {
+        res.status(404).json({ error: 'Comentario no encontrado' });
+        return;
+      }
 
       if (comment.likedBy && comment.likedBy.includes(uid_user_firebase)) {
         const index = comment.likedBy.indexOf(uid_user_firebase);
@@ -168,15 +176,21 @@ router.put(
   '/edit/:id',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
     const { textEdit } = req.body;
-    if (!textEdit) return res.status(400).json({ message: 'Missing content' });
+
+    if (!textEdit) {
+      res.status(400).json({ message: 'Missing content' });
+      return;
+    }
 
     try {
       const comment = await modelComment.findById(id);
-      if (!comment)
-        return res.status(404).json({ message: 'Comment not found' });
+      if (!comment) {
+        res.status(404).json({ message: 'Comment not found' });
+        return;
+      }
 
       comment.data = textEdit;
       await comment.save();
@@ -193,14 +207,19 @@ router.delete(
   '/del/:id',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    if (!isValidObjectId(id))
-      return res.status(400).json({ message: 'Invalid publication ID' });
+    if (!isValidObjectId(id)) {
+      res.status(400).json({ message: 'Invalid publication ID' });
+      return;
+    }
+
     try {
       const fatherComment = await modelComment.findById(id);
-      if (!fatherComment)
-        return res.status(404).json({ message: 'Comment not found' });
+      if (!fatherComment) {
+        res.status(404).json({ message: 'Comment not found' });
+        return;
+      }
 
       // Elimina los hijos del comentario
       if (fatherComment.answers && fatherComment.answers.length > 0)

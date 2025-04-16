@@ -1,4 +1,5 @@
 # Security Policy
+
 We appreciate your help in maintaining the security of our projects. Please follow the guidelines below for reporting vulnerabilities or security issues.
 
 ## Supported Versions
@@ -11,8 +12,8 @@ currently being supported with security updates.
 | < 1.0   | :x:                |
 | > 1.x   | :white_check_mark: |
 
+## Reporting Vulnerabilities
 
-## Reporting Vulnerabilities  
 If you discover a vulnerability, please follow these steps:
 
 1. **Do not disclose** the details publicly or on social media.
@@ -43,5 +44,3 @@ This security policy does not cover unauthorized penetration tests or testing pe
 - **Legal Safe Harbor**: Clarification on legal protections for researchers following the policy guidelines.
 
 Thank you for contributing to the security of our projects!
-
-

@@ -1,4 +1,4 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { Comment, PublicationCardType } from '../../types/types';
 
 const commentSchema = new Schema<Comment>({

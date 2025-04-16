@@ -5,8 +5,10 @@ const router = Router();
 router.get('/user/:email', log, verifyIdToken, async (req, res) => {
     // Obtener el UID de un usuario por su correo electrónico
     const { email } = req.params;
-    if (!email)
-        return res.status(400).json({ message: 'Missing required fields' });
+    if (!email) {
+        res.status(400).json({ message: 'Missing required fields' });
+        return;
+    }
     getUidByEmail(email)
         .then((uid) => {
         // Devolbemos el UID del usuario si existe

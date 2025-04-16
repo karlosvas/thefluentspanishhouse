@@ -8,7 +8,7 @@ const admin = process.env.ADMIN_GMAIL;
 export async function submitNote(note) {
     try {
         return await resend.emails.send({
-            from: 'no-reply@thefluentspanishhouse.com',
+            from: 'TheFluentSpanishHosue <noreply@thefluentspanishhouse.com>',
             to: [admin],
             subject: note.subject,
             html: `
@@ -38,13 +38,13 @@ export async function submitNote(note) {
 export async function submitEmailStudent(newstudent) {
     try {
         return await resend.emails.send({
-            from: 'no-reply@thefluentspanishhouse.com',
+            from: 'TheFluentSpanishHosue <noreply@thefluentspanishhouse.com>',
             to: [admin],
             subject: `The Fluent Spanish House: New Student ${newstudent.name} ${newstudent.lastname}`,
             html: `<html>
         <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; padding: 20px;">
           <div style="background-color: #fff; padding: 20px; max-width: 1000px; margin: 20px auto; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-            <h1 style="text-align: center; color: #2a8cff;">TheFuentSpanishHouse</h1>
+            <h1 style="text-align: center; color: #2a8cff;">The Fluent Spanish House</h1>
             <h3 style="text-align: center; color: #2a8cff;">New Student Request</h3>
             <p style="font-size: 16px; line-height: 1.6;">The user <b style="color: #2a8cff;">${newstudent.name} ${newstudent.lastname}</b> with email <b style="color: #2a8cff;">${newstudent.email}</b> wants to be a new student:</p>
             <p style="font-size: 16px; line-height: 1.6;">They would like to sign up for <b style="color: #2a8cff;">${newstudent.class}</b>.</p>
@@ -63,14 +63,14 @@ export async function submitEmailStudent(newstudent) {
 export async function submitEmailComment(note, originUrl) {
     try {
         return await resend.emails.send({
-            from: `no-reply@thefluentspanishhouse.com`,
+            from: `TheFluentSpanishHosue <noreply@thefluentspanishhouse.com>`,
             to: [admin],
             subject: note.subject,
             html: `
         <html>
           <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; padding: 20px;">
             <div style="background-color: #fff; padding: 20px; max-width: 1000px; margin: 20px auto; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-              <h1 style="text-align: center; color: #2a8cff;">TheFuentSpanishHouse</h1>
+              <h1 style="text-align: center; color: #2a8cff;">The Fluent Spanish House</h1>
               <h3 style="text-align: center; color: #2a8cff;">New Like from ${note.username}</h3>
               <p style="font-size: 16px; line-height: 1.6;">The user <strong style="color: #2a8cff;">${note.username} (${note.email_user})</strong> says:</p>
               <p style="font-size: 16px; line-height: 1.6; background-color: #f9f9f9; padding: 10px; border-left: 4px solid #2a8cff; margin-top: 10px;">${note.note}</p>
@@ -88,23 +88,25 @@ export async function submitEmailComment(note, originUrl) {
         throw error;
     }
 }
-export async function submitLikeComment(note, originUrl) {
+export async function submitLikeComment(note, originUrl, like_from) {
     try {
         return await resend.emails.send({
-            from: `no-reply@thefluentspanishhouse.com`,
+            from: `TheFluentSpanishHosue <noreply@thefluentspanishhouse.com>`,
             to: [admin],
             subject: note.subject,
             html: `
         <html>
           <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; padding: 20px;">
             <div style="background-color: #fff; padding: 20px; max-width: 1000px; margin: 20px auto; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-              <h1 style="text-align: center; color: #2a8cff;">TheFuentSpanishHouse</h1>
-              <h3 style="text-align: center; color: #2a8cff;">Nuevo Like de ${note.username}</h3>
-              <p style="font-size: 16px; line-height: 1.6;">El usuario <strong style="color: #2a8cff;">${note.username} (${note.email_user})</strong> dice:</p>
-              <p style="font-size: 16px; line-height: 1.6; background-color: #f9f9f9; padding: 10px; border-left: 4px solid #2a8cff; margin-top: 10px;">${note.note}</p>
-              <p style="font-size: 16px; line-height: 1.6; margin-top: 20px;">Desde la publicación: <a href="${originUrl}" style="color: #2a8cff;" target="_blank">${originUrl}</a></p>
-              <p style="font-size: 14px; color: #777; text-align: center; margin-top: 30px;">Usuario: <strong style="color: #2a8cff;">${note.email_user}</strong></p>
-              <p style="font-size: 14px; color: #777; text-align: center;">Gracias por tu atención.</p>
+              <h1 style="text-align: center; color: #2a8cff;">The Fluent Spanish House</h1>
+              <h3 style="text-align: center; color: #2a8cff;">New Like from ${note.username} ❤️</h3>
+              <p style="font-size: 16px; line-height: 1.6; margin-top: 20px;">
+                From post: <br />
+                <a href="${originUrl}" style="color: #2a8cff;" target="_blank">${originUrl}</a>
+              </p>
+              <p style="font-size: 14px; color: #777; text-align: center; margin-top: 30px;">To: <strong style="color: #2a8cff;">${note.email_user}</strong></p>
+              <p style="font-size: 14px; color: #777; text-align: center;">From: <strong style="color: #2a8cff;">${like_from}</strong></p>
+              <p style="font-size: 14px; color: #777; text-align: center;">Thank you for your attention.</p>
             </div>
           </body>
         </html>

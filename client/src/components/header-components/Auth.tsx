@@ -6,7 +6,7 @@ import {
   localRegister,
   localSignin,
   signInWithFacebook,
-} from '@/services/oauth2-0';
+} from '@/services/firebase-auth-users';
 import { toggleFormType } from '@/utils/modal';
 import Button from '@/components/reusable/Button';
 import ShowPassword from '@/components/reusable/ShowPassword';

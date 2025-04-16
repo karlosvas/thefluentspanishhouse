@@ -25,7 +25,7 @@ router.get(
   '/getall/member',
   log,
   verifyIdToken,
-  async (_req: Request, res: Response) => {
+  async (_req: Request, res: Response): Promise<void> => {
     mailchimp.lists
       .getListMembersInfo(listId)
       .then((response) => {
@@ -42,7 +42,7 @@ router.get(
   '/getone/member/:email',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const { email } = req.params;
     const subscriberHash = crypto.createHash('md5').update(email).digest('hex');
 
@@ -63,7 +63,7 @@ router.get(
   '/groupscategory',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     mailchimp.lists
       .getListInterestCategories(listId)
       .then((response) => {
@@ -80,8 +80,11 @@ router.get(
   '/get/interests',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
-    if (!groupId) return res.status(400).send('groupID is required');
+  async (_req: Request, res: Response): Promise<void> => {
+    if (!groupId) {
+      res.status(400).send('groupID is required');
+      return;
+    }
 
     mailchimp.lists
       .listInterestCategoryInterests(listId, groupId)
@@ -100,7 +103,7 @@ router.post(
   '/add/member',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const member: Member = req.body;
 
     mailchimp.lists
@@ -119,7 +122,7 @@ router.post(
   '/add/batchcontact',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const members: Member[] = req.body;
 
     // Usuario y etiquetas para añadir al usuario
@@ -142,11 +145,13 @@ router.post(
   '/add/interests',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const { name }: { name: string } = req.body;
 
-    if (!groupId || !name)
+    if (!groupId || !name) {
       res.status(400).send('Category ID and interest name are required');
+      return;
+    }
 
     try {
       const response = await addInterestToCategory(groupId, name);
@@ -167,7 +172,7 @@ router.put(
   '/updatecontact/status/:email',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const { email } = req.params;
     const { status }: { status: Status } = req.body;
 
@@ -193,7 +198,7 @@ router.put(
   '/updatecontact/tag/:email',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const { email } = req.params;
     const { tag }: { tag: OptionsChampTag } = req.body;
 
@@ -217,7 +222,7 @@ router.delete(
   '/del/member/:email',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     // Obtenemos el email del usuario a eliminar desde la URL
     const { email } = req.params;
     const subscriberHash = crypto.createHash('md5').update(email).digest('hex');
@@ -238,7 +243,7 @@ router.delete(
   '/del/tag/:email',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     // Obtenemos el email del usuario a eliminar desde la URL
     const { email } = req.params;
     const { tag }: { tag: OptionsChampTag } = req.body;
@@ -266,7 +271,7 @@ router.delete(
   '/del/interests/:id',
   log,
   verifyIdToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
     try {

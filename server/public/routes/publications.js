@@ -13,8 +13,10 @@ router.get('/last', log, verifyIdToken, async (_req, res) => {
             .sort({ currentPage: -1 })
             .select('currentPage')
             .exec();
-        if (!lastPublication)
+        if (!lastPublication) {
             res.status(404).json({ message: 'No posts available' });
+            return;
+        }
         res.status(200).json(lastPublication);
     }
     catch (error) {
@@ -25,12 +27,16 @@ router.get('/last', log, verifyIdToken, async (_req, res) => {
 // Obtener publicaciones segun la página
 router.get('/page/:page', log, verifyIdToken, async (req, res) => {
     const page = parseInt(req.params.page, 10);
-    if (isNaN(page))
+    if (isNaN(page)) {
         res.status(400).json({ message: 'Invalid page number' });
+        return;
+    }
     try {
         const publications = await modelPublication.find({ currentPage: page });
-        if (!publications)
+        if (!publications) {
             res.status(404).json({ message: 'Publication not found' });
+            return;
+        }
         res.status(200).json(publications);
     }
     catch (error) {
@@ -42,11 +48,15 @@ router.get('/page/:page', log, verifyIdToken, async (req, res) => {
 router.get('/:id', log, verifyIdToken, async (req, res) => {
     const { id } = req.params;
     try {
-        if (!isValidObjectId(id))
+        if (!isValidObjectId(id)) {
             res.status(400).json({ message: 'Invalid publication ID' });
+            return;
+        }
         const publication = await modelPublication.findById(id);
-        if (!publication)
+        if (!publication) {
             res.status(404).json({ message: 'Publication not found' });
+            return;
+        }
         res.status(200).json(publication);
     }
     catch (error) {
@@ -62,11 +72,15 @@ router.post('/new', log, verifyIdToken, async (req, res) => {
         // Validaciones
         if (!newPublication.title ||
             !newPublication.subtitle ||
-            !newPublication.content)
-            return res.status(400).json({ message: 'Missing required fields' });
+            !newPublication.content) {
+            res.status(400).json({ message: 'Missing required fields' });
+            return;
+        }
         if (newPublication.base64_img &&
-            !/^data:image\/[a-zA-Z]+;base64,/.test(newPublication.base64_img))
-            return res.status(400).json({ message: 'Invalid image format' });
+            !/^data:image\/[a-zA-Z]+;base64,/.test(newPublication.base64_img)) {
+            res.status(400).json({ message: 'Invalid image format' });
+            return;
+        }
         // Crear una nueva tarjeta de blog
         const newCardBlog = new modelPublication({
             _id: new Types.ObjectId(),
@@ -92,8 +106,10 @@ router.put('/edit/:id', log, verifyIdToken, async (req, res) => {
     const updatedFields = req.body;
     try {
         const publication = await modelPublication.findById(id);
-        if (!publication)
-            return res.status(404).json({ message: 'Publication not found' });
+        if (!publication) {
+            res.status(404).json({ message: 'Publication not found' });
+            return;
+        }
         publication.title = updatedFields.title;
         publication.subtitle = updatedFields.subtitle;
         publication.content = updatedFields.content;
@@ -109,13 +125,17 @@ router.put('/edit/:id', log, verifyIdToken, async (req, res) => {
 // Eliminar publicaciones
 router.delete('/del/:id', log, verifyIdToken, async (req, res) => {
     const { id } = req.params;
-    if (!isValidObjectId(id))
-        return res.status(400).json({ message: 'Invalid publication ID' });
+    if (!isValidObjectId(id)) {
+        res.status(400).json({ message: 'Invalid publication ID' });
+        return;
+    }
     try {
         const result = await modelPublication.findByIdAndDelete(id);
         await modelComment.deleteMany({ pattern_id: id });
-        if (!result)
-            return res.status(404).json({ message: 'Publication not found' });
+        if (!result) {
+            res.status(404).json({ message: 'Publication not found' });
+            return;
+        }
         res.status(204).send();
     }
     catch (error) {

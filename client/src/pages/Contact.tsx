@@ -12,16 +12,18 @@ import Phone from '@/assets/svg/phone.svg';
 import InstagramSVG from '@/assets/svg/instagram.svg';
 
 const ContactForm = () => {
+  // Estado de subsriccion del boton
   const [suscribe, setSuscribe] = useState<boolean>(false);
+  // COntexto global
   const user = useContext(UserContext);
-
+  //  Estado del formulario
   const [newNote, setNewNote] = useState<NoteType>({
     email_user: user?.email || '',
     username: '',
     subject: '',
     note: '',
   });
-
+  // Escribiren el formulario
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -31,19 +33,22 @@ const ContactForm = () => {
       [name]: value,
     }));
   };
-
+  /// Referencia a los inputs
   const inputRefs = useRef<(HTMLInputElement | HTMLTextAreaElement | null)[]>(
     []
   );
 
   const onSubmitNote = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Verificamos que el usuario este loggeado
     if (!user) {
       toast.error('You must log in');
       return;
     }
+    // Activamos la subscripcion del boton
     setSuscribe(true);
 
+    // Lo envimaos y resetamos el formulario
     await submitNote(newNote);
     setNewNote({
       email_user: user.email,
@@ -52,6 +57,7 @@ const ContactForm = () => {
       note: '',
     } as NoteType);
 
+    // Desactivamos la subscripcion del boton
     setSuscribe(false);
   };
 
@@ -173,7 +179,9 @@ const ContactForm = () => {
                     value={newNote.username}
                     required
                     onChange={handleChange}
-                    ref={(el) => el && (inputRefs.current[0] = el)}
+                    ref={(el) => {
+                      if (el) inputRefs.current[0] = el;
+                    }}
                     id="username"
                   />
                   <label htmlFor="username">Username</label>
@@ -187,7 +195,9 @@ const ContactForm = () => {
                     required
                     value={newNote.subject}
                     onChange={handleChange}
-                    ref={(el) => el && (inputRefs.current[2] = el)}
+                    ref={(el) => {
+                      if (el) inputRefs.current[2] = el;
+                    }}
                     id="subject"
                   />
                   <label htmlFor="subject">Subject</label>
@@ -200,7 +210,9 @@ const ContactForm = () => {
                     value={newNote.note}
                     onChange={handleChange}
                     required
-                    ref={(el) => el && (inputRefs.current[3] = el)}
+                    ref={(el) => {
+                      if (el) inputRefs.current[3] = el;
+                    }}
                     id="note"
                   ></textarea>
                   <label htmlFor="note">Message</label>

@@ -10,6 +10,7 @@ import {
 import toast from 'react-hot-toast';
 import { NavigateFunction } from 'react-router-dom';
 import { auth, showMessageErrorFirebase } from './firebase-config';
+import { FirebaseError } from 'firebase/app';
 
 // Cambiar opciones de usuario
 export const changeOptionsUser = async (
@@ -44,8 +45,8 @@ export const changeOptionsUser = async (
         navigate('/account');
         toast.success('User updated successfully');
         return true;
-      } catch (error) {
-        showMessageErrorFirebase(error);
+      } catch (error: unknown) {
+        if (error instanceof FirebaseError) showMessageErrorFirebase(error);
       }
     }
   }
@@ -132,7 +133,7 @@ export async function delateUserFirebase(
     setTimeout(() => {
       navigate('/');
     }, 10000);
-  } catch (error) {
-    showMessageErrorFirebase(error);
+  } catch (error: unknown) {
+    if (error instanceof FirebaseError) showMessageErrorFirebase(error);
   }
 }
