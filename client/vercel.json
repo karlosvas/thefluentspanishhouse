@@ -1,7 +1,7 @@
 {
   "rewrites": [
-    { "source": "/robots.txt", "destination": "/dist/robots.txt" },
-    { "source": "/sitemap.xml", "destination": "/dist/sitemap.xml" },
-    { "source": "/(.*)", "destination": "/dist/index.html" }
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
