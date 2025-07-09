@@ -24,8 +24,8 @@
     .introduction {
       font-size: 22px;
       text-align: center;
-      font-family: 'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial,
-        sans-serif;
+      font-family:
+        'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     }
 
     .card-img-placeholder {
@@ -104,15 +104,15 @@
         list-style: none;
       }
       h2 {
-        font-family: 'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial,
-          sans-serif;
+        font-family:
+          'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
         font-weight: 600;
         text-align: center;
         padding: 50px;
       }
       h4 {
-        font-family: 'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial,
-          sans-serif;
+        font-family:
+          'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
         padding: 5px 0;
       }
     }
@@ -131,8 +131,8 @@
     margin-bottom: 200px;
     margin-top: 100px;
     h2 {
-      font-family: 'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial,
-        sans-serif;
+      font-family:
+        'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
       font-weight: 600;
       margin-bottom: 20px;
       text-align: center;
@@ -159,7 +159,8 @@
         border-radius: 3px;
         padding: 20px;
         h3 {
-          font-family: 'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial;
+          font-family:
+            'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial;
           font-weight: 600;
         }
         button {
@@ -257,8 +258,9 @@
         }
         figcaption {
           padding-top: 20px;
-          font-family: 'Roboto Slab', Inter, system-ui, Avenir, Helvetica,
-            Arial, sans-serif;
+          font-family:
+            'Roboto Slab', Inter, system-ui, Avenir, Helvetica, Arial,
+            sans-serif;
           width: 100%;
           font-size: medium;
           strong {

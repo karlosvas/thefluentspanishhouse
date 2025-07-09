@@ -23,7 +23,7 @@
     "resend": "^4.3.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.51.1",
+    "@playwright/test": "^1.51.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/mailchimp__mailchimp_marketing": "^3.0.21",

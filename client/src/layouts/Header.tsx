@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import Hamburger from '@/components/header-components/Hamburger';
 import Auth from '@/components/header-components/Auth';
@@ -10,24 +10,43 @@ import '@/styles/layouts/header.css';
 import { Link } from 'react-router-dom';
 import { handleClickNavigate } from '@/utils/navigate';
 
+// ...existing code...
+
+const SCROLL_THRESHOLD_SHRINK = 80;
+const SCROLL_THRESHOLD_UNSHRINK = 40;
+
 const Header = () => {
   const [isShrunk, setIsShrunk] = useState<boolean>(false);
 
-  // Manejar el scroll para cambiar el tamaño del header
+  // Manejar el scroll con histéresis para evitar flicker
+  const handleScroll = useCallback(() => {
+    const currentScroll = window.scrollY;
+
+    if (!isShrunk && currentScroll > SCROLL_THRESHOLD_SHRINK) {
+      setIsShrunk(true);
+    } else if (isShrunk && currentScroll < SCROLL_THRESHOLD_UNSHRINK) {
+      setIsShrunk(false);
+    }
+  }, [isShrunk]);
+
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsShrunk(true);
-      } else {
-        setIsShrunk(false);
+    let ticking = false;
+
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', throttledHandleScroll);
     };
-  }, []);
+  }, [handleScroll]);
 
   // Uri actual
   const location = useLocation();

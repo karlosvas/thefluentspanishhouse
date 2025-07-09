@@ -93,6 +93,7 @@
       border: 2px solid var(--primary-black);
       margin-bottom: 10px;
       min-height: 30px;
+      cursor: pointer;
       .providers {
         margin-left: 10px;
       }

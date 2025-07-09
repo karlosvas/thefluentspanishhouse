@@ -7,11 +7,10 @@ header {
   box-sizing: border-box;
   height: 10vh;
   min-height: 60px;
+  transition: height 0.3s ease;
 
   .header-animation {
     height: 100%;
-    transition: height 0.3s ease;
-
     .header {
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       height: 100%;
@@ -125,8 +124,8 @@ header #sect {
   height: 10vh;
   min-height: 70px;
   .waves {
+    transition: height 0.1s ease;
     height: 100%;
-    transition: height 0.3s ease;
     position: relative;
     opacity: 0.7;
     .wave {
@@ -166,9 +165,8 @@ header #sect {
 }
 
 header.shrink {
-  .header-animation {
-    height: 7vh;
-  }
+  height: 7vh;
+
   #sect > .waves {
     height: 7vh;
   }

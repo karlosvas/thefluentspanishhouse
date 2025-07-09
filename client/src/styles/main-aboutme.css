@@ -15,12 +15,17 @@
   position: relative;
 
   .backgroundBanner {
-    background-color: rgb(55, 131, 232);
+    box-shadow: 0 0px 5px rgba(0, 4, 255, 0.5);
+    background: linear-gradient(
+      135deg,
+      rgb(74, 134, 211) 0%,
+      rgba(37, 67, 201, 0.7) 50%,
+      rgba(28, 34, 116, 0.9) 100%
+    );
     position: absolute;
     top: 126px;
     width: 100vw;
     height: 47vh;
-    box-shadow: 0 0px 5px rgba(0, 4, 255, 0.5);
     z-index: 0;
   }
 
@@ -33,19 +38,40 @@
     text-align: center;
     padding-bottom: 200px;
 
-    article {
-      ul {
-        text-align: start;
-        width: 80%;
-        margin: auto;
+    #profile {
+      width: 100%;
+      align-items: center;
+      gap: 20px;
+      z-index: 1;
+      color: var(--primary-white);
+
+      figure {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+        margin: 0;
       }
+
       .img-aboutme {
         animation: reveal linear both;
         animation-timeline: view();
         animation-range: entry 20% cover 30%;
         height: 47vh;
+        margin: 0;
+        flex-shrink: 0;
+      }
+
+      figcaption {
+        padding: 10px;
+      }
+    }
+
+    .custom-articles {
+      ul {
+        text-align: start;
+        width: 80%;
         margin: auto;
-        box-shadow: 0 0px 5px rgba(0, 4, 255, 0.5);
       }
       figcaption {
         font-size: 18px;
@@ -54,7 +80,7 @@
         width: 40vw;
       }
     }
-    article {
+    .custom-articles {
       animation: reveal linear both;
       animation-timeline: view();
       animation-range: entry 20% cover 30%;
@@ -75,9 +101,19 @@
   }
 }
 
-@media only screen and (width <= 1200px) and (width >= 766px) {
+@media only screen and (width <= 1250px) and (width >= 766px) {
   .main-aboutme {
+    .backgroundBanner {
+      height: 90vh;
+    }
     .div-aboutme {
+      #profile {
+        padding-top: 30px;
+        figure {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
       figure {
         .img-aboutme {
           height: 47vh;
@@ -90,15 +126,23 @@
     }
   }
 }
+
 @media only screen and (width <= 766px) {
   .main-aboutme {
     #haboutme {
       margin-top: 20px;
     }
     .backgroundBanner {
-      display: none;
+      height: 80vh;
     }
     .div-aboutme {
+      #profile {
+        padding-top: 30px;
+        figure {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
       h2 {
         font-size: 2em;
       }

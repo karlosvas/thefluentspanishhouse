@@ -16,7 +16,7 @@ const AboutMe = () => {
         <div className="backgroundBanner"></div>
         <div className="div-aboutme">
           <h2 id="haboutme">About me</h2>
-          <article>
+          <article id="profile">
             <PlaceholderImg
               className="img-aboutme"
               src="/img/about"
@@ -27,14 +27,9 @@ const AboutMe = () => {
               Madrid. <br />
               My city is renowned chiefly for three historical events: <br />
               <br />
-              <ul>
-                <li>The marriage of the Catholic Monarchs in 1462.</li>
-                <li>
-                  Miguel de Cervantes's writing of the first part of his
-                  well-known book Don Quijote here.
-                </li>
-                <li>The death of Cristobal Colon in 1506.</li>
-              </ul>
+              The marriage of the Catholic Monarchs in 1462. Miguel de
+              Cervantes's writing of the first part of his well-known book Don
+              Quijote here. The death of Cristobal Colon in 1506.
               <br />
               I’m passionate about my profession because it allows me to stay in
               contact with people worldwide and learn about different cultures.{' '}
@@ -44,8 +39,9 @@ const AboutMe = () => {
               students visit me and enjoy Spanish culture and cuisine firsthand.{' '}
               <br /> Will you join me?
             </PlaceholderImg>
+            <p></p>
           </article>
-          <article>
+          <article className="custom-articles">
             <h2>My background</h2>
             <p>
               I studied for a Bachelor’s in Spanish Language and Literature and
@@ -67,7 +63,7 @@ const AboutMe = () => {
               <br />
             </p>
           </article>
-          <article>
+          <article className="custom-articles">
             <h2>Teaching experience</h2>
             <p>
               I have been a freelance Spanish teacher since 2018, specializing

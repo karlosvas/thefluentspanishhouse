@@ -53,7 +53,9 @@ jobs:
         with:
           node-version: "22"
       - name: Install Playwright Browsers
-        run: npx playwright install
+        run: |
+          npm ci
+          npx playwright install --with-deps
         working-directory: ./server
       - name: Install backend dependencies
         run: npm install
