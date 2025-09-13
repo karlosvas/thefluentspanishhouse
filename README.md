@@ -2,6 +2,8 @@
 
 Welcome to the official website of Marta, your trusted Spanish teacher. Here you'll find all the necessary information about her classes, prices, and teaching methods.  
 **Official URL: https://thefluentspanishhouse.com**
+> [!NOTE]
+**⚠️ The website domain has currently expired.**
 
 ## About Marta
 
