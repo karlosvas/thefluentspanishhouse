@@ -19,11 +19,11 @@
     "firebase": "^11.6.0",
     "firebase-admin": "^13.2.0",
     "mongoose": "^8.13.2",
-    "playwright": "^1.51.1",
+    "playwright": "^1.56.1",
     "resend": "^4.3.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.51.2",
+    "@playwright/test": "^1.56.1",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/mailchimp__mailchimp_marketing": "^3.0.21",
