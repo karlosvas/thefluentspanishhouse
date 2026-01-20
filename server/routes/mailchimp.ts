@@ -42,7 +42,7 @@ router.get(
   '/getone/member/:email',
   log,
   verifyIdToken,
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request<{ email: string }>, res: Response): Promise<void> => {
     const { email } = req.params;
     const subscriberHash = crypto.createHash('md5').update(email).digest('hex');
 
@@ -172,7 +172,7 @@ router.put(
   '/updatecontact/status/:email',
   log,
   verifyIdToken,
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request<{ email: string }>, res: Response): Promise<void> => {
     const { email } = req.params;
     const { status }: { status: Status } = req.body;
 
@@ -198,7 +198,7 @@ router.put(
   '/updatecontact/tag/:email',
   log,
   verifyIdToken,
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request<{ email: string }>, res: Response): Promise<void> => {
     const { email } = req.params;
     const { tag }: { tag: OptionsChampTag } = req.body;
 
@@ -222,7 +222,7 @@ router.delete(
   '/del/member/:email',
   log,
   verifyIdToken,
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request<{ email: string }>, res: Response): Promise<void> => {
     // Obtenemos el email del usuario a eliminar desde la URL
     const { email } = req.params;
     const subscriberHash = crypto.createHash('md5').update(email).digest('hex');
@@ -243,7 +243,7 @@ router.delete(
   '/del/tag/:email',
   log,
   verifyIdToken,
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request<{ email: string }>, res: Response): Promise<void> => {
     // Obtenemos el email del usuario a eliminar desde la URL
     const { email } = req.params;
     const { tag }: { tag: OptionsChampTag } = req.body;
@@ -271,7 +271,7 @@ router.delete(
   '/del/interests/:id',
   log,
   verifyIdToken,
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request<{ id: string }>, res: Response): Promise<void> => {
     const { id } = req.params;
 
     try {

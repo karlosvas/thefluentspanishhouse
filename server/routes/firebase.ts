@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, type Request, type Response } from 'express';
 import { log, verifyIdToken } from '../middelware/token-logs.js';
 import { getUidByEmail } from '../lib/firebase/firebase-db.js';
 
@@ -8,7 +8,7 @@ router.get(
   '/user/:email',
   log,
   verifyIdToken,
-  async (req, res): Promise<void> => {
+  async (req: Request<{ email: string }>, res: Response): Promise<void> => {
     // Obtener el UID de un usuario por su correo electrónico
     const { email } = req.params;
 

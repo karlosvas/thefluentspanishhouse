@@ -39,7 +39,7 @@ router.get(
   '/page/:page',
   log,
   verifyIdToken,
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request<{ page: string }>, res: Response): Promise<void> => {
     const page = parseInt(req.params.page, 10);
 
     if (isNaN(page)) {
@@ -68,7 +68,7 @@ router.get(
   '/:id',
   log,
   verifyIdToken,
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request<{ id: string }>, res: Response): Promise<void> => {
     const { id } = req.params;
 
     try {
@@ -141,7 +141,7 @@ router.put(
   '/edit/:id',
   log,
   verifyIdToken,
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request<{ id: string }>, res: Response): Promise<void> => {
     const { id } = req.params;
     const updatedFields = req.body;
 
@@ -171,7 +171,7 @@ router.delete(
   '/del/:id',
   log,
   verifyIdToken,
-  async (req: Request, res: Response): Promise<void> => {
+  async (req: Request<{ id: string }>, res: Response): Promise<void> => {
     const { id } = req.params;
 
     if (!isValidObjectId(id)) {

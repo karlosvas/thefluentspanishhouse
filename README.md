@@ -1,9 +1,10 @@
 # Marta - Spanish Teacher
 
 Welcome to the official website of Marta, your trusted Spanish teacher. Here you'll find all the necessary information about her classes, prices, and teaching methods.  
-**Official URL: https://thefluentspanishhouse.com**
+**Official URL: [https://thefluentspanishhouse.com](https://thefluentspanishhouse.com)**
+
 > [!NOTE]
-**⚠️ The website domain has currently expired.**
+> **⚠️ The website domain has currently expired. The provisional domain is [https://thefluentspanishhouse.vercel.app/](https://thefluentspanishhouse.vercel.app/)**
 
 ## About Marta
 
@@ -30,7 +31,7 @@ Class prices vary depending on the type and duration. Here's a breakdown:
 
 For more information or to book a class, you can contact Marta through:
 
-- **Email:** mar411geca@gmail.com
+- **Email:** <mar411geca@gmail.com>
 - **Phone:** +34 617 286 125
 - [Contact Form](https://thefluentspanishhouse.com/contact)
 
