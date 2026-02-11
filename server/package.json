@@ -13,7 +13,7 @@
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",
     "agent-base": "^6.0.2",
-    "axios": "^1.12.0",
+    "axios": "^1.13.5",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "express": "^5.1.0",
