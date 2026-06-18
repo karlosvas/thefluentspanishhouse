@@ -17,16 +17,16 @@
         "react-dom": "^18.3.1",
         "react-helmet-async": "^2.0.5",
         "react-hot-toast": "^2.5.2",
-        "react-router": "^7.12.0",
-        "react-router-dom": "^7.12.0"
+        "react-router": "^7.18.0",
+        "react-router-dom": "^7.18.0"
     },
     "devDependencies": {
         "@svgr/rollup": "^8.1.0",
         "@types/react": "^18.3.20",
         "@types/react-dom": "^18.3.7",
-        "@vitejs/plugin-react-swc": "^3.9.0",
+        "@vitejs/plugin-react-swc": "^4.3.1",
         "typescript": "^5.8.3",
-        "vite": "^6.4.2",
+        "vite": "^8.0.16",
         "vite-plugin-env": "^1.0.1",
         "vite-plugin-svgr": "^4.3.0"
     }
