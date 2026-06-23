@@ -1,16 +1,17 @@
 import { Response, Request, NextFunction } from 'express';
-import admin from '../lib/firebase/firebase-config.js';
+import { auth } from '../lib/firebase/firebase-config.js';
+import type { DecodedIdToken } from 'firebase-admin/auth';
 
 // Declara el módulo para extender la interfaz Request
 declare module 'express-serve-static-core' {
   interface Request {
-    user?: admin.auth.DecodedIdToken;
+    user?: DecodedIdToken;
   }
 }
 
 export async function log(
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ): Promise<void> {
   // Registro de la solicitud
@@ -37,7 +38,7 @@ export async function verifyIdToken(
 
   try {
     // Verifica el token de Firebase usando firebase-admin
-    const decodedToken = await admin.auth().verifyIdToken(token);
+    const decodedToken = await auth.verifyIdToken(token);
     req.user = decodedToken; // Añade el usuario decodificado a la solicitud
     next();
   } catch (error) {

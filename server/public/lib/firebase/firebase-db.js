@@ -1,8 +1,8 @@
-import admin from 'firebase-admin';
+import { auth } from '../firebase/firebase-config.js';
 // Función para obtener UID por correo electrónico
 export const getUidByEmail = async (email) => {
     try {
-        const userRecord = await admin.auth().getUserByEmail(email);
+        const userRecord = await auth.getUserByEmail(email);
         return userRecord.uid;
     }
     catch (error) {

@@ -1,7 +1,8 @@
 import dotenv from 'dotenv';
 dotenv.config();
 ////////////////////////////////////
-import admin from 'firebase-admin';
+import { initializeApp, getApps, cert } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 // Importa el archivo de credenciales de Firebase Admin
 const serviceAccount = {
     type: process.env.FIREBASE_TYPE,
@@ -16,16 +17,15 @@ const serviceAccount = {
     client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
 };
 // Verifica si la aplicación ya ha sido inicializada
-if (!admin.apps.length) {
+if (!getApps().length) {
     try {
-        admin.initializeApp({
-            credential: admin.credential.cert(serviceAccount),
+        initializeApp({
+            credential: cert(serviceAccount),
             databaseURL: process.env.FIREBASE_DB,
         });
         console.log('Firebase Admin initialized successfully');
         // Verifica si se puede conectar a Firebase Auth
-        admin
-            .auth()
+        getAuth()
             .listUsers(1)
             .then(() => {
             console.log('Successfully connected to Firebase Auth');
@@ -38,4 +38,4 @@ if (!admin.apps.length) {
         console.error('Error initializing Firebase Admin:', error);
     }
 }
-export default admin;
+export const auth = getAuth();

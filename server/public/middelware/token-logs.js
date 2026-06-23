@@ -1,5 +1,5 @@
-import admin from '../lib/firebase/firebase-config.js';
-export async function log(req, res, next) {
+import { auth } from '../lib/firebase/firebase-config.js';
+export async function log(req, _res, next) {
     // Registro de la solicitud
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
     next();
@@ -16,7 +16,7 @@ export async function verifyIdToken(req, res, next) {
         return next();
     try {
         // Verifica el token de Firebase usando firebase-admin
-        const decodedToken = await admin.auth().verifyIdToken(token);
+        const decodedToken = await auth.verifyIdToken(token);
         req.user = decodedToken; // Añade el usuario decodificado a la solicitud
         next();
     }
