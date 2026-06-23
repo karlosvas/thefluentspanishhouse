@@ -1,11 +1,16 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import { Resend } from 'resend';
+// En modo test no enviamos emails reales: las funciones de envío son no-op
+// y el cliente se crea con un placeholder para no lanzar al importar.
+const isTestMode = process.env.USE_MEMORY_DB === 'true';
 // Configurar el cliente de Mandrill
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || 're_test_placeholder');
 const admin = process.env.ADMIN_GMAIL;
 // Enviar nota de contact us a el administrador
 export async function submitNote(note) {
+    if (isTestMode)
+        return;
     try {
         return await resend.emails.send({
             from: 'TheFluentSpanishHosue <noreply@thefluentspanishhouse.com>',
@@ -36,6 +41,8 @@ export async function submitNote(note) {
 }
 // // Enviar email de nuevo estuidiante a el administrador
 export async function submitEmailStudent(newstudent) {
+    if (isTestMode)
+        return;
     try {
         return await resend.emails.send({
             from: 'TheFluentSpanishHosue <noreply@thefluentspanishhouse.com>',
@@ -61,6 +68,8 @@ export async function submitEmailStudent(newstudent) {
 }
 // Enviar email de nuevo comentario a el administrador
 export async function submitEmailComment(note, originUrl) {
+    if (isTestMode)
+        return;
     try {
         return await resend.emails.send({
             from: `TheFluentSpanishHosue <noreply@thefluentspanishhouse.com>`,
@@ -89,6 +98,8 @@ export async function submitEmailComment(note, originUrl) {
     }
 }
 export async function submitLikeComment(note, originUrl, like_from) {
+    if (isTestMode)
+        return;
     try {
         return await resend.emails.send({
             from: `TheFluentSpanishHosue <noreply@thefluentspanishhouse.com>`,

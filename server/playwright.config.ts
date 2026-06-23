@@ -45,5 +45,9 @@ export default defineConfig({
     command: 'npm run start',
     url: `http://127.0.0.1:${process.env.PORT || 8080}`,
     reuseExistingServer: !process.env.CI,
+    // Fuerza al servidor a usar una base de datos en memoria, nunca la real
+    env: {
+      USE_MEMORY_DB: 'true',
+    },
   },
 });
